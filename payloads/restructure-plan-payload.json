@@ -1,0 +1,20 @@
+{
+  "goal": "Crear un plan detallado de reestructuración de archivos y carpetas para el proyecto StartKit Main, aplicando principios de organización clara y mantenibilidad",
+  "style": "technical",
+  "constraints": [
+    "Mantener compatibilidad con el sistema MCP existente",
+    "Preservar la funcionalidad de agentes core (context, prompting, rules)",
+    "Aplicar principios de Toyota Production System",
+    "Mantener separación clara entre proyectos internos y externos",
+    "Optimizar para mantenibilidad y escalabilidad"
+  ],
+  "context_refs": [
+    "CLAUDE.md",
+    "MANUAL-COMPLETO-CURSOR.md",
+    "core/claude-project-init.sh"
+  ],
+  "ruleset_refs": [
+    "policies/security.md",
+    "policies/coding-standards.md"
+  ]
+}

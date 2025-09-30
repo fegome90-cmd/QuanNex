@@ -1,0 +1,18 @@
+{
+  "sources": [
+    "CLAUDE.md",
+    "MANUAL-COMPLETO-CURSOR.md",
+    "README.md",
+    "package.json",
+    "core/claude-project-init.sh"
+  ],
+  "selectors": [
+    "purpose",
+    "architecture",
+    "structure",
+    "organization",
+    "principles",
+    "guidelines"
+  ],
+  "max_tokens": 1024
+}

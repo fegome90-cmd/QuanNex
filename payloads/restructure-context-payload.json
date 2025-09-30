@@ -1,0 +1,29 @@
+{
+  "sources": [
+    "CLAUDE.md",
+    "MANUAL-COMPLETO-CURSOR.md",
+    "README.md",
+    "package.json",
+    "core/claude-project-init.sh",
+    "orchestration/orchestrator.js",
+    "agents/context/server.js",
+    "agents/prompting/server.js",
+    "agents/rules/server.js",
+    "tools/path-lint.mjs",
+    "tools/docs-lint.mjs",
+    "tools/run-autofix.mjs"
+  ],
+  "selectors": [
+    "purpose",
+    "architecture",
+    "structure",
+    "organization",
+    "principles",
+    "guidelines",
+    "context",
+    "prompts",
+    "logging",
+    "validation"
+  ],
+  "max_tokens": 1024
+}
