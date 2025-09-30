@@ -1,0 +1,6 @@
+{
+  "target_path": "orchestration/",
+  "optimization_types": ["performance", "maintainability"],
+  "scan_depth": 1,
+  "auto_fix": false
+}

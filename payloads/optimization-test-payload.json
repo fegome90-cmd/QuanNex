@@ -1,0 +1,6 @@
+{
+  "target_path": "agents/",
+  "optimization_types": ["performance", "maintainability", "readability", "security"],
+  "scan_depth": 2,
+  "auto_fix": false
+}

@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Security Agent Output Schema",
+  "description": "Schema de salida para el agente de seguridad",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Versión del schema de salida",
+      "const": "1.0.0"
+    },
+    "agent_version": {
+      "type": "string",
+      "description": "Versión del agente de seguridad",
+      "const": "1.0.0"
+    },
+    "security_report": {
+      "type": "object",
+      "description": "Reporte completo de seguridad",
+      "properties": {
+        "summary": {
+          "type": "object",
+          "description": "Resumen del escaneo de seguridad",
+          "properties": {
+            "total_findings": {
+              "type": "number",
+              "description": "Total de findings encontrados"
+            },
+            "secrets_found": {
+              "type": "number",
+              "description": "Número de secretos encontrados"
+            },
+            "vulnerabilities_found": {
+              "type": "number",
+              "description": "Número de vulnerabilidades encontradas"
+            },
+            "compliance_score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Score de compliance de seguridad (0-100)"
+            },
+            "severity_breakdown": {
+              "type": "object",
+              "description": "Desglose de findings por severidad",
+              "properties": {
+                "high": { "type": "number" },
+                "medium": { "type": "number" },
+                "low": { "type": "number" }
+              }
+            }
+          },
+          "required": ["total_findings", "secrets_found", "vulnerabilities_found", "compliance_score", "severity_breakdown"]
+        },
+        "findings": {
+          "type": "array",
+          "description": "Lista detallada de findings de seguridad",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["secret", "vulnerability"],
+                "description": "Tipo de finding"
+              },
+              "secret_type": {
+                "type": "string",
+                "description": "Tipo de secreto (solo para type: secret)"
+              },
+              "vuln_type": {
+                "type": "string",
+                "description": "Tipo de vulnerabilidad (solo para type: vulnerability)"
+              },
+              "file": {
+                "type": "string",
+                "description": "Archivo donde se encontró el issue"
+              },
+              "line": {
+                "type": "number",
+                "description": "Número de línea del issue"
+              },
+              "match": {
+                "type": "string",
+                "description": "Texto que coincidió con el patrón"
+              },
+              "severity": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"],
+                "description": "Severidad del finding"
+              },
+              "recommendation": {
+                "type": "string",
+                "description": "Recomendación para resolver el issue"
+              }
+            },
+            "required": ["type", "file", "line", "match", "severity", "recommendation"]
+          }
+        },
+        "recommendations": {
+          "type": "array",
+          "description": "Recomendaciones generales de seguridad",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Tipo de recomendación"
+              },
+              "priority": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"],
+                "description": "Prioridad de la recomendación"
+              },
+              "message": {
+                "type": "string",
+                "description": "Mensaje de la recomendación"
+              },
+              "actions": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Acciones específicas recomendadas"
+              }
+            },
+            "required": ["type", "priority", "message", "actions"]
+          }
+        }
+      },
+      "required": ["summary", "findings", "recommendations"]
+    },
+    "stats": {
+      "type": "object",
+      "description": "Estadísticas del escaneo",
+      "properties": {
+        "files_scanned": {
+          "type": "number",
+          "description": "Número de archivos escaneados"
+        },
+        "secrets_found": {
+          "type": "number",
+          "description": "Número de secretos encontrados"
+        },
+        "vulnerabilities_found": {
+          "type": "number",
+          "description": "Número de vulnerabilidades encontradas"
+        },
+        "compliance_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Score de compliance de seguridad"
+        }
+      },
+      "required": ["files_scanned", "secrets_found", "vulnerabilities_found", "compliance_score"]
+    },
+    "trace": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Traza de ejecución del agente",
+      "examples": [["security.server:ok"], ["security.server:error:invalid_path"]]
+    }
+  },
+  "required": ["schema_version", "agent_version", "security_report", "stats", "trace"],
+  "additionalProperties": false
+}

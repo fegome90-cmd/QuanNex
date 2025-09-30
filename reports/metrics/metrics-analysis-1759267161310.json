@@ -1,0 +1,78 @@
+{
+  "timestamp": "2025-09-30T21:19:21.308Z",
+  "total_reports": 1,
+  "time_range": {
+    "start": "2025-09-30T21:19:17.241Z",
+    "end": "2025-09-30T21:19:17.241Z",
+    "duration_days": 0
+  },
+  "trends": {
+    "duration": {
+      "first_value": 33.211584,
+      "last_value": 33.211584,
+      "change_percent": 0,
+      "trend": "stable",
+      "values": [
+        33.211584
+      ]
+    },
+    "cpu": {
+      "first_value": 0.872,
+      "last_value": 0.872,
+      "change_percent": 0,
+      "trend": "stable",
+      "values": [
+        0.872
+      ]
+    },
+    "memory": {
+      "first_value": 64064,
+      "last_value": 64064,
+      "change_percent": 0,
+      "trend": "stable",
+      "values": [
+        64064
+      ]
+    },
+    "success_rate": {
+      "first_value": 1,
+      "last_value": 1,
+      "change_percent": 0,
+      "trend": "stable",
+      "values": [
+        1
+      ]
+    }
+  },
+  "performance": {
+    "duration": {
+      "min": 32.261334,
+      "max": 67.094542,
+      "mean": 35.49658480000001,
+      "p50": 33.211584,
+      "p95": 44.035417,
+      "p99": 67.094542
+    },
+    "cpu": {
+      "min": 0.68,
+      "max": 2.227,
+      "mean": 0.9760666666666667,
+      "p50": 0.872,
+      "p95": 1.581,
+      "p99": 2.227
+    },
+    "memory": {
+      "min": -1528576,
+      "max": 284376,
+      "mean": -4781.866666666667,
+      "p50": 64064,
+      "p95": 76392,
+      "p99": 284376
+    },
+    "total_measurements": 30
+  },
+  "recommendations": [],
+  "comparison": {
+    "message": "Se necesitan al menos 2 reportes para comparar"
+  }
+}

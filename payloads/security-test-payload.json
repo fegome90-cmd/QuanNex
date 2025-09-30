@@ -1,0 +1,7 @@
+{
+  "target_path": "agents/",
+  "check_mode": "scan",
+  "scan_depth": 2,
+  "policy_refs": ["policies/security.md"],
+  "severity_threshold": "low"
+}

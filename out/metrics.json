@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "agent_version": "1.0.0",
+  "error": "metrics.agent:error:target_path es requerido",
+  "trace": [
+    "metrics.agent:error"
+  ]
+}

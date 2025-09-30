@@ -115,7 +115,7 @@ const rawInput = readFileSync(0, 'utf8');
 const data = JSON.parse(rawInput);
 const inputErrors = validateInput(data);
 if (inputErrors.length > 0) {
-  console.error(JSON.stringify(inputErrors, null, 2));
+  // console.error(JSON.stringify(inputErrors, null, 2));
   process.exit(1);
 }
 
@@ -132,21 +132,21 @@ const result = spawnSync('node', [serverPath], {
   encoding: 'utf8'
 });
 if (result.status !== 0) {
-  console.error(result.stderr || 'rules.agent: server execution failed');
+  // console.error(result.stderr || 'rules.agent: server execution failed');
   process.exit(result.status ?? 1);
 }
 
 const rawOutput = result.stdout;
 if (!rawOutput) {
-  console.error('rules.agent: empty output from server');
+  // console.error('rules.agent: empty output from server');
   process.exit(1);
 }
 
 const output = JSON.parse(rawOutput);
 const outputErrors = validateOutput(output);
 if (outputErrors.length > 0) {
-  console.error(JSON.stringify(outputErrors, null, 2));
+  // console.error(JSON.stringify(outputErrors, null, 2));
   process.exit(1);
 }
 
-console.log(JSON.stringify(output, null, 2));
+// console.log(JSON.stringify(output, null, 2));

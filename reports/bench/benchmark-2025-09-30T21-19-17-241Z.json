@@ -1,0 +1,672 @@
+{
+  "benchmark_info": {
+    "timestamp": "2025-09-30T21:19:17.241Z",
+    "version": "1.0.0",
+    "config": {
+      "iterations": 10,
+      "warmup": 3,
+      "timeout": 30000,
+      "outputDir": "/Users/felipe/Developer/startkit-main/reports/bench",
+      "agents": [
+        "context",
+        "prompting",
+        "rules"
+      ],
+      "metrics": [
+        "duration",
+        "cpu",
+        "memory",
+        "throughput"
+      ]
+    },
+    "total_duration": -1759267155865
+  },
+  "summary": {
+    "total_agents": 3,
+    "total_iterations": 30,
+    "successful_iterations": 30,
+    "success_rate": 1,
+    "duration": {
+      "p50": 33.211584,
+      "p95": 44.035417,
+      "p99": 67.094542,
+      "min": 32.261334,
+      "max": 67.094542,
+      "mean": 35.49658480000001
+    },
+    "cpu": {
+      "p50": 0.872,
+      "p95": 1.581,
+      "p99": 2.227,
+      "min": 0.68,
+      "max": 2.227,
+      "mean": 0.9760666666666667
+    },
+    "memory": {
+      "p50": 64064,
+      "p95": 76392,
+      "p99": 284376,
+      "min": -1528576,
+      "max": 284376,
+      "mean": -4781.866666666667
+    },
+    "best_agent": {
+      "agent": "prompting",
+      "iterations": [
+        {
+          "duration": 33.211584,
+          "cpu": 1.241,
+          "memory": -650128,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.610Z"
+        },
+        {
+          "duration": 32.74475,
+          "cpu": 1.175,
+          "memory": 67216,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.643Z"
+        },
+        {
+          "duration": 33.154916,
+          "cpu": 0.877,
+          "memory": 71664,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.676Z"
+        },
+        {
+          "duration": 33.186334,
+          "cpu": 1.581,
+          "memory": 76392,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.709Z"
+        },
+        {
+          "duration": 32.516666,
+          "cpu": 0.852,
+          "memory": 63296,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.742Z"
+        },
+        {
+          "duration": 33.246584,
+          "cpu": 0.861,
+          "memory": 64432,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.775Z"
+        },
+        {
+          "duration": 32.261334,
+          "cpu": 0.805,
+          "memory": 63024,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.807Z"
+        },
+        {
+          "duration": 34.684708,
+          "cpu": 0.787,
+          "memory": 63336,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.842Z"
+        },
+        {
+          "duration": 32.728166,
+          "cpu": 0.76,
+          "memory": 63296,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.875Z"
+        },
+        {
+          "duration": 32.914125,
+          "cpu": 0.865,
+          "memory": 64256,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.908Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 1,
+        "total_iterations": 10,
+        "successful_iterations": 10,
+        "duration": {
+          "p50": 32.914125,
+          "p95": 34.684708,
+          "p99": 34.684708,
+          "min": 32.261334,
+          "max": 34.684708,
+          "mean": 33.0649167
+        },
+        "cpu": {
+          "p50": 0.861,
+          "p95": 1.581,
+          "p99": 1.581,
+          "min": 0.76,
+          "max": 1.581,
+          "mean": 0.9804
+        },
+        "memory": {
+          "p50": 63336,
+          "p95": 76392,
+          "p99": 76392,
+          "min": -650128,
+          "max": 76392,
+          "mean": -5321.6
+        },
+        "throughput": {
+          "p50": 1,
+          "p95": 1,
+          "p99": 1,
+          "min": 1,
+          "max": 1,
+          "mean": 1
+        }
+      },
+      "timestamp": "2025-09-30T21:19:16.908Z"
+    },
+    "worst_agent": {
+      "agent": "context",
+      "iterations": [
+        {
+          "duration": 35.947333,
+          "cpu": 1.044,
+          "memory": 67576,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.210Z"
+        },
+        {
+          "duration": 33.001208,
+          "cpu": 1.03,
+          "memory": 72008,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.243Z"
+        },
+        {
+          "duration": 37.074917,
+          "cpu": 0.723,
+          "memory": 64464,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.280Z"
+        },
+        {
+          "duration": 44.035417,
+          "cpu": 0.943,
+          "memory": 64592,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.325Z"
+        },
+        {
+          "duration": 42.288958,
+          "cpu": 0.922,
+          "memory": 64360,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.367Z"
+        },
+        {
+          "duration": 67.094542,
+          "cpu": 1.256,
+          "memory": 65432,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.434Z"
+        },
+        {
+          "duration": 38.121792,
+          "cpu": 0.967,
+          "memory": 64064,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.472Z"
+        },
+        {
+          "duration": 37.1605,
+          "cpu": 1.229,
+          "memory": 66376,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.509Z"
+        },
+        {
+          "duration": 34.071125,
+          "cpu": 0.824,
+          "memory": 64064,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.544Z"
+        },
+        {
+          "duration": 32.791667,
+          "cpu": 0.896,
+          "memory": 74912,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.576Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 1,
+        "total_iterations": 10,
+        "successful_iterations": 10,
+        "duration": {
+          "p50": 37.074917,
+          "p95": 67.094542,
+          "p99": 67.094542,
+          "min": 32.791667,
+          "max": 67.094542,
+          "mean": 40.1587459
+        },
+        "cpu": {
+          "p50": 0.943,
+          "p95": 1.256,
+          "p99": 1.256,
+          "min": 0.723,
+          "max": 1.256,
+          "mean": 0.9833999999999999
+        },
+        "memory": {
+          "p50": 64592,
+          "p95": 74912,
+          "p99": 74912,
+          "min": 64064,
+          "max": 74912,
+          "mean": 66784.8
+        },
+        "throughput": {
+          "p50": 1,
+          "p95": 1,
+          "p99": 1,
+          "min": 1,
+          "max": 1,
+          "mean": 1
+        }
+      },
+      "timestamp": "2025-09-30T21:19:16.577Z"
+    }
+  },
+  "agents": [
+    {
+      "agent": "context",
+      "iterations": [
+        {
+          "duration": 35.947333,
+          "cpu": 1.044,
+          "memory": 67576,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.210Z"
+        },
+        {
+          "duration": 33.001208,
+          "cpu": 1.03,
+          "memory": 72008,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.243Z"
+        },
+        {
+          "duration": 37.074917,
+          "cpu": 0.723,
+          "memory": 64464,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.280Z"
+        },
+        {
+          "duration": 44.035417,
+          "cpu": 0.943,
+          "memory": 64592,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.325Z"
+        },
+        {
+          "duration": 42.288958,
+          "cpu": 0.922,
+          "memory": 64360,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.367Z"
+        },
+        {
+          "duration": 67.094542,
+          "cpu": 1.256,
+          "memory": 65432,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.434Z"
+        },
+        {
+          "duration": 38.121792,
+          "cpu": 0.967,
+          "memory": 64064,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.472Z"
+        },
+        {
+          "duration": 37.1605,
+          "cpu": 1.229,
+          "memory": 66376,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.509Z"
+        },
+        {
+          "duration": 34.071125,
+          "cpu": 0.824,
+          "memory": 64064,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.544Z"
+        },
+        {
+          "duration": 32.791667,
+          "cpu": 0.896,
+          "memory": 74912,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.576Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 1,
+        "total_iterations": 10,
+        "successful_iterations": 10,
+        "duration": {
+          "p50": 37.074917,
+          "p95": 67.094542,
+          "p99": 67.094542,
+          "min": 32.791667,
+          "max": 67.094542,
+          "mean": 40.1587459
+        },
+        "cpu": {
+          "p50": 0.943,
+          "p95": 1.256,
+          "p99": 1.256,
+          "min": 0.723,
+          "max": 1.256,
+          "mean": 0.9833999999999999
+        },
+        "memory": {
+          "p50": 64592,
+          "p95": 74912,
+          "p99": 74912,
+          "min": 64064,
+          "max": 74912,
+          "mean": 66784.8
+        },
+        "throughput": {
+          "p50": 1,
+          "p95": 1,
+          "p99": 1,
+          "min": 1,
+          "max": 1,
+          "mean": 1
+        }
+      },
+      "timestamp": "2025-09-30T21:19:16.577Z"
+    },
+    {
+      "agent": "prompting",
+      "iterations": [
+        {
+          "duration": 33.211584,
+          "cpu": 1.241,
+          "memory": -650128,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.610Z"
+        },
+        {
+          "duration": 32.74475,
+          "cpu": 1.175,
+          "memory": 67216,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.643Z"
+        },
+        {
+          "duration": 33.154916,
+          "cpu": 0.877,
+          "memory": 71664,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.676Z"
+        },
+        {
+          "duration": 33.186334,
+          "cpu": 1.581,
+          "memory": 76392,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.709Z"
+        },
+        {
+          "duration": 32.516666,
+          "cpu": 0.852,
+          "memory": 63296,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.742Z"
+        },
+        {
+          "duration": 33.246584,
+          "cpu": 0.861,
+          "memory": 64432,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.775Z"
+        },
+        {
+          "duration": 32.261334,
+          "cpu": 0.805,
+          "memory": 63024,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.807Z"
+        },
+        {
+          "duration": 34.684708,
+          "cpu": 0.787,
+          "memory": 63336,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.842Z"
+        },
+        {
+          "duration": 32.728166,
+          "cpu": 0.76,
+          "memory": 63296,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.875Z"
+        },
+        {
+          "duration": 32.914125,
+          "cpu": 0.865,
+          "memory": 64256,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.908Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 1,
+        "total_iterations": 10,
+        "successful_iterations": 10,
+        "duration": {
+          "p50": 32.914125,
+          "p95": 34.684708,
+          "p99": 34.684708,
+          "min": 32.261334,
+          "max": 34.684708,
+          "mean": 33.0649167
+        },
+        "cpu": {
+          "p50": 0.861,
+          "p95": 1.581,
+          "p99": 1.581,
+          "min": 0.76,
+          "max": 1.581,
+          "mean": 0.9804
+        },
+        "memory": {
+          "p50": 63336,
+          "p95": 76392,
+          "p99": 76392,
+          "min": -650128,
+          "max": 76392,
+          "mean": -5321.6
+        },
+        "throughput": {
+          "p50": 1,
+          "p95": 1,
+          "p99": 1,
+          "min": 1,
+          "max": 1,
+          "mean": 1
+        }
+      },
+      "timestamp": "2025-09-30T21:19:16.908Z"
+    },
+    {
+      "agent": "rules",
+      "iterations": [
+        {
+          "duration": 33.203042,
+          "cpu": 0.863,
+          "memory": 284376,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.941Z"
+        },
+        {
+          "duration": 33.333917,
+          "cpu": 2.227,
+          "memory": -1528576,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:16.975Z"
+        },
+        {
+          "duration": 35.124917,
+          "cpu": 0.872,
+          "memory": 61440,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:17.010Z"
+        },
+        {
+          "duration": 33.350541,
+          "cpu": 0.681,
+          "memory": 60584,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:17.043Z"
+        },
+        {
+          "duration": 32.35,
+          "cpu": 0.688,
+          "memory": 61216,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:17.075Z"
+        },
+        {
+          "duration": 33.618584,
+          "cpu": 0.785,
+          "memory": 60584,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:17.109Z"
+        },
+        {
+          "duration": 32.504792,
+          "cpu": 0.95,
+          "memory": 62872,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:17.142Z"
+        },
+        {
+          "duration": 33.102292,
+          "cpu": 0.68,
+          "memory": 59832,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:17.175Z"
+        },
+        {
+          "duration": 33.3635,
+          "cpu": 1.099,
+          "memory": 59752,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:17.208Z"
+        },
+        {
+          "duration": 32.709333,
+          "cpu": 0.799,
+          "memory": 59832,
+          "throughput": 1,
+          "success": true,
+          "timestamp": "2025-09-30T21:19:17.241Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 1,
+        "total_iterations": 10,
+        "successful_iterations": 10,
+        "duration": {
+          "p50": 33.203042,
+          "p95": 35.124917,
+          "p99": 35.124917,
+          "min": 32.35,
+          "max": 35.124917,
+          "mean": 33.2660918
+        },
+        "cpu": {
+          "p50": 0.799,
+          "p95": 2.227,
+          "p99": 2.227,
+          "min": 0.68,
+          "max": 2.227,
+          "mean": 0.9644
+        },
+        "memory": {
+          "p50": 60584,
+          "p95": 284376,
+          "p99": 284376,
+          "min": -1528576,
+          "max": 284376,
+          "mean": -75808.8
+        },
+        "throughput": {
+          "p50": 1,
+          "p95": 1,
+          "p99": 1,
+          "min": 1,
+          "max": 1,
+          "mean": 1
+        }
+      },
+      "timestamp": "2025-09-30T21:19:17.241Z"
+    }
+  ],
+  "recommendations": []
+}

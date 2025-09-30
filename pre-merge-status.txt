@@ -1,0 +1,35 @@
+ M agents/context/agent.js
+ M agents/prompting/agent.js
+ M agents/rules/agent.js
+ D antigeneric-agents
+ M core/scripts/run-clean.sh
+ M orchestration/orchestrator.js
+ M out/context.json
+ M out/prompting.json
+ M out/rules.json
+?? AUDITORIA-PRE-MERGE.md
+?? REESTRUCTURACION-REAL-COMPLETADA.md
+?? REPORTE-USO-HERRAMIENTAS.md
+?? agents/legacy/
+?? agents/metrics/
+?? agents/optimization/
+?? agents/security/
+?? out/context-optimization.json
+?? out/metrics.json
+?? out/optimization.json
+?? out/orchestrator-optimization.json
+?? out/prompting-optimization.json
+?? out/security.json
+?? payloads/context-optimization-payload.json
+?? payloads/metrics-test-payload.json
+?? payloads/optimization-test-payload.json
+?? payloads/orchestrator-optimization-payload.json
+?? payloads/prompting-optimization-payload.json
+?? payloads/security-test-payload.json
+?? pre-merge-status.txt
+?? reports/bench/
+?? reports/metrics/
+?? schemas/agents/metrics.input.schema.json
+?? schemas/agents/metrics.output.schema.json
+?? schemas/agents/security.input.schema.json
+?? schemas/agents/security.output.schema.json

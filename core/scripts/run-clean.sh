@@ -44,8 +44,11 @@ mkdir -p out
 case "$AGENT" in
   prompting) OUT_FILE="out/prompting.json" ;;
   context) OUT_FILE="out/context.json" ;;
-    rules) OUT_FILE="out/rules.json" ;;
-    *) OUT_FILE="out/${AGENT}.json" ;;
+  rules) OUT_FILE="out/rules.json" ;;
+  security) OUT_FILE="out/security.json" ;;
+  metrics) OUT_FILE="out/metrics.json" ;;
+  optimization) OUT_FILE="out/optimization.json" ;;
+  *) OUT_FILE="out/${AGENT}.json" ;;
   esac
 fi
 
@@ -69,6 +72,15 @@ case "$AGENT" in
     ;;
   rules)
     CMD=(node agents/rules/agent.js)
+    ;;
+  security)
+    CMD=(node agents/security/agent.js)
+    ;;
+  metrics)
+    CMD=(node agents/metrics/agent.js)
+    ;;
+  optimization)
+    CMD=(node agents/optimization/agent.js)
     ;;
   *)
     echo "Unsupported agent: $AGENT" >&2

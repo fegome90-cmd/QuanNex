@@ -59,12 +59,10 @@ class WorkflowOrchestrator {
       if (this.isShuttingDown) return;
       this.isShuttingDown = true;
       // eslint-disable-next-line no-console
-      console.log(
-        `\n[INFO] Recibida señal ${signal}. Guardando estado antes de salir...`
-      );
+      // console.log(`\n[INFO] Recibida señal ${signal}. Guardando estado antes de salir...`);
       this.saveWorkflows();
       // eslint-disable-next-line no-console
-      console.log('[INFO] Estado guardado. Saliendo.');
+      // console.log('[INFO] Estado guardado. Saliendo.');
       process.exit(0);
     };
 
@@ -502,16 +500,14 @@ async function main() {
             configStr = readFileSync(0, 'utf8'); // Lee desde stdin
           } catch {
             // eslint-disable-next-line no-console
-            console.error(
-              'Se requiere una configuración JSON desde un archivo o stdin.'
-            );
+            // console.error('Se requiere una configuración JSON desde un archivo o stdin.');
             process.exit(1);
           }
         }
         const cfg = JSON.parse(configStr);
         const wf = await orchestrator.createWorkflow(cfg);
         // eslint-disable-next-line no-console
-        console.log(JSON.stringify(wf, null, 2));
+        // console.log(JSON.stringify(wf, null, 2));
       }
     )
     .command(
@@ -520,14 +516,12 @@ async function main() {
       {},
       async argv => {
         // eslint-disable-next-line no-console
-        console.log(`[INFO] Ejecutando workflow ${argv.workflowId}...`);
+        // console.log(`[INFO] Ejecutando workflow ${argv.workflowId}...`);
         const result = await orchestrator.executeWorkflow(argv.workflowId);
         // eslint-disable-next-line no-console
-        console.log(
-          `[INFO] Workflow ${argv.workflowId} finalizado con estado: ${result.status}`
-        );
+        // console.log(`[INFO] Workflow ${argv.workflowId} finalizado con estado: ${result.status}`);
         // eslint-disable-next-line no-console
-        console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
       }
     )
     .command(
@@ -539,7 +533,7 @@ async function main() {
           ? orchestrator.getWorkflow(argv.workflowId)
           : orchestrator.listWorkflows();
         // eslint-disable-next-line no-console
-        console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
       }
     )
     .command(
@@ -549,7 +543,7 @@ async function main() {
       async () => {
         const health = await orchestrator.healthCheck();
         // eslint-disable-next-line no-console
-        console.log(JSON.stringify(health, null, 2));
+        // console.log(JSON.stringify(health, null, 2));
       }
     )
     .command(
@@ -559,9 +553,7 @@ async function main() {
       argv => {
         const ok = orchestrator.cleanup(argv.workflowId);
         // eslint-disable-next-line no-console
-        console.log(
-          JSON.stringify({ workflow_id: argv.workflowId, cleaned: ok }, null, 2)
-        );
+        // console.log(JSON.stringify({ workflow_id: argv.workflowId, cleaned: ok }, null, 2));
       }
     )
     .demandCommand(1, 'Debes proporcionar un comando.')
@@ -570,7 +562,7 @@ async function main() {
     .wrap(120)
     .fail((msg, err) => {
       // eslint-disable-next-line no-console
-      console.error(msg || err.message);
+      // console.error(msg || err.message);
       process.exit(1);
     })
     .parse();
@@ -579,7 +571,7 @@ async function main() {
 if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch(e => {
     // eslint-disable-next-line no-console
-    console.error(` ${e.message}`);
+    // console.error(` ${e.message}`);
     process.exit(1);
   });
 }
