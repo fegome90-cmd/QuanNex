@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Metrics Agent Output Schema",
+  "description": "Schema de salida para el agente de métricas",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Versión del schema de salida",
+      "const": "1.0.0"
+    },
+    "agent_version": {
+      "type": "string",
+      "description": "Versión del agente de métricas",
+      "const": "1.0.0"
+    },
+    "metrics_report": {
+      "type": "object",
+      "description": "Reporte completo de métricas",
+      "properties": {
+        "summary": {
+          "type": "object",
+          "description": "Resumen del análisis de métricas",
+          "properties": {
+            "files_analyzed": {
+              "type": "number",
+              "description": "Número de archivos analizados"
+            },
+            "functions_analyzed": {
+              "type": "number",
+              "description": "Número de funciones analizadas"
+            },
+            "lines_analyzed": {
+              "type": "number",
+              "description": "Número de líneas analizadas"
+            },
+            "tests_found": {
+              "type": "number",
+              "description": "Número de archivos de test encontrados"
+            },
+            "coverage_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Porcentaje de cobertura de tests"
+            }
+          },
+          "required": ["files_analyzed", "functions_analyzed", "lines_analyzed", "tests_found", "coverage_percentage"]
+        },
+        "performance": {
+          "type": "object",
+          "description": "Métricas de rendimiento",
+          "properties": {
+            "file_sizes": {
+              "type": "array",
+              "description": "Tamaños de archivos analizados"
+            },
+            "function_counts": {
+              "type": "array",
+              "description": "Conteo de funciones por archivo"
+            },
+            "import_counts": {
+              "type": "array",
+              "description": "Conteo de imports por archivo"
+            },
+            "async_functions": {
+              "type": "number",
+              "description": "Número de funciones async"
+            },
+            "sync_functions": {
+              "type": "number",
+              "description": "Número de funciones sync"
+            },
+            "large_files": {
+              "type": "array",
+              "description": "Archivos grandes detectados"
+            },
+            "slow_patterns": {
+              "type": "array",
+              "description": "Patrones de rendimiento lentos detectados"
+            }
+          }
+        },
+        "coverage": {
+          "type": "object",
+          "description": "Métricas de cobertura",
+          "properties": {
+            "test_files": {
+              "type": "array",
+              "description": "Archivos de test encontrados"
+            },
+            "test_functions": {
+              "type": "array",
+              "description": "Funciones de test encontradas"
+            },
+            "coverage_files": {
+              "type": "array",
+              "description": "Archivos de cobertura encontrados"
+            },
+            "uncovered_functions": {
+              "type": "array",
+              "description": "Funciones sin cobertura de tests"
+            },
+            "test_coverage_percentage": {
+              "type": "number",
+              "description": "Porcentaje de cobertura de tests"
+            }
+          }
+        },
+        "quality": {
+          "type": "object",
+          "description": "Métricas de calidad",
+          "properties": {
+            "code_duplication": {
+              "type": "array",
+              "description": "Código duplicado detectado"
+            },
+            "long_functions": {
+              "type": "array",
+              "description": "Funciones largas detectadas"
+            },
+            "complex_conditions": {
+              "type": "array",
+              "description": "Condiciones complejas detectadas"
+            },
+            "magic_numbers": {
+              "type": "array",
+              "description": "Números mágicos detectados"
+            },
+            "todo_comments": {
+              "type": "array",
+              "description": "Comentarios TODO detectados"
+            },
+            "eslint_issues": {
+              "type": "array",
+              "description": "Issues de ESLint detectados"
+            },
+            "quality_score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Score de calidad del código"
+            }
+          }
+        },
+        "complexity": {
+          "type": "object",
+          "description": "Métricas de complejidad",
+          "properties": {
+            "cyclomatic_complexity": {
+              "type": "array",
+              "description": "Complejidad ciclomática por archivo"
+            },
+            "nesting_depth": {
+              "type": "array",
+              "description": "Profundidad de anidamiento por archivo"
+            },
+            "parameter_counts": {
+              "type": "array",
+              "description": "Conteo de parámetros por función"
+            },
+            "line_counts": {
+              "type": "array",
+              "description": "Conteo de líneas por función"
+            },
+            "cognitive_complexity": {
+              "type": "array",
+              "description": "Complejidad cognitiva por archivo"
+            }
+          }
+        },
+        "recommendations": {
+          "type": "array",
+          "description": "Recomendaciones basadas en métricas",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Tipo de recomendación"
+              },
+              "priority": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"],
+                "description": "Prioridad de la recomendación"
+              },
+              "message": {
+                "type": "string",
+                "description": "Mensaje de la recomendación"
+              },
+              "actions": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Acciones específicas recomendadas"
+              }
+            },
+            "required": ["type", "priority", "message", "actions"]
+          }
+        }
+      },
+      "required": ["summary", "performance", "coverage", "quality", "complexity", "recommendations"]
+    },
+    "stats": {
+      "type": "object",
+      "description": "Estadísticas del análisis",
+      "properties": {
+        "files_analyzed": {
+          "type": "number",
+          "description": "Número de archivos analizados"
+        },
+        "functions_analyzed": {
+          "type": "number",
+          "description": "Número de funciones analizadas"
+        },
+        "lines_analyzed": {
+          "type": "number",
+          "description": "Número de líneas analizadas"
+        },
+        "tests_found": {
+          "type": "number",
+          "description": "Número de archivos de test encontrados"
+        },
+        "coverage_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Porcentaje de cobertura de tests"
+        }
+      },
+      "required": ["files_analyzed", "functions_analyzed", "lines_analyzed", "tests_found", "coverage_percentage"]
+    },
+    "trace": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Traza de ejecución del agente",
+      "examples": [["metrics.server:ok"], ["metrics.server:error:invalid_path"]]
+    }
+  },
+  "required": ["schema_version", "agent_version", "metrics_report", "stats", "trace"],
+  "additionalProperties": false
+}

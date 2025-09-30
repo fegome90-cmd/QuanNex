@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Metrics Agent Input Schema",
+  "description": "Schema de entrada para el agente de métricas",
+  "properties": {
+    "target_path": {
+      "type": "string",
+      "description": "Ruta del directorio a analizar para métricas",
+      "examples": ["src/", "agents/", "tools/"]
+    },
+    "metric_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["performance", "coverage", "quality", "complexity"]
+      },
+      "description": "Tipos de métricas a recopilar",
+      "default": ["performance", "coverage", "quality"],
+      "examples": [["performance", "coverage"], ["quality", "complexity"]]
+    },
+    "scan_depth": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Profundidad de escaneo recursivo en directorios",
+      "default": 2
+    },
+    "include_tests": {
+      "type": "boolean",
+      "description": "Incluir análisis de tests y cobertura",
+      "default": true
+    },
+    "exclude_patterns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Patrones de archivos a excluir del análisis",
+      "examples": [["*.log", "*.tmp", "node_modules/**"]]
+    },
+    "quality_thresholds": {
+      "type": "object",
+      "description": "Umbrales de calidad para alertas",
+      "properties": {
+        "max_function_length": { "type": "number", "default": 50 },
+        "max_complexity": { "type": "number", "default": 10 },
+        "min_coverage": { "type": "number", "default": 80 }
+      }
+    }
+  },
+  "required": ["target_path"],
+  "additionalProperties": false
+}

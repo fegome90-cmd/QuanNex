@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Security Agent Input Schema",
+  "description": "Schema de entrada para el agente de seguridad",
+  "properties": {
+    "target_path": {
+      "type": "string",
+      "description": "Ruta del directorio a escanear en busca de secretos y vulnerabilidades",
+      "examples": ["src/", "agents/", "tools/"]
+    },
+    "check_mode": {
+      "type": "string",
+      "enum": ["scan", "validate", "audit"],
+      "description": "Modo de verificación de seguridad",
+      "default": "scan"
+    },
+    "policy_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Referencias a archivos de políticas de seguridad",
+      "examples": [["policies/security.md", "policies/compliance.json"]]
+    },
+    "scan_depth": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Profundidad de escaneo recursivo en directorios",
+      "default": 2
+    },
+    "exclude_patterns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Patrones de archivos a excluir del escaneo",
+      "examples": [["*.log", "*.tmp", "node_modules/**"]]
+    },
+    "severity_threshold": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "Umbral mínimo de severidad para reportar findings",
+      "default": "low"
+    }
+  },
+  "required": ["target_path", "check_mode"],
+  "additionalProperties": false
+}
