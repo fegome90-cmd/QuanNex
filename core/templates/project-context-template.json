@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "project_id": "premium-anti-generic-uiux",
+  "created": "2025-08-29T00:00:00Z",
+  "last_updated": "2025-08-29T00:00:00Z",
+  "locale": "en-US",
+  "project_type": "design",
+  "policies": {
+    "copy_cta": {
+      "force_iteration": true,
+      "headlines_per_variant": 2,
+      "ctas_per_variant": 3,
+      "auto_translate": false,
+      "do_not_copy_competitors": true
+    },
+    "resilience": {
+      "require_skeletons": true,
+      "reduced_motion": true,
+      "network_fallbacks": true,
+      "ssr_mismatch_guards": true
+    }
+  },
+  "competitors": [],
+  "market_insights": {},
+  "design_decisions": [],
+  "iterations": [],
+  "design_tokens": {}
+}

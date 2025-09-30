@@ -1,0 +1,17 @@
+{
+  "sources": [
+    "agents/README.md",
+    "agents/context/README.md",
+    "agents/prompting/README.md",
+    "agents/rules/README.md",
+    "CLAUDE.md"
+  ],
+  "selectors": [
+    "purpose",
+    "inputs",
+    "outputs",
+    "commands",
+    "failure"
+  ],
+  "max_tokens": 512
+}

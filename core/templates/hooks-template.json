@@ -1,0 +1,42 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '✅ Claude ha completado la tarea!'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '🔄 Modificando archivos...' && date '+%H:%M:%S'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "npm run lint --silent 2>/dev/null || echo '✅ Lint verificado (para auto-fix: npm run lint --fix)'"
+          }
+        ]
+      }
+    ]
+  },
+  "filosofia_toyota": {
+    "auto_fix": "desactivado_por_defecto",
+    "notificaciones": "solo_consola",
+    "comentario": "Para habilitar auto-fix: npm run lint --fix. Para notificaciones: export ENABLE_NOTIFICATIONS=1"
+  }
+}

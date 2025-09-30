@@ -1,0 +1,13 @@
+{
+  "name": "compliance-officer",
+  "description": "Oficial de compliance: regulaciones, estándares y auditoría",
+  "version": "1.0.0",
+  "logging": { "nivel": "INFO", "formato": "JSON", "campos": ["timestamp", "norma", "resultado"] },
+  "testing": { "unit": true, "integration": true, "security": true },
+  "documentacion": {
+    "README": "docs/agents/compliance-officer/README.md",
+    "API": "docs/agents/compliance-officer/API.md",
+    "ejemplos": "docs/agents/compliance-officer/ejemplos.md"
+  }
+}
+

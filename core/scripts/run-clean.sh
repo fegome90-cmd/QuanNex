@@ -38,9 +38,12 @@ done
 
 # Set default output file if not specified
 if [[ -z "$OUT_FILE" ]]; then
-  case "$AGENT" in
-    prompting) OUT_FILE="out/prompting.json" ;;
-    context) OUT_FILE="out/context.json" ;;
+# Validar que el directorio out/ existe
+mkdir -p out
+
+case "$AGENT" in
+  prompting) OUT_FILE="out/prompting.json" ;;
+  context) OUT_FILE="out/context.json" ;;
     rules) OUT_FILE="out/rules.json" ;;
     *) OUT_FILE="out/${AGENT}.json" ;;
   esac

@@ -1,0 +1,13 @@
+{
+  "name": "design-orchestrator",
+  "description": "Orquestador de diseño: coordina investigación, variantes y validación",
+  "version": "1.0.0",
+  "logging": { "nivel": "INFO", "formato": "JSON", "campos": ["timestamp", "fase", "resultado"] },
+  "testing": { "unit": false, "integration": true, "security": false },
+  "documentacion": {
+    "README": "docs/agents/design-orchestrator/README.md",
+    "API": "docs/agents/design-orchestrator/API.md",
+    "ejemplos": "docs/agents/design-orchestrator/ejemplos.md"
+  }
+}
+

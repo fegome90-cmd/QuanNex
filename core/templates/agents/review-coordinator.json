@@ -1,0 +1,83 @@
+{
+  "name": "review-coordinator",
+  "description": "Agente especializado en coordinación de revisiones entre equipos con enfoque en colaboración y eficiencia - Filosofía Toyota",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más",
+  "responsabilidades": [
+    "Coordinar revisiones entre agentes especializados",
+    "Gestionar flujos de trabajo de revisión",
+    "Consolidar reportes de múltiples agentes",
+    "Optimizar procesos de revisión",
+    "Facilitar comunicación entre equipos"
+  ],
+  "especialidad": "Review Coordination y Team Collaboration",
+  "prioridad": "ALTA",
+  "permisos": {
+    "lectura": ["reportes", "configuracion", "logs", "comunicacion"],
+    "escritura": ["coordinacion", "reportes", "logs", "notificaciones"],
+    "ejecucion": ["orquestacion", "validacion", "optimizacion", "comunicacion"]
+  },
+  "validaciones": {
+    "seguridad": ["permisos", "comunicacion", "datos"],
+    "calidad": ["procesos", "reportes", "colaboracion"],
+    "performance": ["tiempo", "recursos", "eficiencia"]
+  },
+  "herramientas": {
+    "coordinacion": ["GitHub", "GitLab", "Bitbucket", "Azure DevOps"],
+    "comunicacion": ["Slack", "Microsoft Teams", "Discord", "Email"],
+    "reportes": ["Jira", "Confluence", "Notion", "GitHub Issues"],
+    "workflow": ["GitHub Actions", "GitLab CI", "Jenkins", "Azure Pipelines"],
+    "monitoring": ["Grafana", "Prometheus", "DataDog", "New Relic"]
+  },
+  "metodologia": {
+    "enfoque": "Coordinación eficiente de revisiones",
+    "criterios": ["Colaboración", "Eficiencia", "Calidad", "Comunicación"],
+    "proceso": ["Planificación", "Coordinación", "Ejecución", "Seguimiento"],
+    "priorizacion": ["Crítico", "Alto", "Medio", "Bajo"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "agente", "accion", "estado", "duracion", "participantes"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true,
+    "performance": true,
+    "collaboration": true
+  },
+  "documentacion": {
+    "README": "docs/agents/review-coordinator/README.md",
+    "API": "docs/agents/review-coordinator/API.md",
+    "ejemplos": "docs/agents/review-coordinator/ejemplos.md",
+    "checklist": "docs/agents/review-coordinator/checklist.md"
+  },
+  "contacto": {
+    "responsable": "Project Manager / Team Lead",
+    "email": "coordination@proyecto.com",
+    "slack": "#coordination"
+  },
+  "configuracion": {
+    "auto_coordinate": true,
+    "notifications": true,
+    "reporting": "json",
+    "collaboration_tools": ["slack", "github", "jira"],
+    "workflow_automation": true,
+    "real_time_monitoring": true
+  },
+  "agentes_coordinados": {
+    "code-reviewer": "Revisión de código",
+    "medical-reviewer": "Revisión médica",
+    "security-guardian": "Revisión de seguridad",
+    "deployment-manager": "Revisión de despliegue",
+    "test-generator": "Revisión de tests"
+  },
+  "flujos_trabajo": {
+    "pull_request": "Revisión de PR",
+    "code_review": "Revisión de código",
+    "security_audit": "Auditoría de seguridad",
+    "deployment_review": "Revisión de despliegue",
+    "test_review": "Revisión de tests"
+  }
+}

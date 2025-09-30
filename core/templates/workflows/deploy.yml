@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then
+            echo "package.json found, installing dependencies..."
+            npm ci
+          else
+            echo "No package.json found, skipping npm install"
+          fi
+
+      - name: Build container
+        run: |
+          if [ -f Dockerfile ]; then
+            echo "Dockerfile found, building container..."
+            docker build -t example/app:latest .
+            echo "Built image example/app:latest"
+          else
+            echo "No Dockerfile found, skipping container build"
+          fi
+
+      - name: Deploy (placeholder)
+        run: echo "Add your deployment steps here"
+

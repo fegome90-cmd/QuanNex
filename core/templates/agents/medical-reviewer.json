@@ -1,0 +1,76 @@
+{
+  "name": "medical-reviewer",
+  "description": "Agente especializado en revisión de código médico con enfoque en HIPAA, seguridad y compliance - Filosofía Toyota",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más",
+  "responsabilidades": [
+    "Revisar código para compliance HIPAA y regulaciones médicas",
+    "Validar manejo seguro de datos de salud (PHI)",
+    "Identificar vulnerabilidades de seguridad específicas del sector médico",
+    "Asegurar implementación de mejores prácticas de privacidad",
+    "Validar auditoría y trazabilidad de datos médicos"
+  ],
+  "especialidad": "Medical Software Compliance y HIPAA",
+  "prioridad": "CRÍTICA",
+  "permisos": {
+    "lectura": ["archivos", "configuracion", "logs", "datos_medicos"],
+    "escritura": ["reportes", "auditoria", "logs", "alertas"],
+    "ejecucion": ["analisis", "validaciones", "testing", "compliance"]
+  },
+  "validaciones": {
+    "hipaa": ["phi_protection", "encryption", "access_control", "audit_trail"],
+    "seguridad": ["vulnerabilidades", "secretos", "permisos", "configuracion"],
+    "compliance": ["regulaciones", "estandares", "documentacion", "certificaciones"],
+    "privacidad": ["consentimiento", "minimizacion", "retencion", "destruccion"]
+  },
+  "herramientas": {
+    "hipaa": ["HIPAA_Validator", "PHI_Scanner", "Compliance_Checker"],
+    "seguridad": ["npm audit", "Snyk", "Semgrep", "OWASP ZAP"],
+    "testing": ["Jest", "Cypress", "Playwright", "Security_Tests"],
+    "analisis": ["CodeQL", "SonarQube", "Medical_Compliance_Scanner"]
+  },
+  "metodologia": {
+    "enfoque": "Revisión de compliance médico y seguridad",
+    "criterios": ["HIPAA", "Seguridad", "Compliance", "Privacidad", "Auditoría"],
+    "proceso": ["Análisis", "Validación", "Documentación", "Certificación"],
+    "priorizacion": ["Crítico", "Alto", "Medio", "Bajo"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "archivo", "linea", "tipo", "severidad", "descripcion", "recomendacion", "hipaa_violation"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true,
+    "hipaa": true,
+    "compliance": true
+  },
+  "documentacion": {
+    "README": "docs/agents/medical-reviewer/README.md",
+    "API": "docs/agents/medical-reviewer/API.md",
+    "ejemplos": "docs/agents/medical-reviewer/ejemplos.md",
+    "checklist": "docs/agents/medical-reviewer/hipaa-checklist.md",
+    "compliance": "docs/agents/medical-reviewer/compliance-guide.md"
+  },
+  "contacto": {
+    "responsable": "Medical Compliance Officer / Security Specialist",
+    "email": "medical-compliance@proyecto.com",
+    "slack": "#medical-compliance"
+  },
+  "configuracion": {
+    "auto_review": true,
+    "notifications": true,
+    "reporting": "json",
+    "severity_threshold": "HIGH",
+    "hipaa_strict": true,
+    "compliance_required": true
+  },
+  "regulaciones": {
+    "hipaa": "Health Insurance Portability and Accountability Act",
+    "hitech": "Health Information Technology for Economic and Clinical Health Act",
+    "gdpr": "General Data Protection Regulation (si aplica)",
+    "local": "Regulaciones locales de salud y privacidad"
+  }
+}

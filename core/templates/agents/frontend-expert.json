@@ -1,0 +1,13 @@
+{
+  "name": "frontend-expert",
+  "description": "Experto en frontend: UI/UX, rendimiento y accesibilidad",
+  "version": "1.0.0",
+  "logging": { "nivel": "INFO", "formato": "JSON", "campos": ["timestamp", "accion", "resultado"] },
+  "testing": { "unit": true, "integration": true, "security": false },
+  "documentacion": {
+    "README": "docs/agents/frontend-expert/README.md",
+    "API": "docs/agents/frontend-expert/API.md",
+    "ejemplos": "docs/agents/frontend-expert/ejemplos.md"
+  }
+}
+

@@ -1,0 +1,13 @@
+{
+  "name": "security-guardian",
+  "description": "Guardián de seguridad: análisis de vulnerabilidades y protección de datos",
+  "version": "1.0.0",
+  "logging": { "nivel": "INFO", "formato": "JSON", "campos": ["timestamp", "issue", "severity"] },
+  "testing": { "unit": true, "integration": true, "security": true },
+  "documentacion": {
+    "README": "docs/agents/security-guardian/README.md",
+    "API": "docs/agents/security-guardian/API.md",
+    "ejemplos": "docs/agents/security-guardian/ejemplos.md"
+  }
+}
+

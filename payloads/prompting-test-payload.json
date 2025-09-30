@@ -1,0 +1,18 @@
+{
+  "goal": "Analizar la arquitectura de agentes MCP del proyecto y generar recomendaciones de mejora",
+  "style": "technical",
+  "constraints": [
+    "Mantener compatibilidad con contratos MCP existentes",
+    "Preservar esquemas de validación actuales",
+    "No introducir dependencias externas adicionales"
+  ],
+  "context_refs": [
+    "agents/README.md",
+    "CLAUDE.md",
+    "core/templates/claude-md-template.md"
+  ],
+  "ruleset_refs": [
+    "policies/security.md",
+    "policies/coding-standards.md"
+  ]
+}

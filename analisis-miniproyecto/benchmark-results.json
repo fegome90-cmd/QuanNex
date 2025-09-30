@@ -1,0 +1,489 @@
+{
+  "benchmark_info": {
+    "timestamp": "2025-09-30T17:49:32.386Z",
+    "version": "1.0.0",
+    "config": {
+      "iterations": 5,
+      "warmup": 1,
+      "timeout": 30000,
+      "outputDir": "/Users/felipe/Developer/test-startkit-miniproject/reports/bench",
+      "agents": [
+        "context",
+        "prompting",
+        "rules"
+      ],
+      "metrics": [
+        "duration",
+        "cpu",
+        "memory",
+        "throughput"
+      ]
+    },
+    "total_duration": -1759254571720
+  },
+  "summary": {
+    "total_agents": 3,
+    "total_iterations": 15,
+    "successful_iterations": 0,
+    "success_rate": 0,
+    "duration": {
+      "mean": null
+    },
+    "cpu": {
+      "mean": null
+    },
+    "memory": {
+      "mean": null
+    },
+    "best_agent": {
+      "agent": "context",
+      "iterations": [
+        {
+          "duration": 34.062,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.864Z"
+        },
+        {
+          "duration": 34.346458,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.898Z"
+        },
+        {
+          "duration": 36.361875,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.935Z"
+        },
+        {
+          "duration": 37.674875,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.972Z"
+        },
+        {
+          "duration": 37.851208,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:32.010Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 0,
+        "total_iterations": 5,
+        "successful_iterations": 0,
+        "duration": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "cpu": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "memory": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "throughput": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "timestamp": "2025-09-30T17:49:32.011Z"
+    },
+    "worst_agent": {
+      "agent": "context",
+      "iterations": [
+        {
+          "duration": 34.062,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.864Z"
+        },
+        {
+          "duration": 34.346458,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.898Z"
+        },
+        {
+          "duration": 36.361875,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.935Z"
+        },
+        {
+          "duration": 37.674875,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.972Z"
+        },
+        {
+          "duration": 37.851208,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:32.010Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 0,
+        "total_iterations": 5,
+        "successful_iterations": 0,
+        "duration": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "cpu": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "memory": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "throughput": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "timestamp": "2025-09-30T17:49:32.011Z"
+    }
+  },
+  "agents": [
+    {
+      "agent": "context",
+      "iterations": [
+        {
+          "duration": 34.062,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.864Z"
+        },
+        {
+          "duration": 34.346458,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.898Z"
+        },
+        {
+          "duration": 36.361875,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.935Z"
+        },
+        {
+          "duration": 37.674875,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:31.972Z"
+        },
+        {
+          "duration": 37.851208,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: context.server:error:sources array required\n",
+          "timestamp": "2025-09-30T17:49:32.010Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 0,
+        "total_iterations": 5,
+        "successful_iterations": 0,
+        "duration": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "cpu": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "memory": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "throughput": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "timestamp": "2025-09-30T17:49:32.011Z"
+    },
+    {
+      "agent": "prompting",
+      "iterations": [
+        {
+          "duration": 37.176417,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: prompting.server:error:Missing required field: goal\n",
+          "timestamp": "2025-09-30T17:49:32.048Z"
+        },
+        {
+          "duration": 36.4415,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: prompting.server:error:Missing required field: goal\n",
+          "timestamp": "2025-09-30T17:49:32.084Z"
+        },
+        {
+          "duration": 36.231959,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: prompting.server:error:Missing required field: goal\n",
+          "timestamp": "2025-09-30T17:49:32.121Z"
+        },
+        {
+          "duration": 38.166958,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: prompting.server:error:Missing required field: goal\n",
+          "timestamp": "2025-09-30T17:49:32.159Z"
+        },
+        {
+          "duration": 38.852792,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: prompting.server:error:Missing required field: goal\n",
+          "timestamp": "2025-09-30T17:49:32.198Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 0,
+        "total_iterations": 5,
+        "successful_iterations": 0,
+        "duration": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "cpu": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "memory": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "throughput": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "timestamp": "2025-09-30T17:49:32.198Z"
+    },
+    {
+      "agent": "rules",
+      "iterations": [
+        {
+          "duration": 36.280625,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: rules.server:error:policy_refs array required\n",
+          "timestamp": "2025-09-30T17:49:32.234Z"
+        },
+        {
+          "duration": 36.831417,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: rules.server:error:policy_refs array required\n",
+          "timestamp": "2025-09-30T17:49:32.271Z"
+        },
+        {
+          "duration": 39.428791,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: rules.server:error:policy_refs array required\n",
+          "timestamp": "2025-09-30T17:49:32.310Z"
+        },
+        {
+          "duration": 38.553125,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: rules.server:error:policy_refs array required\n",
+          "timestamp": "2025-09-30T17:49:32.349Z"
+        },
+        {
+          "duration": 36.895792,
+          "cpu": 0,
+          "memory": 0,
+          "throughput": 0,
+          "success": false,
+          "error": "Agente falló con código 1: rules.server:error:policy_refs array required\n",
+          "timestamp": "2025-09-30T17:49:32.386Z"
+        }
+      ],
+      "metrics": {
+        "success_rate": 0,
+        "total_iterations": 5,
+        "successful_iterations": 0,
+        "duration": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "cpu": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "memory": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "throughput": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "timestamp": "2025-09-30T17:49:32.386Z"
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "reliability",
+      "priority": "high",
+      "message": "Tasa de éxito baja (<95%). Revisar estabilidad del sistema.",
+      "suggestion": "Implementar mejor manejo de errores y validación"
+    }
+  ]
+}

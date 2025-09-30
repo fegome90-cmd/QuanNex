@@ -1,0 +1,13 @@
+{
+  "name": "visual-validator",
+  "description": "Validador visual: accesibilidad, UI y pruebas visuales con Playwright",
+  "version": "1.0.0",
+  "logging": { "nivel": "INFO", "formato": "JSON", "campos": ["timestamp", "test", "resultado"] },
+  "testing": { "unit": false, "integration": true, "security": false },
+  "documentacion": {
+    "README": "docs/agents/visual-validator/README.md",
+    "API": "docs/agents/visual-validator/API.md",
+    "ejemplos": "docs/agents/visual-validator/ejemplos.md"
+  }
+}
+

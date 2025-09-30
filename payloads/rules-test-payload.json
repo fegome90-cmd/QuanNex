@@ -1,0 +1,10 @@
+{
+  "policy_refs": [
+    "policies/writing.md",
+    "docs/cleaning.md",
+    "docs/agents/security-auditor/checklist.md"
+  ],
+  "tone": "formal",
+  "domain": "software-development",
+  "compliance_level": "strict"
+}

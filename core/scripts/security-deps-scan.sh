@@ -151,7 +151,9 @@ scan_npm_deps() {
         fi
     fi
     
-    echo "${findings[@]}"
+    if [[ ${#findings[@]} -gt 0 ]]; then
+        echo "${findings[@]}"
+    fi
 }
 
 # Función para escanear dependencias Python
@@ -219,7 +221,9 @@ scan_python_deps() {
         fi
     fi
     
-    echo "${findings[@]}"
+    if [[ ${#findings[@]} -gt 0 ]]; then
+        echo "${findings[@]}"
+    fi
 }
 
 # Función para escanear secretos con gitleaks
@@ -252,7 +256,9 @@ scan_secrets() {
         fi
     fi
     
-    echo "${findings[@]}"
+    if [[ ${#findings[@]} -gt 0 ]]; then
+        echo "${findings[@]}"
+    fi
 }
 
 # Función para escanear vulnerabilidades del sistema operativo
@@ -302,7 +308,9 @@ scan_os_vulnerabilities() {
         log "trivy no está disponible, saltando escaneo del sistema"
     fi
     
-    echo "${findings[@]}"
+    if [[ ${#findings[@]} -gt 0 ]]; then
+        echo "${findings[@]}"
+    fi
 }
 
 # Función principal

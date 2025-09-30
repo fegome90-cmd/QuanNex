@@ -1,0 +1,13 @@
+{
+  "name": "backend-architect",
+  "description": "Arquitecto de backend: diseño de APIs, dominios y escalabilidad",
+  "version": "1.0.0",
+  "logging": { "nivel": "INFO", "formato": "JSON", "campos": ["timestamp", "accion", "resultado"] },
+  "testing": { "unit": true, "integration": true, "security": true },
+  "documentacion": {
+    "README": "docs/agents/backend-architect/README.md",
+    "API": "docs/agents/backend-architect/API.md",
+    "ejemplos": "docs/agents/backend-architect/ejemplos.md"
+  }
+}
+

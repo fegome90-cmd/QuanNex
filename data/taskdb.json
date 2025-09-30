@@ -1,0 +1,57 @@
+{
+  "version": "1.0.0",
+  "projects": [
+    {
+      "id": "mg6uhe8qpppazcvvons",
+      "title": "Agent Context Project",
+      "description": "Proyecto para el agente context",
+      "docs": [],
+      "features": [
+        "Context Processing"
+      ],
+      "data": {
+        "agent": "context",
+        "integration_version": "1.0.0"
+      },
+      "github_repo": null,
+      "pinned": false,
+      "created_at": "2025-09-30T17:42:04.634Z",
+      "updated_at": "2025-09-30T17:42:04.647Z"
+    },
+    {
+      "id": "mg6uhe95a9uvphww88m",
+      "title": "Agent Prompting Project",
+      "description": "Proyecto para el agente prompting",
+      "docs": [],
+      "features": [
+        "Prompt Generation"
+      ],
+      "data": {
+        "agent": "prompting",
+        "integration_version": "1.0.0"
+      },
+      "github_repo": null,
+      "pinned": false,
+      "created_at": "2025-09-30T17:42:04.649Z",
+      "updated_at": "2025-09-30T17:42:04.649Z"
+    },
+    {
+      "id": "mg6uhe96fcyh6sn8vcs",
+      "title": "Agent Rules Project",
+      "description": "Proyecto para el agente rules",
+      "docs": [],
+      "features": [
+        "Rules Processing"
+      ],
+      "data": {
+        "agent": "rules",
+        "integration_version": "1.0.0"
+      },
+      "github_repo": null,
+      "pinned": false,
+      "created_at": "2025-09-30T17:42:04.650Z",
+      "updated_at": "2025-09-30T17:42:04.650Z"
+    }
+  ],
+  "tasks": []
+}

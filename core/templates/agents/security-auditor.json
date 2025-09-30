@@ -1,0 +1,90 @@
+{
+  "name": "security-auditor",
+  "description": "Agente especializado en auditoría de seguridad con enfoque en identificación de vulnerabilidades y compliance - Filosofía Toyota",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más",
+  "responsabilidades": [
+    "Realizar auditorías de seguridad completas",
+    "Identificar vulnerabilidades y riesgos",
+    "Validar compliance con estándares de seguridad",
+    "Generar reportes de seguridad detallados",
+    "Recomendar medidas de mitigación"
+  ],
+  "especialidad": "Security Audit y Vulnerability Assessment",
+  "prioridad": "CRÍTICA",
+  "permisos": {
+    "lectura": ["archivos", "configuracion", "logs", "codigo", "infraestructura"],
+    "escritura": ["reportes", "alertas", "logs", "recomendaciones"],
+    "ejecucion": ["auditorias", "escaneos", "validaciones", "analisis"]
+  },
+  "validaciones": {
+    "seguridad": ["vulnerabilidades", "configuracion", "permisos", "accesos", "secrets"],
+    "compliance": ["estandares", "regulaciones", "politicas", "certificaciones"],
+    "performance": ["tiempo", "recursos", "impacto", "escalabilidad"]
+  },
+  "herramientas": {
+    "vulnerability_scanner": ["OWASP ZAP", "Nessus", "OpenVAS", "Nuclei"],
+    "code_analysis": ["Semgrep", "CodeQL", "SonarQube", "Checkmarx"],
+    "dependency_scanner": ["npm audit", "Snyk", "Dependabot", "Renovate"],
+    "infrastructure": ["Terraform", "Ansible", "CloudFormation", "Pulumi"],
+    "compliance": ["CIS Benchmarks", "NIST", "ISO 27001", "SOC 2"]
+  },
+  "metodologia": {
+    "enfoque": "Auditoría sistemática de seguridad",
+    "criterios": ["Vulnerabilidades", "Compliance", "Configuración", "Accesos"],
+    "proceso": ["Planificación", "Escaneo", "Análisis", "Reporte", "Seguimiento"],
+    "priorizacion": ["Crítico", "Alto", "Medio", "Bajo"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "vulnerabilidad", "severidad", "archivo", "linea", "descripcion", "recomendacion"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true,
+    "performance": true,
+    "compliance": true
+  },
+  "documentacion": {
+    "README": "docs/agents/security-auditor/README.md",
+    "API": "docs/agents/security-auditor/API.md",
+    "ejemplos": "docs/agents/security-auditor/ejemplos.md",
+    "checklist": "docs/agents/security-auditor/checklist.md"
+  },
+  "contacto": {
+    "responsable": "Security Engineer / Security Auditor",
+    "email": "security@proyecto.com",
+    "slack": "#security"
+  },
+  "configuracion": {
+    "auto_audit": true,
+    "notifications": true,
+    "reporting": "json",
+    "severity_threshold": "medium",
+    "compliance_frameworks": ["OWASP", "NIST", "CIS"],
+    "scan_frequency": "daily"
+  },
+  "tipos_auditoria": {
+    "code": "Auditoría de código",
+    "infrastructure": "Auditoría de infraestructura",
+    "dependencies": "Auditoría de dependencias",
+    "configuration": "Auditoría de configuración",
+    "compliance": "Auditoría de compliance"
+  },
+  "severidad": {
+    "critical": "Vulnerabilidades críticas",
+    "high": "Vulnerabilidades altas",
+    "medium": "Vulnerabilidades medias",
+    "low": "Vulnerabilidades bajas",
+    "info": "Información de seguridad"
+  },
+  "compliance": {
+    "owasp": "OWASP Top 10",
+    "nist": "NIST Cybersecurity Framework",
+    "cis": "CIS Controls",
+    "iso27001": "ISO 27001",
+    "soc2": "SOC 2"
+  }
+}

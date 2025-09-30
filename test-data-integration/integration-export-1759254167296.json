@@ -1,0 +1,224 @@
+{
+  "timestamp": "2025-09-30T17:42:47.296Z",
+  "version": "1.0.0",
+  "projects": [
+    {
+      "id": "mg6uib3wwaf24zcrmce",
+      "title": "Agent Context Project",
+      "description": "Proyecto para el agente context",
+      "docs": [],
+      "features": [
+        "Context Processing"
+      ],
+      "data": {
+        "agent": "context",
+        "integration_version": "1.0.0"
+      },
+      "github_repo": null,
+      "pinned": false,
+      "created_at": "2025-09-30T17:42:47.228Z",
+      "updated_at": "2025-09-30T17:42:47.236Z"
+    },
+    {
+      "id": "mg6uib44eovmj2ddt75",
+      "title": "Agent Prompting Project",
+      "description": "Proyecto para el agente prompting",
+      "docs": [],
+      "features": [
+        "Prompt Generation"
+      ],
+      "data": {
+        "agent": "prompting",
+        "integration_version": "1.0.0"
+      },
+      "github_repo": null,
+      "pinned": false,
+      "created_at": "2025-09-30T17:42:47.236Z",
+      "updated_at": "2025-09-30T17:42:47.236Z"
+    },
+    {
+      "id": "mg6uib459b62vz67bc6",
+      "title": "Agent Rules Project",
+      "description": "Proyecto para el agente rules",
+      "docs": [],
+      "features": [
+        "Rules Processing"
+      ],
+      "data": {
+        "agent": "rules",
+        "integration_version": "1.0.0"
+      },
+      "github_repo": null,
+      "pinned": false,
+      "created_at": "2025-09-30T17:42:47.237Z",
+      "updated_at": "2025-09-30T17:42:47.237Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "mg6uib4km9gd1s3cun",
+      "project_id": "mg6uib3wwaf24zcrmce",
+      "parent_task_id": null,
+      "title": "Tarea context - process",
+      "description": "Procesamiento de process por agente context",
+      "status": "doing",
+      "assignee": "context",
+      "task_order": 0,
+      "feature": "Context Processing",
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T17:42:47.252Z",
+      "updated_at": "2025-09-30T17:42:47.252Z",
+      "agent": "context"
+    },
+    {
+      "id": "mg6uib5axouppg2rbj",
+      "project_id": "mg6uib3wwaf24zcrmce",
+      "parent_task_id": null,
+      "title": "Tarea context - process",
+      "description": "Procesamiento de process por agente context",
+      "status": "doing",
+      "assignee": "context",
+      "task_order": 0,
+      "feature": "Context Processing",
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T17:42:47.278Z",
+      "updated_at": "2025-09-30T17:42:47.278Z",
+      "agent": "context"
+    },
+    {
+      "id": "mg6uib5a9px2v36f7wd",
+      "project_id": "mg6uib44eovmj2ddt75",
+      "parent_task_id": null,
+      "title": "Tarea prompting - process",
+      "description": "Procesamiento de process por agente prompting",
+      "status": "doing",
+      "assignee": "prompting",
+      "task_order": 0,
+      "feature": "Prompt Generation",
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T17:42:47.278Z",
+      "updated_at": "2025-09-30T17:42:47.278Z",
+      "agent": "prompting"
+    },
+    {
+      "id": "mg6uib5cc94z80ffu5o",
+      "project_id": "mg6uib3wwaf24zcrmce",
+      "parent_task_id": null,
+      "title": "Tarea context - process",
+      "description": "Procesamiento de process por agente context",
+      "status": "doing",
+      "assignee": "context",
+      "task_order": 0,
+      "feature": "Context Processing",
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T17:42:47.280Z",
+      "updated_at": "2025-09-30T17:42:47.280Z",
+      "agent": "context"
+    },
+    {
+      "id": "mg6uib5evnq3k3j2v6r",
+      "project_id": "mg6uib3wwaf24zcrmce",
+      "parent_task_id": null,
+      "title": "Tarea context - process",
+      "description": "Procesamiento de process por agente context",
+      "status": "doing",
+      "assignee": "context",
+      "task_order": 0,
+      "feature": "Context Processing",
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T17:42:47.282Z",
+      "updated_at": "2025-09-30T17:42:47.282Z",
+      "agent": "context"
+    },
+    {
+      "id": "mg6uib5eqxh84dodaq",
+      "project_id": "mg6uib44eovmj2ddt75",
+      "parent_task_id": null,
+      "title": "Tarea prompting - process",
+      "description": "Procesamiento de process por agente prompting",
+      "status": "doing",
+      "assignee": "prompting",
+      "task_order": 0,
+      "feature": "Prompt Generation",
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T17:42:47.282Z",
+      "updated_at": "2025-09-30T17:42:47.282Z",
+      "agent": "prompting"
+    },
+    {
+      "id": "mg6uib5lsgrojpxelpn",
+      "project_id": "mg6uib44eovmj2ddt75",
+      "parent_task_id": null,
+      "title": "Tarea prompting - process",
+      "description": "Procesamiento de process por agente prompting",
+      "status": "doing",
+      "assignee": "prompting",
+      "task_order": 0,
+      "feature": "Prompt Generation",
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T17:42:47.289Z",
+      "updated_at": "2025-09-30T17:42:47.289Z",
+      "agent": "prompting"
+    },
+    {
+      "id": "mg6uib5s3zsr1y5eos8",
+      "project_id": "mg6uib3wwaf24zcrmce",
+      "parent_task_id": null,
+      "title": "Tarea context - process",
+      "description": "Procesamiento de process por agente context",
+      "status": "doing",
+      "assignee": "context",
+      "task_order": 0,
+      "feature": "Context Processing",
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T17:42:47.296Z",
+      "updated_at": "2025-09-30T17:42:47.296Z",
+      "agent": "context"
+    }
+  ],
+  "stats": {
+    "total_projects": 3,
+    "total_tasks": 8,
+    "tasks_by_agent": {
+      "context": 5,
+      "prompting": 3,
+      "rules": 0
+    },
+    "tasks_by_status": {
+      "doing": 8
+    },
+    "performance_metrics": {}
+  }
+}
