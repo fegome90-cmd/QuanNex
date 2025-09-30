@@ -73,3 +73,12 @@ out/*.stdout.txt
 # Antigeneric archives (legacy)
 antigeneric-agents/
 antigeneric-agents*
+
+# Archived content (opcional)
+# archived/
+
+# External tools (si no se quieren versionar)
+# external/
+
+# Test files temporales
+archived/test-files/*.tmp
