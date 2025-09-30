@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "agent_version": "1.0.0",
+  "context_bundle": "# Source: CLAUDE.md\n## Architecture Overview\nThis is a **shell-based project initialization kit** that scaffolds Claude Code projects with specialized templates and configurations. The architecture follows Toyota Production System principles with stability-first design.\n2. **Backend**: Node.js/Python/Go with scalable architecture\n- **Knowledge-First Development**: Use RAG queries before implementation\n- **Backend**: Node.js/Python/Go with API-focused architecture and database setup\n### Template System Architecture\n## Critical Implementation Notes\n### Toyota Production System Implementation\n\n# Source: MANUAL-COMPLETO-CURSOR.md\n    \"purpose\",",
+  "provenance": [
+    "loaded:CLAUDE.md",
+    "loaded:MANUAL-COMPLETO-CURSOR.md",
+    "empty:agents/context/server.js",
+    "empty:agents/prompting/server.js",
+    "empty:agents/rules/server.js"
+  ],
+  "stats": {
+    "tokens_estimated": 256,
+    "chunks": 2,
+    "matched": 9,
+    "truncated": false,
+    "adjusted": false
+  },
+  "trace": [
+    "context.server:ok"
+  ]
+}
