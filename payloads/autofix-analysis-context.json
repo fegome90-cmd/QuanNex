@@ -1,0 +1,14 @@
+{
+  "sources": [
+    "tools/run-autofix.mjs",
+    "tools/run-autofix-simple.mjs",
+    "agents/optimization/server.js"
+  ],
+  "selectors": [
+    "fixers",
+    "runFixer",
+    "optimizations",
+    "auto_fix"
+  ],
+  "max_tokens": 1024
+}

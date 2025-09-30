@@ -1,0 +1,6 @@
+{
+  "target_path": "tools/",
+  "optimization_types": ["performance", "maintainability", "security"],
+  "scan_depth": 1,
+  "auto_fix": false
+}

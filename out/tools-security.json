@@ -1,0 +1,96 @@
+🔒 Security Agent: Escaneando tools/...
+{
+  "schema_version": "1.0.0",
+  "agent_version": "1.0.0",
+  "security_report": {
+    "summary": {
+      "total_findings": 5,
+      "secrets_found": 0,
+      "vulnerabilities_found": 5,
+      "compliance_score": 75,
+      "severity_breakdown": {
+        "high": 0,
+        "medium": 0,
+        "low": 5
+      }
+    },
+    "findings": [
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 6,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 7,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 12,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 14,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 15,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      }
+    ],
+    "recommendations": [
+      {
+        "type": "vulnerabilities",
+        "priority": "medium",
+        "message": "5 vulnerabilidades encontradas. Aplicar parches.",
+        "actions": [
+          "Revisar código para vulnerabilidades",
+          "Implementar validación de entrada",
+          "Aplicar mejores prácticas de seguridad"
+        ]
+      },
+      {
+        "type": "compliance",
+        "priority": "high",
+        "message": "Score de compliance bajo (75/100). Mejorar seguridad.",
+        "actions": [
+          "Revisar políticas de seguridad",
+          "Implementar auditorías regulares",
+          "Capacitar al equipo en seguridad"
+        ]
+      }
+    ]
+  },
+  "stats": {
+    "files_scanned": 1,
+    "secrets_found": 0,
+    "vulnerabilities_found": 5,
+    "compliance_score": 75
+  },
+  "trace": [
+    "security.server:ok"
+  ]
+}

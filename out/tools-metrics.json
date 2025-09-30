@@ -1,0 +1,57 @@
+📊 Metrics Agent: Analizando tools/...
+{
+  "schema_version": "1.0.0",
+  "agent_version": "1.0.0",
+  "metrics_report": {
+    "summary": {
+      "files_analyzed": 1,
+      "functions_analyzed": 0,
+      "lines_analyzed": 17,
+      "tests_found": 0,
+      "coverage_percentage": 0
+    },
+    "performance": {
+      "file_sizes": [],
+      "function_counts": [],
+      "large_files": [],
+      "slow_patterns": []
+    },
+    "coverage": {
+      "test_files": [],
+      "test_functions": [],
+      "uncovered_functions": [],
+      "test_coverage_percentage": 0
+    },
+    "quality": {
+      "code_duplication": [],
+      "long_functions": [],
+      "quality_score": 85
+    },
+    "complexity": {
+      "cyclomatic_complexity": [],
+      "nesting_depth": [],
+      "parameter_counts": []
+    },
+    "recommendations": [
+      {
+        "type": "coverage",
+        "priority": "medium",
+        "message": "0 archivos de test encontrados",
+        "actions": [
+          "Aumentar cobertura de tests",
+          "Implementar TDD"
+        ]
+      }
+    ]
+  },
+  "stats": {
+    "files_analyzed": 1,
+    "functions_analyzed": 0,
+    "lines_analyzed": 17,
+    "tests_found": 0,
+    "coverage_percentage": 0
+  },
+  "trace": [
+    "metrics.server:ok"
+  ]
+}

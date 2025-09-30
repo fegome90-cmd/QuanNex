@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "agent_version": "1.0.0",
+  "system_prompt": "You are a helpful coding assistant. Style: formal.",
+  "user_prompt": "Goal: demo",
+  "guardrails": [],
+  "trace": [
+    "prompting.server:ok"
+  ]
+}

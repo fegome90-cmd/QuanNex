@@ -351,6 +351,18 @@
       "pinned": false,
       "created_at": "2025-09-30T21:01:12.374Z",
       "updated_at": "2025-09-30T21:01:12.374Z"
+    },
+    {
+      "id": "mg73m274770tpimpn5",
+      "title": "PR-I: Remediación Automatizada",
+      "description": "Integración de autofix con agentes MCP para correcciones automáticas",
+      "docs": [],
+      "features": [],
+      "data": [],
+      "github_repo": "local",
+      "pinned": false,
+      "created_at": "2025-09-30T21:57:38.848Z",
+      "updated_at": "2025-09-30T21:57:39.050Z"
     }
   ],
   "tasks": [
@@ -611,6 +623,78 @@
         },
         "mcp_prompt": "You are a helpful coding assistant. Style: technical. Constraints: Mantener compatibilidad con contr..."
       }
+    },
+    {
+      "id": "mg73m2dx1qf69wiopa3",
+      "project_id": "mg73m274770tpimpn5",
+      "parent_task_id": null,
+      "title": "Integrar @optimization con run-autofix",
+      "description": "Conectar sugerencias de @optimization con sistema de autofix",
+      "status": "todo",
+      "assignee": "User",
+      "task_order": 1,
+      "feature": null,
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T21:57:39.093Z",
+      "updated_at": "2025-09-30T21:57:39.093Z"
+    },
+    {
+      "id": "mg73m2etk6mtvojipw",
+      "project_id": "mg73m274770tpimpn5",
+      "parent_task_id": null,
+      "title": "Implementar aplicación automática de correcciones",
+      "description": "Sistema que aplica correcciones sugeridas por agentes",
+      "status": "todo",
+      "assignee": "User",
+      "task_order": 2,
+      "feature": null,
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T21:57:39.125Z",
+      "updated_at": "2025-09-30T21:57:39.125Z"
+    },
+    {
+      "id": "mg73m2eum1isxsh629",
+      "project_id": "mg73m274770tpimpn5",
+      "parent_task_id": null,
+      "title": "Añadir retry logic y rollback",
+      "description": "Mecanismo de retry y rollback para correcciones fallidas",
+      "status": "todo",
+      "assignee": "User",
+      "task_order": 3,
+      "feature": null,
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T21:57:39.126Z",
+      "updated_at": "2025-09-30T21:57:39.126Z"
+    },
+    {
+      "id": "mg73m2fmhx0wxpvbqq",
+      "project_id": "mg73m274770tpimpn5",
+      "parent_task_id": null,
+      "title": "Generar reportes detallados de correcciones",
+      "description": "Reportes con métricas de correcciones aplicadas",
+      "status": "todo",
+      "assignee": "User",
+      "task_order": 4,
+      "feature": null,
+      "sources": [],
+      "code_examples": [],
+      "archived": false,
+      "archived_at": null,
+      "archived_by": null,
+      "created_at": "2025-09-30T21:57:39.154Z",
+      "updated_at": "2025-09-30T21:57:39.154Z"
     }
   ]
 }
