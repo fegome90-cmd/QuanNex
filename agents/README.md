@@ -9,6 +9,7 @@ This phase delivers the three foundational agents required by the MCP-first blue
 Contract tests live alongside each agent under `tests/` and run via `.github/workflows/agents-core.yml`.
 
 ## Local Test Commands
+
 ```bash
 node --test agents/rules/tests/contract.test.js
 node --test agents/context/tests/contract.test.js
@@ -16,6 +17,7 @@ node --test agents/prompting/tests/contract.test.js
 ```
 
 ## Artifact & Cleanup Policy
-- Runtime outputs are created via `scripts/run-clean.sh <agent> payload.json` and stored in `out/` iff validation succeeds.
+
+- Runtime outputs are created via `core/scripts/run-clean.sh <agent> payload.json` and stored in `out/` iff validation succeeds.
 - Temporary sandboxes live in `tmp/run-*/` and are removed automatically (set `KEEP_ARTIFACTS=1` to retain).
 - `tools/cleanup.mjs` removes `tmp/`, `.reports/`, and `coverage/tmp` to keep the workspace pristine.

@@ -14,8 +14,8 @@ function loadLegacyMap() {
     const data = JSON.parse(readFileSync(legacyFile, 'utf8'));
     if (Array.isArray(data)) {
       return data
-        .filter((entry) => entry && typeof entry === 'object' && entry.from)
-        .map((entry) => entry.from);
+        .filter(entry => entry && typeof entry === 'object' && entry.from)
+        .map(entry => entry.from);
     }
     if (typeof data === 'object' && data !== null) {
       return Object.keys(data);
@@ -65,12 +65,17 @@ async function detectDuplicates() {
     slugMap.set(slug, entry);
   }
 
-  return Array.from(slugMap.values()).filter((entry) => entry.public.length > 0 && entry.internal.length > 0);
+  return Array.from(slugMap.values()).filter(
+    entry => entry.public.length > 0 && entry.internal.length > 0
+  );
 }
 
 async function detectLegacyReferences(legacyPaths) {
   if (legacyPaths.length === 0) return [];
-  const docs = [...await gatherDocs('docs'), ...await gatherDocs('internal/docs')];
+  const docs = [
+    ...(await gatherDocs('docs')),
+    ...(await gatherDocs('internal/docs'))
+  ];
   const issues = [];
   for (const relativePath of docs) {
     const abs = resolve(ROOT, relativePath);
@@ -103,21 +108,30 @@ async function main() {
 
   if (duplicates.length > 0 || legacyRefs.length > 0) {
     const messages = [];
-    if (duplicates.length > 0) messages.push(`${duplicates.length} duplicate slug(s)`);
-    if (legacyRefs.length > 0) messages.push(`${legacyRefs.length} legacy reference(s)`);
+    if (duplicates.length > 0)
+      messages.push(`${duplicates.length} duplicate slug(s)`);
+    if (legacyRefs.length > 0)
+      messages.push(`${legacyRefs.length} legacy reference(s)`);
     console.error(`docs-lint: ${messages.join(', ')}`);
     process.exit(1);
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   if (!existsSync(REPORTS_DIR)) {
     mkdirSync(REPORTS_DIR, { recursive: true });
   }
-  writeFileSync(REPORT_PATH, JSON.stringify({
-    generated_at: new Date().toISOString(),
-    error: error.message
-  }, null, 2));
+  writeFileSync(
+    REPORT_PATH,
+    JSON.stringify(
+      {
+        generated_at: new Date().toISOString(),
+        error: error.message
+      },
+      null,
+      2
+    )
+  );
   console.error(`docs-lint: ${error.message}`);
   process.exit(1);
 });

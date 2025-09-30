@@ -7,17 +7,18 @@
 
 ## 🎯 RESUMEN EJECUTIVO
 
-| Métrica | Valor | Estado |
-|---------|-------|--------|
-| **Tests Totales** | 3/3 | ✅ 100% |
-| **Aislamiento Sandbox** | Verificado | ✅ PASS |
-| **Archivos Temporales** | 0 | ✅ CLEAN |
-| **Tiempo Promedio** | 0.15-0.24s | ✅ ÓPTIMO |
-| **Consistencia** | 5 iteraciones | ✅ ESTABLE |
+| Métrica                 | Valor         | Estado     |
+| ----------------------- | ------------- | ---------- |
+| **Tests Totales**       | 3/3           | ✅ 100%    |
+| **Aislamiento Sandbox** | Verificado    | ✅ PASS    |
+| **Archivos Temporales** | 0             | ✅ CLEAN   |
+| **Tiempo Promedio**     | 0.15-0.24s    | ✅ ÓPTIMO  |
+| **Consistencia**        | 5 iteraciones | ✅ ESTABLE |
 
 ## 🔍 VALIDACIÓN DETALLADA
 
 ### 1. Aislamiento de Sandbox
+
 - **Archivos creados en sandbox:** 0 (por agente)
 - **Archivos temporales restantes:** 0
 - **Limpieza automática:** ✅ Verificada
@@ -26,13 +27,15 @@
 ### 2. Rendimiento por Agente
 
 #### @context Agent
+
 - **Tiempo promedio:** 0.312s (5 iteraciones)
 - **Tiempo mínimo:** 0.081s
 - **Tiempo máximo:** 0.821s
 - **Exit code:** 0 (éxito)
 - **Output generado:** ✅ out/context.json
 
-#### @prompting Agent  
+#### @prompting Agent
+
 - **Tiempo promedio:** 0.421s (5 iteraciones)
 - **Tiempo mínimo:** 0.101s
 - **Tiempo máximo:** 0.739s
@@ -40,6 +43,7 @@
 - **Output generado:** ✅ out/prompting.json
 
 #### @rules Agent
+
 - **Tiempo promedio:** 0.148s (5 iteraciones)
 - **Tiempo mínimo:** 0.102s
 - **Tiempo máximo:** 0.194s
@@ -47,12 +51,14 @@
 - **Output generado:** ✅ out/rules.json
 
 ### 3. Validación Jest (Unit Tests)
+
 - **Tests ejecutados:** 11/11
 - **Tiempo total:** 0.117s
 - **Cobertura:** N/A (archivos de configuración)
 - **Estado:** ✅ ALL PASS
 
 ### 4. Políticas de Limpieza
+
 - **Patrones en .gitignore:** 3
 - **Patrones en .dockerignore:** 4
 - **Scripts de limpieza:** 2 (run-clean.sh, save-if-passed.sh)
@@ -61,17 +67,20 @@
 ## 📈 MÉTRICAS DE CALIDAD
 
 ### Consistencia de Rendimiento
+
 - **Desviación estándar:** Baja (variación < 0.5s)
 - **Tiempo de respuesta:** Consistente entre iteraciones
 - **Manejo de errores:** Robusto (exit codes apropiados)
 
 ### Aislamiento y Seguridad
+
 - **Sandbox temporal:** ✅ mktemp -d
 - **Limpieza automática:** ✅ rmSync recursivo
 - **Restauración de CWD:** ✅ Verificada
 - **Prevención de contaminación:** ✅ 100% efectiva
 
 ### Gestión de Artefactos
+
 - **Archivos de salida:** Centralizados en out/
 - **Archivos temporales:** Eliminados automáticamente
 - **Logs de depuración:** No generados en producción
@@ -80,12 +89,14 @@
 ## 🛡️ VALIDACIÓN DE SEGURIDAD
 
 ### Prevención de Side Effects
+
 - ✅ No modificación del directorio de trabajo
 - ✅ No creación de archivos fuera del sandbox
 - ✅ No alteración de variables de entorno
 - ✅ No dependencias externas no controladas
 
 ### Gestión de Recursos
+
 - ✅ Memoria: Liberada automáticamente
 - ✅ Archivos: Limpiados en finally block
 - ✅ Procesos: Terminados correctamente
@@ -94,6 +105,7 @@
 ## 📋 EVIDENCIA TÉCNICA
 
 ### Archivos de Validación Generados
+
 ```
 test-validation/reports/
 ├── consolidated-report.json      # Resumen ejecutivo
@@ -106,6 +118,7 @@ test-validation/reports/
 ```
 
 ### Comandos de Verificación
+
 ```bash
 # Validación completa
 ./test-validation/validate-agents.sh

@@ -4,9 +4,9 @@ Objetivo
 - Checks esenciales y permisos mínimos; reproducible y portable.
 
 Checks requeridos
-- Lint: `scripts/lint-shell.sh` (shellcheck + shfmt).
-- Tests: `scripts/test-claude-init.sh`, `scripts/test-flags.sh`.
-- Secret scan: `scripts/scan-secrets.sh`.
+- Lint: `core/scripts/lint-shell.sh` (shellcheck + shfmt).
+- Tests: `core/scripts/test-claude-init.sh`, `core/scripts/test-flags.sh`.
+- Secret scan: `core/scripts/scan-secrets.sh`.
 
 Permisos mínimos
 - A nivel job: `permissions: contents: read`.

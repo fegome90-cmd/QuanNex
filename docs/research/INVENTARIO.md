@@ -49,4 +49,4 @@ Nota: existen subdirectorios adicionales en `investigacion/` (p. ej., `2-planifi
 ## Plan de Normalización
 - Destino: `docs/research/imported/{investigacion,brainstorm}/...` (estructura preservada).
 - Tras migración: actualizar `INDEX.md` y `TRAZABILIDAD.md`.
-- Script: `./scripts/normalize-research.sh --apply` (usa `git mv` si es posible).
+- Script: `./core/scripts/normalize-research.sh --apply` (usa `git mv` si es posible).

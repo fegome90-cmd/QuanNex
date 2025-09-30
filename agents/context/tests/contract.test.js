@@ -7,10 +7,11 @@ import { writeFileSync, unlinkSync, existsSync } from 'node:fs';
 const agentPath = resolve(process.cwd(), 'agents/context/agent.js');
 const samplePath = 'agents/context/tests/fixtures/sample.txt';
 
-const runAgent = (payload) => execFileSync('node', [agentPath], {
-  input: JSON.stringify(payload),
-  encoding: 'utf8'
-});
+const runAgent = payload =>
+  execFileSync('node', [agentPath], {
+    input: JSON.stringify(payload),
+    encoding: 'utf8'
+  });
 
 test('context agent bundles selectors with versioned stats', () => {
   const input = {
@@ -31,20 +32,24 @@ test('context agent bundles selectors with versioned stats', () => {
 });
 
 test('context agent adjusts low max_tokens and records trace', () => {
-  const response = JSON.parse(runAgent({
-    sources: [samplePath],
-    selectors: ['Requisitos'],
-    max_tokens: 10
-  }));
+  const response = JSON.parse(
+    runAgent({
+      sources: [samplePath],
+      selectors: ['Requisitos'],
+      max_tokens: 10
+    })
+  );
   assert.strictEqual(response.stats.adjusted, true);
   assert.ok(response.trace.includes('context.server:adjusted_max_tokens'));
 });
 
 test('context agent reports empty bundle when selectors do not match', () => {
-  const response = JSON.parse(runAgent({
-    sources: [samplePath],
-    selectors: ['NoExiste']
-  }));
+  const response = JSON.parse(
+    runAgent({
+      sources: [samplePath],
+      selectors: ['NoExiste']
+    })
+  );
   assert.strictEqual(response.context_bundle, '');
   assert.ok(response.provenance.includes('empty:' + samplePath));
   assert.strictEqual(response.stats.matched, 0);
@@ -78,4 +83,3 @@ test('context agent rejects oversized files', () => {
     }
   }
 });
-

@@ -23,9 +23,12 @@ async function testOrchestration() {
     // Test 2: Load and execute prompt generation workflow
     console.log('2️⃣ Testing Prompt Generation Workflow...');
     const promptTemplate = JSON.parse(
-      readFileSync(join(__dirname, 'workflows', 'prompt-generation.json'), 'utf8')
+      readFileSync(
+        join(__dirname, 'workflows', 'prompt-generation.json'),
+        'utf8'
+      )
     );
-    
+
     // Add some test context
     promptTemplate.context = {
       ...promptTemplate.context,
@@ -35,10 +38,15 @@ async function testOrchestration() {
         'The system should be secure and compliant'
       ]
     };
-    
+
     promptTemplate.steps[0].input.sources = promptTemplate.context.test_sources;
-    promptTemplate.steps[1].input.goal = 'Create a prompt for generating secure code';
-    promptTemplate.steps[1].input.constraints = ['Security first', 'Clean code', 'Documentation'];
+    promptTemplate.steps[1].input.goal =
+      'Create a prompt for generating secure code';
+    promptTemplate.steps[1].input.constraints = [
+      'Security first',
+      'Clean code',
+      'Documentation'
+    ];
 
     const workflow = await orchestrator.createWorkflow(promptTemplate);
     console.log('Workflow created:', workflow.workflow_id);
@@ -70,7 +78,6 @@ async function testOrchestration() {
     console.log('✅ Workflow listing completed\n');
 
     console.log('🎉 All orchestration tests passed!');
-
   } catch (error) {
     console.error('❌ Test failed:', error.message);
     console.error('Stack:', error.stack);

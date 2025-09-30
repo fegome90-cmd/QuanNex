@@ -5,10 +5,11 @@ import { resolve } from 'node:path';
 
 const agentPath = resolve(process.cwd(), 'agents/rules/agent.js');
 
-const runAgent = (payload) => execFileSync('node', [agentPath], {
-  input: JSON.stringify(payload),
-  encoding: 'utf8'
-});
+const runAgent = payload =>
+  execFileSync('node', [agentPath], {
+    input: JSON.stringify(payload),
+    encoding: 'utf8'
+  });
 
 test('rules agent compiles policies with version metadata', () => {
   const payload = {
@@ -45,4 +46,3 @@ test('rules agent rejects invalid compliance level', () => {
     });
   }, /compliance_level must be one of/);
 });
-

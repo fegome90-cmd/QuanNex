@@ -163,9 +163,9 @@ make archon-edge     # Edge matrix funcionando
 
 ### **Scripts de Bootstrap:**
 ```bash
-scripts/archon-bootstrap.sh    # Setup automático completo
-scripts/archon-setup-check.sh  # Verificación de configuración
-scripts/archon-smoke.sh        # Testing operativo
+core/scripts/archon-bootstrap.sh    # Setup automático completo
+core/scripts/archon-setup-check.sh  # Verificación de configuración
+core/scripts/archon-smoke.sh        # Testing operativo
 ```
 
 ---

@@ -14,7 +14,7 @@ El sistema DAST proporciona testing de seguridad dinámico para aplicaciones web
 
 ## 🛠️ **Herramientas Incluidas**
 
-### 1. DAST Scanner (`scripts/dast-scan.sh`)
+### 1. DAST Scanner (`core/scripts/dast-scan.sh`)
 
 Escáner principal para testing de seguridad dinámico.
 
@@ -35,16 +35,16 @@ Escáner principal para testing de seguridad dinámico.
 **Uso:**
 ```bash
 # Escaneo básico
-./scripts/dast-scan.sh https://api.example.com
+./core/scripts/dast-scan.sh https://api.example.com
 
 # Escaneo de API con output detallado
-./scripts/dast-scan.sh -t api -v https://api.example.com/v1
+./core/scripts/dast-scan.sh -t api -v https://api.example.com/v1
 
 # Escaneo completo con archivo de salida personalizado
-./scripts/dast-scan.sh -t full -o custom-report.json https://app.example.com
+./core/scripts/dast-scan.sh -t full -o custom-report.json https://app.example.com
 ```
 
-### 2. Security Dependencies Scanner (`scripts/security-deps-scan.sh`)
+### 2. Security Dependencies Scanner (`core/scripts/security-deps-scan.sh`)
 
 Escáner de vulnerabilidades en dependencias y paquetes.
 
@@ -64,16 +64,16 @@ Escáner de vulnerabilidades en dependencias y paquetes.
 **Uso:**
 ```bash
 # Escaneo con nivel moderado (default)
-./scripts/security-deps-scan.sh
+./core/scripts/security-deps-scan.sh
 
 # Escaneo con nivel alto y output detallado
-./scripts/security-deps-scan.sh -l high -v
+./core/scripts/security-deps-scan.sh -l high -v
 
 # Escaneo solo crítico
-./scripts/security-deps-scan.sh -l critical
+./core/scripts/security-deps-scan.sh -l critical
 ```
 
-### 3. Security Report Aggregator (`scripts/security-report-aggregator.sh`)
+### 3. Security Report Aggregator (`core/scripts/security-report-aggregator.sh`)
 
 Combina múltiples reportes de seguridad en un resumen consolidado.
 
@@ -86,13 +86,13 @@ Combina múltiples reportes de seguridad en un resumen consolidado.
 **Uso:**
 ```bash
 # Agregar todos los reportes disponibles
-./scripts/security-report-aggregator.sh
+./core/scripts/security-report-aggregator.sh
 
 # Agregar con output detallado
-./scripts/security-report-aggregator.sh -v
+./core/scripts/security-report-aggregator.sh -v
 
 # Archivo de salida personalizado
-./scripts/security-report-aggregator.sh -o custom-summary.json
+./core/scripts/security-report-aggregator.sh -o custom-summary.json
 ```
 
 ## 📦 **Scripts NPM**
@@ -346,13 +346,13 @@ Los reportes se pueden integrar con:
 2. **Timeouts en escaneos**
    ```bash
    # Aumentar timeout
-   ./scripts/dast-scan.sh -T 60 https://slow-api.example.com
+   ./core/scripts/dast-scan.sh -T 60 https://slow-api.example.com
    ```
 
 3. **Reportes no generados**
    ```bash
    # Verificar permisos
-   chmod +x scripts/*.sh
+   chmod +x core/scripts/*.sh
    
    # Verificar directorios
    mkdir -p .reports/{dast,security,consolidated}
@@ -362,7 +362,7 @@ Los reportes se pueden integrar con:
 
 ```bash
 # Ejecutar con output detallado
-./scripts/dast-scan.sh -v https://api.example.com
+./core/scripts/dast-scan.sh -v https://api.example.com
 
 # Verificar reportes generados
 ls -la .reports/dast/

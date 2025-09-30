@@ -2,14 +2,15 @@
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
   "rules_compiled": [
-    "[README.md] # 🚀 Claude Project Init Kit  ## 📋 **Resumen**  El **Claude Project Init Kit** es un sistema avanzado de inicialización de proyectos que integra Claude Code con herramientas especializadas para crear proyectos de alta calidad de forma sistemática y eficiente.",
-    "[SECURITY.md] # Seguridad y Manejo de Secretos  Alcance  - Este repositorio y los proyectos generados por el inicializador."
+    "[policies/writing.md] # Writing Guidelines - Prefer active voice. - Keep sections under 300 words. - Cite sources for data points. - Provide actionable next steps.",
+    "[docs/cleaning.md] # Artifact & Cleanup Policy  ## Temporary Layout - All ephemeral data is scoped to `tmp/run-<agent>-<timestamp>/`. - Logs are written to `tmp/run-*/run.log` and removed automatically unless `KEEP_ARTIFACTS=1`.",
+    "[docs/agents/security-auditor/checklist.md] # 🔒 Security Auditor Checklist  ## 📋 **Checklist de Auditoría de Seguridad**  ### **🔍 Pre-Auditoría**"
   ],
   "violations": [],
   "advice": [
-    "tone:neutral",
-    "domain:general",
-    "Ensure primary policies are acknowledged."
+    "tone:formal",
+    "domain:software-development",
+    "All policies must be enforced with audits."
   ],
   "trace": [
     "rules.server:ok"

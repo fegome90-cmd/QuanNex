@@ -1,16 +1,124 @@
 version: 2
 updates:
+  # NPM dependencies
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+    open-pull-requests-limit: 10
+    reviewers:
+      - 'fegome90-cmd'
+    assignees:
+      - 'fegome90-cmd'
+    commit-message:
+      prefix: 'chore'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'javascript'
+    # Solo automerge para patch y minor sin breaking changes
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    # Configuración de merge confidence
+    groups:
+      npm-minor-patch:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+        reviewers:
+          - 'fegome90-cmd'
+        assignees:
+          - 'fegome90-cmd'
+        labels:
+          - 'dependencies'
+          - 'automated'
+        commit-message:
+          prefix: 'chore'
+          include: 'scope'
+
+  # Python dependencies (RETE)
+  - package-ecosystem: 'pip'
+    directory: '/analisis-motor-rete'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+    open-pull-requests-limit: 5
+    reviewers:
+      - 'fegome90-cmd'
+    assignees:
+      - 'fegome90-cmd'
+    commit-message:
+      prefix: 'chore'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'python'
+    # Solo automerge para patch y minor
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    groups:
+      pip-minor-patch:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+        reviewers:
+          - 'fegome90-cmd'
+        assignees:
+          - 'fegome90-cmd'
+        labels:
+          - 'dependencies'
+          - 'python'
+          - 'automated'
+        commit-message:
+          prefix: 'chore'
+          include: 'scope'
+
+  # GitHub Actions
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
       day: 'monday'
-      time: '02:00'
-      timezone: 'America/Santiago'
+      time: '09:00'
     open-pull-requests-limit: 5
+    reviewers:
+      - 'fegome90-cmd'
+    assignees:
+      - 'fegome90-cmd'
     commit-message:
-      prefix: 'chore(ci)'
+      prefix: 'chore'
       include: 'scope'
     labels:
       - 'dependencies'
-      - 'ci'
+      - 'github-actions'
+    # Solo automerge para patch y minor
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    groups:
+      actions-minor-patch:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+        reviewers:
+          - 'fegome90-cmd'
+        assignees:
+          - 'fegome90-cmd'
+        labels:
+          - 'dependencies'
+          - 'github-actions'
+          - 'automated'
+        commit-message:
+          prefix: 'chore'
+          include: 'scope'

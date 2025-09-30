@@ -1,45 +1,80 @@
-name: modernize
+name: Modernize & Autofix
 
 on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
-  schedule:
-    - cron: '0 6 * * 1'
-
-permissions:
-  contents: write
+    inputs:
+      mode:
+        description: 'Mode to run'
+        required: true
+        default: 'dry-run'
+        type: choice
+        options:
+          - dry-run
+          - apply
 
 jobs:
-  codemods:
-    name: Deterministic Modernization
+  modernize:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 1
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+          node-version: ${{ matrix.node }}
           cache: 'npm'
-      - run: npm ci --omit=optional
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install shfmt
-        run: sudo apt-get update && sudo apt-get install -y shfmt
-      - name: Run codemods
-        run: bash tools/run-codemods.sh --apply
-      - name: Fail on remaining diffs
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run dry-run autofix
+        if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'dry-run')
         run: |
-          if git diff --quiet; then
-            echo "Workspace clean after codemods"
-          else
-            git diff --stat
-            exit 1
-          fi
-      - name: Upload diff artifact (if failure)
-        if: failure()
+          echo "🔍 Running dry-run autofix..."
+          npm run autofix:dry
+          npm run autofix:diff
+          npm run autofix:sarif
+
+      - name: Run apply autofix
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'apply')
+        run: |
+          echo "🔧 Running apply autofix..."
+          npm run autofix:apply
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run lint check
+        run: npm run lint
+
+      - name: Run security check
+        run: npm run security:full
+
+      - name: Upload autofix diff (on PR)
+        if: github.event_name == 'pull_request' && failure()
         uses: actions/upload-artifact@v4
         with:
-          name: modernization-diff
-          path: reports/refactor
-          if-no-files-found: ignore
+          name: autofix-diff-${{ matrix.node }}
+          path: .reports/autofix.diff
+
+      - name: Upload SARIF report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-sarif-${{ matrix.node }}
+          path: .reports/security.sarif
+
+      - name: Cleanup
+        if: always()
+        run: |
+          node tools/cleanup.mjs
+          echo "🧹 Cleanup completed"

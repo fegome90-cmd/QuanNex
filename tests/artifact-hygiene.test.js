@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const { readFileSync, accessSync, constants } = require('node:fs');
 const { join } = require('node:path');
 
@@ -51,7 +50,9 @@ describe('Artifact Hygiene Policy Compliance', () => {
       ];
 
       requiredPatterns.forEach(pattern => {
-        expect(content).toMatch(new RegExp(pattern.replace(/\*/g, '\\*').replace(/\//g, '\\/')));
+        expect(content).toMatch(
+          new RegExp(pattern.replace(/\*/g, '\\*').replace(/\//g, '\\/'))
+        );
       });
     });
   });
@@ -88,7 +89,12 @@ describe('Artifact Hygiene Policy Compliance', () => {
 
   describe('CI Workflow Cleanup Steps', () => {
     test('.github/workflows/agents-core.yml has cleanup steps', () => {
-      const workflowPath = join(projectRoot, '.github', 'workflows', 'agents-core.yml');
+      const workflowPath = join(
+        projectRoot,
+        '.github',
+        'workflows',
+        'agents-core.yml'
+      );
       const content = readFileSync(workflowPath, 'utf8');
 
       // Check for cleanup in agents-contract job
@@ -121,7 +127,9 @@ describe('Artifact Hygiene Policy Compliance', () => {
       // Check pass_criteria
       expect(content).toMatch(/pass_criteria:/);
       expect(content).toMatch(/no_temp_leftovers:/);
-      expect(content).toMatch(/!exists\('tmp\/\*\*'\) && !exists\('\.reports\/\*\*'\)/);
+      expect(content).toMatch(
+        /!exists\('tmp\/\*\*'\) && !exists\('\.reports\/\*\*'\)/
+      );
     });
   });
 });

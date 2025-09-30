@@ -13,6 +13,6 @@
   - Garantiza calidad técnica: lint, testing, performance.
 
 ## CODEOWNERS sugerido
-- `claude-project-init.sh`, `scripts/**`, `.github/**`: Tech Lead
+- `claude-project-init.sh`, `core/scripts/**`, `.github/**`: Tech Lead
 - `docs/**`: PM (+ Tech Lead para ADR/SECURITY)
 

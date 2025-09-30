@@ -6,7 +6,7 @@
 - Security-sensitive outputs are never stored outside `process.cwd()`; traversal, symlinks, oversized files, and source lists >50 are rejected.
 
 ## Contract Outputs
-- `scripts/run-clean.sh <agent> payload.json` validates payloads, executes the agent, and stores validated artifacts in:
+- `core/scripts/run-clean.sh <agent> payload.json` validates payloads, executes the agent, and stores validated artifacts in:
   - `out/prompt.json`
   - `out/context.json`
   - `out/rules.json`

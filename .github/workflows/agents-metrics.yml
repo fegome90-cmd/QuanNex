@@ -3,7 +3,7 @@ name: Agents Metrics
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   metrics:
@@ -26,8 +26,8 @@ jobs:
       - name: Run agents validation (withSandbox)
         run: |
           mkdir -p out/reports tmp
-          chmod +x scripts/validate-agents.sh
-          KEEP_ARTIFACTS=0 scripts/validate-agents.sh
+          chmod +x core/scripts/validate-agents.sh
+          KEEP_ARTIFACTS=0 core/scripts/validate-agents.sh
           test -f out/reports/agents-metrics.latest.json
 
       - name: Verify metrics gates

@@ -106,7 +106,7 @@ config/                # Archivos de configuración
 logs/                  # Archivos de log del sistema
 metrics/               # Métricas y reportes de calidad
 .github/workflows/     # GitHub Actions
-scripts/quality/       # Scripts de calidad
+core/scripts/quality/       # Scripts de calidad
 ```
 
 ### **4.2 Archivos de Configuración**
@@ -116,9 +116,9 @@ scripts/quality/       # Scripts de calidad
 - **`.pre-commit-config.yaml`** - Configuración de pre-commit hooks
 
 ### **4.3 Scripts de Calidad**
-- **`scripts/quality/quality-check.sh`** - Verificación de calidad
-- **`scripts/quality/metrics.sh`** - Generación de métricas
-- **`scripts/prepare-implementation.sh`** - Preparación completa del entorno
+- **`quality/quality-check.sh (pendiente)`** - Verificación de calidad
+- **`quality/metrics.sh (pendiente)`** - Generación de métricas
+- **`core/scripts/prepare-implementation.sh`** - Preparación completa del entorno
 
 ### **4.4 Tests Base**
 - **`tests/setup.bash`** - Setup común para tests

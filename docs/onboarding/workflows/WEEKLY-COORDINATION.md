@@ -155,8 +155,8 @@ Viernes:   Retrospectiva Semanal   📅 PLANIFICADO
 
 ### **🔧 Scripts de Validación:**
 - **healthcheck.sh** (en proyectos generados): Verificación de salud del proyecto
-- **scripts/test-claude-init.sh**: Testing del inicializador
-- **scripts/scan-secrets.sh**: Escaneo de seguridad
+- **core/scripts/test-claude-init.sh**: Testing del inicializador
+- **core/scripts/scan-secrets.sh**: Escaneo de seguridad
 
 ### **📊 Métricas de Progreso:**
 - **Gates semanales**: Porcentaje de gates completados
@@ -215,7 +215,7 @@ Viernes:   Retrospectiva Semanal   📅 PLANIFICADO
 - [ ] Marcar checks requeridos: lint, tests init/flags, secret scan
 
 ### Validación Técnica
-- [ ] Ejecutar `./scripts/lint-shell.sh && ./scripts/test-claude-init.sh && ./scripts/test-flags.sh` local y en CI
+- [ ] Ejecutar `./core/scripts/lint-shell.sh && ./core/scripts/test-claude-init.sh && ./core/scripts/test-flags.sh` local y en CI
 - [ ] Generar un proyecto de cada tipo y correr `./healthcheck.sh` en cada uno
 
 ### Integración de Investigación

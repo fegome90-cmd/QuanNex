@@ -3,16 +3,11 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 const baseDir = new URL('../../', import.meta.url);
-const resolvePath = relative => new URL(relative, baseDir).pathname;
+const resolvePath = (relative) => new URL(relative, baseDir).pathname;
 
 const MAX_LIST_ITEMS = 50;
 
-const ensureStringArray = (
-  field,
-  value,
-  errors,
-  { allowEmpty = false } = {}
-) => {
+const ensureStringArray = (field, value, errors, { allowEmpty = false } = {}) => {
   if (value === undefined) {
     return;
   }
@@ -23,16 +18,12 @@ const ensureStringArray = (
   if (value.length > MAX_LIST_ITEMS) {
     errors.push(`${field} must not exceed ${MAX_LIST_ITEMS} entries`);
   }
-  if (
-    !value.every(
-      item => typeof item === 'string' && (allowEmpty || item.trim() !== '')
-    )
-  ) {
+  if (!value.every((item) => typeof item === 'string' && (allowEmpty || item.trim() !== ''))) {
     errors.push(`${field} items must be non-empty strings`);
   }
 };
 
-const validateInput = data => {
+const validateInput = (data) => {
   const errors = [];
   if (!data || typeof data !== 'object') {
     return ['Input must be an object'];
@@ -43,23 +34,16 @@ const validateInput = data => {
     if (data.sources.length > MAX_LIST_ITEMS) {
       errors.push(`sources must not exceed ${MAX_LIST_ITEMS} entries`);
     }
-    if (
-      !data.sources.every(
-        item => typeof item === 'string' && item.trim() !== ''
-      )
-    ) {
+    if (!data.sources.every((item) => typeof item === 'string' && item.trim() !== '')) {
       errors.push('sources items must be non-empty strings');
     }
-    if (data.sources.some(item => item.includes('..'))) {
+    if (data.sources.some((item) => item.includes('..'))) {
       errors.push('sources must not contain parent directory traversal (..)');
     }
   }
   ensureStringArray('selectors', data.selectors, errors);
   if (data.max_tokens !== undefined) {
-    if (
-      typeof data.max_tokens !== 'number' ||
-      !Number.isInteger(data.max_tokens)
-    ) {
+    if (typeof data.max_tokens !== 'number' || !Number.isInteger(data.max_tokens)) {
       errors.push('max_tokens must be an integer when provided');
     } else if (data.max_tokens <= 0) {
       errors.push('max_tokens must be greater than zero when provided');
@@ -89,7 +73,7 @@ const validateStats = (stats, errors) => {
   });
 };
 
-const validateOutput = data => {
+const validateOutput = (data) => {
   const errors = [];
   if (typeof data !== 'object' || data === null) {
     return ['Output must be an object'];
@@ -99,19 +83,13 @@ const validateOutput = data => {
   if (data.schema_version !== '1.0.0') {
     errors.push('schema_version must equal 1.0.0');
   }
-  if (
-    typeof data.agent_version !== 'string' ||
-    data.agent_version.trim() === ''
-  ) {
+  if (typeof data.agent_version !== 'string' || data.agent_version.trim() === '') {
     errors.push('agent_version must be a non-empty string');
   }
   if (typeof data.context_bundle !== 'string') {
     errors.push('context_bundle must be a string');
   }
-  if (
-    !Array.isArray(data.provenance) ||
-    !data.provenance.every(item => typeof item === 'string')
-  ) {
+  if (!Array.isArray(data.provenance) || !data.provenance.every((item) => typeof item === 'string')) {
     errors.push('provenance must be an array of strings');
   }
 
@@ -120,10 +98,7 @@ const validateOutput = data => {
 
   // Validate optional trace field
   if (data.trace !== undefined) {
-    if (
-      !Array.isArray(data.trace) ||
-      !data.trace.every(item => typeof item === 'string')
-    ) {
+    if (!Array.isArray(data.trace) || !data.trace.every((item) => typeof item === 'string')) {
       errors.push('trace must be an array of strings when provided');
     }
   }
@@ -148,10 +123,7 @@ if (typeof data.max_tokens === 'number') {
 }
 
 const serverPath = resolvePath('agents/context/server.js');
-const result = spawnSync('node', [serverPath], {
-  input: JSON.stringify(payload),
-  encoding: 'utf8'
-});
+const result = spawnSync('node', [serverPath], { input: JSON.stringify(payload), encoding: 'utf8' });
 if (result.status !== 0) {
   console.error(result.stderr || 'context.agent: server execution failed');
   process.exit(result.status ?? 1);

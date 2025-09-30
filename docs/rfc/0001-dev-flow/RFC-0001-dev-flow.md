@@ -48,9 +48,9 @@ Arquitectura → Estrategia → Roadmap → Plan de Implementación
 
 #### **Entregables Codex:**
 - `docs/CHARTER.md`: Objetivos, KPI, entregables, milestones
-- `docs/adr/ADR-0001-stack-basico.md`: Stack y decisiones técnicas
+- `ADR-0001 (pendiente)`: Stack y decisiones técnicas
 - `docs/ci/PLAN.md`: Plan de CI/CD y seguridad
-- `docs/rfc/RFC-0001-dev-flow.md`: Este documento
+- `este mismo RFC (sección principal)`: Este documento
 
 ### **🛠️ FASE 3: EJECUTAR (Claude)**
 ```
@@ -159,9 +159,9 @@ Validación → Testing → Documentación → Mejora Continua
 - **docs/research/TRAZABILIDAD.md**: Mapa de investigación → decisiones
 
 ### **🔧 Scripts de Automatización:**
-- **scripts/normalize-research.sh**: Normalización de investigación
-- **scripts/healthcheck.sh**: Verificación de salud del proyecto
-- **scripts/test-claude-init.sh**: Testing del inicializador
+- **core/scripts/normalize-research.sh**: Normalización de investigación
+- **core/scripts/healthcheck.sh**: Verificación de salud del proyecto
+- **core/scripts/test-claude-init.sh**: Testing del inicializador
 
 ### **📊 Métricas de Progreso:**
 - **Gates completados**: Porcentaje de gates aprobados

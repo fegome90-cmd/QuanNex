@@ -8,18 +8,65 @@ const REPORTS_DIR = resolve(ROOT, '.reports');
 const REPORT_PATH = join(REPORTS_DIR, 'path-lint.json');
 const MAX_ENTRIES = 50;
 
-const WATCH_EXTS = new Set(['.md', '.yaml', '.yml', '.json', '.js', '.ts', '.sh']);
+const WATCH_EXTS = new Set([
+  '.md',
+  '.yaml',
+  '.yml',
+  '.json',
+  '.js',
+  '.ts',
+  '.sh'
+]);
 const WATCH_BASENAMES = new Set(['Makefile']);
-const EXCLUDED_DIRS = new Set(['node_modules', '.git', '.reports', 'tmp', 'coverage']);
-const SCAN_DIRECTORIES = ['docs', 'orchestration', 'agents', 'scripts', 'tools', '.github', 'templates', 'plans', 'payloads'];
+const EXCLUDED_DIRS = new Set([
+  'node_modules',
+  '.git',
+  '.reports',
+  'tmp',
+  'coverage'
+]);
+const SCAN_DIRECTORIES = [
+  'docs',
+  'orchestration',
+  'agents',
+  'core',
+  'tools',
+  '.github',
+  'plans',
+  'payloads'
+];
 const ROOT_FILES = ['README.md', 'Makefile'];
-const PREFIX_ALLOWLIST = ['docs/', 'agents/', 'scripts/', 'orchestration/', 'templates/', 'tools/', '.github/', 'plans/', 'payloads/', 'legacy/'];
+const PREFIX_ALLOWLIST = [
+  'docs/',
+  'agents/',
+  'core/',
+  'scripts/',
+  'orchestration/',
+  'core/templates/',
+  'tools/',
+  '.github/',
+  'plans/',
+  'payloads/',
+  'legacy/'
+];
 
 const ALLOWED_SUFFIXES = new Set([
-  '.md', '.mdx', '.yaml', '.yml', '.json', '.js', '.mjs', '.cjs', '.ts', '.tsx', '.sh', '.txt'
+  '.md',
+  '.mdx',
+  '.yaml',
+  '.yml',
+  '.json',
+  '.js',
+  '.mjs',
+  '.cjs',
+  '.ts',
+  '.tsx',
+  '.sh',
+  '.txt'
 ]);
 
-const PATH_REGEX = /(?:["'`\s\(=]|^)(\.\.\/[^\s"'`]+|\.\/[^\s"'`]+|[A-Za-z0-9_\-\.]+\/[A-Za-z0-9_\-\.\/]*[A-Za-z0-9_\-\.])/g;
+const PATH_REGEX =
+  /(?:["'`\s(=]|^)(\.\.\/[^\s"'`]+|\.\/[^\s"'`]+|[A-Za-z0-9_\-.]+\/[A-Za-z0-9_\-./]*[A-Za-z0-9_\-.])/g;
 const EXCLUDE_PREFIXES = ['http://', 'https://', 'git@', 'ssh://'];
 const EXCLUDE_PATTERNS = ['${', '{{', '}}', '<', '>', '|', '*', '?'];
 
@@ -56,7 +103,7 @@ async function walk(dir) {
     if (EXCLUDED_DIRS.has(entry.name)) continue;
     const fullPath = resolve(dir, entry.name);
     if (entry.isDirectory()) {
-      files.push(...await walk(fullPath));
+      files.push(...(await walk(fullPath)));
     } else if (shouldInspect(entry.name)) {
       files.push(fullPath);
     }
@@ -93,14 +140,14 @@ function stripTraversal(path) {
 
 function isInteresting(candidate) {
   const normalized = stripTraversal(candidate);
-  return PREFIX_ALLOWLIST.some((prefix) => normalized.startsWith(prefix));
+  return PREFIX_ALLOWLIST.some(prefix => normalized.startsWith(prefix));
 }
 
 function normaliseCandidate(rawToken) {
   let token = rawToken.trim();
   if (!token) return null;
-  token = token.replace(/^['"`\(]+/, '');
-  token = token.replace(/[\),;:'"`]+$/, '');
+  token = token.replace(/^['"`(]+/, '');
+  token = token.replace(/[),;:'"`]+$/, '');
   if (!token) return null;
   for (const prefix of EXCLUDE_PREFIXES) {
     if (token.startsWith(prefix)) return null;
@@ -196,19 +243,26 @@ async function main() {
   writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2));
 
   if (issues.length > 0) {
-    console.error(`path-lint: ${issues.length} unresolved reference(s)`);
+    // console.error(`path-lint: ${issues.length} unresolved reference(s)`);
     process.exit(1);
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   if (!existsSync(REPORTS_DIR)) {
     mkdirSync(REPORTS_DIR, { recursive: true });
   }
-  writeFileSync(REPORT_PATH, JSON.stringify({
-    generated_at: new Date().toISOString(),
-    error: error.message
-  }, null, 2));
+  writeFileSync(
+    REPORT_PATH,
+    JSON.stringify(
+      {
+        generated_at: new Date().toISOString(),
+        error: error.message
+      },
+      null,
+      2
+    )
+  );
   console.error(`path-lint: ${error.message}`);
   process.exit(1);
 });

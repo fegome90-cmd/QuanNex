@@ -50,6 +50,6 @@ jobs:
 
       - name: Ejecutar auditoría
         run: |
-          chmod +x scripts/audit.sh
-          ./scripts/audit.sh
+          chmod +x core/scripts/audit.sh
+          ./core/scripts/audit.sh
           echo "✅ Auditoría completada"

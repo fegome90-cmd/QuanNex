@@ -258,10 +258,10 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ```bash
 # Ejecutar script de testing completo
 cd /Users/felipe/Desktop/claude-project-init-kit
-./scripts/test-claude-init.sh
+./core/scripts/test-claude-init.sh
 
 # Verificar dependencias
-./scripts/verify-dependencies.sh
+./core/scripts/verify-dependencies.sh
 ```
 
 ## 🔍 Verificación Manual
@@ -357,4 +357,4 @@ Si el problema persiste, crea un reporte con:
 
 ---
 
-**💡 Tip:** Siempre ejecuta `./scripts/verify-dependencies.sh` antes de reportar problemas para verificar que todas las dependencias estén correctamente instaladas.
+**💡 Tip:** Siempre ejecuta `./core/scripts/verify-dependencies.sh` antes de reportar problemas para verificar que todas las dependencias estén correctamente instaladas.

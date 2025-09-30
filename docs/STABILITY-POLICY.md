@@ -43,7 +43,7 @@
 
 ## Release y Recuperación - Principio Toyota "Respeto por las Personas"
 - RCs antes de estable; backup/rollback opt‑in.
-- Guías de recuperación y `scripts/restore-backup.sh`.
+- Guías de recuperación y `rutina de restauración (pendiente)`.
 - Documentación clara para troubleshooting.
 
 ## Comunicación - Principio Toyota "Control Visual"

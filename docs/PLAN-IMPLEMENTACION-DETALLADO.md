@@ -511,7 +511,7 @@ Implementar pipeline de CI/CD completo.
 
 2. **Workflow de release**
    ```yaml
-   # .github/workflows/release.yml
+   # workflow de release (pendiente)
    name: Release
    
    on:
@@ -568,7 +568,7 @@ Integrar ShellCheck y análisis estático.
 
 2. **Script de análisis de calidad**
    ```bash
-   # scripts/quality-check.sh
+   # quality-check.sh (pendiente)
    #!/bin/bash
    
    set -euo pipefail
@@ -600,8 +600,8 @@ Integrar ShellCheck y análisis estático.
    # .github/workflows/ci.yml (continuación)
        - name: Quality check
          run: |
-           chmod +x scripts/quality-check.sh
-           ./scripts/quality-check.sh
+           chmod +x quality-check.sh (pendiente)
+           ./quality-check.sh (pendiente)
    ```
 
 #### **Criterios de Aceptación**
@@ -623,7 +623,7 @@ Automatizar proceso de releases y versionado.
 #### **Implementación**
 1. **Script de versionado automático**
    ```bash
-   # scripts/version.sh
+   # version.sh (pendiente)
    #!/bin/bash
    
    set -euo pipefail
@@ -656,16 +656,16 @@ Automatizar proceso de releases y versionado.
 
 2. **Workflow de release automático**
    ```yaml
-   # .github/workflows/release.yml (continuación)
+   # workflow de release (pendiente) (continuación)
        - name: Bump version
          run: |
-           chmod +x scripts/version.sh
-           ./scripts/version.sh
+           chmod +x version.sh (pendiente)
+           ./version.sh (pendiente)
        
        - name: Build package
          run: |
            mkdir -p dist
-           tar -czf "dist/claude-project-init-v${{ github.ref_name }}.tar.gz" src/ config/ tests/ scripts/
+           tar -czf "dist/claude-project-init-v${{ github.ref_name }}.tar.gz" src/ config/ tests/ core/scripts/
    ```
 
 #### **Criterios de Aceptación**
@@ -710,7 +710,7 @@ Implementar validación automática antes de commits.
      hooks:
      - id: quality-check
        name: Quality Check
-       entry: ./scripts/quality-check.sh
+       entry: ./quality-check.sh (pendiente)
        language: system
        pass_filenames: false
        always_run: true
@@ -758,7 +758,7 @@ Implementar linting completo y configurable.
 
 2. **Script de linting personalizado**
    ```bash
-   # scripts/advanced-lint.sh
+   # advanced-lint.sh (pendiente)
    #!/bin/bash
    
    set -euo pipefail
@@ -799,8 +799,8 @@ Implementar linting completo y configurable.
    # .github/workflows/ci.yml (continuación)
        - name: Advanced linting
          run: |
-           chmod +x scripts/advanced-lint.sh
-           ./scripts/advanced-lint.sh
+           chmod +x advanced-lint.sh (pendiente)
+           ./advanced-lint.sh (pendiente)
    ```
 
 #### **Criterios de Aceptación**
@@ -822,7 +822,7 @@ Crear dashboard de métricas de calidad.
 #### **Implementación**
 1. **Script de métricas**
    ```bash
-   # scripts/metrics.sh
+   # metrics.sh (pendiente)
    #!/bin/bash
    
    set -euo pipefail

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* eslint-env node */
-/* global process */
+
 import { existsSync, rmSync } from 'node:fs';
 import { readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';

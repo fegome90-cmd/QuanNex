@@ -33,7 +33,7 @@
       "agent": "rules",
       "action": "validate",
       "input": {
-        "policy_refs": ["docs/", "templates/"],
+        "policy_refs": ["docs/", "core/templates/"],
         "tone": "formal",
         "domain": "documentation",
         "compliance_level": "strict"

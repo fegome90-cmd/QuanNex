@@ -127,9 +127,9 @@ Viernes 3:00 PM: Reunión semanal (45 min)
 
 ### **🔧 Scripts de Validación:**
 - **healthcheck.sh** (en proyectos generados): Verificación de salud del proyecto
-- **scripts/test-claude-init.sh**: Testing del inicializador
-- **scripts/scan-secrets.sh**: Escaneo de seguridad
-- **scripts/normalize-research.sh**: Normalización de investigación
+- **core/scripts/test-claude-init.sh**: Testing del inicializador
+- **core/scripts/scan-secrets.sh**: Escaneo de seguridad
+- **core/scripts/normalize-research.sh**: Normalización de investigación
 
 ---
 
@@ -222,7 +222,7 @@ Viernes 3:00 PM: Reunión semanal (45 min)
 
 **Semana 6 — Seguridad y Release**
 - PR7: `.env.example` por tipo y `check-phi.sh` (medical)
-- PR8: `VERSION` + `scripts/release.sh` (SemVer/changelog/checksum)
+- PR8: `VERSION` + `core/scripts/release.sh` (SemVer/changelog/checksum)
 
 ### **🎉 RESULTADO ESPERADO**
 **Proyecto implementado con calidad, coordinación perfecta y mejora continua, siguiendo la filosofía Toyota de "menos (y mejor) es más".**

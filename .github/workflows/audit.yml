@@ -34,8 +34,8 @@ jobs:
 
       - name: Ejecutar auditoría
         run: |
-          chmod +x scripts/audit.sh
-          ./scripts/audit.sh
+          chmod +x core/scripts/audit.sh
+          ./core/scripts/audit.sh
 
       - name: Subir artefactos de auditoría
         uses: actions/upload-artifact@v4

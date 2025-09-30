@@ -23,25 +23,25 @@
 ### **Ejemplo 2: Revisión con ESLint**
 ```bash
 # Ejecutar ESLint
-./scripts/eslint-check.sh src/app.js
+./core/core/scripts/eslint-check.sh src/app.js
 
 # Ejecutar con configuración personalizada
-ESLINT_CONFIG=custom.eslintrc.js ./scripts/eslint-check.sh
+ESLINT_CONFIG=custom.eslintrc.js ./core/core/scripts/eslint-check.sh
 
 # Ejecutar con umbral de severidad
-SEVERITY_THRESHOLD=high ./scripts/eslint-check.sh
+SEVERITY_THRESHOLD=high ./core/core/scripts/eslint-check.sh
 ```
 
 ### **Ejemplo 3: Revisión de Seguridad**
 ```bash
 # Escanear vulnerabilidades
-./scripts/security-scan.sh src/
+./core/core/scripts/security-scan.sh src/
 
 # Escanear solo secretos
-SCAN_TYPE=secrets ./scripts/security-scan.sh
+SCAN_TYPE=secrets ./core/core/scripts/security-scan.sh
 
 # Escanear solo vulnerabilidades
-SCAN_TYPE=vulnerabilities ./scripts/security-scan.sh
+SCAN_TYPE=vulnerabilities ./core/core/scripts/security-scan.sh
 ```
 
 ---
@@ -50,7 +50,7 @@ SCAN_TYPE=vulnerabilities ./scripts/security-scan.sh
 
 ### **Ejemplo 4: Integración con CI/CD**
 ```yaml
-# .github/workflows/code-review.yml
+# workflow de revisión (pendiente)
 name: Code Review
 on: [push, pull_request]
 
@@ -69,10 +69,10 @@ jobs:
         run: npm install
       
       - name: Run ESLint
-        run: ./scripts/eslint-check.sh
+        run: ./core/core/scripts/eslint-check.sh
       
       - name: Security Scan
-        run: ./scripts/security-scan.sh
+        run: ./core/core/scripts/security-scan.sh
       
       - name: Upload reports
         uses: actions/upload-artifact@v2
@@ -116,7 +116,7 @@ jobs:
 ### **Ejemplo 6: Script de Automatización**
 ```bash
 #!/bin/bash
-# scripts/auto-review.sh
+# auto-review.sh (pendiente)
 
 set -euo pipefail
 
@@ -124,11 +124,11 @@ echo "🔍 Iniciando revisión automática de código..."
 
 # Revisar código con ESLint
 echo "📝 Ejecutando ESLint..."
-./scripts/eslint-check.sh
+./core/core/scripts/eslint-check.sh
 
 # Escanear seguridad
 echo "🛡️ Ejecutando escaneo de seguridad..."
-./scripts/security-scan.sh
+./core/core/scripts/security-scan.sh
 
 # Generar reporte consolidado
 echo "📊 Generando reporte consolidado..."
@@ -162,7 +162,7 @@ echo "✅ Revisión automática completada"
 @medical-reviewer src/medical/
 
 # Escanear PHI
-./scripts/check-phi.sh src/
+./core/core/scripts/check-phi.sh src/
 
 # Revisión completa médica
 @code-reviewer --medical src/medical/
@@ -195,13 +195,13 @@ echo "✅ Revisión automática completada"
 @security-guardian --full-audit
 
 # Escanear vulnerabilidades específicas
-./scripts/security-scan.sh --type=vulnerabilities
+./core/core/scripts/security-scan.sh --type=vulnerabilities
 
 # Escanear secretos
-./scripts/security-scan.sh --type=secrets
+./core/core/scripts/security-scan.sh --type=secrets
 
 # Auditoría de dependencias
-./scripts/security-scan.sh --type=dependencies
+./core/core/scripts/security-scan.sh --type=dependencies
 ```
 
 ### **Ejemplo 10: Configuración de Seguridad**
@@ -233,10 +233,10 @@ echo "✅ Revisión automática completada"
 @deployment-manager --check
 
 # Verificar ambiente específico
-ENVIRONMENT=production ./scripts/deployment-check.sh
+ENVIRONMENT=production ./core/core/scripts/deployment-check.sh
 
 # Verificar estrategia específica
-STRATEGY=blue-green ./scripts/deployment-check.sh
+STRATEGY=blue-green ./core/core/scripts/deployment-check.sh
 ```
 
 ### **Ejemplo 12: Configuración de Despliegue**
@@ -277,7 +277,7 @@ STRATEGY=blue-green ./scripts/deployment-check.sh
 @test-generator --type=all
 
 # Generar con cobertura específica
-COVERAGE_THRESHOLD=90 ./scripts/test-generator.sh
+COVERAGE_THRESHOLD=90 ./core/core/scripts/test-generator.sh
 ```
 
 ### **Ejemplo 14: Configuración de Testing**
@@ -310,7 +310,7 @@ COVERAGE_THRESHOLD=90 ./scripts/test-generator.sh
 @review-coordinator --type=code-review
 
 # Coordinar con notificaciones
-NOTIFICATION_LEVEL=high ./scripts/review-coordinator.sh
+NOTIFICATION_LEVEL=high ./core/core/scripts/review-coordinator.sh
 ```
 
 ### **Ejemplo 16: Configuración de Coordinación**
@@ -339,7 +339,7 @@ NOTIFICATION_LEVEL=high ./scripts/review-coordinator.sh
 ### **Ejemplo 17: Reporte Consolidado**
 ```bash
 # Generar reporte consolidado
-./scripts/review-coordinator.sh
+./core/core/scripts/review-coordinator.sh
 
 # Ver reporte JSON
 cat consolidated-review-report.json | jq '.'
@@ -351,7 +351,7 @@ cat consolidated-review-report.json | jq -r '.results[] | "\(.agent): \(.status)
 ### **Ejemplo 18: Análisis de Reportes**
 ```bash
 #!/bin/bash
-# scripts/analyze-reports.sh
+# analyze-reports.sh (pendiente)
 
 echo "📊 Analizando reportes de revisión..."
 
@@ -384,11 +384,11 @@ echo "🔍 Ejecutando revisión pre-commit..."
 # Revisar archivos modificados
 git diff --cached --name-only | grep -E '\.(js|ts|jsx|tsx)$' | while read file; do
   echo "Revisando: $file"
-  ./scripts/eslint-check.sh "$file"
+  ./core/core/scripts/eslint-check.sh "$file"
 done
 
 # Escanear seguridad
-./scripts/security-scan.sh
+./core/core/scripts/security-scan.sh
 
 echo "✅ Revisión pre-commit completada"
 ```

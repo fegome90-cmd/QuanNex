@@ -83,11 +83,11 @@ try {
 
     const content = readFileSync(absPath, 'utf8');
     const lines = content.split(/\r?\n/);
-    const matchedLines = selectorsLower.length
-      ? lines.filter((line) =>
-          selectorsLower.some((sel) => line.toLowerCase().includes(sel))
-        )
-      : lines;
+    const matchedLines = selectorsLower.length ?
+      lines.filter((line) =>
+        selectorsLower.some((sel) => line.toLowerCase().includes(sel))
+      ) :
+      lines;
 
     matchedCount += matchedLines.length;
 

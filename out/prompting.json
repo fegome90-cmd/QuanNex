@@ -1,9 +1,11 @@
 {
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
-  "system_prompt": "You are a helpful coding assistant. Style: formal.",
-  "user_prompt": "Goal: demo",
-  "guardrails": [],
+  "system_prompt": "You are a helpful coding assistant. Style: technical. Constraints: Mantener compatibilidad con contratos MCP. Rules: policies/security.md. Context references: agents/README.md, CLAUDE.md.",
+  "user_prompt": "Goal: Generar documentación técnica del sistema MCP",
+  "guardrails": [
+    "Mantener compatibilidad con contratos MCP"
+  ],
   "trace": [
     "prompting.server:ok"
   ]

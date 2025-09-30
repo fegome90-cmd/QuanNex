@@ -1,15 +1,15 @@
 repos:
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.6.0
-  hooks:
-  - id: check-added-large-files
-    args: ['--maxkb=400']
-  - id: end-of-file-fixer
-  - id: trailing-whitespace
-  - id: forbid-new-submodules
-- repo: local
-  hooks:
-  - id: block-temp-artifacts
-    name: Block tmp/.reports/coverage in commits
-    entry: bash -c 'git diff --cached --name-only | egrep "^(tmp/|\.reports/|coverage/|.*\.log$)" && { echo "❌ Artefactos temporales detectados"; exit 1; } || exit 0'
-    language: system
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=400']
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: forbid-new-submodules
+  - repo: local
+    hooks:
+      - id: block-temp-artifacts
+        name: Block tmp/.reports/coverage in commits
+        entry: bash -c 'git diff --cached --name-only | egrep "^(tmp/|\.reports/|coverage/|.*\.log$)" && { echo "❌ Artefactos temporales detectados"; exit 1; } || exit 0'
+        language: system

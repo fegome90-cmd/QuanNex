@@ -58,13 +58,13 @@ const orchestrator = new WorkflowOrchestrator();
 
 // Crear workflow
 const workflow = await orchestrator.createWorkflow({
-  name: "Mi Workflow",
+  name: 'Mi Workflow',
   steps: [
     {
-      step_id: "step1",
-      agent: "context",
-      action: "extract",
-      input: { sources: ["..."], selectors: ["..."] }
+      step_id: 'step1',
+      agent: 'context',
+      action: 'extract',
+      input: { sources: ['...'], selectors: ['...'] }
     }
   ]
 });
@@ -88,24 +88,26 @@ const result = await orchestrator.executeWorkflow(workflow.workflow_id);
 
 ## 🛠️ Herramientas MCP Disponibles
 
-| Herramienta | Descripción |
-|-------------|-------------|
-| `create_workflow` | Crear nuevo workflow |
-| `execute_workflow` | Ejecutar workflow por ID |
-| `get_workflow_status` | Obtener estado de workflow |
-| `list_workflows` | Listar todos los workflows |
+| Herramienta              | Descripción                 |
+| ------------------------ | --------------------------- |
+| `create_workflow`        | Crear nuevo workflow        |
+| `execute_workflow`       | Ejecutar workflow por ID    |
+| `get_workflow_status`    | Obtener estado de workflow  |
+| `list_workflows`         | Listar todos los workflows  |
 | `load_workflow_template` | Cargar template predefinido |
-| `agent_health_check` | Verificar salud de agentes |
-| `call_agent_direct` | Llamar agente directamente |
+| `agent_health_check`     | Verificar salud de agentes  |
+| `call_agent_direct`      | Llamar agente directamente  |
 
 ## 📊 Workflows Predefinidos
 
 ### **Prompt Generation**
+
 - Extrae contexto de fuentes
 - Genera prompt con contexto
 - Valida con reglas de compliance
 
 ### **Context Analysis**
+
 - Extrae contexto primario y secundario
 - Valida con reglas de documentación
 - Genera resumen técnico
@@ -113,16 +115,19 @@ const result = await orchestrator.executeWorkflow(workflow.workflow_id);
 ## 🔧 Configuración
 
 ### **Variables de Entorno**
+
 ```bash
 NODE_ENV=production  # Modo de producción
 ```
 
 ### **Timeouts por Defecto**
+
 - Context Agent: 30s
 - Prompting Agent: 60s
 - Rules Agent: 30s
 
 ### **Reintentos**
+
 - Máximo: 3 reintentos por paso
 - Backoff: Exponencial
 
@@ -142,6 +147,7 @@ node orchestration/test-orchestration.js
 ## 📈 Métricas y Monitoreo
 
 ### **Estados de Workflow**
+
 - `pending` - Esperando ejecución
 - `running` - En ejecución
 - `completed` - Completado exitosamente
@@ -149,6 +155,7 @@ node orchestration/test-orchestration.js
 - `cancelled` - Cancelado
 
 ### **Estados de Paso**
+
 - `pending` - Esperando dependencias
 - `running` - Ejecutándose
 - `completed` - Completado
@@ -165,6 +172,7 @@ node orchestration/test-orchestration.js
 ## 🚨 Troubleshooting
 
 ### **Agente No Responde**
+
 ```bash
 # Verificar salud
 node orchestration/orchestrator.js health
@@ -174,6 +182,7 @@ ls agents/<agent_name>/agent.js
 ```
 
 ### **Workflow Fallido**
+
 ```bash
 # Ver estado detallado
 node orchestration/orchestrator.js status <workflow_id>
@@ -182,12 +191,14 @@ node orchestration/orchestrator.js status <workflow_id>
 ```
 
 ### **Dependencias Circulares**
+
 - Verificar `depends_on` en pasos
 - Asegurar que no hay ciclos
 
 ## 📚 Ejemplos
 
 ### **Workflow Simple**
+
 ```json
 {
   "name": "Simple Context Extract",
@@ -207,6 +218,7 @@ node orchestration/orchestrator.js status <workflow_id>
 ```
 
 ### **Workflow Complejo**
+
 ```json
 {
   "name": "Full Document Processing",

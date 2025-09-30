@@ -4,7 +4,7 @@ import stylistic from '@stylistic/eslint-plugin';
 export default [
   js.configs.recommended,
   {
-    files: ['**/*.{js,ts,jsx,tsx}'],
+    files: ['**/*.{js,mjs,ts,jsx,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -67,6 +67,20 @@ export default [
   },
   {
     files: ['**/*.test.{js,ts}', '**/*.spec.{js,ts}', '**/tests/**/*.{js,ts}'],
+    languageOptions: {
+      globals: {
+        // Jest globals
+        describe: 'readonly',
+        test: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        jest: 'readonly'
+      }
+    },
     rules: {
       'no-console': 'off'
     }
@@ -88,7 +102,7 @@ export default [
       '*.bundle.js',
       '.git/**',
       '.github/**',
-      'templates/**',
+      'core/templates/**',
       'docs/**',
       'ejemplos/**',
       'examples/**',

@@ -3,7 +3,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import {
   CallToolRequestSchema,
-  ListToolsRequestSchema,
+  ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 import WorkflowOrchestrator from '../orchestrator.js';
 import { readFileSync, existsSync } from 'node:fs';
@@ -19,12 +19,12 @@ class OrchestrationMCPServer {
     this.server = new Server(
       {
         name: 'orchestration-mcp-server',
-        version: '1.0.0',
+        version: '1.0.0'
       },
       {
         capabilities: {
-          tools: {},
-        },
+          tools: {}
+        }
       }
     );
 
@@ -38,7 +38,8 @@ class OrchestrationMCPServer {
         tools: [
           {
             name: 'create_workflow',
-            description: 'Create a new workflow with the specified configuration',
+            description:
+              'Create a new workflow with the specified configuration',
             inputSchema: {
               type: 'object',
               properties: {
@@ -57,7 +58,10 @@ class OrchestrationMCPServer {
                     type: 'object',
                     properties: {
                       step_id: { type: 'string' },
-                      agent: { type: 'string', enum: ['context', 'prompting', 'rules'] },
+                      agent: {
+                        type: 'string',
+                        enum: ['context', 'prompting', 'rules']
+                      },
                       action: { type: 'string' },
                       input: { type: 'object' },
                       depends_on: { type: 'array', items: { type: 'string' } }
@@ -134,7 +138,8 @@ class OrchestrationMCPServer {
           },
           {
             name: 'call_agent_direct',
-            description: 'Call an agent directly without workflow orchestration',
+            description:
+              'Call an agent directly without workflow orchestration',
             inputSchema: {
               type: 'object',
               properties: {
@@ -159,32 +164,32 @@ class OrchestrationMCPServer {
       };
     });
 
-    this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    this.server.setRequestHandler(CallToolRequestSchema, async request => {
       const { name, arguments: args } = request.params;
 
       try {
         switch (name) {
           case 'create_workflow':
             return await this.handleCreateWorkflow(args);
-          
+
           case 'execute_workflow':
             return await this.handleExecuteWorkflow(args);
-          
+
           case 'get_workflow_status':
             return await this.handleGetWorkflowStatus(args);
-          
+
           case 'list_workflows':
             return await this.handleListWorkflows(args);
-          
+
           case 'load_workflow_template':
             return await this.handleLoadWorkflowTemplate(args);
-          
+
           case 'agent_health_check':
             return await this.handleAgentHealthCheck(args);
-          
+
           case 'call_agent_direct':
             return await this.handleCallAgentDirect(args);
-          
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -237,7 +242,7 @@ class OrchestrationMCPServer {
         ]
       };
     }
-    
+
     return {
       content: [
         {
@@ -248,7 +253,7 @@ class OrchestrationMCPServer {
     };
   }
 
-  async handleListWorkflows(args) {
+  async handleListWorkflows() {
     const workflows = this.orchestrator.listWorkflows();
     return {
       content: [
@@ -261,15 +266,20 @@ class OrchestrationMCPServer {
   }
 
   async handleLoadWorkflowTemplate(args) {
-    const templatePath = join(PROJECT_ROOT, 'orchestration', 'workflows', `${args.template_name}.json`);
-    
+    const templatePath = join(
+      PROJECT_ROOT,
+      'orchestration',
+      'workflows',
+      `${args.template_name}.json`
+    );
+
     if (!existsSync(templatePath)) {
       throw new Error(`Template ${args.template_name} not found`);
     }
-    
+
     const template = JSON.parse(readFileSync(templatePath, 'utf8'));
     const workflow = await this.orchestrator.createWorkflow(template);
-    
+
     return {
       content: [
         {
@@ -280,7 +290,7 @@ class OrchestrationMCPServer {
     };
   }
 
-  async handleAgentHealthCheck(args) {
+  async handleAgentHealthCheck() {
     const health = await this.orchestrator.healthCheck();
     return {
       content: [
@@ -293,7 +303,11 @@ class OrchestrationMCPServer {
   }
 
   async handleCallAgentDirect(args) {
-    const result = await this.orchestrator.callAgent(args.agent, args.action, args.input);
+    const result = await this.orchestrator.callAgent(
+      args.agent,
+      args.action,
+      args.input
+    );
     return {
       content: [
         {

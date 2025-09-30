@@ -364,11 +364,11 @@ investigacion/
 │   ├── e2e-tests/
 │   └── performance-tests/
 │
-├── 📁 scripts/                               # 🔧 Scripts (existente)
+├── 📁 core/scripts/                               # 🔧 Scripts (existente)
 │   ├── install.sh                           # Existente
 │   ├── test-claude-init.sh                  # Existente
 │   ├── verify-dependencies.sh               # Existente
-│   └── new-scripts/                         # Nuevos scripts
+│   └── new-core/scripts/                         # Nuevos scripts
 │       ├── setup-specialties.sh
 │       ├── validate-configuration.sh
 │       ├── backup-project.sh
@@ -376,7 +376,7 @@ investigacion/
 │
 ├── 📁 tools/                                # 🛠️ Herramientas
 │   ├── cli-tools/
-│   ├── automation-scripts/
+│   ├── automation-core/scripts/
 │   ├── validation-tools/
 │   └── monitoring-tools/
 │
@@ -438,7 +438,7 @@ mkdir -p {7-design-systems,8-technical-architecture,9-micro-saas,10-continuous-l
 
 # Migrar archivos existentes
 mv templates/ core/templates/
-mv scripts/ scripts/ # Mantener ubicación actual
+mv core/scripts/ core/scripts/ # Mantener ubicación actual
 ```
 
 #### **Fase 2: Implementación por Prioridad**

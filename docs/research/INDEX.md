@@ -12,7 +12,7 @@ Este índice resume el material de `docs/research/` tras la normalización.
 - Trazabilidad: `docs/research/TRAZABILIDAD.md`
 
 ## Estado actual
-- Ejecuta `scripts/normalize-research.sh --apply` para mover contenidos desde `investigacion/` y `brainstorm/` a `docs/research/imported/`.
+- Ejecuta `core/scripts/normalize-research.sh --apply` para mover contenidos desde `investigacion/` y `brainstorm/` a `docs/research/imported/`.
 - Tras mover, actualiza esta lista según la estructura importada.
 
 ## Imported (pendiente de completar)

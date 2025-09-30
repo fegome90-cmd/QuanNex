@@ -11,10 +11,10 @@
   - `bash archon/archon-run.sh edge`
 
 ## Suites Incluidas
-- Lint: `./scripts/lint-shell.sh`
-- Integración: `./scripts/test-claude-init.sh`
-- Flags: `./scripts/test-flags.sh`
-- Unit: `./scripts/test-unit.sh`
+- Lint: `./core/scripts/lint-shell.sh`
+- Integración: `./core/scripts/test-claude-init.sh`
+- Flags: `./core/scripts/test-flags.sh`
+- Unit: `./core/scripts/test-unit.sh`
 - Edge matrix: `archon/edge-matrix.sh`
 
 ## Reportes

@@ -34,7 +34,7 @@ jobs:
       - name: Verificar cobertura mínima
         run: |
           echo "📊 Verificando cobertura mínima..."
-          
+
           # Extraer cobertura del reporte JSON
           if [ -f coverage/coverage-final.json ]; then
             COVERAGE=$(node -e "
@@ -65,25 +65,25 @@ jobs:
       - name: Ejecutar tests de agentes
         run: |
           echo "🤖 Ejecutando tests de agentes..."
-          
+
           # Test de agentes de prompting
           if [ -f "agents/prompting/tests/contract.test.js" ]; then
             echo "Testing @prompting agent..."
             node agents/prompting/tests/contract.test.js || echo "⚠️ @prompting tests fallaron"
           fi
-          
+
           # Test de agentes de context
           if [ -f "agents/context/tests/contract.test.js" ]; then
             echo "Testing @context agent..."
             node agents/context/tests/contract.test.js || echo "⚠️ @context tests fallaron"
           fi
-          
+
           # Test de agentes de rules
           if [ -f "agents/rules/tests/contract.test.js" ]; then
             echo "Testing @rules agent..."
             node agents/rules/tests/contract.test.js || echo "⚠️ @rules tests fallaron"
           fi
-          
+
           echo "✅ Tests de agentes completados"
 
       - name: Subir reporte de cobertura
@@ -99,9 +99,9 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            
+
             let comment = '## 🧪 Resumen de Tests\n\n';
-            
+
             // Leer reporte de cobertura si existe
             if (fs.existsSync('coverage/coverage-final.json')) {
               const coverage = JSON.parse(fs.readFileSync('coverage/coverage-final.json', 'utf8'));
@@ -115,9 +115,9 @@ jobs:
               comment += `**Cobertura de código:** ${percentage}%\n`;
               comment += `- Líneas cubiertas: ${total.covered}/${total.total}\n\n`;
             }
-            
+
             comment += `📊 [Ver reporte completo](${context.payload.pull_request.html_url}/checks)`;
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,

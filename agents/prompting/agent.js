@@ -3,12 +3,18 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 const baseDir = new URL('../../', import.meta.url);
-const resolvePath = (relative) => new URL(relative, baseDir).pathname;
+const resolvePath = relative => new URL(relative, baseDir).pathname;
 
-const ALLOWED_STYLES = ['default', 'formal', 'concise', 'creative', 'technical'];
+const ALLOWED_STYLES = [
+  'default',
+  'formal',
+  'concise',
+  'creative',
+  'technical'
+];
 const MAX_LIST_ITEMS = 50;
 
-const ensureArray = (value) => (Array.isArray(value) ? value : []);
+const ensureArray = value => (Array.isArray(value) ? value : []);
 
 const validateStringArray = (field, value, errors) => {
   if (value === undefined) {
@@ -21,12 +27,12 @@ const validateStringArray = (field, value, errors) => {
   if (value.length > MAX_LIST_ITEMS) {
     errors.push(`${field} must not exceed ${MAX_LIST_ITEMS} entries`);
   }
-  if (!value.every((item) => typeof item === 'string')) {
+  if (!value.every(item => typeof item === 'string')) {
     errors.push(`${field} items must be strings`);
   }
 };
 
-const validateInput = (data) => {
+const validateInput = data => {
   if (typeof data !== 'object' || data === null) {
     return ['Input must be an object'];
   }
@@ -47,7 +53,7 @@ const validateInput = (data) => {
   return errors;
 };
 
-const validateOutput = (data) => {
+const validateOutput = data => {
   const errors = [];
   if (typeof data !== 'object' || data === null) {
     return ['Output must be an object'];
@@ -55,10 +61,16 @@ const validateOutput = (data) => {
   if (data.schema_version !== '1.0.0') {
     errors.push('schema_version must equal 1.0.0');
   }
-  if (typeof data.agent_version !== 'string' || data.agent_version.trim() === '') {
+  if (
+    typeof data.agent_version !== 'string' ||
+    data.agent_version.trim() === ''
+  ) {
     errors.push('agent_version must be a non-empty string');
   }
-  if (typeof data.system_prompt !== 'string' || data.system_prompt.trim() === '') {
+  if (
+    typeof data.system_prompt !== 'string' ||
+    data.system_prompt.trim() === ''
+  ) {
     errors.push('system_prompt must be a non-empty string');
   }
   if (typeof data.user_prompt !== 'string' || data.user_prompt.trim() === '') {
@@ -67,14 +79,14 @@ const validateOutput = (data) => {
   if (data.guardrails !== undefined) {
     if (!Array.isArray(data.guardrails)) {
       errors.push('guardrails must be an array');
-    } else if (!data.guardrails.every((item) => typeof item === 'string')) {
+    } else if (!data.guardrails.every(item => typeof item === 'string')) {
       errors.push('guardrails items must be strings');
     }
   }
   if (data.trace !== undefined) {
     if (!Array.isArray(data.trace)) {
       errors.push('trace must be an array');
-    } else if (!data.trace.every((item) => typeof item === 'string')) {
+    } else if (!data.trace.every(item => typeof item === 'string')) {
       errors.push('trace items must be strings');
     }
   }
@@ -94,7 +106,10 @@ data.context_refs = ensureArray(data.context_refs);
 data.ruleset_refs = ensureArray(data.ruleset_refs);
 
 const serverPath = resolvePath('agents/prompting/server.js');
-const result = spawnSync('node', [serverPath], { input: JSON.stringify(data), encoding: 'utf8' });
+const result = spawnSync('node', [serverPath], {
+  input: JSON.stringify(data),
+  encoding: 'utf8'
+});
 if (result.status !== 0) {
   console.error(result.stderr || 'prompting.agent: server execution failed');
   process.exit(result.status ?? 1);

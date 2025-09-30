@@ -11,7 +11,7 @@
 - pre-commit (opt‑in): Lint + secretos + EOL/UTF‑8 localmente.
 - .editorconfig/.gitattributes: UTF‑8 + LF normalizados (evita CRLF/encoding corrupto).
 - Dependabot: Actualiza github-actions semanal; evita drift de CI.
-- gh CLI (con red): Pin de acciones por SHA (scripts/pin-actions.sh).
+- gh CLI (con red): Pin de acciones por SHA (core/scripts/pin-actions.sh).
 
 ## Integración en CI (mínimos)
 - Required checks: `lint-shell`, `test-claude-init`, `test-flags`, `test-unit`, `scan-secrets`.
@@ -19,11 +19,11 @@
 - Artifacts: `reports/validation.json` e `init-report.json` (diagnóstico).
 
 ## Uso Rápido
-- Lint: `./scripts/lint-shell.sh`
-- Unit: `./scripts/test-unit.sh`
-- Integración: `./scripts/test-claude-init.sh && ./scripts/test-flags.sh`
-- Secretos: `./scripts/scan-secrets.sh`
-- Pin de acciones (con red): `bash scripts/pin-actions.sh`
+- Lint: `./core/scripts/lint-shell.sh`
+- Unit: `./core/scripts/test-unit.sh`
+- Integración: `./core/scripts/test-claude-init.sh && ./core/scripts/test-flags.sh`
+- Secretos: `./core/scripts/scan-secrets.sh`
+- Pin de acciones (con red): `bash core/scripts/pin-actions.sh`
 
 ## Métricas y Gates
 - KPI: init→healthcheck OK ≥95%, 0 secretos, tiempo <30s.

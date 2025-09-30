@@ -104,7 +104,7 @@ startkit/
 │   ├── user-guides/
 │   └── development/
 ├── src/                         # Source code
-├── scripts/                     # Automation scripts
+├── core/scripts/                     # Automation scripts
 └── .github/                     # GitHub workflows y templates
 ```
 

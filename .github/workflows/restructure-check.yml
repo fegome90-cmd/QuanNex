@@ -45,9 +45,9 @@ jobs:
 
       - name: Sandbox smoke
         run: |
-          scripts/run-clean.sh rules payloads/rules.sample.json
-          scripts/run-clean.sh context payloads/context.sample.json
-          scripts/run-clean.sh prompting payloads/prompting.sample.json
+          core/scripts/run-clean.sh rules payloads/rules.sample.json
+          core/scripts/run-clean.sh context payloads/context.sample.json
+          core/scripts/run-clean.sh prompting payloads/prompting.sample.json
           test -s out/rules.json && test -s out/context.json && test -s out/prompt.json
 
       - name: Upload diagnostics on failure

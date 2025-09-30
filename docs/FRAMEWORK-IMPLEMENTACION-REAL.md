@@ -29,9 +29,8 @@
 
 ## Rollback y Recuperación
 - Staging + mv atómico; cleanup seguro en ERR/INT/TERM.
-- Backups opt‑in (`--force-with-backup`) y `scripts/restore-backup.sh` (pendiente).
+- Backups opt‑in (`--force-with-backup`) y rutina de restauración (pendiente por definir).
 
 ## Métricas y Reportes
 - `reports/validation.json` y `logs/init-*.log` con pasos/estado/razón.
 - CI publica summary y artifacts; gates marcan required checks.
-

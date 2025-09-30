@@ -70,3 +70,6 @@ out/*.stdout.txt
 !out/prompt.json
 !out/context.json
 !out/rules.json
+# Antigeneric archives (legacy)
+antigeneric-agents/
+antigeneric-agents*

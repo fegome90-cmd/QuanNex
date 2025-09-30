@@ -73,3 +73,6 @@ analisis-proyecto-general/
 
 # Archivos de configuración específicos
 .claude/
+
+# Archivos HTML problemáticos
+antigeneric-agents/output_tests/**/*.html

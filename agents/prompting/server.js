@@ -23,10 +23,19 @@ try {
     throw new Error('Missing required field: goal');
   }
 
-  const style = typeof input.style === 'string' && input.style.trim() !== '' ? input.style : 'default';
-  const constraints = Array.isArray(input.constraints) ? input.constraints.join('; ') : '';
-  const rules = Array.isArray(input.ruleset_refs) ? input.ruleset_refs.join(', ') : '';
-  const contextRefs = Array.isArray(input.context_refs) ? input.context_refs.join(', ') : '';
+  const style =
+    typeof input.style === 'string' && input.style.trim() !== ''
+      ? input.style
+      : 'default';
+  const constraints = Array.isArray(input.constraints)
+    ? input.constraints.join('; ')
+    : '';
+  const rules = Array.isArray(input.ruleset_refs)
+    ? input.ruleset_refs.join(', ')
+    : '';
+  const contextRefs = Array.isArray(input.context_refs)
+    ? input.context_refs.join(', ')
+    : '';
 
   const systemPrompt = [
     'You are a helpful coding assistant.',
@@ -34,7 +43,9 @@ try {
     constraints ? `Constraints: ${constraints}.` : '',
     rules ? `Rules: ${rules}.` : '',
     contextRefs ? `Context references: ${contextRefs}.` : ''
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   const userPrompt = `Goal: ${input.goal.trim()}`;
   const guardrails = Array.isArray(input.constraints) ? input.constraints : [];

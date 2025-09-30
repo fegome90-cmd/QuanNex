@@ -29,7 +29,7 @@ Asegurar un kit robusto, reproducible y seguro, con plantillas por tipo y CI end
 
 4) Seguridad y Compliance (Semana 2–3)
 - `.env.example` por tipo; política de PHI en proyectos “medical”
-- `scripts/check-phi.sh` para medical; reforzar `.gitignore` en plantillas
+- `core/scripts/check-phi.sh` para medical; reforzar `.gitignore` en plantillas
 - Secret scan gated en CI; `.secretsallow` documentado
 
 5) Integración de Investigación (Semana 3)
@@ -37,7 +37,7 @@ Asegurar un kit robusto, reproducible y seguro, con plantillas por tipo y CI end
 - Comando `/research-digest` y agente `@context-engineer` (plantilla)
 
 6) Release y Mantenimiento (Semana 4)
-- `VERSION` + `scripts/release.sh` (SemVer, changelog, checksum)
+- `VERSION` + `core/scripts/release.sh` (SemVer, changelog, checksum)
 - Dependabot para `github-actions`; documentación de soporte
 
 ## KPIs

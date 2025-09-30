@@ -127,8 +127,8 @@ Próximo: Validación     ⏳ PENDIENTE
 
 ### **🔧 Scripts de Validación:**
 - **healthcheck.sh** (en proyectos generados): Verificar salud del proyecto
-- **scripts/test-claude-init.sh**: Testing del inicializador
-- **scripts/scan-secrets.sh**: Escaneo de seguridad
+- **core/scripts/test-claude-init.sh**: Testing del inicializador
+- **core/scripts/scan-secrets.sh**: Escaneo de seguridad
 
 ### **📊 Métricas de Progreso:**
 - **Entregables completados**: Cantidad vs. objetivo del día

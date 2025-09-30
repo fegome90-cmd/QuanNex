@@ -121,15 +121,15 @@ Próximo: Validación     ⏳ PENDIENTE (Cimientos listos)
 
 ### **📋 Documentos de Referencia:**
 - **docs/COORDINACION-CODEX.md**: Estado actual y reglas de coordinación
-- **docs/adr/ADR-0001-stack-basico.md**: Stack tecnológico
+- **ADR base (pendiente de publicación)**: Stack tecnológico
 - **docs/ci/PLAN.md**: Plan de CI/CD
-- **docs/rfc/RFC-0001-dev-flow.md**: Flujo de desarrollo
+- **RFC dev-flow (pendiente de publicación)**: Flujo de desarrollo
 
 ### **🔧 Scripts de Cimientos:**
-- **scripts/healthcheck.sh**: Verificar salud de los cimientos
-- **scripts/test-claude-init.sh**: Testing de la infraestructura base
-- **scripts/scan-secrets-simple.sh**: Escaneo de seguridad de cimientos
-- **scripts/normalize-research.sh**: Normalización de investigación
+- **core/scripts/healthcheck.sh**: Verificar salud de los cimientos
+- **core/scripts/test-claude-init.sh**: Testing de la infraestructura base
+- **core/scripts/scan-secrets-simple.sh**: Escaneo de seguridad de cimientos
+- **core/scripts/normalize-research.sh**: Normalización de investigación
 
 ### **📊 Métricas de Cimientos:**
 - **Infraestructura construida**: Cantidad vs. objetivo del día
