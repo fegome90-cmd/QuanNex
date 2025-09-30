@@ -1,0 +1,81 @@
+{
+  "name": "document-agent",
+  "description": "Document Agent - Gestión y análisis de documentos basado en Archon OS",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más - Adaptado de Archon OS",
+  "especialidad": "DOCUMENT_MANAGEMENT",
+  "prioridad": "ALTA",
+  "responsabilidades": [
+    "Gestión inteligente de documentos",
+    "Análisis y procesamiento de contenido",
+    "Organización automática de información",
+    "Extracción de insights de documentos"
+  ],
+  "expertise": [
+    "Document processing",
+    "Content analysis",
+    "Information extraction",
+    "Document organization",
+    "Metadata management"
+  ],
+  "permisos": {
+    "lectura": ["documentos", "archivos", "contenido"],
+    "escritura": ["analisis", "metadata", "insights"],
+    "ejecucion": ["procesamiento", "extraccion", "organizacion"]
+  },
+  "validaciones": {
+    "seguridad": ["permisos", "formato_archivo", "contenido"],
+    "calidad": ["precision_extraccion", "relevancia_insights", "organizacion"],
+    "performance": ["tiempo_procesamiento", "memoria", "escalabilidad"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "documento", "accion", "resultado", "usuario"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true
+  },
+  "dependencias": {
+    "base_agent": "base-agent-template.json",
+    "rag_agent": "rag-agent.json",
+    "knowledge_base": "knowledge-base.json"
+  },
+  "workflows": [
+    "document_ingestion",
+    "content_analysis",
+    "information_extraction",
+    "metadata_generation",
+    "insight_discovery"
+  ],
+  "comandos": [
+    "/process-document [archivo] - Procesa y analiza documento",
+    "/extract-insights [documento] - Extrae insights clave",
+    "/organize-docs [directorio] - Organiza documentos automáticamente",
+    "/generate-metadata [archivo] - Genera metadata inteligente"
+  ],
+  "documentacion": {
+    "README": "docs/agents/archon-adapted/README.md",
+    "API": "docs/agents/archon-adapted/API.md",
+    "ejemplos": "docs/agents/archon-adapted/ejemplos.md"
+  },
+  "contacto": {
+    "responsable": "DOCUMENT_SPECIALIST",
+    "email": "documents@proyecto.com",
+    "slack": "#canal-documents"
+  },
+  "archon_adaptation": {
+    "source": "Archon OS Document Agent",
+    "original_file": "docs/reference/archon/python/src/agents/document_agent.py",
+    "adaptation_notes": "Convertido de Python/PydanticAI a JSON para compatibilidad con nuestro sistema",
+    "features_implemented": [
+      "Document processing",
+      "Content analysis",
+      "Information extraction",
+      "Metadata generation",
+      "Insight discovery"
+    ]
+  }
+}

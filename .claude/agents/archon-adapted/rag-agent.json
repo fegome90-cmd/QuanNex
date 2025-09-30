@@ -1,0 +1,78 @@
+{
+  "name": "rag-agent",
+  "description": "RAG Agent - Conversational Search and Retrieval basado en Archon OS",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más - Adaptado de Archon OS",
+  "especialidad": "RAG_AGENT",
+  "prioridad": "ALTA",
+  "responsabilidades": [
+    "Búsqueda conversacional en documentos",
+    "Retrieval de información relevante",
+    "Respuestas inteligentes basadas en contexto",
+    "Integración con sistema de knowledge base"
+  ],
+  "expertise": [
+    "RAG (Retrieval Augmented Generation)",
+    "Búsqueda semántica",
+    "Análisis de documentos",
+    "Generación de respuestas contextuales"
+  ],
+  "permisos": {
+    "lectura": ["documentos", "knowledge_base", "contexto"],
+    "escritura": ["respuestas", "queries", "logs"],
+    "ejecucion": ["busquedas", "analisis", "generacion"]
+  },
+  "validaciones": {
+    "seguridad": ["permisos", "entrada", "salida"],
+    "calidad": ["relevancia", "precision", "contexto"],
+    "performance": ["tiempo_respuesta", "recursos", "escalabilidad"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "query", "resultado", "usuario", "proyecto_id"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true
+  },
+  "dependencias": {
+    "base_agent": "base-agent-template.json",
+    "mcp_client": "mcp-client.json",
+    "knowledge_base": "knowledge-base.json"
+  },
+  "workflows": [
+    "document_search",
+    "context_retrieval",
+    "response_generation",
+    "knowledge_update"
+  ],
+  "comandos": [
+    "/search [query] - Busca en documentos",
+    "/chat [pregunta] - Chat conversacional con documentos",
+    "/retrieve [contexto] - Recupera información relevante",
+    "/update-knowledge - Actualiza knowledge base"
+  ],
+  "documentacion": {
+    "README": "docs/agents/archon-adapted/README.md",
+    "API": "docs/agents/archon-adapted/API.md",
+    "ejemplos": "docs/agents/archon-adapted/ejemplos.md"
+  },
+  "contacto": {
+    "responsable": "RAG_SPECIALIST",
+    "email": "rag@proyecto.com",
+    "slack": "#canal-rag"
+  },
+  "archon_adaptation": {
+    "source": "Archon OS RAG Agent",
+    "original_file": "docs/reference/archon/python/src/agents/rag_agent.py",
+    "adaptation_notes": "Convertido de Python/PydanticAI a JSON para compatibilidad con nuestro sistema",
+    "features_implemented": [
+      "Conversational search",
+      "Document retrieval",
+      "Context-aware responses",
+      "Knowledge base integration"
+    ]
+  }
+}

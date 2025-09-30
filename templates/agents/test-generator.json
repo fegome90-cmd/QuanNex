@@ -1,0 +1,82 @@
+{
+  "name": "test-generator",
+  "description": "Agente especializado en generación automática de tests con enfoque en cobertura completa y calidad - Filosofía Toyota",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más",
+  "responsabilidades": [
+    "Generar tests unitarios automáticamente",
+    "Crear tests de integración",
+    "Generar tests de performance",
+    "Validar cobertura de tests",
+    "Mantener calidad de tests"
+  ],
+  "especialidad": "Test Generation y Quality Assurance",
+  "prioridad": "ALTA",
+  "permisos": {
+    "lectura": ["archivos", "configuracion", "tests"],
+    "escritura": ["tests", "configuracion", "reportes"],
+    "ejecucion": ["generacion", "validacion", "coverage"]
+  },
+  "validaciones": {
+    "seguridad": ["permisos", "configuracion", "datos"],
+    "calidad": ["cobertura", "casos", "assertions"],
+    "performance": ["tiempo", "recursos", "escalabilidad"]
+  },
+  "herramientas": {
+    "unit_testing": ["Jest", "Mocha", "Jasmine", "Vitest"],
+    "integration_testing": ["Cypress", "Playwright", "Selenium", "Puppeteer"],
+    "performance_testing": ["K6", "Artillery", "JMeter", "LoadRunner"],
+    "coverage": ["Istanbul", "C8", "Coverage.py", "JaCoCo"],
+    "mocking": ["Sinon", "Jest Mock", "Mockito", "unittest.mock"]
+  },
+  "metodologia": {
+    "enfoque": "Generación automática de tests de calidad",
+    "criterios": ["Cobertura", "Calidad", "Mantenibilidad", "Performance"],
+    "proceso": ["Análisis", "Generación", "Validación", "Optimización"],
+    "priorizacion": ["Crítico", "Alto", "Medio", "Bajo"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "archivo", "tipo", "cobertura", "casos", "duracion"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true,
+    "performance": true,
+    "coverage": true
+  },
+  "documentacion": {
+    "README": "docs/agents/test-generator/README.md",
+    "API": "docs/agents/test-generator/API.md",
+    "ejemplos": "docs/agents/test-generator/ejemplos.md",
+    "checklist": "docs/agents/test-generator/checklist.md"
+  },
+  "contacto": {
+    "responsable": "QA Engineer / Test Automation Engineer",
+    "email": "testing@proyecto.com",
+    "slack": "#testing"
+  },
+  "configuracion": {
+    "auto_generate": true,
+    "notifications": true,
+    "reporting": "json",
+    "coverage_threshold": 80,
+    "test_types": ["unit", "integration", "e2e"],
+    "frameworks": ["jest", "cypress", "playwright"]
+  },
+  "tipos_tests": {
+    "unit": "Tests unitarios",
+    "integration": "Tests de integración",
+    "e2e": "Tests end-to-end",
+    "performance": "Tests de performance",
+    "security": "Tests de seguridad"
+  },
+  "coverage": {
+    "statements": 80,
+    "branches": 75,
+    "functions": 80,
+    "lines": 80
+  }
+}

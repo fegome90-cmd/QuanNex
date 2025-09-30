@@ -1,0 +1,66 @@
+[
+  {
+    "factor": "Timerop Validation",
+    "category": "timerop_validation",
+    "value": 1.0,
+    "evidence_level": "B",
+    "confidence_interval": [
+      0.95,
+      1.05
+    ],
+    "study_count": 1,
+    "total_sample_size": 150,
+    "publication_range": [
+      2023,
+      2023
+    ]
+  },
+  {
+    "factor": "Hemorrhage Classification",
+    "category": "hemorrhage_classification",
+    "value": 1.3,
+    "evidence_level": "B",
+    "confidence_interval": [
+      1.2,
+      1.4
+    ],
+    "study_count": 1,
+    "total_sample_size": 200,
+    "publication_range": [
+      2023,
+      2023
+    ]
+  },
+  {
+    "factor": "Infection Diagnosis",
+    "category": "infection_diagnosis",
+    "value": 1.6,
+    "evidence_level": "A",
+    "confidence_interval": [
+      1.4,
+      1.8
+    ],
+    "study_count": 1,
+    "total_sample_size": 2000,
+    "publication_range": [
+      2022,
+      2022
+    ]
+  },
+  {
+    "factor": "Product Effectiveness",
+    "category": "product_effectiveness",
+    "value": 1.4,
+    "evidence_level": "A",
+    "confidence_interval": [
+      1.2,
+      1.6
+    ],
+    "study_count": 1,
+    "total_sample_size": 300,
+    "publication_range": [
+      2023,
+      2023
+    ]
+  }
+]

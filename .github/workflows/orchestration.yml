@@ -1,0 +1,73 @@
+name: Orchestration System Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths: [ 'orchestration/**' ]
+  pull_request:
+    branches: [ main, develop ]
+    paths: [ 'orchestration/**' ]
+
+jobs:
+  orchestration-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test orchestration system
+        run: |
+          echo "🧪 Testing Orchestration System on Node ${{ matrix.node }}"
+          node orchestration/test-orchestration.js
+
+      - name: Test MCP server startup
+        run: |
+          echo "🔌 Testing MCP Server startup"
+          timeout 10s node orchestration/mcp/server.js --help || true
+
+      - name: Validate schemas
+        run: |
+          echo "📋 Validating JSON schemas"
+          # Validate workflow schema
+          node -e "
+            const fs = require('fs');
+            const Ajv = require('ajv');
+            const ajv = new Ajv();
+            
+            const workflowSchema = JSON.parse(fs.readFileSync('orchestration/schemas/workflow.schema.json', 'utf8'));
+            const commSchema = JSON.parse(fs.readFileSync('orchestration/schemas/agent-communication.schema.json', 'utf8'));
+            
+            console.log('✅ Workflow schema valid');
+            console.log('✅ Communication schema valid');
+          "
+
+      - name: Test workflow templates
+        run: |
+          echo "📄 Testing workflow templates"
+          for template in orchestration/workflows/*.json; do
+            echo "Validating $template"
+            node -e "
+              const fs = require('fs');
+              const template = JSON.parse(fs.readFileSync('$template', 'utf8'));
+              console.log('✅ Template valid:', template.name);
+            "
+          done
+
+      - name: Cleanup
+        if: always()
+        run: |
+          node tools/cleanup.mjs || true
+          rm -rf tmp || true

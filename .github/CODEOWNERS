@@ -1,0 +1,30 @@
+# Filosofía Toyota: Solo archivos críticos requieren revisión
+# Protección de seguridad sin burocracia innecesaria
+
+# Archivos críticos - requiere revisión de seguridad
+/claude-project-init.sh @fegome90-cmd
+/.github/ @fegome90-cmd
+/scripts/ @fegome90-cmd
+
+# Archivos de configuración de seguridad
+/.secretsallow @fegome90-cmd
+/.githooks/ @fegome90-cmd
+
+# Archivos de investigación crítica
+/investigacion/ @fegome90-cmd
+/docs/research/ @fegome90-cmd
+
+# Decisiones de arquitectura y RFCs
+/docs/adr/ @fegome90-cmd
+/docs/rfc/ @fegome90-cmd
+
+# Documentación operativa
+/docs/onboarding/ @fegome90-cmd
+/docs/CHARTER.md @fegome90-cmd
+
+# Filosofía Toyota: Mínimo control, máximo valor
+# Solo proteger lo que realmente importa para la seguridad
+
+# COORDINACIÓN CON CODEX:
+# - Codex crea: CHARTER.md, ADR-0001, INDEX.md
+# - Claude implementa: CODEOWNERS, estructura, CI/CD

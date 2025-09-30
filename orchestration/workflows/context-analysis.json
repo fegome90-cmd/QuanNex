@@ -1,0 +1,64 @@
+{
+  "name": "Context Analysis Workflow",
+  "description": "Analyze and extract context from multiple sources with rules validation",
+  "steps": [
+    {
+      "step_id": "extract_primary_context",
+      "agent": "context",
+      "action": "extract",
+      "input": {
+        "sources": [],
+        "selectors": ["main", "primary", "core"],
+        "max_tokens": 3000
+      },
+      "depends_on": [],
+      "timeout": 45,
+      "max_retries": 3
+    },
+    {
+      "step_id": "extract_secondary_context",
+      "agent": "context",
+      "action": "extract",
+      "input": {
+        "sources": [],
+        "selectors": ["secondary", "supporting", "reference"],
+        "max_tokens": 1500
+      },
+      "depends_on": [],
+      "timeout": 30,
+      "max_retries": 3
+    },
+    {
+      "step_id": "validate_context_rules",
+      "agent": "rules",
+      "action": "validate",
+      "input": {
+        "policy_refs": ["docs/", "templates/"],
+        "tone": "formal",
+        "domain": "documentation",
+        "compliance_level": "strict"
+      },
+      "depends_on": ["extract_primary_context", "extract_secondary_context"],
+      "timeout": 30,
+      "max_retries": 2
+    },
+    {
+      "step_id": "generate_context_summary",
+      "agent": "prompting",
+      "action": "summarize",
+      "input": {
+        "goal": "Create a comprehensive context summary",
+        "context": "{{extract_primary_context.output.context_bundle}} {{extract_secondary_context.output.context_bundle}}",
+        "constraints": ["Be concise", "Maintain accuracy", "Include key points"],
+        "style": "technical"
+      },
+      "depends_on": ["validate_context_rules"],
+      "timeout": 60,
+      "max_retries": 3
+    }
+  ],
+  "context": {
+    "workflow_type": "context_analysis",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LintReport",
+  "type": "object",
+  "properties": {
+    "generated_at": { "type": "string", "format": "date-time" },
+    "eslint": {
+      "type": "object",
+      "properties": {
+        "errors": { "type": "integer", "minimum": 0 },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "report_path": { "type": "string" }
+      },
+      "required": ["errors", "warnings"]
+    },
+    "ruff": {
+      "type": "object",
+      "properties": {
+        "errors": { "type": "integer", "minimum": 0 },
+        "report_path": { "type": "string" }
+      },
+      "required": ["errors"]
+    },
+    "shellcheck": {
+      "type": "object",
+      "properties": {
+        "errors": { "type": "integer", "minimum": 0 },
+        "report_path": { "type": "string" }
+      },
+      "required": ["errors"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pass", "fail"]
+    }
+  },
+  "required": ["generated_at", "eslint", "ruff", "shellcheck", "status"]
+}

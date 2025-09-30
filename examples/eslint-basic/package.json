@@ -1,0 +1,14 @@
+{
+  "name": "eslint-basic-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "eslint src --max-warnings=0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}
+

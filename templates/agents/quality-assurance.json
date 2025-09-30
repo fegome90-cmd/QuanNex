@@ -1,0 +1,13 @@
+{
+  "name": "quality-assurance",
+  "description": "Aseguramiento de calidad: pruebas y validaciones transversales",
+  "version": "1.0.0",
+  "logging": { "nivel": "INFO", "formato": "JSON", "campos": ["timestamp", "accion", "resultado"] },
+  "testing": { "unit": true, "integration": true, "security": true },
+  "documentacion": {
+    "README": "docs/agents/quality-assurance/README.md",
+    "API": "docs/agents/quality-assurance/API.md",
+    "ejemplos": "docs/agents/quality-assurance/ejemplos.md"
+  }
+}
+

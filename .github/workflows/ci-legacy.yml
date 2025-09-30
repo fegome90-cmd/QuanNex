@@ -1,0 +1,126 @@
+name: CI - Security Hardened
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# Filosofía Toyota: Mínimo privilegio por defecto
+permissions:
+  contents: read
+  pull-requests: read
+
+# Filosofía Toyota: Evitar builds duplicados
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Filosofía Toyota: Solo chequeos esenciales
+  security-checks:
+    name: Security & Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Filosofía Toyota: Profundidad mínima necesaria
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Shell script linting
+        run: |
+          # Filosofía Toyota: Solo verificación, no auto-fix
+          ./scripts/lint-shell.sh
+
+      - name: Test Claude Project Init
+        run: |
+          # Filosofía Toyota: Verificación de funcionalidad
+          ./scripts/test-claude-init.sh
+
+      - name: Test security flags
+        run: |
+          # Filosofía Toyota: Verificación de seguridad
+          ./scripts/test-flags.sh
+
+      - name: Scan for secrets
+        run: |
+          # Filosofía Toyota: Prevención de fugas
+          ./scripts/scan-secrets.sh
+
+      - name: Verify dependencies
+        run: |
+          # Filosofía Toyota: Verificación de dependencias
+          ./scripts/verify-dependencies.sh
+
+  # Filosofía Toyota: Validación de integridad
+  integrity-check:
+    name: Repository Integrity Check
+    runs-on: ubuntu-latest
+    needs: security-checks
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check file permissions
+        run: |
+          # Filosofía Toyota: Verificar permisos seguros
+          find . -type f -perm /111 | grep -v ".git" | grep -v "node_modules" | while read file; do
+            if [[ $(stat -c "%a" "$file") == "777" ]]; then
+              echo "❌ Unsafe permissions on: $file"
+              exit 1
+            fi
+          done
+          echo "✅ File permissions verified"
+
+      - name: Check for sensitive files
+        run: |
+          # Filosofía Toyota: Verificar ausencia de archivos sensibles
+          if [ -f ".env" ] || [ -f ".secrets" ] || [ -f "secrets.json" ]; then
+            echo "❌ Sensitive files found in repository"
+            exit 1
+          fi
+          echo "✅ No sensitive files found"
+
+      - name: Validate .gitignore
+        run: |
+          # Filosofía Toyota: Verificar integridad de .gitignore
+          if ! grep -q "\.env" .gitignore; then
+            echo "❌ .env not in .gitignore"
+            exit 1
+          fi
+          if ! grep -q "\.claude/memory" .gitignore; then
+            echo "❌ .claude/memory not in .gitignore"
+            exit 1
+          fi
+          echo "✅ .gitignore integrity verified"
+
+  # Filosofía Toyota: Solo si es necesario
+  health-check:
+    name: Project Health Check
+    runs-on: ubuntu-latest
+    needs: [security-checks, integrity-check]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run health check
+        run: |
+          # Filosofía Toyota: Verificación de salud del proyecto
+          if [ -f "scripts/healthcheck.sh" ]; then
+            ./scripts/healthcheck.sh
+          else
+            echo "ℹ️ Health check script not found (optional)"
+          fi

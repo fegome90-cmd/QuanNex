@@ -1,0 +1,11 @@
+{
+  "generated_at": "2025-09-30T14:30:00Z",
+  "notes": "Baseline inicial validated withSandbox; 5 iter/agent; success=100%",
+  "agents": {
+    "context": { "avg_s": 0.312, "p95_s": 0.82, "success_rate": 1.0 },
+    "prompting": { "avg_s": 0.421, "p95_s": 0.74, "success_rate": 1.0 },
+    "rules": { "avg_s": 0.148, "p95_s": 0.20, "success_rate": 1.0 }
+  },
+  "isolation": { "leaks": 0, "temp_after_run": 0 },
+  "tests": { "passed": 11, "failed": 0 }
+}

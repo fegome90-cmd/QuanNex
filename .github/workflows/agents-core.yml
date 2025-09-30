@@ -1,0 +1,101 @@
+name: Agents Core
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  schemas-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Validate agent schemas
+        run: |
+          for file in schemas/agents/*.json; do
+            echo "Validating $file"
+            jq -e . "$file" >/dev/null
+          done
+      - name: Cleanup workspace
+        if: always()
+        run: node tools/cleanup.mjs
+
+  plan-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Ensure orchestration plan structure
+        run: |
+          python - <<'PY'
+          stages = []
+          current = None
+          with open('orchestration/PLAN.yaml', 'r', encoding='utf-8') as fh:
+              for raw_line in fh:
+                  line = raw_line.strip()
+                  if line.startswith('- name:'):
+                      value = line.split(':', 1)[1].strip()
+                      current = {'name': value.strip('"')}
+                      stages.append(current)
+                  elif line.startswith('pass_if:') and current is not None:
+                      value = line.split(':', 1)[1].strip()
+                      current['pass_if'] = value.strip('"')
+          
+          expected_order = ['rules', 'context', 'prompting']
+          if [stage.get('name') for stage in stages] != expected_order:
+              raise SystemExit(f'Unexpected stage order: {stages}')
+          expected_checks = {
+              'rules': 'rules_compiled.length > 0 && violations.length == 0',
+              'context': 'stats.tokens_estimated >= 256',
+              'prompting': 'system_prompt.length > 0 && user_prompt.length > 0'
+          }
+          for stage in stages:
+              if stage.get('pass_if') != expected_checks[stage['name']]:
+                  raise SystemExit(f"Stage {stage['name']} has unexpected pass_if {stage.get('pass_if')}")
+          print('PLAN.yaml validated')
+          PY
+      - name: Cleanup workspace
+        if: always()
+        run: node tools/cleanup.mjs
+
+  agents-contract:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18.x', '20.x', '22.x']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Run prompting contract tests
+        run: node --test agents/prompting/tests/contract.test.js
+      - name: Run context contract tests
+        run: node --test agents/context/tests/contract.test.js
+      - name: Run rules contract tests
+        run: node --test agents/rules/tests/contract.test.js
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agents-core-${{ matrix.node }}-artifacts
+          path: |
+            out
+            tmp
+            **/*.log
+          if-no-files-found: ignore
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          node tools/cleanup.mjs
+          rm -rf out/*.json || true

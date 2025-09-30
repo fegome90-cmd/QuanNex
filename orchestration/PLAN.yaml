@@ -1,0 +1,39 @@
+name: "Core Pipeline"
+description: "rules → context → prompting con gates"
+context:
+  session_id: "${GITHUB_RUN_ID:-local}"
+  run_label: "core-agents"
+steps:
+  - step_id: rules
+    agent: rules
+    input:
+      policy_refs: ["README.md", "SECURITY.md"]
+      compliance_level: "basic"
+    pass_if:
+      exists: "rules_compiled"         # output.rules_compiled debe existir
+    max_retries: 1
+    timeout_ms: 15000
+
+  - step_id: context
+    agent: context
+    depends_on: ["rules"]
+    input:
+      sources: ["agents/context/tests/fixtures/sample.txt"]
+      selectors: ["Requisitos"]
+      max_tokens: 512
+    pass_if:
+      exists: "context_bundle"         # output.context_bundle debe existir
+    max_retries: 1
+    timeout_ms: 15000
+
+  - step_id: prompting
+    agent: prompting
+    depends_on: ["context"]
+    input:
+      goal: "demo"
+      style: "formal"
+      context: "{{context.output.context_bundle}}"
+    pass_if:
+      exists: "system_prompt"          # output.system_prompt debe existir
+    max_retries: 1
+    timeout_ms: 15000

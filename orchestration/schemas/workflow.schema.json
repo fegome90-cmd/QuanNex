@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Workflow Orchestration Schema",
+  "description": "Schema for orchestrating agent workflows",
+  "type": "object",
+  "required": ["workflow_id", "steps", "status"],
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "description": "Unique identifier for the workflow"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the workflow"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what this workflow does"
+    },
+    "steps": {
+      "type": "array",
+      "description": "Ordered list of workflow steps",
+      "items": {
+        "$ref": "#/definitions/step"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "running", "completed", "failed", "cancelled"],
+      "description": "Current status of the workflow"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the workflow was created"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the workflow started execution"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the workflow completed"
+    },
+    "context": {
+      "type": "object",
+      "description": "Shared context data for the workflow",
+      "additionalProperties": true
+    },
+    "results": {
+      "type": "object",
+      "description": "Results from completed steps",
+      "additionalProperties": true
+    },
+    "error": {
+      "type": "object",
+      "description": "Error information if workflow failed",
+      "properties": {
+        "message": { "type": "string" },
+        "step_id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "definitions": {
+    "step": {
+      "type": "object",
+      "required": ["step_id", "agent", "action", "status"],
+      "properties": {
+        "step_id": {
+          "type": "string",
+          "description": "Unique identifier for this step"
+        },
+        "agent": {
+          "type": "string",
+          "enum": ["context", "prompting", "rules"],
+          "description": "Which agent to execute"
+        },
+        "action": {
+          "type": "string",
+          "description": "Action to perform (e.g., 'extract', 'generate', 'validate')"
+        },
+        "input": {
+          "type": "object",
+          "description": "Input data for this step",
+          "additionalProperties": true
+        },
+        "output": {
+          "type": "object",
+          "description": "Output data from this step",
+          "additionalProperties": true
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "running", "completed", "failed", "skipped"],
+          "description": "Current status of this step"
+        },
+        "depends_on": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Step IDs this step depends on"
+        },
+        "timeout": {
+          "type": "number",
+          "description": "Timeout in seconds for this step"
+        },
+        "retry_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of times this step has been retried"
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 3,
+          "description": "Maximum number of retries allowed"
+        }
+      }
+    }
+  }
+}

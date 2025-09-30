@@ -1,0 +1,8 @@
+node_modules/
+tmp/
+.reports/
+coverage/
+logs/
+*.log
+out/
+out/*.tmp.json

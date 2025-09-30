@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Communication Schema",
+  "description": "Schema for communication between agents in the orchestration system",
+  "type": "object",
+  "required": ["message_id", "from_agent", "to_agent", "message_type", "payload"],
+  "properties": {
+    "message_id": {
+      "type": "string",
+      "description": "Unique identifier for this message"
+    },
+    "from_agent": {
+      "type": "string",
+      "enum": ["orchestrator", "context", "prompting", "rules"],
+      "description": "Agent that sent this message"
+    },
+    "to_agent": {
+      "type": "string",
+      "enum": ["orchestrator", "context", "prompting", "rules"],
+      "description": "Agent that should receive this message"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": ["task_request", "task_response", "status_update", "error_report", "heartbeat"],
+      "description": "Type of message being sent"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Message payload",
+      "oneOf": [
+        { "$ref": "#/definitions/task_request_payload" },
+        { "$ref": "#/definitions/task_response_payload" },
+        { "$ref": "#/definitions/status_update_payload" },
+        { "$ref": "#/definitions/error_report_payload" },
+        { "$ref": "#/definitions/heartbeat_payload" }
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the message was created"
+    },
+    "correlation_id": {
+      "type": "string",
+      "description": "ID to correlate related messages"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "default": 5,
+      "description": "Message priority (1=highest, 10=lowest)"
+    }
+  },
+  "definitions": {
+    "task_request_payload": {
+      "type": "object",
+      "required": ["task_id", "action", "input"],
+      "properties": {
+        "task_id": { "type": "string" },
+        "action": { "type": "string" },
+        "input": { "type": "object", "additionalProperties": true },
+        "timeout": { "type": "number" },
+        "retry_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "task_response_payload": {
+      "type": "object",
+      "required": ["task_id", "status", "output"],
+      "properties": {
+        "task_id": { "type": "string" },
+        "status": { "type": "string", "enum": ["completed", "failed"] },
+        "output": { "type": "object", "additionalProperties": true },
+        "execution_time": { "type": "number" },
+        "error": { "type": "string" }
+      }
+    },
+    "status_update_payload": {
+      "type": "object",
+      "required": ["status", "details"],
+      "properties": {
+        "status": { "type": "string" },
+        "details": { "type": "string" },
+        "progress": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "error_report_payload": {
+      "type": "object",
+      "required": ["error_type", "message", "details"],
+      "properties": {
+        "error_type": { "type": "string" },
+        "message": { "type": "string" },
+        "details": { "type": "object", "additionalProperties": true },
+        "stack_trace": { "type": "string" }
+      }
+    },
+    "heartbeat_payload": {
+      "type": "object",
+      "required": ["agent_status"],
+      "properties": {
+        "agent_status": { "type": "string", "enum": ["healthy", "busy", "error"] },
+        "current_tasks": { "type": "integer", "minimum": 0 },
+        "memory_usage": { "type": "number" },
+        "last_activity": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

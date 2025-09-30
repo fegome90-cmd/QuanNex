@@ -1,0 +1,13 @@
+{
+  "name": "performance-optimizer",
+  "description": "Optimizador de performance: perfiles, métricas y mejoras de rendimiento",
+  "version": "1.0.0",
+  "logging": { "nivel": "INFO", "formato": "JSON", "campos": ["timestamp", "metric", "valor"] },
+  "testing": { "unit": false, "integration": true, "security": false },
+  "documentacion": {
+    "README": "docs/agents/performance-optimizer/README.md",
+    "API": "docs/agents/performance-optimizer/API.md",
+    "ejemplos": "docs/agents/performance-optimizer/ejemplos.md"
+  }
+}
+

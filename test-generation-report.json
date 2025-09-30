@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-09-02T22:35:37Z",
+  "test_type": "unit",
+  "framework": "jest",
+  "coverage_threshold": 80,
+  "total_generated": 11,
+  "generated_tests": [
+    "[0;34m[Test",
+    "Generator][0m",
+    "Generando",
+    "tests",
+    "unitarios...",
+    "[0;34m[Test",
+    "Generator][0m",
+    "Tests",
+    "unitarios",
+    "generados:",
+    "0"
+  ],
+  "recommendations": [
+    "Review generated tests and add specific assertions",
+    "Add edge cases and error handling tests",
+    "Implement integration tests for complex workflows",
+    "Add performance tests for critical functions",
+    "Maintain test coverage above 80%"
+  ]
+}

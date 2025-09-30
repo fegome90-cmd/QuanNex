@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-08-31T20:05:00.054632",
+  "total_records": 1000,
+  "missing_data_percentage": 0.0,
+  "distribution_metrics": {
+    "timerop_score": {
+      "mean": 5.5384,
+      "median": 5.515,
+      "std": 2.0113,
+      "min_value": 0.0,
+      "max_value": 10.0,
+      "outliers_count": 0,
+      "outliers_percentage": 0.0
+    },
+    "confidence_score": {
+      "mean": 0.7082,
+      "median": 0.716,
+      "std": 0.1878,
+      "min_value": 0.126,
+      "max_value": 1.0,
+      "outliers_count": 6,
+      "outliers_percentage": 0.6
+    }
+  },
+  "bias_analysis": [
+    {
+      "bias_type": "Hemorrhage Severity Bias",
+      "severity": "low",
+      "description": "Sesgo hacia casos menos severos de hemorrhage (70.5% casos none/minimal)",
+      "affected_fields": [
+        "hemorrhage_level"
+      ],
+      "impact_score": 0.6,
+      "recommendations": [
+        "Revisar criterios de clasificación de hemorrhage",
+        "Validar con datos clínicos reales",
+        "Considerar balanceo de datos de entrenamiento"
+      ]
+    }
+  ],
+  "data_quality_score": 0.88,
+  "recommendations": [
+    "Revisar y corregir sesgos identificados"
+  ]
+}

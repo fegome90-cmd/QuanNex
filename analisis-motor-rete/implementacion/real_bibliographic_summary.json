@@ -1,0 +1,66 @@
+{
+  "total_papers": 2188,
+  "sources_breakdown": {
+    "PubMed": 926,
+    "Semantic Scholar": 372,
+    "OpenAlex": 890
+  },
+  "year_range": "1982-2025",
+  "papers_by_year": {
+    "2025": 156,
+    "2024": 215,
+    "2023": 164,
+    "2022": 165,
+    "2021": 172,
+    "2020": 136,
+    "2019": 107,
+    "2018": 114,
+    "2017": 108,
+    "2016": 108
+  },
+  "top_journals": [
+    [
+      "International Wound Journal",
+      66
+    ],
+    [
+      "The Cochrane database of systematic reviews",
+      65
+    ],
+    [
+      "Journal of wound care",
+      48
+    ],
+    [
+      "Wound Repair and Regeneration",
+      28
+    ],
+    [
+      "European Heart Journal",
+      27
+    ],
+    [
+      "The Lancet",
+      24
+    ],
+    [
+      "Advances in wound care",
+      20
+    ],
+    [
+      "International wound journal",
+      19
+    ],
+    [
+      "New England Journal of Medicine",
+      19
+    ],
+    [
+      "Annals of Internal Medicine",
+      19
+    ]
+  ],
+  "papers_with_abstract": 1818,
+  "papers_with_doi": 1787,
+  "avg_citations": 405.42504570383915
+}

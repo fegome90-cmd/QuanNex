@@ -1,0 +1,4905 @@
+{
+  "timestamp": "2025-09-02T20:44:43Z",
+  "review_type": "all",
+  "total_agents": 978,
+  "successful_reviews": 9,
+  "failed_reviews": 10,
+  "results": [
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Coordinando",
+      "status": "Coordinando",
+      "duration": Coordinando
+    },
+    {
+      "agent": "revisiones...",
+      "status": "revisiones...",
+      "duration": revisiones...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "[0;34m[Review...",
+      "status": "[0;34m[Review...",
+      "duration": [0;34m[Review...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Coordinator][0m...",
+      "status": "Coordinator][0m...",
+      "duration": Coordinator][0m...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Determinando...",
+      "status": "Determinando...",
+      "duration": Determinando...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "Determinando",
+      "status": "Determinando",
+      "duration": Determinando
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "Determinando",
+      "status": "Determinando",
+      "duration": Determinando
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Determinando",
+      "status": "Determinando",
+      "duration": Determinando
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "agentes...",
+      "status": "agentes...",
+      "duration": agentes...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "necesarios......",
+      "status": "necesarios......",
+      "duration": necesarios......
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "necesarios...",
+      "status": "necesarios...",
+      "duration": necesarios...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "necesarios...",
+      "status": "necesarios...",
+      "duration": necesarios...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "necesarios...",
+      "status": "necesarios...",
+      "duration": necesarios...
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "[0;34m[Review...",
+      "status": "[0;34m[Review...",
+      "duration": [0;34m[Review...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Coordinator][0m...",
+      "status": "Coordinator][0m...",
+      "duration": Coordinator][0m...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Agentes...",
+      "status": "Agentes...",
+      "duration": Agentes...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "Agentes",
+      "status": "Agentes",
+      "duration": Agentes
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "Agentes",
+      "status": "Agentes",
+      "duration": Agentes
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Agentes",
+      "status": "Agentes",
+      "duration": Agentes
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "necesarios",
+      "status": "...",
+      "duration": 
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "necesarios",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Agente",
+      "status": "Agente",
+      "duration": Agente
+    },
+    {
+      "agent": "desconocido",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "necesarios",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Revisión",
+      "status": "Revisión",
+      "duration": Revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "necesarios",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "completada",
+      "status": "completada",
+      "duration": completada
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente",
+      "duration": exitosamente
+    },
+    {
+      "agent": "(0s)",
+      "status": "(0s)",
+      "duration": (0s)
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "code-reviewer...",
+      "status": "code-reviewer...",
+      "duration": code-reviewer...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "code-reviewer",
+      "status": "code-reviewer",
+      "duration": code-reviewer
+    },
+    {
+      "agent": "[0;34m[ESLint",
+      "status": "[0;34m[ESLint",
+      "duration": [0;34m[ESLint
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación",
+      "duration": verificación
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint...",
+      "duration": ESLint...
+    },
+    {
+      "agent": "[0;34m[ESLint",
+      "status": "[0;34m[ESLint",
+      "duration": [0;34m[ESLint
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[ESLint",
+      "status": "[0;34m[ESLint",
+      "duration": [0;34m[ESLint
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración",
+      "duration": configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint...",
+      "duration": ESLint...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración",
+      "duration": Configuración
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada",
+      "duration": verificada
+    },
+    {
+      "agent": "[0;34m[ESLint",
+      "status": "[0;34m[ESLint",
+      "duration": [0;34m[ESLint
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint...",
+      "duration": ESLint...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "security-guardian...",
+      "status": "security-guardian...",
+      "duration": security-guardian...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "security-guardian",
+      "status": "security-guardian",
+      "duration": security-guardian
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "escaneo",
+      "status": "escaneo",
+      "duration": escaneo
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "seguridad...",
+      "status": "seguridad...",
+      "duration": seguridad...
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando",
+      "duration": Escaneando
+    },
+    {
+      "agent": "vulnerabilidades...",
+      "status": "vulnerabilidades...",
+      "duration": vulnerabilidades...
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "escaneados",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "592",
+      "status": "592",
+      "duration": 592
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "vulnerabilidades",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "34",
+      "status": "34",
+      "duration": 34
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Se",
+      "status": "Se",
+      "duration": Se
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron",
+      "duration": encontraron
+    },
+    {
+      "agent": "72",
+      "status": "72",
+      "duration": 72
+    },
+    {
+      "agent": "vulnerabilidades",
+      "status": "vulnerabilidades",
+      "duration": vulnerabilidades
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando",
+      "duration": Escaneando
+    },
+    {
+      "agent": "secretos...",
+      "status": "secretos...",
+      "duration": secretos...
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "escaneados",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "593",
+      "status": "593",
+      "duration": 593
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "secretos",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "10",
+      "status": "10",
+      "duration": 10
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Se",
+      "status": "Se",
+      "duration": Se
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron",
+      "duration": encontraron
+    },
+    {
+      "agent": "22",
+      "status": "22",
+      "duration": 22
+    },
+    {
+      "agent": "secretos",
+      "status": "secretos",
+      "duration": secretos
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Auditando",
+      "status": "Auditando",
+      "duration": Auditando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "package.json",
+      "status": "package.json",
+      "duration": package.json
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado,",
+      "status": "encontrado,",
+      "duration": encontrado,
+    },
+    {
+      "agent": "saltando",
+      "status": "saltando",
+      "duration": saltando
+    },
+    {
+      "agent": "auditoría",
+      "status": "auditoría",
+      "duration": auditoría
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "dependencias",
+      "status": "dependencias",
+      "duration": dependencias
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Analizando",
+      "status": "Analizando",
+      "duration": Analizando
+    },
+    {
+      "agent": "resultados...",
+      "status": "resultados...",
+      "duration": resultados...
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando",
+      "duration": Generando
+    },
+    {
+      "agent": "reporte",
+      "status": "reporte",
+      "duration": reporte
+    },
+    {
+      "agent": "JSON...",
+      "status": "JSON...",
+      "duration": JSON...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte",
+      "duration": Reporte
+    },
+    {
+      "agent": "JSON",
+      "status": "JSON",
+      "duration": JSON
+    },
+    {
+      "agent": "generado",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "security-report.json",
+      "status": "security-report.json",
+      "duration": security-report.json
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "test-generator...",
+      "status": "test-generator...",
+      "duration": test-generator...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "test-generator",
+      "status": "test-generator",
+      "duration": test-generator
+    },
+    {
+      "agent": "[0;34m[Test",
+      "status": "[0;34m[Test",
+      "duration": [0;34m[Test
+    },
+    {
+      "agent": "Generator][0m",
+      "status": "Generator][0m",
+      "duration": Generator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "generación",
+      "status": "generación",
+      "duration": generación
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "tests...",
+      "status": "tests...",
+      "duration": tests...
+    },
+    {
+      "agent": "[0;34m[Test",
+      "status": "[0;34m[Test",
+      "duration": [0;34m[Test
+    },
+    {
+      "agent": "Generator][0m",
+      "status": "Generator][0m",
+      "duration": Generator][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "deployment-manager...",
+      "status": "deployment-manager...",
+      "duration": deployment-manager...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "deployment-manager",
+      "status": "deployment-manager",
+      "duration": deployment-manager
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación",
+      "duration": verificación
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "despliegue...",
+      "status": "despliegue...",
+      "duration": despliegue...
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "archivos",
+      "status": "archivos",
+      "duration": archivos
+    },
+    {
+      "agent": "requeridos...",
+      "status": "requeridos...",
+      "duration": requeridos...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "❌",
+      "status": "❌",
+      "duration": ❌
+    },
+    {
+      "agent": "package.json",
+      "status": "package.json",
+      "duration": package.json
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado",
+      "duration": encontrado
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "❌",
+      "status": "❌",
+      "duration": ❌
+    },
+    {
+      "agent": "Dockerfile",
+      "status": "Dockerfile",
+      "duration": Dockerfile
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado",
+      "duration": encontrado
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "❌",
+      "status": "❌",
+      "duration": ❌
+    },
+    {
+      "agent": "docker-compose.yml",
+      "status": "docker-compose.yml",
+      "duration": docker-compose.yml
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado",
+      "duration": encontrado
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "❌",
+      "status": "❌",
+      "duration": ❌
+    },
+    {
+      "agent": ".github/workflows/deploy.yml",
+      "status": ".github/workflows/deploy.yml",
+      "duration": .github/workflows/deploy.yml
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado",
+      "duration": encontrado
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "encontrados",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "0/4",
+      "status": "0/4",
+      "duration": 0/4
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "faltantes",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "package.json",
+      "status": "package.json",
+      "duration": package.json
+    },
+    {
+      "agent": "Dockerfile",
+      "status": "Dockerfile",
+      "duration": Dockerfile
+    },
+    {
+      "agent": "docker-compose.yml",
+      "status": "docker-compose.yml",
+      "duration": docker-compose.yml
+    },
+    {
+      "agent": ".github/workflows/deploy.yml",
+      "status": ".github/workflows/deploy.yml",
+      "duration": .github/workflows/deploy.yml
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración",
+      "duration": configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Docker...",
+      "status": "Docker...",
+      "duration": Docker...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración",
+      "duration": Configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Docker",
+      "status": "Docker",
+      "duration": Docker
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada",
+      "duration": verificada
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración",
+      "duration": configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "CI/CD...",
+      "status": "CI/CD...",
+      "duration": CI/CD...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Workflows",
+      "status": "Workflows",
+      "duration": Workflows
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "GitHub",
+      "status": "GitHub",
+      "duration": GitHub
+    },
+    {
+      "agent": "Actions",
+      "status": "Actions",
+      "duration": Actions
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados",
+      "duration": encontrados
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️",
+      "duration": ⚠️
+    },
+    {
+      "agent": "No",
+      "status": "No",
+      "duration": No
+    },
+    {
+      "agent": "se",
+      "status": "se",
+      "duration": se
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró",
+      "duration": encontró
+    },
+    {
+      "agent": "workflow",
+      "status": "workflow",
+      "duration": workflow
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "despliegue",
+      "status": "despliegue",
+      "duration": despliegue
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración",
+      "duration": Configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "CI/CD",
+      "status": "CI/CD",
+      "duration": CI/CD
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada",
+      "duration": verificada
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración",
+      "duration": configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes...",
+      "status": "Kubernetes...",
+      "duration": Kubernetes...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes",
+      "duration": Kubernetes
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados",
+      "duration": encontrados
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️",
+      "duration": ⚠️
+    },
+    {
+      "agent": "No",
+      "status": "No",
+      "duration": No
+    },
+    {
+      "agent": "se",
+      "status": "se",
+      "duration": se
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró",
+      "duration": encontró
+    },
+    {
+      "agent": "Deployment",
+      "status": "Deployment",
+      "duration": Deployment
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes",
+      "duration": Kubernetes
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️",
+      "duration": ⚠️
+    },
+    {
+      "agent": "No",
+      "status": "No",
+      "duration": No
+    },
+    {
+      "agent": "se",
+      "status": "se",
+      "duration": se
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró",
+      "duration": encontró
+    },
+    {
+      "agent": "Service",
+      "status": "Service",
+      "duration": Service
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes",
+      "duration": Kubernetes
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración",
+      "duration": Configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes",
+      "duration": Kubernetes
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada",
+      "duration": verificada
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "variables",
+      "status": "variables",
+      "duration": variables
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "entorno...",
+      "status": "entorno...",
+      "duration": entorno...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "entorno",
+      "status": "entorno",
+      "duration": entorno
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados",
+      "duration": encontrados
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Variables",
+      "status": "Variables",
+      "duration": Variables
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "entorno",
+      "status": "entorno",
+      "duration": entorno
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando",
+      "duration": Generando
+    },
+    {
+      "agent": "reporte",
+      "status": "reporte",
+      "duration": reporte
+    },
+    {
+      "agent": "JSON...",
+      "status": "JSON...",
+      "duration": JSON...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte",
+      "duration": Reporte
+    },
+    {
+      "agent": "JSON",
+      "status": "JSON",
+      "duration": JSON
+    },
+    {
+      "agent": "generado",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "deployment-report.json",
+      "status": "deployment-report.json",
+      "duration": deployment-report.json
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "medical-reviewer...",
+      "status": "medical-reviewer...",
+      "duration": medical-reviewer...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "medical-reviewer",
+      "status": "medical-reviewer",
+      "duration": medical-reviewer
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación",
+      "duration": verificación
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "PHI...",
+      "status": "PHI...",
+      "duration": PHI...
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando",
+      "duration": Escaneando
+    },
+    {
+      "agent": "PHI",
+      "status": "PHI",
+      "duration": PHI
+    },
+    {
+      "agent": "en",
+      "status": "en",
+      "duration": en
+    },
+    {
+      "agent": "archivos...",
+      "status": "archivos...",
+      "duration": archivos...
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "escaneados",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "8",
+      "status": "8",
+      "duration": 8
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "PHI",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "2",
+      "status": "2",
+      "duration": 2
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Se",
+      "status": "Se",
+      "duration": Se
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron",
+      "duration": encontraron
+    },
+    {
+      "agent": "4",
+      "status": "4",
+      "duration": 4
+    },
+    {
+      "agent": "instancias",
+      "status": "instancias",
+      "duration": instancias
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "PHI",
+      "status": "PHI",
+      "duration": PHI
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Analizando",
+      "status": "Analizando",
+      "duration": Analizando
+    },
+    {
+      "agent": "resultados...",
+      "status": "resultados...",
+      "duration": resultados...
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando",
+      "duration": Generando
+    },
+    {
+      "agent": "reporte",
+      "status": "reporte",
+      "duration": reporte
+    },
+    {
+      "agent": "JSON...",
+      "status": "JSON...",
+      "duration": JSON...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte",
+      "duration": Reporte
+    },
+    {
+      "agent": "JSON",
+      "status": "JSON",
+      "duration": JSON
+    },
+    {
+      "agent": "generado",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "phi-report.json",
+      "status": "phi-report.json",
+      "duration": phi-report.json
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "code-reviewer...",
+      "status": "code-reviewer...",
+      "duration": code-reviewer...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "code-reviewer",
+      "status": "code-reviewer",
+      "duration": code-reviewer
+    },
+    {
+      "agent": "[0;34m[ESLint",
+      "status": "[0;34m[ESLint",
+      "duration": [0;34m[ESLint
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación",
+      "duration": verificación
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint...",
+      "duration": ESLint...
+    },
+    {
+      "agent": "[0;34m[ESLint",
+      "status": "[0;34m[ESLint",
+      "duration": [0;34m[ESLint
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[ESLint",
+      "status": "[0;34m[ESLint",
+      "duration": [0;34m[ESLint
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración",
+      "duration": configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint...",
+      "duration": ESLint...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración",
+      "duration": Configuración
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada",
+      "duration": verificada
+    },
+    {
+      "agent": "[0;34m[ESLint",
+      "status": "[0;34m[ESLint",
+      "duration": [0;34m[ESLint
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint...",
+      "duration": ESLint...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "security-guardian...",
+      "status": "security-guardian...",
+      "duration": security-guardian...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "security-guardian",
+      "status": "security-guardian",
+      "duration": security-guardian
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "escaneo",
+      "status": "escaneo",
+      "duration": escaneo
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "seguridad...",
+      "status": "seguridad...",
+      "duration": seguridad...
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando",
+      "duration": Escaneando
+    },
+    {
+      "agent": "vulnerabilidades...",
+      "status": "vulnerabilidades...",
+      "duration": vulnerabilidades...
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "escaneados",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "592",
+      "status": "592",
+      "duration": 592
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "vulnerabilidades",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "34",
+      "status": "34",
+      "duration": 34
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Se",
+      "status": "Se",
+      "duration": Se
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron",
+      "duration": encontraron
+    },
+    {
+      "agent": "72",
+      "status": "72",
+      "duration": 72
+    },
+    {
+      "agent": "vulnerabilidades",
+      "status": "vulnerabilidades",
+      "duration": vulnerabilidades
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando",
+      "duration": Escaneando
+    },
+    {
+      "agent": "secretos...",
+      "status": "secretos...",
+      "duration": secretos...
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "escaneados",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "593",
+      "status": "593",
+      "duration": 593
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "secretos",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "10",
+      "status": "10",
+      "duration": 10
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Se",
+      "status": "Se",
+      "duration": Se
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron",
+      "duration": encontraron
+    },
+    {
+      "agent": "22",
+      "status": "22",
+      "duration": 22
+    },
+    {
+      "agent": "secretos",
+      "status": "secretos",
+      "duration": secretos
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Auditando",
+      "status": "Auditando",
+      "duration": Auditando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "package.json",
+      "status": "package.json",
+      "duration": package.json
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado,",
+      "status": "encontrado,",
+      "duration": encontrado,
+    },
+    {
+      "agent": "saltando",
+      "status": "saltando",
+      "duration": saltando
+    },
+    {
+      "agent": "auditoría",
+      "status": "auditoría",
+      "duration": auditoría
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "dependencias",
+      "status": "dependencias",
+      "duration": dependencias
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Analizando",
+      "status": "Analizando",
+      "duration": Analizando
+    },
+    {
+      "agent": "resultados...",
+      "status": "resultados...",
+      "duration": resultados...
+    },
+    {
+      "agent": "[0;34m[Security",
+      "status": "[0;34m[Security",
+      "duration": [0;34m[Security
+    },
+    {
+      "agent": "Scan][0m",
+      "status": "Scan][0m",
+      "duration": Scan][0m
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando",
+      "duration": Generando
+    },
+    {
+      "agent": "reporte",
+      "status": "reporte",
+      "duration": reporte
+    },
+    {
+      "agent": "JSON...",
+      "status": "JSON...",
+      "duration": JSON...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte",
+      "duration": Reporte
+    },
+    {
+      "agent": "JSON",
+      "status": "JSON",
+      "duration": JSON
+    },
+    {
+      "agent": "generado",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "security-report.json",
+      "status": "security-report.json",
+      "duration": security-report.json
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "test-generator...",
+      "status": "test-generator...",
+      "duration": test-generator...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "test-generator",
+      "status": "test-generator",
+      "duration": test-generator
+    },
+    {
+      "agent": "[0;34m[Test",
+      "status": "[0;34m[Test",
+      "duration": [0;34m[Test
+    },
+    {
+      "agent": "Generator][0m",
+      "status": "Generator][0m",
+      "duration": Generator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "generación",
+      "status": "generación",
+      "duration": generación
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "tests...",
+      "status": "tests...",
+      "duration": tests...
+    },
+    {
+      "agent": "[0;34m[Test",
+      "status": "[0;34m[Test",
+      "duration": [0;34m[Test
+    },
+    {
+      "agent": "Generator][0m",
+      "status": "Generator][0m",
+      "duration": Generator][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "deployment-manager...",
+      "status": "deployment-manager...",
+      "duration": deployment-manager...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "deployment-manager",
+      "status": "deployment-manager",
+      "duration": deployment-manager
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación",
+      "duration": verificación
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "despliegue...",
+      "status": "despliegue...",
+      "duration": despliegue...
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "archivos",
+      "status": "archivos",
+      "duration": archivos
+    },
+    {
+      "agent": "requeridos...",
+      "status": "requeridos...",
+      "duration": requeridos...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "❌",
+      "status": "❌",
+      "duration": ❌
+    },
+    {
+      "agent": "package.json",
+      "status": "package.json",
+      "duration": package.json
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado",
+      "duration": encontrado
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "❌",
+      "status": "❌",
+      "duration": ❌
+    },
+    {
+      "agent": "Dockerfile",
+      "status": "Dockerfile",
+      "duration": Dockerfile
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado",
+      "duration": encontrado
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "❌",
+      "status": "❌",
+      "duration": ❌
+    },
+    {
+      "agent": "docker-compose.yml",
+      "status": "docker-compose.yml",
+      "duration": docker-compose.yml
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado",
+      "duration": encontrado
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "❌",
+      "status": "❌",
+      "duration": ❌
+    },
+    {
+      "agent": ".github/workflows/deploy.yml",
+      "status": ".github/workflows/deploy.yml",
+      "duration": .github/workflows/deploy.yml
+    },
+    {
+      "agent": "no",
+      "status": "no",
+      "duration": no
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado",
+      "duration": encontrado
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "encontrados",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "0/4",
+      "status": "0/4",
+      "duration": 0/4
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "faltantes",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "package.json",
+      "status": "package.json",
+      "duration": package.json
+    },
+    {
+      "agent": "Dockerfile",
+      "status": "Dockerfile",
+      "duration": Dockerfile
+    },
+    {
+      "agent": "docker-compose.yml",
+      "status": "docker-compose.yml",
+      "duration": docker-compose.yml
+    },
+    {
+      "agent": ".github/workflows/deploy.yml",
+      "status": ".github/workflows/deploy.yml",
+      "duration": .github/workflows/deploy.yml
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración",
+      "duration": configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Docker...",
+      "status": "Docker...",
+      "duration": Docker...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración",
+      "duration": Configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Docker",
+      "status": "Docker",
+      "duration": Docker
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada",
+      "duration": verificada
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración",
+      "duration": configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "CI/CD...",
+      "status": "CI/CD...",
+      "duration": CI/CD...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Workflows",
+      "status": "Workflows",
+      "duration": Workflows
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "GitHub",
+      "status": "GitHub",
+      "duration": GitHub
+    },
+    {
+      "agent": "Actions",
+      "status": "Actions",
+      "duration": Actions
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados",
+      "duration": encontrados
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️",
+      "duration": ⚠️
+    },
+    {
+      "agent": "No",
+      "status": "No",
+      "duration": No
+    },
+    {
+      "agent": "se",
+      "status": "se",
+      "duration": se
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró",
+      "duration": encontró
+    },
+    {
+      "agent": "workflow",
+      "status": "workflow",
+      "duration": workflow
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "despliegue",
+      "status": "despliegue",
+      "duration": despliegue
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración",
+      "duration": Configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "CI/CD",
+      "status": "CI/CD",
+      "duration": CI/CD
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada",
+      "duration": verificada
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración",
+      "duration": configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes...",
+      "status": "Kubernetes...",
+      "duration": Kubernetes...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes",
+      "duration": Kubernetes
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados",
+      "duration": encontrados
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️",
+      "duration": ⚠️
+    },
+    {
+      "agent": "No",
+      "status": "No",
+      "duration": No
+    },
+    {
+      "agent": "se",
+      "status": "se",
+      "duration": se
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró",
+      "duration": encontró
+    },
+    {
+      "agent": "Deployment",
+      "status": "Deployment",
+      "duration": Deployment
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes",
+      "duration": Kubernetes
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️",
+      "duration": ⚠️
+    },
+    {
+      "agent": "No",
+      "status": "No",
+      "duration": No
+    },
+    {
+      "agent": "se",
+      "status": "se",
+      "duration": se
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró",
+      "duration": encontró
+    },
+    {
+      "agent": "Service",
+      "status": "Service",
+      "duration": Service
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes",
+      "duration": Kubernetes
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración",
+      "duration": Configuración
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes",
+      "duration": Kubernetes
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada",
+      "duration": verificada
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "variables",
+      "status": "variables",
+      "duration": variables
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "entorno...",
+      "status": "entorno...",
+      "duration": entorno...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "✅",
+      "status": "✅",
+      "duration": ✅
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "entorno",
+      "status": "entorno",
+      "duration": entorno
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados",
+      "duration": encontrados
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Variables",
+      "status": "Variables",
+      "duration": Variables
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "entorno",
+      "status": "entorno",
+      "duration": entorno
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[Deployment",
+      "status": "[0;34m[Deployment",
+      "duration": [0;34m[Deployment
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando",
+      "duration": Generando
+    },
+    {
+      "agent": "reporte",
+      "status": "reporte",
+      "duration": reporte
+    },
+    {
+      "agent": "JSON...",
+      "status": "JSON...",
+      "duration": JSON...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte",
+      "duration": Reporte
+    },
+    {
+      "agent": "JSON",
+      "status": "JSON",
+      "duration": JSON
+    },
+    {
+      "agent": "generado",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "deployment-report.json",
+      "status": "deployment-report.json",
+      "duration": deployment-report.json
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "medical-reviewer...",
+      "status": "medical-reviewer...",
+      "duration": medical-reviewer...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando",
+      "duration": Ejecutando
+    },
+    {
+      "agent": "agente",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "medical-reviewer",
+      "status": "medical-reviewer",
+      "duration": medical-reviewer
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación",
+      "duration": verificación
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "PHI...",
+      "status": "PHI...",
+      "duration": PHI...
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando",
+      "duration": Verificando
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias...",
+      "duration": dependencias...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias",
+      "duration": Dependencias
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas",
+      "duration": verificadas
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando",
+      "duration": Escaneando
+    },
+    {
+      "agent": "PHI",
+      "status": "PHI",
+      "duration": PHI
+    },
+    {
+      "agent": "en",
+      "status": "en",
+      "duration": en
+    },
+    {
+      "agent": "archivos...",
+      "status": "archivos...",
+      "duration": archivos...
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "escaneados",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "8",
+      "status": "8",
+      "duration": 8
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos",
+      "duration": Archivos
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "PHI",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "2",
+      "status": "2",
+      "duration": 2
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Se",
+      "status": "Se",
+      "duration": Se
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron",
+      "duration": encontraron
+    },
+    {
+      "agent": "4",
+      "status": "4",
+      "duration": 4
+    },
+    {
+      "agent": "instancias",
+      "status": "instancias",
+      "duration": instancias
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "PHI",
+      "status": "PHI",
+      "duration": PHI
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Analizando",
+      "status": "Analizando",
+      "duration": Analizando
+    },
+    {
+      "agent": "resultados...",
+      "status": "resultados...",
+      "duration": resultados...
+    },
+    {
+      "agent": "[0;34m[PHI",
+      "status": "[0;34m[PHI",
+      "duration": [0;34m[PHI
+    },
+    {
+      "agent": "Check][0m",
+      "status": "Check][0m",
+      "duration": Check][0m
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando",
+      "duration": Generando
+    },
+    {
+      "agent": "reporte",
+      "status": "reporte",
+      "duration": reporte
+    },
+    {
+      "agent": "JSON...",
+      "status": "JSON...",
+      "duration": JSON...
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m",
+      "duration": [0;32m[SUCCESS][0m
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte",
+      "duration": Reporte
+    },
+    {
+      "agent": "JSON",
+      "status": "JSON",
+      "duration": JSON
+    },
+    {
+      "agent": "generado",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "phi-report.json",
+      "status": "phi-report.json",
+      "duration": phi-report.json
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Revisiones",
+      "status": "Revisiones",
+      "duration": Revisiones
+    },
+    {
+      "agent": "completadas",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "9/19",
+      "status": "9/19",
+      "duration": 9/19
+    },
+    {
+      "agent": "exitosas",
+      "status": "exitosas",
+      "duration": exitosas
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "success",
+      "duration": 0
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "success",
+      "duration": 0
+    },
+    {
+      "agent": "Determinando",
+      "status": "success",
+      "duration": 0
+    },
+    {
+      "agent": "agentes",
+      "status": "success",
+      "duration": 0
+    },
+    {
+      "agent": "necesarios...",
+      "status": "success",
+      "duration": 0
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "success",
+      "duration": 0
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "success",
+      "duration": 0
+    },
+    {
+      "agent": "Agentes",
+      "status": "success",
+      "duration": 0
+    },
+    {
+      "agent": "necesarios",
+      "status": "",
+      "duration": success
+    },
+    {
+      "agent": "code-reviewer",
+      "status": "failed",
+      "duration": 0
+    },
+    {
+      "agent": "security-guardian",
+      "status": "failed",
+      "duration": 24
+    },
+    {
+      "agent": "test-generator",
+      "status": "failed",
+      "duration": 15
+    },
+    {
+      "agent": "deployment-manager",
+      "status": "failed",
+      "duration": 1
+    },
+    {
+      "agent": "medical-reviewer",
+      "status": "failed",
+      "duration": 304
+    },
+    {
+      "agent": "code-reviewer",
+      "status": "failed",
+      "duration": 0
+    },
+    {
+      "agent": "security-guardian",
+      "status": "failed",
+      "duration": 40
+    },
+    {
+      "agent": "test-generator",
+      "status": "failed",
+      "duration": 5
+    },
+    {
+      "agent": "deployment-manager",
+      "status": "failed",
+      "duration": 1
+    },
+    {
+      "agent": "medical-reviewer",
+      "status": "failed",
+      "duration": 241
+    }
+  ],
+  "recommendations": [
+    "Review individual agent reports for detailed findings",
+    "Address any failed reviews before proceeding",
+    "Consider running additional reviews if needed",
+    "Update team on review status and findings"
+  ]
+}

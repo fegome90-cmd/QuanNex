@@ -1,0 +1,5 @@
+{
+  "sources": ["agents/context/tests/fixtures/sample.txt"],
+  "selectors": ["Requisitos"],
+  "max_tokens": 512
+}

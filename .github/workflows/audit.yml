@@ -1,0 +1,73 @@
+name: Auditoría Objetiva
+
+on:
+  schedule:
+    - cron: '0 2 * * 1' # Lunes a las 2 AM UTC
+  workflow_dispatch:
+    inputs:
+      force_audit:
+        description: 'Forzar auditoría completa'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar auditoría
+        run: |
+          chmod +x scripts/audit.sh
+          ./scripts/audit.sh
+
+      - name: Subir artefactos de auditoría
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-reports-${{ github.run_number }}
+          path: .reports/
+          retention-days: 30
+
+      - name: Comentar PR con resumen
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = '.reports/AUDIT.md';
+
+            if (fs.existsSync(path)) {
+              const auditData = JSON.parse(fs.readFileSync(path, 'utf8'));
+              
+              const comment = `## 🔍 Auditoría Objetiva - ${auditData.audit_timestamp}
+              
+              **Reportes generados:**
+              ${auditData.reports_generated.map(r => `- \`${r}\``).join('\n')}
+              
+              **Estado:** ${auditData.status}
+              
+              📊 [Ver artefactos completos](${context.payload.pull_request.html_url}/checks)`;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }

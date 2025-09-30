@@ -1,0 +1,947 @@
+{
+  "timestamp": "2025-09-02T22:31:45Z",
+  "review_type": "all",
+  "total_agents": 186,
+  "successful_reviews": 0
+0,
+  "failed_reviews": 0
+0,
+  "results": [
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Coordinando",
+      "status": "Coordinando",
+      "duration": Coordinando
+    },
+    {
+      "agent": "revisiones...",
+      "status": "revisiones...",
+      "duration": revisiones...
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "[0;34m[Review...",
+      "status": "[0;34m[Review...",
+      "duration": [0;34m[Review...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Coordinator][0m...",
+      "status": "Coordinator][0m...",
+      "duration": Coordinator][0m...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Determinando...",
+      "status": "Determinando...",
+      "duration": Determinando...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "agentes...",
+      "status": "agentes...",
+      "duration": agentes...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "necesarios......",
+      "status": "necesarios......",
+      "duration": necesarios......
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "[0;34m[Review...",
+      "status": "[0;34m[Review...",
+      "duration": [0;34m[Review...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Coordinator][0m...",
+      "status": "Coordinator][0m...",
+      "duration": Coordinator][0m...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "Agentes...",
+      "status": "Agentes...",
+      "duration": Agentes...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "necesarios",
+      "status": "...",
+      "duration": 
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "code-reviewer...",
+      "status": "code-reviewer...",
+      "duration": code-reviewer...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando",
+      "duration": Iniciando
+    },
+    {
+      "agent": "revisión",
+      "status": "revisión",
+      "duration": revisión
+    },
+    {
+      "agent": "con",
+      "status": "con",
+      "duration": con
+    },
+    {
+      "agent": "code-reviewer...",
+      "status": "code-reviewer...",
+      "duration": code-reviewer...
+    },
+    {
+      "agent": "[1;33m[WARNING][0m",
+      "status": "[1;33m[WARNING][0m",
+      "duration": [1;33m[WARNING][0m
+    },
+    {
+      "agent": "Ejecutar",
+      "status": "Ejecutar",
+      "duration": Ejecutar
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes",
+      "duration": agentes
+    },
+    {
+      "agent": "está",
+      "status": "está",
+      "duration": está
+    },
+    {
+      "agent": "deshabilitado",
+      "status": "deshabilitado",
+      "duration": deshabilitado
+    },
+    {
+      "agent": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "status": "(REVIEW_COORDINATOR_EXECUTE=0);",
+      "duration": (REVIEW_COORDINATOR_EXECUTE=0);
+    },
+    {
+      "agent": "registro",
+      "status": "registro",
+      "duration": registro
+    },
+    {
+      "agent": "de",
+      "status": "de",
+      "duration": de
+    },
+    {
+      "agent": "intención.",
+      "status": "intención.",
+      "duration": intención.
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "[0;34m[Review",
+      "duration": [0;34m[Review
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "Coordinator][0m",
+      "duration": Coordinator][0m
+    },
+    {
+      "agent": "Revisiones",
+      "status": "Revisiones",
+      "duration": Revisiones
+    },
+    {
+      "agent": "completadas",
+      "status": "",
+      "duration": 
+    },
+    {
+      "agent": "0/11",
+      "status": "0/11",
+      "duration": 0/11
+    },
+    {
+      "agent": "exitosas",
+      "status": "exitosas",
+      "duration": exitosas
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "Determinando",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "agentes",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "necesarios...",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "[0;34m[Review",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "Coordinator][0m",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "Agentes",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "necesarios",
+      "status": "",
+      "duration": skipped
+    },
+    {
+      "agent": "code-reviewer",
+      "status": "skipped",
+      "duration": 0
+    },
+    {
+      "agent": "code-reviewer",
+      "status": "skipped",
+      "duration": 0
+    }
+  ],
+  "recommendations": [
+    "Review individual agent reports for detailed findings",
+    "Address any failed reviews before proceeding",
+    "Consider running additional reviews if needed",
+    "Update team on review status and findings"
+  ]
+}

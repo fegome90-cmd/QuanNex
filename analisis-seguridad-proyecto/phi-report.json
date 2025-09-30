@@ -1,0 +1,1814 @@
+{
+  "timestamp": "2025-09-02T20:47:15Z",
+  "scan_type": "PHI_DETECTION",
+  "total_findings": 6538,
+  "severity": "HIGH",
+  "findings": [
+    {
+      "file": "./analisis-motor-rete/implementacion/real_papers_analyzer.py",
+      "line": 79,
+      "content": "                'infection diagnosis', 'microbial'",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./analisis-motor-rete/implementacion/real_bibliographic_searcher.py",
+      "line": 440,
+      "content": "        # Infection Diagnosis",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./analisis-motor-rete/implementacion/real_bibliographic_searcher.py",
+      "line": 441,
+      "content": "        "wound infection diagnosis biomarkers clinical signs",",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./analisis-motor-rete/implementacion/real_bibliographic_searcher.py",
+      "line": 442,
+      "content": "        "surgical site infection SSI diagnosis criteria",",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/tests/test_source_id_refactor.py",
+      "line": 238,
+      "content": "            # Non-special files should not get special treatment",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/socketio_handlers.py",
+      "line": 222,
+      "content": "    client_address = environ.get("REMOTE_ADDR", "unknown")",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/socketio_handlers.py",
+      "line": 226,
+      "content": "    logger.info(f"🔌 [SOCKETIO] Client connected: {sid} from {client_address}")",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/socketio_handlers.py",
+      "line": 232,
+      "content": "    logger.debug(f"  - Address: {client_address}")",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/config/config.py",
+      "line": 6,
+      "content": "import ipaddress",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/config/config.py",
+      "line": 114,
+      "content": "        # Check if hostname is a private IP address",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/config/config.py",
+      "line": 116,
+      "content": "            ip = ipaddress.ip_address(hostname)",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/config/config.py",
+      "line": 117,
+      "content": "            # Allow HTTP for private IP addresses (RFC 1918)",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/config/config.py",
+      "line": 122,
+      "content": "            # Exclude unspecified address (0.0.0.0) for security",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/config/config.py",
+      "line": 126,
+      "content": "            # hostname is not a valid IP address, could be a domain name",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 251,
+      "content": "      <div className={styles.ideNode}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 252,
+      "content": "        <img src={data.icon} alt={data.label} className={styles.nodeIcon} />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 253,
+      "content": "        <span className={styles.nodeLabel}>{data.label}</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 262,
+      "content": "      <div className={styles.archonNode}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 269,
+      "content": "<img src="/img/Python-logo-notext.svg" alt="Python" className={styles.pythonIcon} />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 270,
+      "content": "        <img src="/logo-neon.png" alt="Archon" className={styles.archonIcon} />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 271,
+      "content": "        <div className={styles.archonText}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 290,
+      "content": "      <div className={styles.uiControlNode}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 296,
+      "content": "<img src="/img/React-icon.svg" alt="React" className={styles.reactIcon} />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 297,
+      "content": "        <h3 className={styles.uiControlTitle}>{data.title}</h3>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 298,
+      "content": "        <p className={styles.uiControlSubtitle}>{data.subtitle}</p>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 302,
+      "content": "      <div className={styles.mcpNode}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 303,
+      "content": "        <img src="/img/mcp.svg" alt="MCP" className={styles.mcpIcon} />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 307,
+      "content": "      <div className={styles.fastapiNode}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 308,
+      "content": "        <img src="/img/fastapi-seeklogo.svg" alt="FastAPI" className={styles.fastapiIcon} />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 312,
+      "content": "      <div className={styles.containerNode} data-type={data.type}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 313,
+      "content": "        <h3 className={styles.containerTitle}>{data.title}</h3>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 314,
+      "content": "        <div className={styles.containerGrid}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 316,
+      "content": "            <div key={index} className={styles.containerItem}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 317,
+      "content": "              <item.icon size={16} className={styles.itemIcon} />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 318,
+      "content": "              <span className={styles.itemLabel}>{item.label}</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 366,
+      "content": "    <header className={clsx('hero hero--primary', styles.heroBanner)}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 367,
+      "content": "      <div className="container">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 368,
+      "content": "        <div className={styles.heroContent}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 369,
+      "content": "          <h1 className="hero__title">{siteConfig.title}</h1>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 370,
+      "content": "          <p className="hero__subtitle">Supercharge your AI development workflow. Plug Cursor, Windsurf, or any AI IDE into Archon to unlock instant access to your business knowledge, technical docs, project requirements, and development tasks.</p>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 371,
+      "content": "          <div className={styles.buttons}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 373,
+      "content": "              className="button button--green-neon button--lg"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 407,
+      "content": "        <section className={styles.features}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 408,
+      "content": "          <div className="container">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 409,
+      "content": "            <h2 className="text--center margin-bottom--xl">✨ Key Features</h2>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 410,
+      "content": "            <div className="row">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 411,
+      "content": "              <div className="col col--12">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 460,
+      "content": "      <section className={styles.features}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 461,
+      "content": "        <div className="container">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 462,
+      "content": "          <h2 className="text--center margin-bottom--xl">✨ Key Features</h2>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 465,
+      "content": "          <div className="row">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 469,
+      "content": "                <div key={idx} className="col col--4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 470,
+      "content": "                  <div className={styles.glassContainer}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 471,
+      "content": "                    <div className={styles.featureHeader}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 474,
+      "content": "                        className={styles.featureIcon}",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 478,
+      "content": "                    <p className={styles.featureDescription}>{feature.description}</p>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 486,
+      "content": "          <div className={`row ${styles.featureRowSpacing}`}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 490,
+      "content": "                <div key={idx + 3} className="col col--4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 491,
+      "content": "                  <div className={styles.glassContainer}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 492,
+      "content": "                    <div className={styles.featureHeader}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 495,
+      "content": "                        className={styles.featureIcon}",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 499,
+      "content": "                    <p className={styles.featureDescription}>{feature.description}</p>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 508,
+      "content": "      <section className={styles.quickStart}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 509,
+      "content": "        <div className="container">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 510,
+      "content": "          <div className="row">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 511,
+      "content": "            <div className="col col--8 col--offset-2">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 514,
+      "content": "              <div className="text--center">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 516,
+      "content": "                  className="button button--green-neon button--lg"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 526,
+      "content": "      <section className={styles.nextSteps}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 527,
+      "content": "        <div className="container">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 528,
+      "content": "          <div className="row">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 529,
+      "content": "            <div className="col col--8 col--offset-2">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 543,
+      "content": "      <section className={styles.callToAction}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 544,
+      "content": "        <div className="container">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 545,
+      "content": "          <div className="row">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 546,
+      "content": "            <div className="col col--8 col--offset-2 text--center">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/docs/src/pages/index.js",
+      "line": 567,
+      "content": "        <section className={styles.architectureSection}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/__mocks__/lucide-react.tsx",
+      "line": 5,
+      "content": "  const MockIcon = React.forwardRef(({ className, ...props }: any, ref: any) => (",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/__mocks__/lucide-react.tsx",
+      "line": 8,
+      "content": "      className={className}",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/user_flows.test.tsx",
+      "line": 195,
+      "content": "        <div className={isDark ? 'dark' : 'light'}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/prp/PRPViewer.test.tsx",
+      "line": 141,
+      "content": "    expect(viewer?.className).toContain('dark')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocumentCard.test.tsx",
+      "line": 77,
+      "content": "    expect(card.className).toContain('border-blue-500')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocumentCard.test.tsx",
+      "line": 78,
+      "content": "    expect(card.className).toContain('scale-105')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocumentCard.test.tsx",
+      "line": 206,
+      "content": "    expect(card.className).toContain('dark:')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 58,
+      "content": "      <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 63,
+      "content": "            className={`flex-shrink-0 w-48 p-4 rounded-lg cursor-pointer ${",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 68,
+      "content": "            <div className={`text-xs ${doc.document_type}`}>{doc.document_type}</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 91,
+      "content": "          className="flex-shrink-0 w-48 h-32 rounded-lg border-2 border-dashed"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 124,
+      "content": "    expect(doc1.className).toContain('border-blue-500')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 127,
+      "content": "    expect(doc2.className).not.toContain('border-blue-500')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 143,
+      "content": "    expect(screen.getByTestId('document-card-doc-1').className).not.toContain('border-blue-500')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 144,
+      "content": "    expect(screen.getByTestId('document-card-doc-2').className).toContain('border-blue-500')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 220,
+      "content": "    expect(scrollContainer?.className).toContain('scrollbar-thin')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 221,
+      "content": "    expect(scrollContainer?.className).toContain('scrollbar-thumb-gray-300')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 229,
+      "content": "      expect(card.className).toContain('flex-shrink-0')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/project-tasks/DocsTab.integration.test.tsx",
+      "line": 230,
+      "content": "      expect(card.className).toContain('w-48')",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 49,
+      "content": "        return <CheckCircle className="w-5 h-5 text-green-500" />;",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 51,
+      "content": "        return <XCircle className="w-5 h-5 text-red-500" />;",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 53,
+      "content": "        return <AlertCircle className="w-5 h-5 text-yellow-500" />;",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 56,
+      "content": "        return <Info className="w-5 h-5 text-blue-500" />;",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 93,
+      "content": "      <div className="fixed top-4 right-4 z-50 space-y-2">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 102,
+      "content": "              className={`flex items-center gap-3 p-4 rounded-lg min-w-[300px] max-w-[500px] ${getGlassmorphismStyles(toast.type).container}`}",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 105,
+      "content": "              <p className={`flex-1 text-sm font-medium ${getGlassmorphismStyles(toast.type).textColor}`}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 110,
+      "content": "                className={`${getGlassmorphismStyles(toast.type).buttonColor} transition-colors duration-200`}",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/contexts/ToastContext.tsx",
+      "line": 112,
+      "content": "                <X className="w-4 h-4" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 202,
+      "content": "        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 210,
+      "content": "          className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 w-full max-w-4xl max-h-[90vh] overflow-hidden"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 214,
+      "content": "          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 215,
+      "content": "            <div className="flex items-center gap-3">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 216,
+      "content": "              <TestTube className="w-6 h-6 text-blue-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 217,
+      "content": "              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 223,
+      "content": "              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 225,
+      "content": "              <X className="w-5 h-5 text-gray-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 230,
+      "content": "          <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 232,
+      "content": "              <div className="flex items-center justify-center py-12">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 233,
+      "content": "                <div className="flex items-center gap-3">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 234,
+      "content": "                  <Activity className="w-5 h-5 animate-pulse text-blue-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 235,
+      "content": "                  <span className="text-gray-600 dark:text-gray-400">Loading test results...</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 241,
+      "content": "              <div className="flex flex-col items-center justify-center py-12 space-y-4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 242,
+      "content": "                <AlertCircle className="w-12 h-12 text-yellow-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 243,
+      "content": "                <div className="text-center">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 244,
+      "content": "                  <p className="text-gray-600 dark:text-gray-400 mb-2">No test results available</p>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 245,
+      "content": "                  <p className="text-sm text-gray-500 dark:text-gray-500">Run tests to generate the report</p>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 251,
+      "content": "              <div className="space-y-6">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 253,
+      "content": "                <div className={`p-6 rounded-lg border ${getHealthBg(healthScore)}`}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 254,
+      "content": "                  <div className="flex items-center gap-4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 255,
+      "content": "                    <div className="flex items-center gap-3">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 256,
+      "content": "                      <Target className={`w-8 h-8 ${getHealthColor(healthScore)}`} />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 258,
+      "content": "                        <h3 className="text-xl font-bold text-gray-800 dark:text-white">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 261,
+      "content": "                        <p className="text-sm text-gray-600 dark:text-gray-400">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 266,
+      "content": "                    <div className="ml-auto text-right">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 267,
+      "content": "                      <div className={`text-4xl font-bold ${getHealthColor(healthScore)}`}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 270,
+      "content": "                      <div className="text-sm text-gray-500 dark:text-gray-400">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 277,
+      "content": "                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 280,
+      "content": "                    <div className="bg-gray-50 dark:bg-gray-900/50 p-6 rounded-lg border border-gray-200 dark:border-gray-700">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 281,
+      "content": "                      <div className="flex items-center gap-3 mb-4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 282,
+      "content": "                        <TestTube className="w-5 h-5 text-blue-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 283,
+      "content": "                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 289,
+      "content": "                      <div className="grid grid-cols-2 gap-4 mb-4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 290,
+      "content": "                        <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg border">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 291,
+      "content": "                          <div className="text-2xl font-bold text-green-600 dark:text-green-400">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 294,
+      "content": "                          <div className="text-sm text-gray-600 dark:text-gray-400">Passed</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 296,
+      "content": "                        <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg border">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 297,
+      "content": "                          <div className="text-2xl font-bold text-red-600 dark:text-red-400">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 300,
+      "content": "                          <div className="text-sm text-gray-600 dark:text-gray-400">Failed</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 304,
+      "content": "                      <div className="grid grid-cols-2 gap-4 mb-4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 305,
+      "content": "                        <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg border">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 306,
+      "content": "                          <div className="text-lg font-semibold text-gray-700 dark:text-gray-300">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 309,
+      "content": "                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Tests</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 311,
+      "content": "                        <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg border">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 312,
+      "content": "                          <div className="text-lg font-semibold text-gray-700 dark:text-gray-300">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 315,
+      "content": "                          <div className="text-sm text-gray-600 dark:text-gray-400">Duration</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 320,
+      "content": "                      <div className="space-y-2 max-h-60 overflow-y-auto">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 322,
+      "content": "                          <div key={index} className="bg-white dark:bg-gray-800 rounded border">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 324,
+      "content": "                              className="flex items-center justify-between p-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 337,
+      "content": "                              <div className="flex items-center gap-2">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 339,
+      "content": "                                  <XCircle className="w-4 h-4 text-red-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 341,
+      "content": "                                  <CheckCircle className="w-4 h-4 text-green-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 343,
+      "content": "                                <span className="font-mono text-xs truncate max-w-[200px]" title={suite.name}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 347,
+      "content": "                              <div className="flex items-center gap-2 text-xs">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 348,
+      "content": "                                <span className="text-green-600">{suite.passed}</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 349,
+      "content": "                                <span className="text-gray-400">/</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 350,
+      "content": "                                <span className="text-red-600">{suite.failed}</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 351,
+      "content": "                                <span className="text-gray-500">({formatDuration(suite.duration)})</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 357,
+      "content": "                                    <ChevronDown className="w-3 h-3 text-gray-400" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 371,
+      "content": "                                  className="border-t border-gray-200 dark:border-gray-700 overflow-hidden"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 373,
+      "content": "                                  <div className="p-2 space-y-2 bg-red-50 dark:bg-red-900/10">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 375,
+      "content": "                                      <div key={testIndex} className="space-y-1">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 376,
+      "content": "                                        <div className="flex items-start gap-2">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 377,
+      "content": "                                          <XCircle className="w-3 h-3 text-red-500 mt-0.5 flex-shrink-0" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 378,
+      "content": "                                          <div className="flex-1">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 379,
+      "content": "                                            <p className="text-xs font-medium text-red-700 dark:text-red-400">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 383,
+      "content": "                                              <pre className="mt-1 text-xs text-red-600 dark:text-red-500 whitespace-pre-wrap font-mono bg-red-100 dark:bg-red-900/20 p-2 rounded">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 403,
+      "content": "                    <div className="bg-gray-50 dark:bg-gray-900/50 p-6 rounded-lg border border-gray-200 dark:border-gray-700">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 414,
+      "content": "                <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 417,
+      "content": "                    className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 419,
+      "content": "                    <RefreshCw className="w-4 h-4" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 424,
+      "content": "                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultsModal.tsx",
+      "line": 426,
+      "content": "                    <ExternalLink className="w-4 h-4" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/Card.tsx",
+      "line": 11,
+      "content": "  className = '',",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/Card.tsx",
+      "line": 69,
+      "content": "  return <div className={`",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/Card.tsx",
+      "line": 84,
+      "content": "        ${className}",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/Card.tsx",
+      "line": 86,
+      "content": "      <div className="relative z-10">{children}</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 43,
+      "content": "  className?: string;",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 57,
+      "content": "      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-sm">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 58,
+      "content": "        <div className="flex items-center gap-3 mb-4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 59,
+      "content": "          <Activity className="w-5 h-5 animate-pulse text-blue-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 60,
+      "content": "          <h3 className="text-lg font-semibold text-gray-800 dark:text-white">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 64,
+      "content": "        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 66,
+      "content": "            <div key={i} className="animate-pulse">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 67,
+      "content": "              <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 77,
+      "content": "      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-sm">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 78,
+      "content": "        <div className="flex flex-col items-center justify-center py-8 text-center">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 79,
+      "content": "          <TestTube className="w-12 h-12 text-gray-300 dark:text-gray-600 mb-4" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 80,
+      "content": "          <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400 mb-2">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 83,
+      "content": "          <p className="text-sm text-gray-400 dark:text-gray-500">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 106,
+      "content": "      className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-200"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 109,
+      "content": "      <div className="flex items-center justify-between mb-6">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 110,
+      "content": "        <div className="flex items-center gap-3">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 111,
+      "content": "          <TestTube className="w-6 h-6 text-blue-500" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 112,
+      "content": "          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 116,
+      "content": "        <div className={`px-3 py-1 rounded-full text-sm font-medium ${health.bg} ${health.color}`}>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 122,
+      "content": "      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 127,
+      "content": "          className="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 129,
+      "content": "          <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 132,
+      "content": "          <div className="text-sm text-gray-600 dark:text-gray-400">Total Tests</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 139,
+      "content": "          className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 141,
+      "content": "          <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-1 flex items-center justify-center gap-1">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 142,
+      "content": "            <CheckCircle className="w-5 h-5" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 145,
+      "content": "          <div className="text-sm text-gray-600 dark:text-gray-400">Passed</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 152,
+      "content": "          className="text-center p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 154,
+      "content": "          <div className="text-2xl font-bold text-red-600 dark:text-red-400 mb-1 flex items-center justify-center gap-1">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 155,
+      "content": "            <XCircle className="w-5 h-5" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 158,
+      "content": "          <div className="text-sm text-gray-600 dark:text-gray-400">Failed</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 165,
+      "content": "          className="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800"",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 167,
+      "content": "          <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mb-1 flex items-center justify-center gap-1">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 168,
+      "content": "            <Clock className="w-5 h-5" />",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 171,
+      "content": "          <div className="text-sm text-gray-600 dark:text-gray-400">Skipped</div>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 176,
+      "content": "      <div className="mb-4">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 177,
+      "content": "        <div className="flex items-center justify-between mb-2">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 178,
+      "content": "          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Success Rate</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 179,
+      "content": "          <span className="text-sm text-gray-600 dark:text-gray-400">{successRate.toFixed(1)}%</span>",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 181,
+      "content": "        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 186,
+      "content": "            className={`h-3 rounded-full ${",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 195,
+      "content": "      <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/ui/TestResultDashboard.tsx",
+      "line": 196,
+      "content": "        <div className="flex items-center gap-2">",
+      "type": "PHI_DETECTED",
+      "severity": "HIGH",
+      "recommendation": "Remove or mask PHI data"
+    },

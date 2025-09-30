@@ -1,0 +1,59 @@
+{
+  "name": "claude-project-init-kit",
+  "version": "2.0.1",
+  "description": "Shell-based project initialization kit for AI-powered development workflows",
+  "type": "module",
+  "main": "claude-project-init.sh",
+  "scripts": {
+    "test": "./scripts/test-claude-init.sh",
+    "lint": "./scripts/eslint-check.sh",
+    "security": "./scripts/security-audit.sh",
+    "integration": "./scripts/integration-test.sh",
+    "test:clean": "node tools/cleanup.mjs",
+    "validate": "npm run test && npm run test:clean",
+    "plan:build": "node tools/plan-build.mjs",
+    "wf:create": "./scripts/wf-create.sh",
+    "wf:exec": "./scripts/wf-exec.sh",
+    "wf:status": "node orchestration/orchestrator.js status $(cat .wf_id)",
+    "wf:clean": "node orchestration/orchestrator.js cleanup $(cat .wf_id)",
+    "agents:validate": "node --test agents/prompting/tests/contract.test.js && node --test agents/context/tests/contract.test.js && node --test agents/rules/tests/contract.test.js",
+    "cleanup": "node tools/cleanup.mjs",
+    "orchestrate": "npm run plan:build && npm run wf:create && npm run wf:exec",
+    "dast:scan": "./scripts/dast-scan.sh",
+    "dast:basic": "./scripts/dast-scan.sh -t basic",
+    "dast:api": "./scripts/dast-scan.sh -t api",
+    "dast:web": "./scripts/dast-scan.sh -t web",
+    "dast:full": "./scripts/dast-scan.sh -t full",
+    "security:deps": "./scripts/security-deps-scan.sh",
+    "security:deps:low": "./scripts/security-deps-scan.sh -l low",
+    "security:deps:moderate": "./scripts/security-deps-scan.sh -l moderate",
+    "security:deps:high": "./scripts/security-deps-scan.sh -l high",
+    "security:deps:critical": "./scripts/security-deps-scan.sh -l critical",
+    "security:aggregate": "./scripts/security-report-aggregator.sh",
+    "security:full": "npm run security:deps && npm run dast:basic && npm run security:aggregate"
+  },
+  "keywords": [
+    "claude",
+    "ai",
+    "project-init",
+    "development",
+    "automation"
+  ],
+  "author": "Claude Project Init Kit Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fegome90-cmd/startkit.git"
+  },
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@stylistic/eslint-plugin": "^2.9.0",
+    "eslint": "^9.34.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.2",
+    "semver": "^7.6.3"
+  }
+}

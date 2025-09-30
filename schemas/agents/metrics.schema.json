@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agents Metrics",
+  "type": "object",
+  "required": ["generated_at", "agents", "isolation", "tests"],
+  "properties": {
+    "generated_at": { "type": "string" },
+    "agents": {
+      "type": "object",
+      "properties": {
+        "context": { "$ref": "#/definitions/agent" },
+        "prompting": { "$ref": "#/definitions/agent" },
+        "rules": { "$ref": "#/definitions/agent" }
+      },
+      "additionalProperties": false
+    },
+    "isolation": {
+      "type": "object",
+      "required": ["leaks", "temp_after_run"],
+      "properties": {
+        "leaks": { "type": "integer", "minimum": 0 },
+        "temp_after_run": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "tests": {
+      "type": "object",
+      "required": ["passed", "failed"],
+      "properties": {
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "definitions": {
+    "agent": {
+      "type": "object",
+      "required": ["avg_s", "p95_s", "success_rate"],
+      "properties": {
+        "avg_s": { "type": "number", "minimum": 0 },
+        "p95_s": { "type": "number", "minimum": 0 },
+        "success_rate": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

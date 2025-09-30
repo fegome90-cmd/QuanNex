@@ -1,0 +1,69 @@
+name: Restructure Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  restructure:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18.x', '20.x', '22.x']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Layout migration dry-run
+        run: node tools/migrate-layout.mjs --dry-run
+
+      - name: Path lint
+        run: node tools/path-lint.mjs
+
+      - name: Docs lint
+        run: node tools/docs-lint.mjs
+
+      - name: Contract tests - prompting
+        run: node --test agents/prompting/tests/contract.test.js
+
+      - name: Contract tests - context
+        run: node --test agents/context/tests/contract.test.js
+
+      - name: Contract tests - rules
+        run: node --test agents/rules/tests/contract.test.js
+
+      - name: Orchestrator health
+        run: node orchestration/orchestrator.js health
+
+      - name: Sandbox smoke
+        run: |
+          scripts/run-clean.sh rules payloads/rules.sample.json
+          scripts/run-clean.sh context payloads/context.sample.json
+          scripts/run-clean.sh prompting payloads/prompting.sample.json
+          test -s out/rules.json && test -s out/context.json && test -s out/prompt.json
+
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: restructure-artifacts-${{ matrix.node }}
+          path: |
+            .reports
+            tmp
+            out
+            **/*.log
+          if-no-files-found: ignore
+
+      - name: Strict cleanup
+        if: always()
+        run: |
+          node tools/cleanup.mjs
+          rm -f out/*.json || true

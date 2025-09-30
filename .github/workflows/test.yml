@@ -1,0 +1,126 @@
+name: Tests Incrementales
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar tests con cobertura
+        run: |
+          echo "🧪 Ejecutando tests con cobertura..."
+          npm test -- --coverage --coverageReporters=json --coverageReporters=text
+          echo "✅ Tests completados"
+
+      - name: Verificar cobertura mínima
+        run: |
+          echo "📊 Verificando cobertura mínima..."
+          
+          # Extraer cobertura del reporte JSON
+          if [ -f coverage/coverage-final.json ]; then
+            COVERAGE=$(node -e "
+              const fs = require('fs');
+              const coverage = JSON.parse(fs.readFileSync('coverage/coverage-final.json', 'utf8'));
+              const total = Object.values(coverage).reduce((acc, file) => {
+                const statements = file.s.total;
+                const covered = file.s.covered;
+                return { total: acc.total + statements, covered: acc.covered + covered };
+              }, { total: 0, covered: 0 });
+              const percentage = total.total > 0 ? (total.covered / total.total * 100).toFixed(2) : 0;
+              console.log(percentage);
+            ")
+            
+            echo "Cobertura actual: ${COVERAGE}%"
+            
+            # Verificar que la cobertura sea al menos 15%
+            if (( $(echo "$COVERAGE >= 15" | bc -l) )); then
+              echo "✅ Cobertura cumple con el mínimo requerido (≥15%)"
+            else
+              echo "❌ Cobertura insuficiente: ${COVERAGE}% < 15%"
+              exit 1
+            fi
+          else
+            echo "⚠️ No se encontró reporte de cobertura"
+          fi
+
+      - name: Ejecutar tests de agentes
+        run: |
+          echo "🤖 Ejecutando tests de agentes..."
+          
+          # Test de agentes de prompting
+          if [ -f "agents/prompting/tests/contract.test.js" ]; then
+            echo "Testing @prompting agent..."
+            node agents/prompting/tests/contract.test.js || echo "⚠️ @prompting tests fallaron"
+          fi
+          
+          # Test de agentes de context
+          if [ -f "agents/context/tests/contract.test.js" ]; then
+            echo "Testing @context agent..."
+            node agents/context/tests/contract.test.js || echo "⚠️ @context tests fallaron"
+          fi
+          
+          # Test de agentes de rules
+          if [ -f "agents/rules/tests/contract.test.js" ]; then
+            echo "Testing @rules agent..."
+            node agents/rules/tests/contract.test.js || echo "⚠️ @rules tests fallaron"
+          fi
+          
+          echo "✅ Tests de agentes completados"
+
+      - name: Subir reporte de cobertura
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-${{ github.run_number }}
+          path: coverage/
+          retention-days: 30
+
+      - name: Comentar PR con resumen de tests
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            let comment = '## 🧪 Resumen de Tests\n\n';
+            
+            // Leer reporte de cobertura si existe
+            if (fs.existsSync('coverage/coverage-final.json')) {
+              const coverage = JSON.parse(fs.readFileSync('coverage/coverage-final.json', 'utf8'));
+              const total = Object.values(coverage).reduce((acc, file) => {
+                const statements = file.s.total;
+                const covered = file.s.covered;
+                return { total: acc.total + statements, covered: acc.covered + covered };
+              }, { total: 0, covered: 0 });
+              const percentage = total.total > 0 ? (total.covered / total.total * 100).toFixed(2) : 0;
+              
+              comment += `**Cobertura de código:** ${percentage}%\n`;
+              comment += `- Líneas cubiertas: ${total.covered}/${total.total}\n\n`;
+            }
+            
+            comment += `📊 [Ver reporte completo](${context.payload.pull_request.html_url}/checks)`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

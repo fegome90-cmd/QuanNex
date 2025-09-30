@@ -1,0 +1,13 @@
+services:
+  tester:
+    build:
+      context: ..
+      dockerfile: archon/Dockerfile
+    working_dir: /workspace
+    volumes:
+      - ..:/workspace:rw
+    environment:
+      - LC_ALL=C.UTF-8
+      - CLAUDE_INIT_SKIP_DEPS=1
+    command: bash -lc "./scripts/test-claude-init.sh && ./scripts/test-flags.sh && ./scripts/test-unit.sh"
+

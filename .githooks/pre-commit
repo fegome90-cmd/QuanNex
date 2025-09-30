@@ -1,0 +1,27 @@
+#!/bin/bash
+set -euo pipefail
+
+echo "🔍 Pre-commit: Checking for artifacts..."
+
+# Check for staged artifacts that should not be committed
+STAGED_ARTIFACTS=$(git diff --cached --name-only | grep -E '^(tmp/|\.reports/|coverage/|.*\.log$)' || true)
+
+if [ -n "$STAGED_ARTIFACTS" ]; then
+  echo "❌ Error: Found staged artifacts that should not be committed:"
+  echo "$STAGED_ARTIFACTS"
+  echo ""
+  echo "Please unstage these files:"
+  echo "git reset HEAD -- $STAGED_ARTIFACTS"
+  echo ""
+  echo "And add them to .gitignore if not already present."
+  exit 1
+fi
+
+# Check for any residue files in working directory
+if [ -d "tmp" ] || [ -d ".reports" ] || [ -d "coverage" ] || ls *.log 1> /dev/null 2>&1; then
+  echo "🧹 Found residue files, running cleanup..."
+  node tools/cleanup.mjs || true
+  echo "✅ Cleanup completed"
+fi
+
+echo "✅ Pre-commit checks passed"

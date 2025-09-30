@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "min_init_version": "2.0.0",
+  "files": [
+    "claude/frontend/CLAUDE.md",
+    "claude/backend/CLAUDE.md",
+    "claude/fullstack/CLAUDE.md",
+    "claude/design/CLAUDE.md",
+    "claude/medical/CLAUDE.md",
+    "claude/generic/CLAUDE.md"
+  ],
+  "deps": []
+}
+

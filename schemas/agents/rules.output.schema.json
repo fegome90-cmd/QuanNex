@@ -1,0 +1,15 @@
+{  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://startkit.local/schemas/agents/rules.output.schema.json",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "agent_version": { "type": "string" },
+    "rules_compiled": { "type": "array", "items": { "type": "string" } },
+    "violations": { "type": "array", "items": { "type": "string" } },
+    "advice": { "type": "array", "items": { "type": "string" } },
+    "trace": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["schema_version", "agent_version", "rules_compiled", "violations", "advice"],
+  "additionalProperties": false
+}

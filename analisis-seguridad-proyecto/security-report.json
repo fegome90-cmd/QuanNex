@@ -1,0 +1,767 @@
+{
+  "timestamp": "2025-09-02T20:45:42Z",
+  "scan_type": "SECURITY_SCAN",
+  "total_findings": 94,
+  "severity": "HIGH",
+  "findings": [
+    {
+      "file": "./docs/reference/archon/python/tests/test_rag_simple.py",
+      "line": 415,
+      "type": "vulnerability",
+      "content": "                    "content": 'def example_function():\\n    return "Hello"',",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/tests/test_token_optimization.py",
+      "line": 176,
+      "type": "vulnerability",
+      "content": "            "code_examples": [{"code": "function() { /* large */ }"}],",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/agents/base_agent.py",
+      "line": 253,
+      "type": "vulnerability",
+      "content": "    def add_system_prompt_function(self, func):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/tests_api.py",
+      "line": 177,
+      "type": "vulnerability",
+      "content": "        process = await asyncio.create_subprocess_exec(",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/tests_api.py",
+      "line": 321,
+      "type": "vulnerability",
+      "content": "                await asyncio.create_subprocess_exec(*copy_cmd)",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/tests_api.py",
+      "line": 330,
+      "type": "vulnerability",
+      "content": "                await asyncio.create_subprocess_exec(*copy_html_cmd)",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/services/threading_service.py",
+      "line": 323,
+      "type": "vulnerability",
+      "content": "                        if asyncio.iscoroutinefunction(process_func):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/services/threading_service.py",
+      "line": 451,
+      "type": "vulnerability",
+      "content": "                if asyncio.iscoroutinefunction(process_func):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/services/storage/document_storage_service.py",
+      "line": 52,
+      "type": "vulnerability",
+      "content": "            if progress_callback and asyncio.iscoroutinefunction(progress_callback):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/services/storage/document_storage_service.py",
+      "line": 160,
+      "type": "vulnerability",
+      "content": "            if progress_callback and asyncio.iscoroutinefunction(progress_callback):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/services/storage/document_storage_service.py",
+      "line": 380,
+      "type": "vulnerability",
+      "content": "        if progress_callback and asyncio.iscoroutinefunction(progress_callback):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/docs/static/js/mermaid-rounded-corners.js",
+      "line": 10,
+      "type": "vulnerability",
+      "content": "(function() {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/docs/static/js/mermaid-rounded-corners.js",
+      "line": 132,
+      "type": "vulnerability",
+      "content": "        window.mermaid.init = function(...args) {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/test/components/prp/PRPViewer.test.tsx",
+      "line": 42,
+      "type": "vulnerability",
+      "content": "    const htmlContent = container.innerHTML",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/vite.config.ts",
+      "line": 69,
+      "type": "vulnerability",
+      "content": "            const testProcess = exec('npm run test -- --run', {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/vite.config.ts",
+      "line": 148,
+      "type": "vulnerability",
+      "content": "            const testProcess = exec('npm run test:coverage:stream', {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/vite.config.ts",
+      "line": 234,
+      "type": "vulnerability",
+      "content": "            const coverageProcess = exec('npm run test:coverage', {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/settings/IDEGlobalRules.tsx",
+      "line": 435,
+      "type": "vulnerability",
+      "content": "              dangerouslySetInnerHTML={{ __html: processedContent }} />",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/settings/IDEGlobalRules.tsx",
+      "line": 449,
+      "type": "vulnerability",
+      "content": "              dangerouslySetInnerHTML={{ __html: processedContent }} />",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/settings/IDEGlobalRules.tsx",
+      "line": 458,
+      "type": "vulnerability",
+      "content": "             dangerouslySetInnerHTML={{ __html: processedLine }} />",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/prp/sections/TokenSystemSection.tsx",
+      "line": 231,
+      "type": "vulnerability",
+      "content": "        {renderTokenSystem()}",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/prp/components/SimpleMarkdown.tsx",
+      "line": 48,
+      "type": "vulnerability",
+      "content": "    while ((match = boldRegex.exec(processed)) !== null) {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/prp/components/SimpleMarkdown.tsx",
+      "line": 62,
+      "type": "vulnerability",
+      "content": "    while ((match = italicRegex.exec(remainingText)) !== null) {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/TaskTableView.tsx",
+      "line": 403,
+      "type": "vulnerability",
+      "content": "              const originalHTML = button.innerHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/TaskTableView.tsx",
+      "line": 404,
+      "type": "vulnerability",
+      "content": "              button.innerHTML = '<div class="flex items-center gap-1"><span class="w-3 h-3 text-green-500">✓</span><span class="text-green-500 text-xs">Copied</span></div>';",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/TaskTableView.tsx",
+      "line": 406,
+      "type": "vulnerability",
+      "content": "                button.innerHTML = originalHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/DocumentCard.tsx",
+      "line": 59,
+      "type": "vulnerability",
+      "content": "    const originalHTML = button.innerHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/DocumentCard.tsx",
+      "line": 60,
+      "type": "vulnerability",
+      "content": "    button.innerHTML = '<div class="flex items-center gap-1"><span class="w-3 h-3 text-green-500">✓</span><span class="text-green-500 text-xs">Copied</span></div>';",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/DocumentCard.tsx",
+      "line": 62,
+      "type": "vulnerability",
+      "content": "      button.innerHTML = originalHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/DraggableTaskCard.tsx",
+      "line": 206,
+      "type": "vulnerability",
+      "content": "                  const originalHTML = button.innerHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/DraggableTaskCard.tsx",
+      "line": 207,
+      "type": "vulnerability",
+      "content": "                  button.innerHTML = '<span class="text-green-500">Copied!</span>';",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/project-tasks/DraggableTaskCard.tsx",
+      "line": 209,
+      "type": "vulnerability",
+      "content": "                    button.innerHTML = originalHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/pages/ProjectPage.tsx",
+      "line": 853,
+      "type": "vulnerability",
+      "content": "                          const originalHTML = button.innerHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/pages/ProjectPage.tsx",
+      "line": 854,
+      "type": "vulnerability",
+      "content": "                          button.innerHTML = '<svg class="w-3 h-3 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Copied!';",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/pages/ProjectPage.tsx",
+      "line": 856,
+      "type": "vulnerability",
+      "content": "                            button.innerHTML = originalHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/services/mcpService.ts",
+      "line": 283,
+      "type": "vulnerability",
+      "content": "  // CLIENT MANAGEMENT (New functionality)",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/tests/test_rag_simple.py",
+      "line": 415,
+      "type": "vulnerability",
+      "content": "                    "content": 'def example_function():\\n    return "Hello"',",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/tests/test_token_optimization.py",
+      "line": 176,
+      "type": "vulnerability",
+      "content": "            "code_examples": [{"code": "function() { /* large */ }"}],",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/agents/base_agent.py",
+      "line": 253,
+      "type": "vulnerability",
+      "content": "    def add_system_prompt_function(self, func):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/api_routes/tests_api.py",
+      "line": 177,
+      "type": "vulnerability",
+      "content": "        process = await asyncio.create_subprocess_exec(",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/api_routes/tests_api.py",
+      "line": 321,
+      "type": "vulnerability",
+      "content": "                await asyncio.create_subprocess_exec(*copy_cmd)",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/api_routes/tests_api.py",
+      "line": 330,
+      "type": "vulnerability",
+      "content": "                await asyncio.create_subprocess_exec(*copy_html_cmd)",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/services/threading_service.py",
+      "line": 323,
+      "type": "vulnerability",
+      "content": "                        if asyncio.iscoroutinefunction(process_func):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/services/threading_service.py",
+      "line": 451,
+      "type": "vulnerability",
+      "content": "                if asyncio.iscoroutinefunction(process_func):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/services/storage/document_storage_service.py",
+      "line": 52,
+      "type": "vulnerability",
+      "content": "            if progress_callback and asyncio.iscoroutinefunction(progress_callback):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/services/storage/document_storage_service.py",
+      "line": 160,
+      "type": "vulnerability",
+      "content": "            if progress_callback and asyncio.iscoroutinefunction(progress_callback):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/services/storage/document_storage_service.py",
+      "line": 380,
+      "type": "vulnerability",
+      "content": "        if progress_callback and asyncio.iscoroutinefunction(progress_callback):",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/docs/static/js/mermaid-rounded-corners.js",
+      "line": 10,
+      "type": "vulnerability",
+      "content": "(function() {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/docs/static/js/mermaid-rounded-corners.js",
+      "line": 132,
+      "type": "vulnerability",
+      "content": "        window.mermaid.init = function(...args) {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/test/components/prp/PRPViewer.test.tsx",
+      "line": 42,
+      "type": "vulnerability",
+      "content": "    const htmlContent = container.innerHTML",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/vite.config.ts",
+      "line": 69,
+      "type": "vulnerability",
+      "content": "            const testProcess = exec('npm run test -- --run', {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/vite.config.ts",
+      "line": 148,
+      "type": "vulnerability",
+      "content": "            const testProcess = exec('npm run test:coverage:stream', {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/vite.config.ts",
+      "line": 234,
+      "type": "vulnerability",
+      "content": "            const coverageProcess = exec('npm run test:coverage', {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/settings/IDEGlobalRules.tsx",
+      "line": 435,
+      "type": "vulnerability",
+      "content": "              dangerouslySetInnerHTML={{ __html: processedContent }} />",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/settings/IDEGlobalRules.tsx",
+      "line": 449,
+      "type": "vulnerability",
+      "content": "              dangerouslySetInnerHTML={{ __html: processedContent }} />",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/settings/IDEGlobalRules.tsx",
+      "line": 458,
+      "type": "vulnerability",
+      "content": "             dangerouslySetInnerHTML={{ __html: processedLine }} />",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/prp/sections/TokenSystemSection.tsx",
+      "line": 231,
+      "type": "vulnerability",
+      "content": "        {renderTokenSystem()}",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/prp/components/SimpleMarkdown.tsx",
+      "line": 48,
+      "type": "vulnerability",
+      "content": "    while ((match = boldRegex.exec(processed)) !== null) {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/prp/components/SimpleMarkdown.tsx",
+      "line": 62,
+      "type": "vulnerability",
+      "content": "    while ((match = italicRegex.exec(remainingText)) !== null) {",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/TaskTableView.tsx",
+      "line": 403,
+      "type": "vulnerability",
+      "content": "              const originalHTML = button.innerHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/TaskTableView.tsx",
+      "line": 404,
+      "type": "vulnerability",
+      "content": "              button.innerHTML = '<div class="flex items-center gap-1"><span class="w-3 h-3 text-green-500">✓</span><span class="text-green-500 text-xs">Copied</span></div>';",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/TaskTableView.tsx",
+      "line": 406,
+      "type": "vulnerability",
+      "content": "                button.innerHTML = originalHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/DocumentCard.tsx",
+      "line": 59,
+      "type": "vulnerability",
+      "content": "    const originalHTML = button.innerHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/DocumentCard.tsx",
+      "line": 60,
+      "type": "vulnerability",
+      "content": "    button.innerHTML = '<div class="flex items-center gap-1"><span class="w-3 h-3 text-green-500">✓</span><span class="text-green-500 text-xs">Copied</span></div>';",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/DocumentCard.tsx",
+      "line": 62,
+      "type": "vulnerability",
+      "content": "      button.innerHTML = originalHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/DraggableTaskCard.tsx",
+      "line": 206,
+      "type": "vulnerability",
+      "content": "                  const originalHTML = button.innerHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/DraggableTaskCard.tsx",
+      "line": 207,
+      "type": "vulnerability",
+      "content": "                  button.innerHTML = '<span class="text-green-500">Copied!</span>';",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/project-tasks/DraggableTaskCard.tsx",
+      "line": 209,
+      "type": "vulnerability",
+      "content": "                    button.innerHTML = originalHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/pages/ProjectPage.tsx",
+      "line": 853,
+      "type": "vulnerability",
+      "content": "                          const originalHTML = button.innerHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/pages/ProjectPage.tsx",
+      "line": 854,
+      "type": "vulnerability",
+      "content": "                          button.innerHTML = '<svg class="w-3 h-3 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Copied!';",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/pages/ProjectPage.tsx",
+      "line": 856,
+      "type": "vulnerability",
+      "content": "                            button.innerHTML = originalHTML;",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/services/mcpService.ts",
+      "line": 283,
+      "type": "vulnerability",
+      "content": "  // CLIENT MANAGEMENT (New functionality)",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/tests/test_token_optimization_integration.py",
+      "line": 74,
+      "type": "secret",
+      "content": "    size_full, tokens_full = await measure_response_size(base_url, {"exclude_large_fields": "false"})",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/tests/test_token_optimization_integration.py",
+      "line": 81,
+      "type": "secret",
+      "content": "    size_light, tokens_light = await measure_response_size(base_url, {"exclude_large_fields": "true"})",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/tests/test_async_llm_provider_service.py",
+      "line": 130,
+      "type": "secret",
+      "content": "                        api_key="ollama", base_url="http://localhost:11434/v1"",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 49,
+      "type": "secret",
+      "content": "        self.token = os.getenv("GITHUB_TOKEN")",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 57,
+      "type": "secret",
+      "content": "                status_code=500, detail="GitHub integration not configured - GITHUB_TOKEN not found"",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 97,
+      "type": "secret",
+      "content": "                        detail="GitHub authentication failed - check GITHUB_TOKEN permissions",",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 271,
+      "type": "secret",
+      "content": "    github_configured = bool(os.getenv("GITHUB_TOKEN"))",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 276,
+      "type": "secret",
+      "content": "        "github_token_configured": github_configured,",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/python/src/server/config/logfire_config.py",
+      "line": 54,
+      "type": "secret",
+      "content": "    token: str | None = None, environment: str = "development", service_name: str = "archon-server"",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/prp/sections/TokenSystemSection.tsx",
+      "line": 165,
+      "type": "secret",
+      "content": "      const typographyTokens = categories.filter(([k]) => k.toLowerCase().includes('typography') || k.toLowerCase().includes('font'));",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./docs/reference/archon/archon-ui-main/src/components/prp/sections/TokenSystemSection.tsx",
+      "line": 166,
+      "type": "secret",
+      "content": "      const spacingTokens = categories.filter(([k]) => k.toLowerCase().includes('spacing') || k.toLowerCase().includes('size'));",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/tests/test_token_optimization_integration.py",
+      "line": 74,
+      "type": "secret",
+      "content": "    size_full, tokens_full = await measure_response_size(base_url, {"exclude_large_fields": "false"})",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/tests/test_token_optimization_integration.py",
+      "line": 81,
+      "type": "secret",
+      "content": "    size_light, tokens_light = await measure_response_size(base_url, {"exclude_large_fields": "true"})",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/tests/test_async_llm_provider_service.py",
+      "line": 130,
+      "type": "secret",
+      "content": "                        api_key="ollama", base_url="http://localhost:11434/v1"",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 49,
+      "type": "secret",
+      "content": "        self.token = os.getenv("GITHUB_TOKEN")",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 57,
+      "type": "secret",
+      "content": "                status_code=500, detail="GitHub integration not configured - GITHUB_TOKEN not found"",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 97,
+      "type": "secret",
+      "content": "                        detail="GitHub authentication failed - check GITHUB_TOKEN permissions",",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 271,
+      "type": "secret",
+      "content": "    github_configured = bool(os.getenv("GITHUB_TOKEN"))",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/api_routes/bug_report_api.py",
+      "line": 276,
+      "type": "secret",
+      "content": "        "github_token_configured": github_configured,",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/python/src/server/config/logfire_config.py",
+      "line": 54,
+      "type": "secret",
+      "content": "    token: str | None = None, environment: str = "development", service_name: str = "archon-server"",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/prp/sections/TokenSystemSection.tsx",
+      "line": 165,
+      "type": "secret",
+      "content": "      const typographyTokens = categories.filter(([k]) => k.toLowerCase().includes('typography') || k.toLowerCase().includes('font'));",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    },
+    {
+      "file": "./external/archon/archon-ui-main/src/components/prp/sections/TokenSystemSection.tsx",
+      "line": 166,
+      "type": "secret",
+      "content": "      const spacingTokens = categories.filter(([k]) => k.toLowerCase().includes('spacing') || k.toLowerCase().includes('size'));",
+      "severity": "HIGH",
+      "recommendation": "Review and fix security issue"
+    }
+  ],
+  "recommendations": [
+    "Fix all identified vulnerabilities",
+    "Remove exposed secrets from code",
+    "Update vulnerable dependencies",
+    "Implement security best practices",
+    "Add security scanning to CI/CD pipeline"
+  ]
+}

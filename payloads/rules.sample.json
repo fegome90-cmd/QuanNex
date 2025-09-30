@@ -1,0 +1,6 @@
+{
+  "policy_refs": ["policies/writing.md"],
+  "tone": "formal",
+  "domain": "documentation",
+  "compliance_level": "basic"
+}

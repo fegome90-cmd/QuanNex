@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://startkit.local/schemas/agents/context.input.schema.json",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "sources": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "maxItems": 50
+    },
+    "selectors": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "maxItems": 50
+    },
+    "max_tokens": { "type": "integer", "minimum": 1 }
+  },
+  "required": ["sources"],
+  "additionalProperties": false
+}

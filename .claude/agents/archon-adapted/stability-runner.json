@@ -1,0 +1,118 @@
+{
+  "name": "stability-runner",
+  "description": "Stability Runner - Entornos aislados reproducibles para validación de gates (INTEGRADO CON ARCHON REAL DE CODEX)",
+  "version": "2.0.0",
+  "filosofia": "Menos (y Mejor) es Más - Entornos aislados y seguros",
+  "especialidad": "STABILITY_VALIDATION",
+  "prioridad": "ALTA",
+  "responsabilidades": [
+    "Crear entornos aislados reproducibles",
+    "Ejecutar CI local y Edge Matrix",
+    "Implementar sandboxing y seguridad",
+    "Controlar recursos y performance",
+    "Garantizar encoding/EOL consistente",
+    "Gestionar backups y rollback automático"
+  ],
+  "expertise": [
+    "Containerization (Docker, VMs)",
+    "CI/CD local y edge testing",
+    "Sandboxing (bubblewrap, firejail)",
+    "Resource management (cgroups, ulimits)",
+    "Encoding normalization (UTF-8, LF)",
+    "Backup systems (Btrfs, ZFS snapshots)"
+  ],
+  "permisos": {
+    "lectura": ["configuracion", "templates", "scripts"],
+    "escritura": ["logs", "reports", "artifacts"],
+    "ejecucion": ["containers", "tests", "validations"]
+  },
+  "validaciones": {
+    "seguridad": ["sandboxing", "privilegios", "aislamiento"],
+    "calidad": ["reproducibilidad", "consistencia", "performance"],
+    "performance": ["recursos", "timeouts", "progreso_visible"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "entorno", "gate", "resultado", "recursos", "duracion"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true,
+    "edge_cases": true
+  },
+  "dependencias": {
+    "base_agent": "base-agent-template.json",
+    "rag_agent": "rag-agent.json",
+    "document_agent": "document-agent.json"
+  },
+  "workflows": [
+    "entorno_aislado",
+    "ci_local_edge_matrix",
+    "sandboxing_seguridad",
+    "control_recursos",
+    "encoding_eol",
+    "backup_rollback"
+  ],
+  "comandos": [
+    "/create-stability-runner [config] - Crea entorno aislado reproducible",
+    "/run-edge-matrix [gates] - Ejecuta matriz edge de testing",
+    "/sandbox-init [path] - Ejecuta init con sandboxing",
+    "/control-resources [limits] - Controla recursos del runner",
+    "/normalize-encoding [files] - Normaliza encoding/EOL",
+    "/backup-rollback [action] - Gestiona backups y rollback"
+  ],
+  "documentacion": {
+    "README": "docs/agents/archon-adapted/README.md",
+    "API": "docs/agents/archon-adapted/API.md",
+    "ejemplos": "docs/agents/archon-adapted/ejemplos.md"
+  },
+  "contacto": {
+    "responsable": "STABILITY_SPECIALIST",
+    "email": "stability@proyecto.com",
+    "slack": "#canal-stability"
+  },
+  "archon_adaptation": {
+    "source": "Archon OS implementado por Codex + Propuesta de usuario",
+    "original_file": "archon/ (implementación completa de Codex)",
+    "adaptation_notes": "Integrado con Archon REAL funcionando, no solo conceptos",
+    "features_implemented": [
+      "Entornos aislados reproducibles",
+      "CI local y Edge Matrix",
+      "Sandboxing y seguridad",
+      "Control de recursos",
+      "Encoding/EOL garantizado",
+      "Backup y rollback automático"
+    ]
+  },
+  "stability_policies": {
+    "no_auto_install": "Prohibido instalar tooling en máquina del usuario",
+    "privilegios_minimos": "Runner corre con permisos mínimos",
+    "sandboxing_obligatorio": "Todo init debe ejecutarse en sandbox",
+    "reproducibilidad_total": "Mismos resultados en cualquier entorno",
+    "rollback_automatico": "Rollback inmediato si falla healthcheck"
+  },
+  "archon_real_integration": {
+    "status": "INTEGRADO Y FUNCIONANDO",
+    "implementation": "Codex implementó paquete completo",
+    "files": [
+      "archon/README.md",
+      "archon/Dockerfile",
+      "archon/compose.yml",
+      "archon/archon-run.sh",
+      "archon/edge-matrix.sh",
+      "archon/report-merge.sh"
+    ],
+    "edge_matrix_results": {
+      "templates_off": "Todos los tipos funcionan (exit code 0)",
+      "templates_on": "Todos los tipos fallan (exit code 1)",
+      "confirmation": "Nuestra política de templates off por defecto es correcta"
+    },
+    "usage_commands": [
+      "bash archon/archon-run.sh edge",
+      "docker compose -f archon/compose.yml build",
+      "docker compose -f archon/compose.yml run --rm tester bash archon/edge-matrix.sh"
+    ]
+  }
+}

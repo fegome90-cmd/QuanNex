@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TestReport",
+  "type": "object",
+  "properties": {
+    "generated_at": { "type": "string", "format": "date-time" },
+    "total": { "type": "integer", "minimum": 0 },
+    "passed": { "type": "integer", "minimum": 0 },
+    "failed": { "type": "integer", "minimum": 0 },
+    "coverage": { "type": "number", "minimum": 0, "maximum": 100 },
+    "reports": {
+      "type": "object",
+      "properties": {
+        "junit": { "type": "string" },
+        "coverage_xml": { "type": "string" }
+      }
+    },
+    "status": { "type": "string", "enum": ["pass", "fail"] }
+  },
+  "required": ["generated_at", "total", "passed", "failed", "coverage", "status"]
+}

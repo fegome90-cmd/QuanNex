@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Claude Agent Definition",
+  "type": "object",
+  "required": ["name", "description", "version", "logging", "testing", "documentacion"],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "filosofia": { "type": "string" },
+    "responsabilidades": { "type": "array", "items": { "type": "string" } },
+    "especialidad": { "type": "string" },
+    "prioridad": { "type": "string" },
+    "permisos": {
+      "type": "object",
+      "properties": {
+        "lectura": { "type": "array", "items": { "type": "string" } },
+        "escritura": { "type": "array", "items": { "type": "string" } },
+        "ejecucion": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "validaciones": { "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" } } },
+    "herramientas": { "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" } } },
+    "metodologia": { "type": "object", "additionalProperties": true },
+    "logging": {
+      "type": "object",
+      "required": ["nivel", "formato"],
+      "properties": {
+        "nivel": { "type": "string" },
+        "formato": { "type": "string" },
+        "campos": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "testing": {
+      "type": "object",
+      "properties": {
+        "unit": { "type": "boolean" },
+        "integration": { "type": "boolean" },
+        "security": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "documentacion": {
+      "type": "object",
+      "required": ["README"],
+      "properties": {
+        "README": { "type": "string" },
+        "API": { "type": "string" },
+        "ejemplos": { "type": "string" },
+        "checklist": { "type": "string" },
+        "compliance": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "contacto": { "type": "object", "additionalProperties": true },
+    "configuracion": { "type": "object", "additionalProperties": true },
+    "regulaciones": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": true
+}
+

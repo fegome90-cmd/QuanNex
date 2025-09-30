@@ -1,0 +1,75 @@
+# Archivos JSON malformados o generados automáticamente
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!.prettierrc
+!eslint.config.js
+
+# Reportes y artefactos
+.reports/
+reports/
+*.report.json
+*report*.json
+consolidated-review-report.json
+deployment-report.json
+integration-test-report.json
+phi-report.json
+security-report.json
+eslint-report.json
+
+# Archivos de análisis
+analisis-*/
+archivos-organizados/
+
+# Archivos de configuración específicos
+.github/workflows/agents-core.yml
+.mcp.json
+
+# Archivos de ejemplos
+examples/
+
+# Archivos de documentación que no necesitan formateo
+docs/
+templates/
+ejemplos/
+
+# Archivos de configuración de Archon
+archon/
+
+# Archivos de migración
+migration/
+
+# Archivos de esquemas
+schemas/
+
+# Archivos de métricas
+metrics/
+
+# Archivos de políticas
+policies/
+
+# Archivos de planes
+planes-futuros/
+plans/
+
+# Archivos de informes
+informes-evaluacion/
+
+# Archivos de documentación
+documentacion/
+
+# Archivos de análisis del motor RETE
+analisis-motor-rete/
+
+# Archivos de análisis del sistema orquestador
+analisis-sistema-orquestador/
+
+# Archivos de análisis de seguridad
+analisis-seguridad-proyecto/
+
+# Archivos de análisis general del proyecto
+analisis-proyecto-general/
+
+# Archivos de configuración específicos
+.claude/

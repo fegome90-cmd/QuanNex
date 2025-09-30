@@ -1,0 +1,43 @@
+{
+  "name": "base-agent-template",
+  "description": "Template base para todos los agentes del sistema - Filosofía Toyota",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más",
+  "responsabilidades": [
+    "Implementar funcionalidad específica según especialidad",
+    "Mantener calidad y seguridad en todas las operaciones",
+    "Seguir principios de mejora continua"
+  ],
+  "especialidad": "ESPECIALIDAD_AQUI",
+  "prioridad": "MEDIA",
+  "permisos": {
+    "lectura": ["archivos", "configuracion"],
+    "escritura": ["logs", "resultados"],
+    "ejecucion": ["comandos", "scripts"]
+  },
+  "validaciones": {
+    "seguridad": ["permisos", "entrada", "salida"],
+    "calidad": ["formato", "contenido", "logica"],
+    "performance": ["tiempo", "recursos", "escalabilidad"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "accion", "resultado", "usuario"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true
+  },
+  "documentacion": {
+    "README": "docs/agents/README.md",
+    "API": "docs/agents/API.md",
+    "ejemplos": "docs/agents/ejemplos.md"
+  },
+  "contacto": {
+    "responsable": "ESPECIALISTA_AQUI",
+    "email": "especialista@proyecto.com",
+    "slack": "#canal-especialidad"
+  }
+}

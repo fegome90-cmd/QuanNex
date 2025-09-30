@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://startkit.local/schemas/agents/rules.input.schema.json",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "policy_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "maxItems": 50
+    },
+    "tone": {
+      "type": "string",
+      "enum": ["neutral", "formal", "friendly", "assertive"]
+    },
+    "domain": { "type": "string" },
+    "compliance_level": {
+      "type": "string",
+      "enum": ["none", "basic", "strict"]
+    }
+  },
+  "required": ["policy_refs"],
+  "additionalProperties": false
+}

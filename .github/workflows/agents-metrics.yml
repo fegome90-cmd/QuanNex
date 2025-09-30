@@ -1,0 +1,48 @@
+name: Agents Metrics
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run agents validation (withSandbox)
+        run: |
+          mkdir -p out/reports tmp
+          chmod +x scripts/validate-agents.sh
+          KEEP_ARTIFACTS=0 scripts/validate-agents.sh
+          test -f out/reports/agents-metrics.latest.json
+
+      - name: Verify metrics gates
+        run: |
+          node tools/verify-metrics.mjs
+
+      - name: Upload metrics (artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agents-metrics-${{ matrix.node }}
+          path: out/reports/agents-metrics.latest.json
+
+      - name: Cleanup
+        if: always()
+        run: |
+          node tools/cleanup.mjs || true
+          rm -rf tmp || true

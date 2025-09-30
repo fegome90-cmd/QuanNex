@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://startkit.local/schemas/agents/prompting.input.schema.json",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "goal": { "type": "string", "minLength": 1 },
+    "style": {
+      "type": "string",
+      "enum": ["default", "formal", "concise", "creative", "technical"]
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 50
+    },
+    "context_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 50
+    },
+    "ruleset_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 50
+    }
+  },
+  "required": ["goal"],
+  "additionalProperties": false
+}

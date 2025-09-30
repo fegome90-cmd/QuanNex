@@ -1,0 +1,12 @@
+{
+  "name": "mini-product-2",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node src/server.js",
+    "start:port": "PORT=3001 node src/server.js"
+  }
+}
+

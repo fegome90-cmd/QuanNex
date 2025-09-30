@@ -1,0 +1,55 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Validar engines.node
+        run: |
+          node_version=$(node --version | sed 's/v//')
+          required_version="20.10.0"
+          if ! npx semver -r ">=$required_version" "$node_version" >/dev/null 2>&1; then
+            echo "❌ Node.js $node_version no cumple con engines.node >= $required_version"
+            exit 1
+          fi
+          echo "✅ Node.js $node_version cumple con engines.node >= $required_version"
+
+      - name: Instalar dependencias (npm ci)
+        run: |
+          npm ci
+          echo "✅ npm ci ejecutado exitosamente"
+
+      - name: Verificar lockfile
+        run: |
+          if [ -f package-lock.json ]; then
+            echo "✅ package-lock.json presente"
+            npm ls --depth=0 >/dev/null
+            echo "✅ Dependencias resueltas correctamente"
+          else
+            echo "❌ package-lock.json no encontrado"
+            exit 1
+          fi
+
+      - name: Ejecutar auditoría
+        run: |
+          chmod +x scripts/audit.sh
+          ./scripts/audit.sh
+          echo "✅ Auditoría completada"

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RefactorReport",
+  "type": "object",
+  "properties": {
+    "generated_at": { "type": "string", "format": "date-time" },
+    "files_changed": { "type": "integer", "minimum": 0 },
+    "diff_path": { "type": "string" },
+    "notes": { "type": "string" },
+    "status": { "type": "string", "enum": ["clean", "pending-review"] }
+  },
+  "required": ["generated_at", "files_changed", "status"]
+}

@@ -1,0 +1,28 @@
+{
+  "generated_at": "2025-09-30T14:36:03Z",
+  "agents": {
+    "context": {
+      "avg_s": 0.079,
+      "p95_s": 0.093163000,
+      "success_rate": 1.0
+    },
+    "prompting": {
+      "avg_s": 0.075,
+      "p95_s": 0.079125000,
+      "success_rate": 1.0
+    },
+    "rules": {
+      "avg_s": 0.077,
+      "p95_s": 0.086867000,
+      "success_rate": 1.0
+    }
+  },
+  "isolation": {
+    "leaks": 0,
+    "temp_after_run":        0
+  },
+  "tests": {
+    "passed": 11,
+    "failed": 0
+  }
+}

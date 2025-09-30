@@ -1,0 +1,63 @@
+name: Agents Orchestration
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  orchestrate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build plan.json from PLAN.yaml
+        run: npm run plan:build
+
+      - name: Create workflow
+        run: |
+          WF=$(node orchestration/orchestrator.js create "$(cat orchestration/plan.json)" | jq -r .workflow_id)
+          echo "WF_ID=$WF" >> $GITHUB_ENV
+          echo "$WF" > .wf_id
+          echo "Created workflow: $WF"
+
+      - name: Execute workflow
+        run: |
+          echo "Executing workflow: $WF_ID"
+          node orchestration/orchestrator.js execute "$WF_ID"
+
+      - name: Verify official artifacts
+        run: |
+          echo "Checking official artifacts..."
+          ls -la out/
+          test -f out/rules.json
+          test -f out/context.json
+          test -f out/prompting.json
+          echo "✅ All official artifacts present"
+
+      - name: Upload artifacts (on failure only)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orchestration-${{ matrix.node }}-${{ env.WF_ID }}
+          path: .reports/${{ env.WF_ID }}/
+
+      - name: Cleanup
+        if: always()
+        run: |
+          node tools/cleanup.mjs
+          echo "🧹 Cleanup completed"

@@ -1,0 +1,7 @@
+{
+  "goal": "Generar documentación inicial",
+  "style": "formal",
+  "constraints": ["español"],
+  "context_refs": ["docs/ANALISIS-CONTEXT-ENGINEERING.md"],
+  "ruleset_refs": ["policies/writing.md"]
+}

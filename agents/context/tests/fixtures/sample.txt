@@ -1,0 +1,6 @@
+Intro section
+## Requisitos
+- Debe ejecutarse en Node 20
+- Incluir cobertura mínima
+## Fuera de alcance
+- Integración externa

@@ -1,0 +1,1956 @@
+{
+  "timestamp": "2025-09-02T22:35:40Z",
+  "test_environment": "integration",
+  "status": "success",
+  "total_agents": 6,
+  "successful_agents": 6,
+  "failed_agents": 0
+0,
+  "agent_results": [
+    {
+      "agent": "[0;34m[Integration",
+      "status": "[0;34m[Integration"
+    },
+    {
+      "agent": "Test][0m",
+      "status": "Test][0m"
+    },
+    {
+      "agent": "Probando",
+      "status": "Probando"
+    },
+    {
+      "agent": "integración",
+      "status": "integración"
+    },
+    {
+      "agent": "entre",
+      "status": "entre"
+    },
+    {
+      "agent": "agentes...",
+      "status": "agentes..."
+    },
+    {
+      "agent": "[0;34m[Integration",
+      "status": "[0;34m[Integration"
+    },
+    {
+      "agent": "Test][0m",
+      "status": "Test][0m"
+    },
+    {
+      "agent": "Probando",
+      "status": "Probando"
+    },
+    {
+      "agent": "agente",
+      "status": ""
+    },
+    {
+      "agent": "code-reviewer",
+      "status": "code-reviewer"
+    },
+    {
+      "agent": "[ESLint",
+      "status": "[ESLint"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando"
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint..."
+    },
+    {
+      "agent": "[ESLint",
+      "status": "[ESLint"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias"
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas"
+    },
+    {
+      "agent": "[ESLint",
+      "status": "[ESLint"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración"
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada"
+    },
+    {
+      "agent": "[ESLint",
+      "status": "[ESLint"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Ejecutando",
+      "status": "Ejecutando"
+    },
+    {
+      "agent": "ESLint...",
+      "status": "ESLint..."
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "No",
+      "status": "No"
+    },
+    {
+      "agent": "hay",
+      "status": "hay"
+    },
+    {
+      "agent": "archivos",
+      "status": "archivos"
+    },
+    {
+      "agent": "JS/TS",
+      "status": "JS/TS"
+    },
+    {
+      "agent": "que",
+      "status": "que"
+    },
+    {
+      "agent": "lintar;",
+      "status": "lintar;"
+    },
+    {
+      "agent": "omitiendo",
+      "status": "omitiendo"
+    },
+    {
+      "agent": "[ESLint",
+      "status": "[ESLint"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Analizando",
+      "status": "Analizando"
+    },
+    {
+      "agent": "resultados...",
+      "status": "resultados..."
+    },
+    {
+      "agent": "[ESLint",
+      "status": "[ESLint"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Errores",
+      "status": "Errores"
+    },
+    {
+      "agent": "encontrados",
+      "status": ""
+    },
+    {
+      "agent": "0",
+      "status": "0"
+    },
+    {
+      "agent": "[ESLint",
+      "status": "[ESLint"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Warnings",
+      "status": "Warnings"
+    },
+    {
+      "agent": "encontrados",
+      "status": ""
+    },
+    {
+      "agent": "0",
+      "status": "0"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Análisis",
+      "status": "Análisis"
+    },
+    {
+      "agent": "completado",
+      "status": "completado"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "Verificación",
+      "status": "Verificación"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "ESLint",
+      "status": "ESLint"
+    },
+    {
+      "agent": "completada",
+      "status": "completada"
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente"
+    },
+    {
+      "agent": "[ESLint",
+      "status": "[ESLint"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando"
+    },
+    {
+      "agent": "reporte...",
+      "status": "reporte..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte"
+    },
+    {
+      "agent": "generado",
+      "status": ""
+    },
+    {
+      "agent": "eslint-summary.md",
+      "status": "eslint-summary.md"
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "code-reviewer",
+      "status": ""
+    },
+    {
+      "agent": "ESLint",
+      "status": "ESLint"
+    },
+    {
+      "agent": "check",
+      "status": "check"
+    },
+    {
+      "agent": "passed",
+      "status": "passed"
+    },
+    {
+      "agent": "[0;34m[Integration",
+      "status": "[0;34m[Integration"
+    },
+    {
+      "agent": "Test][0m",
+      "status": "Test][0m"
+    },
+    {
+      "agent": "Probando",
+      "status": "Probando"
+    },
+    {
+      "agent": "agente",
+      "status": ""
+    },
+    {
+      "agent": "medical-reviewer",
+      "status": "medical-reviewer"
+    },
+    {
+      "agent": "[PHI",
+      "status": "[PHI"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando"
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "PHI...",
+      "status": "PHI..."
+    },
+    {
+      "agent": "[PHI",
+      "status": "[PHI"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias"
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas"
+    },
+    {
+      "agent": "[PHI",
+      "status": "[PHI"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando"
+    },
+    {
+      "agent": "PHI",
+      "status": "PHI"
+    },
+    {
+      "agent": "en",
+      "status": "en"
+    },
+    {
+      "agent": "archivos...",
+      "status": "archivos..."
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "No",
+      "status": "No"
+    },
+    {
+      "agent": "se",
+      "status": "se"
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron"
+    },
+    {
+      "agent": "archivos",
+      "status": "archivos"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "código",
+      "status": "código"
+    },
+    {
+      "agent": "para",
+      "status": "para"
+    },
+    {
+      "agent": "PHI;",
+      "status": "PHI;"
+    },
+    {
+      "agent": "omitiendo",
+      "status": "omitiendo"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "Verificación",
+      "status": "Verificación"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "PHI",
+      "status": "PHI"
+    },
+    {
+      "agent": "completada",
+      "status": "completada"
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente"
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "medical-reviewer",
+      "status": ""
+    },
+    {
+      "agent": "PHI",
+      "status": "PHI"
+    },
+    {
+      "agent": "check",
+      "status": "check"
+    },
+    {
+      "agent": "passed",
+      "status": "passed"
+    },
+    {
+      "agent": "[0;34m[Integration",
+      "status": "[0;34m[Integration"
+    },
+    {
+      "agent": "Test][0m",
+      "status": "Test][0m"
+    },
+    {
+      "agent": "Probando",
+      "status": "Probando"
+    },
+    {
+      "agent": "agente",
+      "status": ""
+    },
+    {
+      "agent": "security-guardian",
+      "status": "security-guardian"
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando"
+    },
+    {
+      "agent": "escaneo",
+      "status": "escaneo"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "seguridad...",
+      "status": "seguridad..."
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias"
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas"
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando"
+    },
+    {
+      "agent": "vulnerabilidades...",
+      "status": "vulnerabilidades..."
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos"
+    },
+    {
+      "agent": "escaneados",
+      "status": ""
+    },
+    {
+      "agent": "0",
+      "status": "0"
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos"
+    },
+    {
+      "agent": "con",
+      "status": "con"
+    },
+    {
+      "agent": "vulnerabilidades",
+      "status": ""
+    },
+    {
+      "agent": "0",
+      "status": "0"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "No",
+      "status": "No"
+    },
+    {
+      "agent": "se",
+      "status": "se"
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron"
+    },
+    {
+      "agent": "vulnerabilidades",
+      "status": "vulnerabilidades"
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Escaneando",
+      "status": "Escaneando"
+    },
+    {
+      "agent": "secretos...",
+      "status": "secretos..."
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos"
+    },
+    {
+      "agent": "escaneados",
+      "status": ""
+    },
+    {
+      "agent": "0",
+      "status": "0"
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos"
+    },
+    {
+      "agent": "con",
+      "status": "con"
+    },
+    {
+      "agent": "secretos",
+      "status": ""
+    },
+    {
+      "agent": "0",
+      "status": "0"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "No",
+      "status": "No"
+    },
+    {
+      "agent": "se",
+      "status": "se"
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron"
+    },
+    {
+      "agent": "secretos",
+      "status": "secretos"
+    },
+    {
+      "agent": "[Security",
+      "status": "[Security"
+    },
+    {
+      "agent": "Scan]",
+      "status": "Scan]"
+    },
+    {
+      "agent": "Auditando",
+      "status": "Auditando"
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Auditoría",
+      "status": "Auditoría"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "dependencias",
+      "status": "dependencias"
+    },
+    {
+      "agent": "completada",
+      "status": "completada"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "Escaneo",
+      "status": "Escaneo"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "seguridad",
+      "status": "seguridad"
+    },
+    {
+      "agent": "completado",
+      "status": "completado"
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente"
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "security-guardian",
+      "status": ""
+    },
+    {
+      "agent": "Security",
+      "status": "Security"
+    },
+    {
+      "agent": "scan",
+      "status": "scan"
+    },
+    {
+      "agent": "passed",
+      "status": "passed"
+    },
+    {
+      "agent": "[0;34m[Integration",
+      "status": "[0;34m[Integration"
+    },
+    {
+      "agent": "Test][0m",
+      "status": "Test][0m"
+    },
+    {
+      "agent": "Probando",
+      "status": "Probando"
+    },
+    {
+      "agent": "agente",
+      "status": ""
+    },
+    {
+      "agent": "deployment-manager",
+      "status": "deployment-manager"
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando"
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "despliegue...",
+      "status": "despliegue..."
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias"
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas"
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "archivos",
+      "status": "archivos"
+    },
+    {
+      "agent": "requeridos...",
+      "status": "requeridos..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "package.json",
+      "status": "package.json"
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado"
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "❌",
+      "status": "❌"
+    },
+    {
+      "agent": "Dockerfile",
+      "status": "Dockerfile"
+    },
+    {
+      "agent": "no",
+      "status": "no"
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado"
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "❌",
+      "status": "❌"
+    },
+    {
+      "agent": "docker-compose.yml",
+      "status": "docker-compose.yml"
+    },
+    {
+      "agent": "no",
+      "status": "no"
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado"
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "❌",
+      "status": "❌"
+    },
+    {
+      "agent": ".github/workflows/deploy.yml",
+      "status": ".github/workflows/deploy.yml"
+    },
+    {
+      "agent": "no",
+      "status": "no"
+    },
+    {
+      "agent": "encontrado",
+      "status": "encontrado"
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos"
+    },
+    {
+      "agent": "encontrados",
+      "status": ""
+    },
+    {
+      "agent": "1/4",
+      "status": "1/4"
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos"
+    },
+    {
+      "agent": "faltantes",
+      "status": ""
+    },
+    {
+      "agent": "Dockerfile",
+      "status": "Dockerfile"
+    },
+    {
+      "agent": "docker-compose.yml",
+      "status": "docker-compose.yml"
+    },
+    {
+      "agent": ".github/workflows/deploy.yml",
+      "status": ".github/workflows/deploy.yml"
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "Docker...",
+      "status": "Docker..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "Docker",
+      "status": "Docker"
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada"
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "CI/CD...",
+      "status": "CI/CD..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "Workflows",
+      "status": "Workflows"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "GitHub",
+      "status": "GitHub"
+    },
+    {
+      "agent": "Actions",
+      "status": "Actions"
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados"
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️"
+    },
+    {
+      "agent": "No",
+      "status": "No"
+    },
+    {
+      "agent": "se",
+      "status": "se"
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró"
+    },
+    {
+      "agent": "workflow",
+      "status": "workflow"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "despliegue",
+      "status": "despliegue"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "CI/CD",
+      "status": "CI/CD"
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada"
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "Kubernetes...",
+      "status": "Kubernetes..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes"
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados"
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️"
+    },
+    {
+      "agent": "No",
+      "status": "No"
+    },
+    {
+      "agent": "se",
+      "status": "se"
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró"
+    },
+    {
+      "agent": "Deployment",
+      "status": "Deployment"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes"
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "⚠️",
+      "status": "⚠️"
+    },
+    {
+      "agent": "No",
+      "status": "No"
+    },
+    {
+      "agent": "se",
+      "status": "se"
+    },
+    {
+      "agent": "encontró",
+      "status": "encontró"
+    },
+    {
+      "agent": "Service",
+      "status": "Service"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Configuración",
+      "status": "Configuración"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "Kubernetes",
+      "status": "Kubernetes"
+    },
+    {
+      "agent": "verificada",
+      "status": "verificada"
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "variables",
+      "status": "variables"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "entorno...",
+      "status": "entorno..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "Archivos",
+      "status": "Archivos"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "entorno",
+      "status": "entorno"
+    },
+    {
+      "agent": "encontrados",
+      "status": "encontrados"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Variables",
+      "status": "Variables"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "entorno",
+      "status": "entorno"
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas"
+    },
+    {
+      "agent": "[ERROR]",
+      "status": "[ERROR]"
+    },
+    {
+      "agent": "Se",
+      "status": "Se"
+    },
+    {
+      "agent": "encontraron",
+      "status": "encontraron"
+    },
+    {
+      "agent": "problemas",
+      "status": "problemas"
+    },
+    {
+      "agent": "en",
+      "status": "en"
+    },
+    {
+      "agent": "la",
+      "status": "la"
+    },
+    {
+      "agent": "configuración",
+      "status": "configuración"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "despliegue",
+      "status": "despliegue"
+    },
+    {
+      "agent": "[Deployment",
+      "status": "[Deployment"
+    },
+    {
+      "agent": "Check]",
+      "status": "Check]"
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando"
+    },
+    {
+      "agent": "reporte",
+      "status": "reporte"
+    },
+    {
+      "agent": "JSON...",
+      "status": "JSON..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte"
+    },
+    {
+      "agent": "JSON",
+      "status": "JSON"
+    },
+    {
+      "agent": "generado",
+      "status": ""
+    },
+    {
+      "agent": "deployment-report.json",
+      "status": "deployment-report.json"
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "Modo",
+      "status": "Modo"
+    },
+    {
+      "agent": "no",
+      "status": "no"
+    },
+    {
+      "agent": "estricto",
+      "status": ""
+    },
+    {
+      "agent": "aprobando",
+      "status": "aprobando"
+    },
+    {
+      "agent": "con",
+      "status": "con"
+    },
+    {
+      "agent": "advertencias",
+      "status": "advertencias"
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "deployment-manager",
+      "status": ""
+    },
+    {
+      "agent": "Deployment",
+      "status": "Deployment"
+    },
+    {
+      "agent": "check",
+      "status": "check"
+    },
+    {
+      "agent": "passed",
+      "status": "passed"
+    },
+    {
+      "agent": "[0;34m[Integration",
+      "status": "[0;34m[Integration"
+    },
+    {
+      "agent": "Test][0m",
+      "status": "Test][0m"
+    },
+    {
+      "agent": "Probando",
+      "status": "Probando"
+    },
+    {
+      "agent": "agente",
+      "status": ""
+    },
+    {
+      "agent": "test-generator",
+      "status": "test-generator"
+    },
+    {
+      "agent": "[Test",
+      "status": "[Test"
+    },
+    {
+      "agent": "Generator]",
+      "status": "Generator]"
+    },
+    {
+      "agent": "Iniciando",
+      "status": "Iniciando"
+    },
+    {
+      "agent": "generación",
+      "status": "generación"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "tests...",
+      "status": "tests..."
+    },
+    {
+      "agent": "[Test",
+      "status": "[Test"
+    },
+    {
+      "agent": "Generator]",
+      "status": "Generator]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "dependencias...",
+      "status": "dependencias..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Dependencias",
+      "status": "Dependencias"
+    },
+    {
+      "agent": "verificadas",
+      "status": "verificadas"
+    },
+    {
+      "agent": "./scripts/test-generator.sh",
+      "status": ""
+    },
+    {
+      "agent": "line",
+      "status": "line"
+    },
+    {
+      "agent": "83",
+      "status": ""
+    },
+    {
+      "agent": "code_files[@]",
+      "status": ""
+    },
+    {
+      "agent": "unbound",
+      "status": "unbound"
+    },
+    {
+      "agent": "variable",
+      "status": "variable"
+    },
+    {
+      "agent": "./scripts/test-generator.sh",
+      "status": ""
+    },
+    {
+      "agent": "line",
+      "status": "line"
+    },
+    {
+      "agent": "139",
+      "status": ""
+    },
+    {
+      "agent": "test_files[@]",
+      "status": ""
+    },
+    {
+      "agent": "unbound",
+      "status": "unbound"
+    },
+    {
+      "agent": "variable",
+      "status": "variable"
+    },
+    {
+      "agent": "[Test",
+      "status": "[Test"
+    },
+    {
+      "agent": "Generator]",
+      "status": "Generator]"
+    },
+    {
+      "agent": "Verificando",
+      "status": "Verificando"
+    },
+    {
+      "agent": "cobertura",
+      "status": "cobertura"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "tests...",
+      "status": "tests..."
+    },
+    {
+      "agent": "[WARNING]",
+      "status": "[WARNING]"
+    },
+    {
+      "agent": "Jest",
+      "status": "Jest"
+    },
+    {
+      "agent": "no",
+      "status": "no"
+    },
+    {
+      "agent": "está",
+      "status": "está"
+    },
+    {
+      "agent": "instalado,",
+      "status": "instalado,"
+    },
+    {
+      "agent": "saltando",
+      "status": "saltando"
+    },
+    {
+      "agent": "verificación",
+      "status": "verificación"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "cobertura",
+      "status": "cobertura"
+    },
+    {
+      "agent": "[Test",
+      "status": "[Test"
+    },
+    {
+      "agent": "Generator]",
+      "status": "Generator]"
+    },
+    {
+      "agent": "Generando",
+      "status": "Generando"
+    },
+    {
+      "agent": "reporte",
+      "status": "reporte"
+    },
+    {
+      "agent": "JSON...",
+      "status": "JSON..."
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "Reporte",
+      "status": "Reporte"
+    },
+    {
+      "agent": "JSON",
+      "status": "JSON"
+    },
+    {
+      "agent": "generado",
+      "status": ""
+    },
+    {
+      "agent": "test-generation-report.json",
+      "status": "test-generation-report.json"
+    },
+    {
+      "agent": "[SUCCESS]",
+      "status": "[SUCCESS]"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "Generación",
+      "status": "Generación"
+    },
+    {
+      "agent": "de",
+      "status": "de"
+    },
+    {
+      "agent": "tests",
+      "status": "tests"
+    },
+    {
+      "agent": "completada",
+      "status": "completada"
+    },
+    {
+      "agent": "exitosamente",
+      "status": "exitosamente"
+    },
+    {
+      "agent": "[Test",
+      "status": "[Test"
+    },
+    {
+      "agent": "Generator]",
+      "status": "Generator]"
+    },
+    {
+      "agent": "Tests",
+      "status": "Tests"
+    },
+    {
+      "agent": "generados",
+      "status": ""
+    },
+    {
+      "agent": "11",
+      "status": "11"
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "test-generator",
+      "status": ""
+    },
+    {
+      "agent": "Test",
+      "status": "Test"
+    },
+    {
+      "agent": "generation",
+      "status": "generation"
+    },
+    {
+      "agent": "passed",
+      "status": "passed"
+    },
+    {
+      "agent": "[0;34m[Integration",
+      "status": "[0;34m[Integration"
+    },
+    {
+      "agent": "Test][0m",
+      "status": "Test][0m"
+    },
+    {
+      "agent": "Probando",
+      "status": "Probando"
+    },
+    {
+      "agent": "agente",
+      "status": ""
+    },
+    {
+      "agent": "review-coordinator",
+      "status": "review-coordinator"
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m"
+    },
+    {
+      "agent": "✅",
+      "status": "✅"
+    },
+    {
+      "agent": "review-coordinator",
+      "status": ""
+    },
+    {
+      "agent": "Review",
+      "status": "Review"
+    },
+    {
+      "agent": "coordination",
+      "status": "coordination"
+    },
+    {
+      "agent": "passed",
+      "status": "passed"
+    },
+    {
+      "agent": "[0;34m[Integration",
+      "status": "[0;34m[Integration"
+    },
+    {
+      "agent": "Test][0m",
+      "status": "Test][0m"
+    },
+    {
+      "agent": "Integración",
+      "status": "Integración"
+    },
+    {
+      "agent": "completada",
+      "status": ""
+    },
+    {
+      "agent": "6/6",
+      "status": "6/6"
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes"
+    },
+    {
+      "agent": "exitosos",
+      "status": "exitosos"
+    },
+    {
+      "agent": "code-reviewer",
+      "status": "success"
+    },
+    {
+      "agent": "medical-reviewer",
+      "status": "success"
+    },
+    {
+      "agent": "security-guardian",
+      "status": "success"
+    },
+    {
+      "agent": "deployment-manager",
+      "status": "success"
+    },
+    {
+      "agent": "test-generator",
+      "status": "success"
+    },
+    {
+      "agent": "review-coordinator",
+      "status": "success"
+    },
+    {
+      "agent": "[0;32m[SUCCESS][0m",
+      "status": "[0;32m[SUCCESS][0m"
+    },
+    {
+      "agent": "Todos",
+      "status": "Todos"
+    },
+    {
+      "agent": "los",
+      "status": "los"
+    },
+    {
+      "agent": "agentes",
+      "status": "agentes"
+    },
+    {
+      "agent": "funcionan",
+      "status": "funcionan"
+    },
+    {
+      "agent": "correctamente",
+      "status": "correctamente"
+    }
+  ],
+  "recommendations": [
+    "All agents are working correctly",
+    "Integration tests passed successfully",
+    "Workflow is ready for production use"
+  ]
+}

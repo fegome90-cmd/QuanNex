@@ -1,0 +1,15 @@
+{
+  "agent": "rules",
+  "timestamp": "2025-09-30T14:36:02Z",
+  "execution_time_seconds": .072699000,
+  "exit_code": 0,
+  "sandbox_isolation": {
+    "files_created_in_sandbox":        0,
+    "sandbox_cleaned": true
+  },
+  "output_management": {
+    "output_file_exists": true,
+    "output_path": "out/rules.json"
+  },
+  "validation_status": "PASS"
+}

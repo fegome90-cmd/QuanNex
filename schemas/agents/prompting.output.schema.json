@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://startkit.local/schemas/agents/prompting.output.schema.json",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "agent_version": { "type": "string" },
+    "system_prompt": { "type": "string", "minLength": 1 },
+    "user_prompt": { "type": "string", "minLength": 1 },
+    "guardrails": { "type": "array", "items": { "type": "string" } },
+    "trace": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["schema_version", "agent_version", "system_prompt", "user_prompt"],
+  "additionalProperties": false
+}

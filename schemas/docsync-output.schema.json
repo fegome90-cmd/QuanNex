@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DocsyncOutput",
+  "type": "object",
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_commit": {
+      "type": "string"
+    },
+    "matrix": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "ecosystem": { "type": "string" },
+          "current": { "type": "string" },
+          "latest": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["ok", "upgrade", "blocked"]
+          },
+          "notes": { "type": "string" }
+        },
+        "required": ["name", "ecosystem", "current", "status"]
+      }
+    }
+  },
+  "required": ["generated_at", "matrix"]
+}

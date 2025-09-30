@@ -1,0 +1,53 @@
+name: Lint Moderno
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar ESLint
+        run: |
+          echo "🔍 Ejecutando ESLint con Flat Config..."
+          npx eslint . --max-warnings=0
+          echo "✅ ESLint completado sin errores"
+
+      - name: Ejecutar Prettier check
+        run: |
+          echo "🎨 Verificando formato con Prettier..."
+          npx prettier --check .
+          echo "✅ Prettier check completado"
+
+      - name: Verificar configuración ESLint
+        run: |
+          echo "⚙️ Verificando configuración ESLint..."
+          npx eslint --print-config eslint.config.js > /dev/null
+          echo "✅ Configuración ESLint válida"
+
+      - name: Reportar errores de lint
+        if: failure()
+        run: |
+          echo "❌ Errores de lint encontrados:"
+          npx eslint . --format=compact || true
+          echo ""
+          echo "❌ Errores de formato encontrados:"
+          npx prettier --check . || true

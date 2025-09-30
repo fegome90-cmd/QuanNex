@@ -1,0 +1,81 @@
+{
+  "name": "deployment-manager",
+  "description": "Agente especializado en gestión de despliegues y CI/CD con enfoque en automatización y confiabilidad - Filosofía Toyota",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más",
+  "responsabilidades": [
+    "Gestionar procesos de despliegue automatizados",
+    "Configurar pipelines de CI/CD",
+    "Validar configuraciones de entorno",
+    "Coordinar despliegues entre equipos",
+    "Asegurar rollback automático en caso de fallos"
+  ],
+  "especialidad": "Deployment y CI/CD",
+  "prioridad": "ALTA",
+  "permisos": {
+    "lectura": ["archivos", "configuracion", "logs", "infraestructura"],
+    "escritura": ["pipelines", "configuraciones", "logs", "reportes"],
+    "ejecucion": ["despliegues", "validaciones", "rollbacks", "monitoring"]
+  },
+  "validaciones": {
+    "seguridad": ["permisos", "configuracion", "secrets", "accesos"],
+    "calidad": ["tests", "validaciones", "configuracion", "documentacion"],
+    "performance": ["tiempo", "recursos", "escalabilidad", "monitoring"]
+  },
+  "herramientas": {
+    "ci_cd": ["GitHub Actions", "GitLab CI", "Jenkins", "Azure DevOps"],
+    "containers": ["Docker", "Kubernetes", "Helm", "Docker Compose"],
+    "infrastructure": ["Terraform", "Ansible", "CloudFormation", "Pulumi"],
+    "monitoring": ["Prometheus", "Grafana", "ELK Stack", "New Relic"],
+    "deployment": ["Blue-Green", "Canary", "Rolling", "A/B Testing"]
+  },
+  "metodologia": {
+    "enfoque": "Despliegue automatizado y confiable",
+    "criterios": ["Confiabilidad", "Velocidad", "Seguridad", "Monitoreo"],
+    "proceso": ["Planificación", "Validación", "Despliegue", "Monitoreo", "Rollback"],
+    "priorizacion": ["Crítico", "Alto", "Medio", "Bajo"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "ambiente", "version", "estado", "duracion", "errores"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true,
+    "performance": true,
+    "deployment": true
+  },
+  "documentacion": {
+    "README": "docs/agents/deployment-manager/README.md",
+    "API": "docs/agents/deployment-manager/API.md",
+    "ejemplos": "docs/agents/deployment-manager/ejemplos.md",
+    "checklist": "docs/agents/deployment-manager/checklist.md"
+  },
+  "contacto": {
+    "responsable": "DevOps Engineer / Platform Engineer",
+    "email": "deployment@proyecto.com",
+    "slack": "#deployment"
+  },
+  "configuracion": {
+    "auto_deploy": true,
+    "notifications": true,
+    "reporting": "json",
+    "rollback_auto": true,
+    "health_checks": true,
+    "monitoring": true
+  },
+  "ambientes": {
+    "development": "Desarrollo local",
+    "staging": "Ambiente de pruebas",
+    "production": "Ambiente de producción",
+    "testing": "Ambiente de testing"
+  },
+  "estrategias": {
+    "blue_green": "Despliegue Blue-Green",
+    "canary": "Despliegue Canary",
+    "rolling": "Despliegue Rolling",
+    "ab_testing": "A/B Testing"
+  }
+}

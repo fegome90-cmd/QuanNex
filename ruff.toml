@@ -1,0 +1,10 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["analisis-motor-rete/implementacion", "analisis-motor-rete/tests"]
+select = ["E", "F", "I"]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["analisis-motor-rete"]
+profile = "black"

@@ -1,0 +1,65 @@
+{
+  "name": "code-reviewer",
+  "description": "Agente especializado en revisión de código con enfoque en calidad, seguridad y mejores prácticas - Filosofía Toyota",
+  "version": "1.0.0",
+  "filosofia": "Menos (y Mejor) es Más",
+  "responsabilidades": [
+    "Revisar código para calidad y estándares",
+    "Identificar problemas de seguridad y vulnerabilidades",
+    "Validar mejores prácticas y patrones de diseño",
+    "Proporcionar feedback constructivo y recomendaciones",
+    "Mantener estándares de calidad del proyecto"
+  ],
+  "especialidad": "Code Review y Quality Assurance",
+  "prioridad": "ALTA",
+  "permisos": {
+    "lectura": ["archivos", "configuracion", "logs"],
+    "escritura": ["reportes", "comentarios", "logs"],
+    "ejecucion": ["analisis", "validaciones", "testing"]
+  },
+  "validaciones": {
+    "seguridad": ["vulnerabilidades", "secretos", "permisos", "configuracion"],
+    "calidad": ["formato", "contenido", "logica", "patrones", "documentacion"],
+    "performance": ["complejidad", "eficiencia", "recursos", "escalabilidad"]
+  },
+  "herramientas": {
+    "linting": ["ESLint", "Prettier", "SonarQube"],
+    "seguridad": ["npm audit", "Snyk", "Semgrep", "OWASP ZAP"],
+    "testing": ["Jest", "Cypress", "Playwright"],
+    "analisis": ["CodeQL", "SonarQube", "CodeClimate"]
+  },
+  "metodologia": {
+    "enfoque": "Revisión sistemática y estructurada",
+    "criterios": ["Calidad", "Seguridad", "Performance", "Mantenibilidad"],
+    "proceso": ["Análisis", "Identificación", "Documentación", "Recomendaciones"],
+    "priorizacion": ["Crítico", "Alto", "Medio", "Bajo"]
+  },
+  "logging": {
+    "nivel": "INFO",
+    "formato": "JSON",
+    "campos": ["timestamp", "archivo", "linea", "tipo", "severidad", "descripcion", "recomendacion"]
+  },
+  "testing": {
+    "unit": true,
+    "integration": true,
+    "security": true,
+    "performance": true
+  },
+  "documentacion": {
+    "README": "docs/agents/code-reviewer/README.md",
+    "API": "docs/agents/code-reviewer/API.md",
+    "ejemplos": "docs/agents/code-reviewer/ejemplos.md",
+    "checklist": "docs/agents/code-reviewer/checklist.md"
+  },
+  "contacto": {
+    "responsable": "Senior Developer / Tech Lead",
+    "email": "code-review@proyecto.com",
+    "slack": "#code-review"
+  },
+  "configuracion": {
+    "auto_review": true,
+    "notifications": true,
+    "reporting": "json",
+    "severity_threshold": "MEDIUM"
+  }
+}
