@@ -1,0 +1,762 @@
+🔒 Security Agent: Escaneando ....
+{
+  "schema_version": "1.0.0",
+  "agent_version": "1.0.0",
+  "security_report": {
+    "summary": {
+      "total_findings": 79,
+      "secrets_found": 0,
+      "vulnerabilities_found": 79,
+      "compliance_score": 0,
+      "severity_breakdown": {
+        "high": 0,
+        "medium": 0,
+        "low": 79
+      }
+    },
+    "findings": [
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 804,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 807,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 808,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 809,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 810,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 825,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 828,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 831,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 835,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 839,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 1204,
+        "match": "Console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 1214,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 1267,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 1273,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 1276,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 1279,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-COMPLETO-CURSOR.md",
+        "line": 1282,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 17,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 22,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 25,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 65,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 74,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 80,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 87,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 93,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 106,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "MANUAL-UPDATE-SECTION.md",
+        "line": 113,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "PR-I-METRICAS-MCP.md",
+        "line": 26,
+        "match": "Console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "PR-I-METRICAS-MCP.md",
+        "line": 31,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "PR-I-METRICAS-MCP.md",
+        "line": 59,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "PR-I-METRICAS-MCP.md",
+        "line": 129,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "PR-I-METRICAS-MCP.md",
+        "line": 133,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "PR-I-METRICAS-MCP.md",
+        "line": 176,
+        "match": "Console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "docs/taskdb-kernel.md",
+        "line": 116,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 62,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 65,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 503,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 510,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 519,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 522,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 524,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 536,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 546,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 556,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 565,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/orchestrator.js",
+        "line": 574,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 11,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 12,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 18,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 20,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 21,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 24,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 52,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 56,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 57,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 58,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 59,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 62,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 68,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 69,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 72,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 74,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 76,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 78,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 80,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 82,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "orchestration/test-orchestration.js",
+        "line": 83,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "out/tools-optimization.json",
+        "line": 22,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "out/tools-security.json",
+        "line": 23,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "out/tools-security.json",
+        "line": 32,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "out/tools-security.json",
+        "line": 41,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "out/tools-security.json",
+        "line": 50,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "out/tools-security.json",
+        "line": 59,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tests/autofix-modernize.test.js",
+        "line": 233,
+        "match": "console.warn",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 6,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 7,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 12,
+        "match": "console.log",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 14,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      },
+      {
+        "type": "vulnerability",
+        "vuln_type": "console_log",
+        "file": "tools/debug-orchestrator.js",
+        "line": 15,
+        "match": "console.error",
+        "severity": "low",
+        "recommendation": "Remover logs de consola en producción"
+      }
+    ],
+    "recommendations": [
+      {
+        "type": "vulnerabilities",
+        "priority": "medium",
+        "message": "79 vulnerabilidades encontradas. Aplicar parches.",
+        "actions": [
+          "Revisar código para vulnerabilidades",
+          "Implementar validación de entrada",
+          "Aplicar mejores prácticas de seguridad"
+        ]
+      },
+      {
+        "type": "compliance",
+        "priority": "high",
+        "message": "Score de compliance bajo (0/100). Mejorar seguridad.",
+        "actions": [
+          "Revisar políticas de seguridad",
+          "Implementar auditorías regulares",
+          "Capacitar al equipo en seguridad"
+        ]
+      }
+    ]
+  },
+  "stats": {
+    "files_scanned": 124,
+    "secrets_found": 0,
+    "vulnerabilities_found": 79,
+    "compliance_score": 0
+  },
+  "trace": [
+    "security.server:ok"
+  ]
+}
