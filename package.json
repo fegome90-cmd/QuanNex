@@ -54,14 +54,16 @@
     "bench:test": "node --test tests/bench-agents.test.js",
     "integration:init": "node tools/agent-taskdb-integration.mjs init",
     "integration:stats": "node tools/agent-taskdb-integration.mjs stats",
-    "integration:test": "node tools/agent-taskdb-integration.mjs test",
+    "integration:test": "node --test tests/agent-taskdb-integration.test.js",
     "integration:cleanup": "node tools/agent-taskdb-integration.mjs cleanup",
     "integration:export": "node tools/agent-taskdb-integration.mjs export",
     "contracts:list": "node tools/agent-taskdb-contracts.mjs list",
     "contracts:validate": "node tools/agent-taskdb-contracts.mjs validate",
     "contracts:example": "node tools/agent-taskdb-contracts.mjs example",
     "contracts:export": "node tools/agent-taskdb-contracts.mjs export",
-    "integration:test": "node --test tests/agent-taskdb-integration.test.js"
+    "pr-i:analyze": "node tools/mcp-metrics-collector.mjs tools/",
+    "pr-i:remediate": "node tools/auto-remediation.mjs tools/",
+    "pr-i:dry-run": "node tools/auto-remediation.mjs --dry-run tools/"
   },
   "keywords": [
     "claude",
