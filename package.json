@@ -61,6 +61,8 @@
     "reports:markdown": "node tools/detailed-reports-generator.mjs --output-format markdown",
     "test:real": "node tools/real-test-runner.mjs",
     "test:real:verbose": "node tools/real-test-runner.mjs --verbose",
+    "test:smart": "node tools/smart-test-runner.mjs",
+    "test:smart:verbose": "node tools/smart-test-runner.mjs --verbose",
     "bench:agents": "node tools/bench-agents.mjs",
     "bench:agents:quick": "node tools/bench-agents.mjs --iterations 5 --warmup 1",
     "bench:agents:full": "node tools/bench-agents.mjs --iterations 20 --warmup 5",
