@@ -14,33 +14,66 @@ const __dirname = dirname(__filename);
 // Patrones de secretos comunes
 const SECRET_PATTERNS = [
   // API Keys
-  { pattern: /(api[_-]?key|apikey)\s*[:=]\s*['"]?([a-zA-Z0-9_-]{20,})['"]?/gi, type: 'api_key' },
+  {
+    pattern: /(api[_-]?key|apikey)\s*[:=]\s*['"]?([a-zA-Z0-9_-]{20,})['"]?/gi,
+    type: 'api_key'
+  },
   // Passwords
-  { pattern: /(password|passwd|pwd)\s*[:=]\s*['"]?([^'"\s]{8,})['"]?/gi, type: 'password' },
+  {
+    pattern: /(password|passwd|pwd)\s*[:=]\s*['"]?([^'"\s]{8,})['"]?/gi,
+    type: 'password'
+  },
   // Tokens
-  { pattern: /(token|access_token|refresh_token)\s*[:=]\s*['"]?([a-zA-Z0-9._-]{20,})['"]?/gi, type: 'token' },
+  {
+    pattern:
+      /(token|access_token|refresh_token)\s*[:=]\s*['"]?([a-zA-Z0-9._-]{20,})['"]?/gi,
+    type: 'token'
+  },
   // Database URLs
   { pattern: /(mongodb|postgres|mysql):\/\/[^'"\s]+/gi, type: 'database_url' },
   // Private Keys
-  { pattern: /-----BEGIN\s+(?:RSA\s+)?PRIVATE\s+KEY-----/gi, type: 'private_key' },
+  {
+    pattern: /-----BEGIN\s+(?:RSA\s+)?PRIVATE\s+KEY-----/gi,
+    type: 'private_key'
+  },
   // AWS Keys
-  { pattern: /(aws[_-]?access[_-]?key[_-]?id|aws[_-]?secret[_-]?access[_-]?key)\s*[:=]\s*['"]?([A-Z0-9]{20,})['"]?/gi, type: 'aws_key' },
+  {
+    pattern:
+      /(aws[_-]?access[_-]?key[_-]?id|aws[_-]?secret[_-]?access[_-]?key)\s*[:=]\s*['"]?([A-Z0-9]{20,})['"]?/gi,
+    type: 'aws_key'
+  },
   // JWT Secrets
-  { pattern: /(jwt[_-]?secret|jwt[_-]?key)\s*[:=]\s*['"]?([a-zA-Z0-9._-]{20,})['"]?/gi, type: 'jwt_secret' }
+  {
+    pattern:
+      /(jwt[_-]?secret|jwt[_-]?key)\s*[:=]\s*['"]?([a-zA-Z0-9._-]{20,})['"]?/gi,
+    type: 'jwt_secret'
+  }
 ];
 
 // Patrones de vulnerabilidades
 const VULNERABILITY_PATTERNS = [
   // SQL Injection
-  { pattern: /(SELECT|INSERT|UPDATE|DELETE).*\+.*['"]/gi, type: 'sql_injection', severity: 'high' },
+  {
+    pattern: /(SELECT|INSERT|UPDATE|DELETE).*\+.*['"]/gi,
+    type: 'sql_injection',
+    severity: 'high'
+  },
   // XSS
   { pattern: /innerHTML\s*=\s*[^;]*\+/gi, type: 'xss', severity: 'medium' },
   // Hardcoded credentials
-  { pattern: /(admin|root|user)\s*[:=]\s*['"]?(admin|password|123456)['"]?/gi, type: 'hardcoded_creds', severity: 'high' },
+  {
+    pattern: /(admin|root|user)\s*[:=]\s*['"]?(admin|password|123456)['"]?/gi,
+    type: 'hardcoded_creds',
+    severity: 'high'
+  },
   // Unsafe eval
   { pattern: /eval\s*\(/gi, type: 'unsafe_eval', severity: 'high' },
   // Console logs in production
-  { pattern: /console\.(log|warn|error|info)/gi, type: 'console_log', severity: 'low' }
+  {
+    pattern: /console\.(log|warn|error|info)/gi,
+    type: 'console_log',
+    severity: 'low'
+  }
 ];
 
 class SecurityAgent {
@@ -78,19 +111,18 @@ class SecurityAgent {
       const report = this.generateReport();
 
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         security_report: report,
         stats: this.stats,
-        trace: ["security.server:ok"]
+        trace: ['security.server:ok']
       };
-
     } catch (error) {
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         error: `security.server:error:${error.message}`,
-        trace: ["security.server:error"]
+        trace: ['security.server:error']
       };
     }
   }
@@ -103,14 +135,18 @@ class SecurityAgent {
 
     try {
       const entries = await this.readDirectory(path);
-      
+
       for (const entry of entries) {
         const fullPath = join(path, entry);
         const stat = statSync(fullPath);
 
         if (stat.isDirectory()) {
           // Saltar directorios comunes que no necesitan escaneo
-          if (!['node_modules', '.git', 'dist', 'build', 'coverage'].includes(entry)) {
+          if (
+            !['node_modules', '.git', 'dist', 'build', 'coverage'].includes(
+              entry
+            )
+          ) {
             await this.scanDirectory(fullPath, depth - 1);
           }
         } else if (stat.isFile()) {
@@ -136,9 +172,20 @@ class SecurityAgent {
   async scanFile(filePath) {
     try {
       const ext = extname(filePath).toLowerCase();
-      
+
       // Solo escanear archivos de código
-      if (!['.js', '.ts', '.jsx', '.tsx', '.json', '.env', '.config', '.md'].includes(ext)) {
+      if (
+        ![
+          '.js',
+          '.ts',
+          '.jsx',
+          '.tsx',
+          '.json',
+          '.env',
+          '.config',
+          '.md'
+        ].includes(ext)
+      ) {
         return;
       }
 
@@ -150,7 +197,6 @@ class SecurityAgent {
 
       // Buscar vulnerabilidades
       this.findVulnerabilities(filePath, content);
-
     } catch (error) {
       console.warn(`⚠️ No se pudo escanear ${filePath}: ${error.message}`);
     }
@@ -162,7 +208,7 @@ class SecurityAgent {
   findSecrets(filePath, content) {
     for (const { pattern, type } of SECRET_PATTERNS) {
       const matches = [...content.matchAll(pattern)];
-      
+
       for (const match of matches) {
         this.findings.push({
           type: 'secret',
@@ -184,7 +230,7 @@ class SecurityAgent {
   findVulnerabilities(filePath, content) {
     for (const { pattern, type, severity } of VULNERABILITY_PATTERNS) {
       const matches = [...content.matchAll(pattern)];
-      
+
       for (const match of matches) {
         this.findings.push({
           type: 'vulnerability',
@@ -212,13 +258,13 @@ class SecurityAgent {
    */
   getSecretRecommendation(type) {
     const recommendations = {
-      'api_key': 'Usar variables de entorno o un gestor de secretos',
-      'password': 'Usar variables de entorno o un gestor de secretos',
-      'token': 'Usar variables de entorno o un gestor de secretos',
-      'database_url': 'Usar variables de entorno para la URL de la base de datos',
-      'private_key': 'Almacenar la clave privada en un gestor de secretos',
-      'aws_key': 'Usar IAM roles o AWS Secrets Manager',
-      'jwt_secret': 'Usar variables de entorno para el secreto JWT'
+      api_key: 'Usar variables de entorno o un gestor de secretos',
+      password: 'Usar variables de entorno o un gestor de secretos',
+      token: 'Usar variables de entorno o un gestor de secretos',
+      database_url: 'Usar variables de entorno para la URL de la base de datos',
+      private_key: 'Almacenar la clave privada en un gestor de secretos',
+      aws_key: 'Usar IAM roles o AWS Secrets Manager',
+      jwt_secret: 'Usar variables de entorno para el secreto JWT'
     };
     return recommendations[type] || 'Revisar y mover a variables de entorno';
   }
@@ -228,13 +274,16 @@ class SecurityAgent {
    */
   getVulnerabilityRecommendation(type) {
     const recommendations = {
-      'sql_injection': 'Usar consultas preparadas o un ORM',
-      'xss': 'Sanitizar entrada del usuario antes de renderizar',
-      'hardcoded_creds': 'Usar variables de entorno o un gestor de secretos',
-      'unsafe_eval': 'Evitar eval(), usar alternativas seguras',
-      'console_log': 'Remover logs de consola en producción'
+      sql_injection: 'Usar consultas preparadas o un ORM',
+      xss: 'Sanitizar entrada del usuario antes de renderizar',
+      hardcoded_creds: 'Usar variables de entorno o un gestor de secretos',
+      unsafe_eval: 'Evitar eval(), usar alternativas seguras',
+      console_log: 'Remover logs de consola en producción'
     };
-    return recommendations[type] || 'Revisar y aplicar mejores prácticas de seguridad';
+    return (
+      recommendations[type] ||
+      'Revisar y aplicar mejores prácticas de seguridad'
+    );
   }
 
   /**
@@ -248,7 +297,9 @@ class SecurityAgent {
           this.applyPolicy(policy);
         }
       } catch (error) {
-        console.warn(`⚠️ No se pudo aplicar política ${policyRef}: ${error.message}`);
+        console.warn(
+          `⚠️ No se pudo aplicar política ${policyRef}: ${error.message}`
+        );
       }
     }
   }
@@ -266,14 +317,17 @@ class SecurityAgent {
    * Calcular score de compliance
    */
   calculateComplianceScore() {
-    const totalIssues = this.stats.secrets_found + this.stats.vulnerabilities_found;
-    const highSeverityIssues = this.findings.filter(f => f.severity === 'high').length;
-    
+    const totalIssues =
+      this.stats.secrets_found + this.stats.vulnerabilities_found;
+    const highSeverityIssues = this.findings.filter(
+      f => f.severity === 'high'
+    ).length;
+
     // Score base de 100, penalizar por issues
     let score = 100;
     score -= highSeverityIssues * 20; // -20 por issue de alta severidad
     score -= (totalIssues - highSeverityIssues) * 5; // -5 por otros issues
-    
+
     this.stats.compliance_score = Math.max(0, score);
   }
 
@@ -281,8 +335,12 @@ class SecurityAgent {
    * Generar reporte de seguridad
    */
   generateReport() {
-    const highSeverity = this.findings.filter(f => f.severity === 'high').length;
-    const mediumSeverity = this.findings.filter(f => f.severity === 'medium').length;
+    const highSeverity = this.findings.filter(
+      f => f.severity === 'high'
+    ).length;
+    const mediumSeverity = this.findings.filter(
+      f => f.severity === 'medium'
+    ).length;
     const lowSeverity = this.findings.filter(f => f.severity === 'low').length;
 
     return {
@@ -355,18 +413,25 @@ class SecurityAgent {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const agent = new SecurityAgent();
   const input = JSON.parse(process.argv[2] || '{}');
-  
-  agent.process(input)
+
+  agent
+    .process(input)
     .then(result => {
       console.log(JSON.stringify(result, null, 2));
     })
     .catch(error => {
-      console.error(JSON.stringify({
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
-        error: `security.server:error:${error.message}`,
-        trace: ["security.server:error"]
-      }, null, 2));
+      console.error(
+        JSON.stringify(
+          {
+            schema_version: '1.0.0',
+            agent_version: '1.0.0',
+            error: `security.server:error:${error.message}`,
+            trace: ['security.server:error']
+          },
+          null,
+          2
+        )
+      );
       process.exit(1);
     });
 }

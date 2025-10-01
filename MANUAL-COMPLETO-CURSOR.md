@@ -46,18 +46,21 @@ Cursor es un sistema avanzado de **inicialización y gestión de proyectos Claud
 **IMPORTANTE**: Cursor es un sistema **completamente independiente** y autónomo. Para evitar confusiones, es crucial entender la separación entre proyectos:
 
 #### Proyecto Cursor (Sistema Interno)
+
 - **Propósito**: Kit de inicialización y gestión de proyectos Claude Code
 - **Características**: Autónomo, no requiere servicios externos
 - **Ubicación**: `/core/claude-project-init.sh` y agentes internos
 - **Dependencias**: Solo herramientas estándar del sistema
 
 #### Archon (Proyecto Externo Independiente)
+
 - **Propósito**: Servidor MCP externo con servicios distribuidos
 - **Características**: Sistema separado con su propia arquitectura
 - **Ubicación**: Proyecto independiente con recursos exclusivos
 - **Relación**: **Opcional** - Cursor puede operar sin Archon
 
 #### Antigeneric (Proyecto Externo Independiente)
+
 - **Propósito**: Sistema anti-genérico con recursos propios
 - **Características**: Proyecto separado con arquitectura única
 - **Ubicación**: Recursos y configuración completamente independientes
@@ -95,12 +98,14 @@ Cursor es un sistema avanzado de **inicialización y gestión de proyectos Claud
 **Archon** es un proyecto independiente que proporciona servicios MCP distribuidos. Aunque puede integrarse opcionalmente con Cursor, es un sistema completamente separado con su propia arquitectura y recursos.
 
 **Características de Archon**:
+
 - Servidor MCP independiente con servicios distribuidos
 - Recursos exclusivos en carpetas externas dedicadas
 - Arquitectura propia y configuración independiente
 - **Relación con Cursor**: Opcional y externa
 
 **Integración Opcional** (si está disponible):
+
 ```bash
 # Estas operaciones requieren Archon instalado separadamente
 # y son OPCIONALES para el funcionamiento de Cursor
@@ -117,6 +122,7 @@ archon:perform_rag_query(query="patrones avanzados", match_count=5)
 **Antigeneric** es otro proyecto independiente que mantiene recursos y configuración completamente separados de Cursor.
 
 **Características de Antigeneric**:
+
 - Sistema independiente con arquitectura propia
 - Recursos exclusivos y configuración separada
 - Funcionamiento autónomo completo
@@ -171,31 +177,25 @@ archon:perform_rag_query(query="patrones avanzados", match_count=5)
 **Propósito**: Agrega extractos contextuales de fuentes del repositorio, filtra por selectores y devuelve bundles con trazabilidad de procedencia.
 
 **Características**:
+
 - Fuentes máximas: 50 archivos
 - Selectores máximos: 50 patrones
 - Auto-ajuste: `max_tokens < 256` → 256
 - Protección contra ataques: Rechaza `..` y rutas absolutas
 
 **Ejemplo de Uso**:
+
 ```bash
 cat payloads/context-test-payload.json | node agents/context/agent.js
 core/scripts/run-clean.sh context payloads/context-test-payload.json
 ```
 
 **Payload de Ejemplo**:
+
 ```json
 {
-  "sources": [
-    "agents/README.md",
-    "agents/context/README.md",
-    "CLAUDE.md"
-  ],
-  "selectors": [
-    "purpose",
-    "inputs",
-    "outputs",
-    "commands"
-  ],
+  "sources": ["agents/README.md", "agents/context/README.md", "CLAUDE.md"],
+  "selectors": ["purpose", "inputs", "outputs", "commands"],
   "max_tokens": 512
 }
 ```
@@ -205,9 +205,11 @@ core/scripts/run-clean.sh context payloads/context-test-payload.json
 **Propósito**: Genera pares de prompts sistema/usuario usando orquestación determinística estilo MCP con E/S validada por esquema.
 
 **Estilos Disponibles**:
+
 - `default`, `formal`, `concise`, `creative`, `technical`
 
 **Ejemplo de Uso**:
+
 ```bash
 cat payloads/prompting-test-payload.json | node agents/prompting/agent.js
 core/scripts/run-clean.sh prompting payloads/prompting-test-payload.json
@@ -218,9 +220,11 @@ core/scripts/run-clean.sh prompting payloads/prompting-test-payload.json
 **Propósito**: Compila documentos de políticas referenciados en guardrails accionables, marca artefactos faltantes y emite guía de asesoramiento con contratos MCP determinísticos.
 
 **Niveles de Cumplimiento**:
+
 - `none`, `basic`, `strict`
 
 **Ejemplo de Uso**:
+
 ```bash
 cat payloads/rules-test-payload.json | node agents/rules/agent.js
 core/scripts/run-clean.sh rules payloads/rules-test-payload.json
@@ -257,12 +261,12 @@ El orquestador (`orchestration/orchestrator.js`) es un sistema avanzado de gesti
 
 ```javascript
 const STATUS = {
-  PENDING: 'pending',    // Esperando ejecución
-  RUNNING: 'running',    // En ejecución
+  PENDING: 'pending', // Esperando ejecución
+  RUNNING: 'running', // En ejecución
   COMPLETED: 'completed', // Completado exitosamente
-  FAILED: 'failed',      // Falló
-  SKIPPED: 'skipped',    // Omitido por dependencia
-  IDLE: 'idle'          // Inactivo
+  FAILED: 'failed', // Falló
+  SKIPPED: 'skipped', // Omitido por dependencia
+  IDLE: 'idle' // Inactivo
 };
 ```
 
@@ -442,14 +446,14 @@ let taskdb = JSON.parse(fs.readFileSync(taskdbPath, 'utf8'));
 
 // Crear nuevo proyecto
 const newProject = {
-  id: "proj_" + Date.now(),
-  title: "Nuevo Proyecto Frontend",
-  description: "Proyecto creado autónomamente",
+  id: 'proj_' + Date.now(),
+  title: 'Nuevo Proyecto Frontend',
+  description: 'Proyecto creado autónomamente',
   docs: [],
-  features: ["Frontend Development"],
+  features: ['Frontend Development'],
   data: {
-    project_type: "frontend",
-    created_by: "cursor_system"
+    project_type: 'frontend',
+    created_by: 'cursor_system'
   },
   github_repo: null,
   pinned: false,
@@ -461,12 +465,12 @@ taskdb.projects.push(newProject);
 
 // Crear tarea asociada
 const newTask = {
-  id: "task_" + Date.now(),
+  id: 'task_' + Date.now(),
   project_id: newProject.id,
-  title: "Implementar componente de login",
-  description: "Crear componente de autenticación",
-  status: "todo",
-  feature: "Authentication",
+  title: 'Implementar componente de login',
+  description: 'Crear componente de autenticación',
+  status: 'todo',
+  feature: 'Authentication',
   task_order: 1,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString()
@@ -548,14 +552,14 @@ cursor-project/                            # 39 items (optimizado -70.2%)
 
 ### Archivos Clave por Función
 
-| Función | Archivo Principal | Descripción |
-|---------|------------------|-------------|
-| Inicialización | `core/claude-project-init.sh` | Script principal de creación de proyectos |
-| Orquestación | `orchestration/orchestrator.js` | Motor de workflows y ejecución de agentes |
-| Gestión de Tareas | `data/taskdb.json` | Base de datos de proyectos y tareas |
-| Configuración | `.cursorrules` | Reglas específicas de Cursor |
-| Documentación | `CLAUDE.md` | Guía de desarrollo para Claude Code |
-| Auditoría | `AUDIT-CURSOR.md` | Estado del proyecto y hallazgos |
+| Función           | Archivo Principal               | Descripción                               |
+| ----------------- | ------------------------------- | ----------------------------------------- |
+| Inicialización    | `core/claude-project-init.sh`   | Script principal de creación de proyectos |
+| Orquestación      | `orchestration/orchestrator.js` | Motor de workflows y ejecución de agentes |
+| Gestión de Tareas | `data/taskdb.json`              | Base de datos de proyectos y tareas       |
+| Configuración     | `.cursorrules`                  | Reglas específicas de Cursor              |
+| Documentación     | `CLAUDE.md`                     | Guía de desarrollo para Claude Code       |
+| Auditoría         | `AUDIT-CURSOR.md`               | Estado del proyecto y hallazgos           |
 
 ---
 
@@ -677,47 +681,53 @@ node tools/analyze-metrics.mjs reports/bench/
 #### Inicio de Sesión de Desarrollo
 
 1. **Verificar Estado del Proyecto**
+
    ```bash
    node orchestration/orchestrator.js health
    ./core/scripts/verify-dependencies.sh
    ```
 
 2. **Revisar Tareas Pendientes**
-    ```bash
-    # Usando TaskDB autónomo
-    cat data/taskdb.json | jq '.tasks[] | select(.status == "todo") | .title'
-    ```
+
+   ```bash
+   # Usando TaskDB autónomo
+   cat data/taskdb.json | jq '.tasks[] | select(.status == "todo") | .title'
+   ```
 
 3. **Investigación y Planificación**
-    ```bash
-    # Investigación usando agentes internos
-    node agents/context/agent.js payloads/context-research-payload.json
-    
-    # Análisis de código existente
-    node agents/lint/agent.js payloads/lint-analysis-payload.json
-    ```
+
+   ```bash
+   # Investigación usando agentes internos
+   node agents/context/agent.js payloads/context-research-payload.json
+
+   # Análisis de código existente
+   node agents/lint/agent.js payloads/lint-analysis-payload.json
+   ```
 
 4. **Ejecución de Tarea**
-    ```bash
-    # Actualizar estado usando operaciones directas
-    node tools/update-task-status.js current_task doing
-    
-    # Implementar siguiendo análisis interno
-    # ... desarrollo ...
-    
-    # Marcar para revisión
-    node tools/update-task-status.js current_task review
-    ```
+
+   ```bash
+   # Actualizar estado usando operaciones directas
+   node tools/update-task-status.js current_task doing
+
+   # Implementar siguiendo análisis interno
+   # ... desarrollo ...
+
+   # Marcar para revisión
+   node tools/update-task-status.js current_task review
+   ```
 
 #### Fin de Sesión de Desarrollo
 
 1. **Actualizar Estado de Tareas**
+
    ```bash
    # Completar tareas finalizadas
    archon:manage_task(action="update", task_id="completed_task", update_fields={"status": "done"})
    ```
 
 2. **Crear Nuevas Tareas si es Necesario**
+
    ```bash
    # Crear tareas para trabajo futuro
    archon:manage_task(action="create", title="Nueva funcionalidad", task_order=5)
@@ -794,28 +804,33 @@ node tools/bench-agents.mjs --all --samples 50
 ### ⚠️ PROBLEMA CRÍTICO RESUELTO: Logging Deshabilitado (Sep 30, 2025)
 
 #### Síntoma Reportado por Auditor Externo
+
 ```bash
 $ npm run wf:create
 ❌ Error: Failed to create workflow
-Output: 
+Output:
 ```
 
 #### Causa Raíz Identificada
+
 Durante optimización del código, se comentaron **TODOS** los `console.log`, incluyendo aquellos esenciales para CLI output.
 
 **Archivos afectados**:
+
 - `orchestration/orchestrator.js` (90% de console.log comentados)
 - `agents/context/agent.js` (todos los console.log comentados)
 - `agents/prompting/agent.js` (todos los console.log comentados)
 - `agents/rules/agent.js` (todos los console.log comentados)
 
 **Problema**:
+
 - Scripts bash esperan JSON en stdout
 - Orchestrator no imprime nada
 - Scripts interpretan vacío como error
 - **Sistema funcional pero parecía roto**
 
 #### Solución Aplicada
+
 1. **Logging habilitado** en orchestrator y agentes core
 2. **Validación**: wf:create y wf:exec funcionan correctamente
 3. **Evidencia**: 5 workflows creados y ejecutados exitosamente
@@ -823,6 +838,7 @@ Durante optimización del código, se comentaron **TODOS** los `console.log`, in
 #### Logging Estratégico - Mejores Prácticas
 
 **NO comentar estos console.log**:
+
 ```javascript
 // ❌ MAL: Comentar CLI output
 // console.log(JSON.stringify(result, null, 2));
@@ -837,6 +853,7 @@ if (process.env.DEBUG) {
 ```
 
 **Checklist antes de comentar console.log**:
+
 - [ ] ¿Es output de comando CLI? → **NO comentar**
 - [ ] ¿Lo usa un script bash? → **NO comentar**
 - [ ] ¿Es resultado de comando? → **NO comentar**
@@ -854,11 +871,13 @@ if (process.env.DEBUG) {
 **Síntomas**: Los agentes tardan demasiado en responder o fallan por timeout.
 
 **Causas Posibles**:
+
 - Recursos insuficientes del sistema
 - Archivos de entrada demasiado grandes
 - Problemas de red o conectividad
 
 **Soluciones**:
+
 ```bash
 # 1. Verificar estado del sistema
 node orchestration/orchestrator.js health
@@ -889,11 +908,13 @@ htop  # o top para monitorear CPU/memoria
 **Síntomas**: Errores de parsing JSON o variables no definidas en scripts.
 
 **Causas Posibles**:
+
 - Archivos de configuración corruptos
 - Variables de entorno no configuradas
 - Problemas de permisos en archivos
 
 **Soluciones**:
+
 ```bash
 # 1. Validar JSON de configuración
 jq empty config.json 2>/dev/null || echo "JSON inválido"
@@ -914,10 +935,12 @@ node tools/run-autofix.mjs
 **Síntomas**: El orquestador detecta dependencias circulares entre pasos.
 
 **Causas Posibles**:
+
 - Configuración incorrecta de `depends_on`
 - Lógica de workflow mal diseñada
 
 **Soluciones**:
+
 ```bash
 # 1. Visualizar dependencias
 node orchestration/orchestrator.js status <workflow_id>
@@ -949,11 +972,13 @@ node tools/validate-workflow.mjs workflow.json
 **Síntomas**: No se generan archivos `out/context.json`, `out/prompting.json`.
 
 **Causas Posibles**:
+
 - Directorio `out/` no existe
 - Problemas de permisos de escritura
 - Agentes fallando silenciosamente
 
 **Soluciones**:
+
 ```bash
 # 1. Crear directorio out/
 mkdir -p out
@@ -977,11 +1002,13 @@ node orchestration/orchestrator.js execute <workflow_id>
 **Síntomas**: Intentos de usar servicios externos opcionales que no están disponibles.
 
 **Causas Posibles**:
+
 - Archon o Antigeneric no están instalados (lo cual es normal)
 - Configuración intentando acceder a servicios externos opcionales
 - Problemas de configuración de integración opcional
 
 **Soluciones**:
+
 ```bash
 # 1. Verificar que el sistema funciona autónomamente
 node orchestration/orchestrator.js health
@@ -1108,6 +1135,7 @@ node orchestration/orchestrator.js health
 ### Comunidad y Soporte
 
 Para soporte adicional, revisar:
+
 - Issues en el repositorio GitHub
 - Comunidad de desarrolladores Claude Code
 - Documentación interna del proyecto Cursor
@@ -1128,6 +1156,7 @@ Este manual proporciona una guía completa y definitiva del proyecto Cursor, enf
 ### Mantenimiento Autónomo
 
 Para mantener el sistema funcionando óptimamente, se recomienda:
+
 1. Ejecutar health checks internos regularmente
 2. Mantener herramientas del sistema actualizadas
 3. Revisar y actualizar workflows internos según necesidades
@@ -1177,6 +1206,7 @@ Para mantener el sistema funcionando óptimamente, se recomienda:
 **Reducción de Complejidad**: 131 items → 39 items (70.2%)
 
 **Nuevas Carpetas**:
+
 - `external/` - Dependencias externas (archon, gemini)
 - `archived/` - Contenido legacy organizado
 - `docs/analysis/` - Análisis técnicos consolidados
@@ -1188,10 +1218,12 @@ Para mantener el sistema funcionando óptimamente, se recomienda:
 #### Sistema de Roadmap
 
 **Archivos Nuevos**:
+
 - `ROADMAP.yaml` - Roadmap pipeline-readable con 15 PRs
 - `docs/ROADMAP-VISUAL.md` - Timeline y KPIs visuales
 
 **Contenido**:
+
 - 15 PRs documentados (10 completados, 2 en progreso, 3 planeados)
 - Owners asignados (Cursor, Códex, Kilo Code)
 - Métricas de progreso por fase
@@ -1200,12 +1232,14 @@ Para mantener el sistema funcionando óptimamente, se recomienda:
 #### Corrección Crítica: Logging Deshabilitado
 
 **Problema Identificado por Auditor Externo**:
+
 - Comandos `wf:create` y `wf:exec` reportaban error falso
 - Console.logs comentados durante optimización
 - Scripts bash no recibían JSON output
 - Sistema funcional pero parecía roto
 
 **Solución**:
+
 - Logging habilitado en `orchestration/orchestrator.js`
 - Logging habilitado en agentes core
 - Comandos ahora funcionan correctamente
@@ -1214,17 +1248,20 @@ Para mantener el sistema funcionando óptimamente, se recomienda:
 **Lección**: No comentar console.log de CLI output, solo debug logs.
 
 **Documentación**:
+
 - `docs/audits/AUDITORIA-CRITICA-COMANDOS.md`
 - `docs/audits/HALLAZGOS-CRITICOS-SOLUCION.md`
 
 #### Benchmarks Establecidos
 
 **Sistema de Métricas**:
+
 - 30 iteraciones por benchmark
 - Métricas P50/P95/P99 documentadas
 - Reportes JSON + HTML generados
 
 **Performance Actual**:
+
 ```
 Duración P50:     32.24ms
 CPU P50:          0.87ms
@@ -1237,26 +1274,28 @@ Success Rate:     100%
 #### TaskDB y Gestión de Tareas
 
 **Sistema Implementado**:
+
 - Base de datos portable en `data/taskdb.json`
 - Migración SQL ↔ JSON
 - Integración con agentes MCP
 - Tracking de progreso automatizado
 
 **Proyectos Actuales**:
+
 - Proyecto PR-I: Remediación Automatizada (4 tareas)
 - Múltiples proyectos de reestructuración
 
 #### Métricas Consolidadas
 
-| Métrica | Valor | Cambio |
-|---------|-------|--------|
-| **Items en raíz** | 39 | -70.2% |
-| **Agentes operativos** | 6 | +100% |
-| **Vulnerabilidades** | 0 | Óptimo |
-| **Performance** | 1327ms | +7.4% |
-| **Success rate** | 100% | Óptimo |
-| **Compliance** | 75/100 | Bueno |
-| **Quality** | 85/100 | Bueno |
+| Métrica                | Valor  | Cambio |
+| ---------------------- | ------ | ------ |
+| **Items en raíz**      | 39     | -70.2% |
+| **Agentes operativos** | 6      | +100%  |
+| **Vulnerabilidades**   | 0      | Óptimo |
+| **Performance**        | 1327ms | +7.4%  |
+| **Success rate**       | 100%   | Óptimo |
+| **Compliance**         | 75/100 | Bueno  |
+| **Quality**            | 85/100 | Bueno  |
 
 ---
 
@@ -1273,15 +1312,16 @@ Success Rate:     100%
 // console.log('[DEBUG] Processing step:', stepId);
 
 // CLI output - NUNCA comentar
-console.log(JSON.stringify(result, null, 2));  // Scripts bash dependen de esto
+console.log(JSON.stringify(result, null, 2)); // Scripts bash dependen de esto
 
 // Errors - NUNCA comentar
 console.error('[ERROR] Failed:', error.message);
 ```
 
 **Checklist antes de comentar console.log**:
+
 1. ¿Es output de comando CLI? → **NO comentar**
-2. ¿Lo usa un script bash (wf-*.sh)? → **NO comentar**
+2. ¿Lo usa un script bash (wf-\*.sh)? → **NO comentar**
 3. ¿Es resultado de comando (create, exec, status)? → **NO comentar**
 4. ¿Es log de debug interno? → **OK comentar**
 
@@ -1304,6 +1344,7 @@ node tools/consolidate-analysis.mjs out/*.json > report.md
 ```
 
 **Beneficios**:
+
 - Métricas cuantificables
 - Múltiples perspectivas
 - Decisiones basadas en datos
@@ -1335,6 +1376,7 @@ await db.updateTask(task.id, { status: 'done' });
 ```
 
 **Beneficios**:
+
 - Tracking automático
 - Métricas de progreso
 - Trazabilidad
@@ -1377,22 +1419,22 @@ node tools/run-autofix.mjs apply
 
 ### Archivos de Configuración Clave
 
-| Archivo | Propósito |
-|---------|-----------|
-| `ROADMAP.yaml` | PRs, métricas, owners |
-| `orchestration/plan.json` | Workflow por defecto |
-| `data/taskdb.json` | Base de datos de tareas |
-| `.reports/workflows.json` | Estado de workflows |
-| `package.json` | Comandos npm |
+| Archivo                   | Propósito               |
+| ------------------------- | ----------------------- |
+| `ROADMAP.yaml`            | PRs, métricas, owners   |
+| `orchestration/plan.json` | Workflow por defecto    |
+| `data/taskdb.json`        | Base de datos de tareas |
+| `.reports/workflows.json` | Estado de workflows     |
+| `package.json`            | Comandos npm            |
 
 ### Documentación Importante
 
-| Documento | Contenido |
-|-----------|-----------|
-| `MANUAL-COMPLETO-CURSOR.md` | Este manual |
-| `docs/ROADMAP-VISUAL.md` | Timeline del proyecto |
-| `docs/reports/INFORME-USO-MCP-SISTEMA.md` | Análisis de uso del MCP |
-| `docs/audits/HALLAZGOS-CRITICOS-SOLUCION.md` | Problemas y soluciones |
+| Documento                                    | Contenido               |
+| -------------------------------------------- | ----------------------- |
+| `MANUAL-COMPLETO-CURSOR.md`                  | Este manual             |
+| `docs/ROADMAP-VISUAL.md`                     | Timeline del proyecto   |
+| `docs/reports/INFORME-USO-MCP-SISTEMA.md`    | Análisis de uso del MCP |
+| `docs/audits/HALLAZGOS-CRITICOS-SOLUCION.md` | Problemas y soluciones  |
 
 ---
 

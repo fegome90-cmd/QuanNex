@@ -1,0 +1,43 @@
+{
+  "rules_enforcement": {
+    "enabled": true,
+    "auto_init": true,
+    "strict_mode": true,
+    "enforcement_interval": 300000,
+    "critical_files": [
+      "docs/AGENTS.md",
+      "docs/audits/2025-09-initial-gap.md",
+      "data/taskdb.json",
+      "orchestration/orchestrator.js"
+    ],
+    "required_agents": [
+      "agents/security/agent.js",
+      "agents/tests/test-agent.js",
+      "agents/docsync/docsync-agent.js",
+      "orchestration/orchestrator.js"
+    ],
+    "required_docs": [
+      "docs/AGENTS.md",
+      "docs/audits/2025-09-initial-gap.md",
+      "docs/PLAN-REPARACION-GAPS-2025-10-01.md"
+    ],
+    "auto_fix": true,
+    "task_db_integration": true,
+    "violation_handling": "strict",
+    "post_execution_actions": true
+  },
+  "project_rules": {
+    "task_registration": "mandatory",
+    "gap_prioritization": "critical_first",
+    "mcp_tool_usage": "required",
+    "documentation_sync": "automatic",
+    "context_preservation": "enforced"
+  },
+  "enforcement_actions": {
+    "missing_files": "create",
+    "empty_files": "populate",
+    "violations": "fix_immediately",
+    "advice": "apply_automatically",
+    "task_db_issues": "repair"
+  }
+}

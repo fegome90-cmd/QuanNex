@@ -3,7 +3,7 @@
 /**
  * TaskDB Migrate - Herramienta de migración para TaskDB
  * PR-J: TaskDB portable (taskbd/taskkernel) – base de datos de tareas
- * 
+ *
  * Migra datos entre diferentes formatos y backends
  */
 
@@ -19,7 +19,7 @@ class TaskDBMigrate {
   constructor() {
     this.dataDir = join(PROJECT_ROOT, 'data');
     this.migrationDir = join(PROJECT_ROOT, 'migration');
-    
+
     // Asegurar que los directorios existen
     if (!existsSync(this.dataDir)) {
       mkdirSync(this.dataDir, { recursive: true });
@@ -35,14 +35,14 @@ class TaskDBMigrate {
   async migrateFromSQL(sqlFile, outputFile) {
     try {
       console.log(`🔄 Migrando desde SQL: ${sqlFile}`);
-      
+
       // Leer archivo SQL
       const sqlContent = readFileSync(sqlFile, 'utf8');
-      
+
       // Extraer datos de INSERT statements (simplificado)
       const projects = this.extractProjectsFromSQL(sqlContent);
       const tasks = this.extractTasksFromSQL(sqlContent);
-      
+
       // Crear estructura JSON
       const jsonData = {
         version: '1.0.0',
@@ -51,13 +51,14 @@ class TaskDBMigrate {
         projects: projects,
         tasks: tasks
       };
-      
+
       // Guardar archivo JSON
       writeFileSync(outputFile, JSON.stringify(jsonData, null, 2));
-      
-      console.log(`✅ Migración completada: ${projects.length} proyectos, ${tasks.length} tareas`);
+
+      console.log(
+        `✅ Migración completada: ${projects.length} proyectos, ${tasks.length} tareas`
+      );
       return jsonData;
-      
     } catch (error) {
       console.error(`❌ Error en migración SQL: ${error.message}`);
       throw error;
@@ -71,7 +72,7 @@ class TaskDBMigrate {
     const projects = [];
     const insertRegex = /INSERT INTO archon_projects[^;]+;/gi;
     const matches = sqlContent.match(insertRegex);
-    
+
     if (matches) {
       matches.forEach(match => {
         // Extraer valores (simplificado)
@@ -95,7 +96,7 @@ class TaskDBMigrate {
         }
       });
     }
-    
+
     return projects;
   }
 
@@ -106,7 +107,7 @@ class TaskDBMigrate {
     const tasks = [];
     const insertRegex = /INSERT INTO archon_tasks[^;]+;/gi;
     const matches = sqlContent.match(insertRegex);
-    
+
     if (matches) {
       matches.forEach(match => {
         // Extraer valores (simplificado)
@@ -136,7 +137,7 @@ class TaskDBMigrate {
         }
       });
     }
-    
+
     return tasks;
   }
 
@@ -148,10 +149,10 @@ class TaskDBMigrate {
     let current = '';
     let inQuotes = false;
     let quoteChar = '';
-    
+
     for (let i = 0; i < valuesString.length; i++) {
       const char = valuesString[i];
-      
+
       if (!inQuotes && (char === "'" || char === '"')) {
         inQuotes = true;
         quoteChar = char;
@@ -167,11 +168,11 @@ class TaskDBMigrate {
         current += char;
       }
     }
-    
+
     if (current.trim()) {
       values.push(current.trim());
     }
-    
+
     return values.map(v => v.replace(/^['"]|['"]$/g, ''));
   }
 
@@ -202,19 +203,20 @@ class TaskDBMigrate {
   async migrateToSQL(jsonFile, outputFile) {
     try {
       console.log(`🔄 Migrando desde JSON: ${jsonFile}`);
-      
+
       // Leer archivo JSON
       const jsonData = JSON.parse(readFileSync(jsonFile, 'utf8'));
-      
+
       // Generar SQL
       const sqlContent = this.generateSQLFromJSON(jsonData);
-      
+
       // Guardar archivo SQL
       writeFileSync(outputFile, sqlContent);
-      
-      console.log(`✅ Migración completada: ${jsonData.projects?.length || 0} proyectos, ${jsonData.tasks?.length || 0} tareas`);
+
+      console.log(
+        `✅ Migración completada: ${jsonData.projects?.length || 0} proyectos, ${jsonData.tasks?.length || 0} tareas`
+      );
       return sqlContent;
-      
     } catch (error) {
       console.error(`❌ Error en migración JSON: ${error.message}`);
       throw error;
@@ -303,23 +305,24 @@ DELETE FROM archon_projects;
    */
   validateData(data) {
     const errors = [];
-    
+
     if (!data.projects || !Array.isArray(data.projects)) {
       errors.push('Campo "projects" debe ser un array');
     }
-    
+
     if (!data.tasks || !Array.isArray(data.tasks)) {
       errors.push('Campo "tasks" debe ser un array');
     }
-    
+
     // Validar proyectos
     if (data.projects) {
       data.projects.forEach((project, index) => {
         if (!project.id) errors.push(`Proyecto ${index}: falta campo "id"`);
-        if (!project.title) errors.push(`Proyecto ${index}: falta campo "title"`);
+        if (!project.title)
+          errors.push(`Proyecto ${index}: falta campo "title"`);
       });
     }
-    
+
     // Validar tareas
     if (data.tasks) {
       data.tasks.forEach((task, index) => {
@@ -330,7 +333,7 @@ DELETE FROM archon_projects;
         }
       });
     }
-    
+
     return {
       valid: errors.length === 0,
       errors: errors
@@ -346,40 +349,46 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   try {
     switch (command) {
       case 'sql-to-json':
-        const sqlFile = process.argv[3] || join(migrate.migrationDir, 'complete_setup_fixed.sql');
-        const jsonFile = process.argv[4] || join(migrate.dataDir, 'taskdb-migrated.json');
-        
+        const sqlFile =
+          process.argv[3] ||
+          join(migrate.migrationDir, 'complete_setup_fixed.sql');
+        const jsonFile =
+          process.argv[4] || join(migrate.dataDir, 'taskdb-migrated.json');
+
         if (!existsSync(sqlFile)) {
           console.error(`❌ Archivo SQL no encontrado: ${sqlFile}`);
           process.exit(1);
         }
-        
+
         await migrate.migrateFromSQL(sqlFile, jsonFile);
         break;
 
       case 'json-to-sql':
-        const jsonInputFile = process.argv[3] || join(migrate.dataDir, 'taskdb.json');
-        const sqlOutputFile = process.argv[4] || join(migrate.migrationDir, 'taskdb-export.sql');
-        
+        const jsonInputFile =
+          process.argv[3] || join(migrate.dataDir, 'taskdb.json');
+        const sqlOutputFile =
+          process.argv[4] || join(migrate.migrationDir, 'taskdb-export.sql');
+
         if (!existsSync(jsonInputFile)) {
           console.error(`❌ Archivo JSON no encontrado: ${jsonInputFile}`);
           process.exit(1);
         }
-        
+
         await migrate.migrateToSQL(jsonInputFile, sqlOutputFile);
         break;
 
       case 'validate':
-        const validateFile = process.argv[3] || join(migrate.dataDir, 'taskdb.json');
-        
+        const validateFile =
+          process.argv[3] || join(migrate.dataDir, 'taskdb.json');
+
         if (!existsSync(validateFile)) {
           console.error(`❌ Archivo no encontrado: ${validateFile}`);
           process.exit(1);
         }
-        
+
         const data = JSON.parse(readFileSync(validateFile, 'utf8'));
         const validation = migrate.validateData(data);
-        
+
         if (validation.valid) {
           console.log('✅ Datos válidos');
         } else {

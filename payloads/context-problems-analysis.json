@@ -1,0 +1,31 @@
+{
+  "sources": [
+    "out/smart-test-runner-1759334270364.json",
+    "out/retry-rollback-v3-1759334194072.json",
+    "out/detailed-reports-summary-1759334308491.json",
+    "tools/optimization-autofix-integration.mjs",
+    "tools/retry-rollback-system-v3.mjs",
+    "tools/smart-test-runner.mjs",
+    "agents/security/agent.js",
+    "agents/metrics/agent.js"
+  ],
+  "selectors": [
+    "error",
+    "failed",
+    "problem",
+    "issue",
+    "warning",
+    "fix",
+    "repair",
+    "solution",
+    "validation",
+    "timeout",
+    "eslint",
+    "prettier",
+    "snyk",
+    "ENOENT",
+    "falló",
+    "error"
+  ],
+  "max_tokens": 1024
+}

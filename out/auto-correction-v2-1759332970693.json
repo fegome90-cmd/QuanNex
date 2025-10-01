@@ -1,0 +1,93 @@
+{
+  "report_type": "auto_correction_v2",
+  "timestamp": "2025-10-01T15:36:10.693Z",
+  "tool_version": "2.0.0",
+  "config": {
+    "target_path": ".",
+    "dry_run": true,
+    "backup_enabled": true,
+    "verbose": true
+  },
+  "results": {
+    "applied": 0,
+    "failed": 0,
+    "skipped": 11,
+    "total": 11
+  },
+  "data": {
+    "correction_types": [
+      "console_logs",
+      "magic_numbers"
+    ],
+    "original_corrections_count": 23,
+    "filtered_corrections_count": 11,
+    "corrections": [
+      {
+        "file": "core/auto-rules-hook.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"core/auto-rules-hook.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "core/centralized-logger.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"core/centralized-logger.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "core/integrity-validator.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"core/integrity-validator.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "core/rules-enforcer.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"core/rules-enforcer.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "core/rules-protection-system.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"core/rules-protection-system.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "core/taskdb-protection.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"core/taskdb-protection.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "orchestration/orchestrator.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"orchestration/orchestrator.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "orchestration/test-orchestration.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"orchestration/test-orchestration.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "tests/autofix-modernize.test.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"tests/autofix-modernize.test.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "tools/debug-orchestrator.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"tools/debug-orchestrator.js\"",
+        "priority": "low"
+      },
+      {
+        "file": "tools/taskdb-diagnostic.js",
+        "type": "console_logs",
+        "command": "sed -i '' '/console\\.(log|warn|error|info)/d' \"tools/taskdb-diagnostic.js\"",
+        "priority": "low"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "policy_refs": [
+    "MANUAL-COMPLETO-CURSOR.md",
+    "docs/audits/2025-09-initial-gap.md",
+    "tools/base-correction-tool.mjs"
+  ],
+  "tone": "technical",
+  "domain": "sistema_optimizacion",
+  "compliance_level": "strict"
+}

@@ -31,7 +31,10 @@ class ContextLogger {
       try {
         return JSON.parse(readFileSync(filePath, 'utf8'));
       } catch (error) {
-        console.warn(`Warning: Could not load log file ${filePath}:`, error.message);
+        console.warn(
+          `Warning: Could not load log file ${filePath}:`,
+          error.message
+        );
         return [];
       }
     }
@@ -58,7 +61,9 @@ class ContextLogger {
       output: {
         schema_version: output.schema_version,
         agent_version: output.agent_version,
-        context_bundle: output.context_bundle ? output.context_bundle.substring(0, 200) + '...' : null,
+        context_bundle: output.context_bundle
+          ? output.context_bundle.substring(0, 200) + '...'
+          : null,
         provenance: output.provenance || [],
         stats: output.stats || {},
         trace: output.trace || []
@@ -73,7 +78,7 @@ class ContextLogger {
 
     this.contextLog.push(logEntry);
     this.saveLog(this.contextLog, CONTEXT_LOG);
-    
+
     console.log(`📝 Context logged for ${agentName} at ${logEntry.timestamp}`);
     return logEntry;
   }
@@ -92,7 +97,9 @@ class ContextLogger {
       output: {
         schema_version: output.schema_version,
         agent_version: output.agent_version,
-        system_prompt: output.system_prompt ? output.system_prompt.substring(0, 200) + '...' : null,
+        system_prompt: output.system_prompt
+          ? output.system_prompt.substring(0, 200) + '...'
+          : null,
         user_prompt: output.user_prompt || '',
         guardrails: output.guardrails || [],
         trace: output.trace || []
@@ -107,7 +114,7 @@ class ContextLogger {
 
     this.promptLog.push(logEntry);
     this.saveLog(this.promptLog, PROMPT_LOG);
-    
+
     console.log(`📝 Prompt logged for ${agentName} at ${logEntry.timestamp}`);
     return logEntry;
   }
@@ -124,7 +131,9 @@ class ContextLogger {
       output: {
         schema_version: output.schema_version,
         agent_version: output.agent_version,
-        rules_compiled: output.rules_compiled ? output.rules_compiled.length : 0,
+        rules_compiled: output.rules_compiled
+          ? output.rules_compiled.length
+          : 0,
         violations: output.violations || [],
         advice: output.advice || [],
         trace: output.trace || []
@@ -139,24 +148,24 @@ class ContextLogger {
 
     this.promptLog.push(logEntry); // Usar prompt log para rules también
     this.saveLog(this.promptLog, PROMPT_LOG);
-    
+
     console.log(`📝 Rules logged for ${agentName} at ${logEntry.timestamp}`);
     return logEntry;
   }
 
   getContextHistory(agentName = null, limit = 10) {
-    const filtered = agentName 
+    const filtered = agentName
       ? this.contextLog.filter(entry => entry.agent === agentName)
       : this.contextLog;
-    
+
     return filtered.slice(-limit);
   }
 
   getPromptHistory(agentName = null, limit = 10) {
-    const filtered = agentName 
+    const filtered = agentName
       ? this.promptLog.filter(entry => entry.agent === agentName)
       : this.promptLog;
-    
+
     return filtered.slice(-limit);
   }
 
@@ -166,10 +175,17 @@ class ContextLogger {
       summary: {
         total_context_entries: this.contextLog.length,
         total_prompt_entries: this.promptLog.length,
-        agents_used: [...new Set([...this.contextLog.map(e => e.agent), ...this.promptLog.map(e => e.agent)])],
+        agents_used: [
+          ...new Set([
+            ...this.contextLog.map(e => e.agent),
+            ...this.promptLog.map(e => e.agent)
+          ])
+        ],
         time_range: {
           start: this.contextLog[0]?.timestamp || this.promptLog[0]?.timestamp,
-          end: this.contextLog[this.contextLog.length - 1]?.timestamp || this.promptLog[this.promptLog.length - 1]?.timestamp
+          end:
+            this.contextLog[this.contextLog.length - 1]?.timestamp ||
+            this.promptLog[this.promptLog.length - 1]?.timestamp
         }
       },
       context_stats: this.analyzeContextStats(),
@@ -179,7 +195,7 @@ class ContextLogger {
 
     const reportPath = join(LOGS_DIR, 'restructure-report.json');
     this.saveLog(report, reportPath);
-    
+
     console.log(`📊 Report generated: ${reportPath}`);
     return report;
   }
@@ -197,18 +213,21 @@ class ContextLogger {
       stats.total_sources_processed += entry.input.sources.length;
       stats.total_tokens_estimated += entry.output.stats.tokens_estimated || 0;
       stats.average_processing_time += entry.metadata.processing_time || 0;
-      
+
       // Contar fuentes más usadas
       entry.input.sources.forEach(source => {
-        stats.most_used_sources[source] = (stats.most_used_sources[source] || 0) + 1;
+        stats.most_used_sources[source] =
+          (stats.most_used_sources[source] || 0) + 1;
       });
-      
+
       // Contar uso por agente
-      stats.agent_usage[entry.agent] = (stats.agent_usage[entry.agent] || 0) + 1;
+      stats.agent_usage[entry.agent] =
+        (stats.agent_usage[entry.agent] || 0) + 1;
     });
 
     if (this.contextLog.length > 0) {
-      stats.average_processing_time = stats.average_processing_time / this.contextLog.length;
+      stats.average_processing_time =
+        stats.average_processing_time / this.contextLog.length;
     }
 
     return stats;
@@ -226,20 +245,23 @@ class ContextLogger {
       if (entry.input.goal) {
         stats.total_goals_processed++;
       }
-      
+
       // Distribución de estilos
       const style = entry.input.style || 'default';
-      stats.style_distribution[style] = (stats.style_distribution[style] || 0) + 1;
-      
+      stats.style_distribution[style] =
+        (stats.style_distribution[style] || 0) + 1;
+
       // Uso de constraints
       if (entry.input.constraints && Array.isArray(entry.input.constraints)) {
         entry.input.constraints.forEach(constraint => {
-          stats.constraint_usage[constraint] = (stats.constraint_usage[constraint] || 0) + 1;
+          stats.constraint_usage[constraint] =
+            (stats.constraint_usage[constraint] || 0) + 1;
         });
       }
-      
+
       // Uso por agente
-      stats.agent_usage[entry.agent] = (stats.agent_usage[entry.agent] || 0) + 1;
+      stats.agent_usage[entry.agent] =
+        (stats.agent_usage[entry.agent] || 0) + 1;
     });
 
     return stats;
@@ -247,13 +269,13 @@ class ContextLogger {
 
   generateRecommendations() {
     const recommendations = [];
-    
+
     // Análisis de fuentes más usadas
     const contextStats = this.analyzeContextStats();
     const topSources = Object.entries(contextStats.most_used_sources)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
-    
+
     if (topSources.length > 0) {
       recommendations.push({
         type: 'source_optimization',
@@ -261,11 +283,13 @@ class ContextLogger {
         details: topSources
       });
     }
-    
+
     // Análisis de patrones de uso
     const agentUsage = contextStats.agent_usage;
-    const mostUsedAgent = Object.entries(agentUsage).sort(([,a], [,b]) => b - a)[0];
-    
+    const mostUsedAgent = Object.entries(agentUsage).sort(
+      ([, a], [, b]) => b - a
+    )[0];
+
     if (mostUsedAgent) {
       recommendations.push({
         type: 'agent_optimization',
@@ -273,7 +297,7 @@ class ContextLogger {
         details: { agent: mostUsedAgent[0], usage_count: mostUsedAgent[1] }
       });
     }
-    
+
     return recommendations;
   }
 }
@@ -281,29 +305,29 @@ class ContextLogger {
 // CLI interface
 if (import.meta.url === `file://${process.argv[1]}`) {
   const logger = new ContextLogger();
-  
+
   const command = process.argv[2];
-  
+
   switch (command) {
     case 'report':
       const report = logger.generateReport();
       console.log(JSON.stringify(report, null, 2));
       break;
-      
+
     case 'context':
       const agent = process.argv[3];
       const limit = parseInt(process.argv[4]) || 10;
       const contextHistory = logger.getContextHistory(agent, limit);
       console.log(JSON.stringify(contextHistory, null, 2));
       break;
-      
+
     case 'prompt':
       const promptAgent = process.argv[3];
       const promptLimit = parseInt(process.argv[4]) || 10;
       const promptHistory = logger.getPromptHistory(promptAgent, promptLimit);
       console.log(JSON.stringify(promptHistory, null, 2));
       break;
-      
+
     default:
       console.log('Usage:');
       console.log('  node tools/context-logger.mjs report');

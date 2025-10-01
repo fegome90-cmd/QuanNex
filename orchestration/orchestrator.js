@@ -8,10 +8,13 @@ import {
 } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { join, dirname } from 'node:path';
+import { hello, isHello } from '../contracts/handshake.js';
+import { validateReq, ok, fail } from '../contracts/schema.js';
 import { fileURLToPath } from 'node:url';
 import crypto from 'node:crypto';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import TaskRunner from './task-runner.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -47,6 +50,7 @@ class WorkflowOrchestrator {
     this.messageQueue = [];
     this.timeoutMs = opts.timeoutMs || DEFAULT_TIMEOUT_MS;
     this.isShuttingDown = false; // BLINDAJE: Flag para cierre seguro.
+    this.taskRunner = new TaskRunner({ orchestrator: this });
     this.initializeAgents();
     if (!existsSync(REPORTS_DIR)) mkdirSync(REPORTS_DIR, { recursive: true });
     this.loadWorkflows();
@@ -59,7 +63,9 @@ class WorkflowOrchestrator {
       if (this.isShuttingDown) return;
       this.isShuttingDown = true;
       // eslint-disable-next-line no-console
-      console.log(`\n[INFO] Recibida señal ${signal}. Guardando estado antes de salir...`);
+      console.log(
+        `\n[INFO] Recibida señal ${signal}. Guardando estado antes de salir...`
+      );
       this.saveWorkflows();
       // eslint-disable-next-line no-console
       console.log('[INFO] Estado guardado. Saliendo.');
@@ -156,12 +162,19 @@ class WorkflowOrchestrator {
     if (!workflow) throw new Error(`Workflow ${workflowId} not found`);
     workflow.status = 'running';
     workflow.started_at = nowIso();
+    const budget = workflow.context?.budget || {};
+    const startTime = Date.now();
+    let hopCount = 0;
 
     try {
       const executedSteps = new Set();
       const pending = new Set(workflow.steps.map(s => s.step_id));
 
       while (pending.size > 0) {
+        if (budget.max_latency_ms && Date.now() - startTime > budget.max_latency_ms) {
+          throw new Error('Budget max latency exceeded');
+        }
+
         const ready = workflow.steps.filter(
           s =>
             pending.has(s.step_id) &&
@@ -182,6 +195,10 @@ class WorkflowOrchestrator {
             workflow.results[step.step_id] = r.value;
             executedSteps.add(step.step_id);
             pending.delete(step.step_id);
+            hopCount += 1;
+            if (budget.max_hops && hopCount > budget.max_hops) {
+              throw new Error('Budget max hops exceeded');
+            }
           } else {
             step.status = 'failed';
             step.error = r.reason?.message || String(r.reason);
@@ -306,6 +323,36 @@ class WorkflowOrchestrator {
       }
       throw error;
     }
+  }
+
+  async runTaskPayload(payload, options = {}) {
+    const baseTask = payload.task || payload;
+    const threadStateId = baseTask.thread_state_id || baseTask.threadStateId;
+    const task = {
+      task_id: baseTask.task_id || baseTask.id,
+      intent: baseTask.intent,
+      confidence: baseTask.confidence,
+      artifacts: baseTask.artifacts,
+      metadata: baseTask.metadata || baseTask.plan || {},
+      thread_state_id: threadStateId,
+      threadStateId
+    };
+
+    const runnerOptions = {
+      diff: payload.diff,
+      evidence: payload.evidence,
+      plan: payload.plan,
+      skipPolicy: options.skipPolicy,
+      workflowConfig: options.workflowConfig,
+      workflowId: options.workflowId
+    };
+
+    if (runnerOptions.workflowConfig) {
+      runnerOptions.workflow = runnerOptions.workflowConfig;
+      delete runnerOptions.workflowConfig;
+    }
+
+    return this.taskRunner.run(task, runnerOptions);
   }
 
   async callAgent(
@@ -500,7 +547,9 @@ async function main() {
             configStr = readFileSync(0, 'utf8'); // Lee desde stdin
           } catch {
             // eslint-disable-next-line no-console
-            console.error('Se requiere una configuración JSON desde un archivo o stdin.');
+            console.error(
+              'Se requiere una configuración JSON desde un archivo o stdin.'
+            );
             process.exit(1);
           }
         }
@@ -519,7 +568,9 @@ async function main() {
         console.log(`[INFO] Ejecutando workflow ${argv.workflowId}...`);
         const result = await orchestrator.executeWorkflow(argv.workflowId);
         // eslint-disable-next-line no-console
-        console.log(`[INFO] Workflow ${argv.workflowId} finalizado con estado: ${result.status}`);
+        console.log(
+          `[INFO] Workflow ${argv.workflowId} finalizado con estado: ${result.status}`
+        );
         // eslint-disable-next-line no-console
         console.log(JSON.stringify(result, null, 2));
       }
@@ -529,9 +580,9 @@ async function main() {
       'Muestra el estado de un workflow o lista todos',
       {},
       argv => {
-        const result = argv.workflowId
-          ? orchestrator.getWorkflow(argv.workflowId)
-          : orchestrator.listWorkflows();
+        const result = argv.workflowId ?
+          orchestrator.getWorkflow(argv.workflowId) :
+          orchestrator.listWorkflows();
         // eslint-disable-next-line no-console
         console.log(JSON.stringify(result, null, 2));
       }
@@ -540,10 +591,62 @@ async function main() {
       'health',
       'Realiza un chequeo de salud de todos los agentes',
       {},
-      async () => {
+      async() => {
         const health = await orchestrator.healthCheck();
         // eslint-disable-next-line no-console
         console.log(JSON.stringify(health, null, 2));
+      }
+    )
+    .command(
+      'task [payload]',
+      'Evalua routing, presupuesto y politicas para una tarea',
+      y =>
+        y
+          .positional('payload', {
+            describe: 'Ruta al JSON de la tarea. Si se omite, lee desde stdin.'
+          })
+          .option('workflow', {
+            type: 'string',
+            describe: 'Ruta a un workflow JSON a ejecutar tras el enrutamiento'
+          })
+          .option('skip-policy', {
+            type: 'boolean',
+            default: false,
+            describe: 'Omite la evaluacion de politicas (solo depuracion)'
+          }),
+      async argv => {
+        let payloadRaw;
+        if (argv.payload && existsSync(argv.payload)) {
+          payloadRaw = readFileSync(argv.payload, 'utf8');
+        } else {
+          try {
+            payloadRaw = readFileSync(0, 'utf8');
+          } catch {
+            // eslint-disable-next-line no-console
+            console.error(
+              'Se requiere una carga JSON desde un archivo o stdin para evaluar la tarea.'
+            );
+            process.exit(1);
+          }
+        }
+
+        const payload = JSON.parse(payloadRaw);
+        let workflowConfig;
+        if (argv.workflow) {
+          if (!existsSync(argv.workflow)) {
+            // eslint-disable-next-line no-console
+            console.error(`Workflow ${argv.workflow} no encontrado`);
+            process.exit(1);
+          }
+          workflowConfig = JSON.parse(readFileSync(argv.workflow, 'utf8'));
+        }
+
+        const result = await orchestrator.runTaskPayload(payload, {
+          skipPolicy: argv.skipPolicy,
+          workflowConfig
+        });
+        // eslint-disable-next-line no-console
+        console.log(JSON.stringify(result, null, 2));
       }
     )
     .command(
@@ -553,7 +656,9 @@ async function main() {
       argv => {
         const ok = orchestrator.cleanup(argv.workflowId);
         // eslint-disable-next-line no-console
-        console.log(JSON.stringify({ workflow_id: argv.workflowId, cleaned: ok }, null, 2));
+        console.log(
+          JSON.stringify({ workflow_id: argv.workflowId, cleaned: ok }, null, 2)
+        );
       }
     )
     .demandCommand(1, 'Debes proporcionar un comando.')
@@ -568,12 +673,79 @@ async function main() {
     .parse();
 }
 
+// Nueva función para manejar mensajes con handshake
+async function onMessage(msg) {
+  if (isHello(msg)) return hello("orchestration");
+  if (!validateReq(msg)) return fail("INVALID_SCHEMA_MIN");
+
+  // Reenvío simple a agentes
+  const target = msg.agent;
+  if (!target) return fail("MISSING_AGENT");
+  
+  // Simular respuesta del agente
+  if (target === 'context') {
+    return ok({
+      project: "demo-repo",
+      branch: "main",
+      filesChanged: ["src/index.js"],
+    });
+  }
+  
+  if (target === 'prompting') {
+    return ok({
+      templateId: "default",
+      filled: "Template default with vars: {}",
+    });
+  }
+  
+  if (target === 'rules') {
+    return ok({
+      rulesetVersion: "1.0.0",
+      violations: [],
+      policy_ok: true,
+    });
+  }
+  
+  return fail(`UNKNOWN_AGENT: ${target}`);
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(e => {
-    // eslint-disable-next-line no-console
-    console.error(` ${e.message}`);
-    process.exit(1);
-  });
+  // Verificar si hay input en stdin para handshake
+  if (!process.stdin.isTTY) {
+    let rawInput = '';
+    process.stdin.setEncoding('utf8');
+    
+    process.stdin.on('data', (chunk) => {
+      rawInput += chunk;
+    });
+    
+    process.stdin.on('end', async () => {
+      if (rawInput.trim()) {
+        try {
+          const data = JSON.parse(rawInput);
+          if (data.type === "hello" || data.requestId) {
+            const response = await onMessage(data);
+            console.log(JSON.stringify(response, null, 2));
+            process.exit(0);
+          }
+        } catch (error) {
+          // Continuar con lógica normal
+        }
+      }
+      
+      // Si no es handshake, ejecutar lógica normal
+      main().catch(e => {
+        console.error(` ${e.message}`);
+        process.exit(1);
+      });
+    });
+  } else {
+    // Sin input en stdin, ejecutar lógica normal
+    main().catch(e => {
+      console.error(` ${e.message}`);
+      process.exit(1);
+    });
+  }
 }
 
 export default WorkflowOrchestrator;

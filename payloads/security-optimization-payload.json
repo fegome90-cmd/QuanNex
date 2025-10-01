@@ -1,0 +1,8 @@
+{
+  "scan_type": "comprehensive",
+  "target_path": ".",
+  "include_dependencies": true,
+  "include_secrets": true,
+  "include_vulnerabilities": true,
+  "include_compliance": true
+}

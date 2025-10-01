@@ -1,0 +1,50 @@
+// Test file 3 for real testing
+var config = {
+  port: 3000,
+  host: "localhost"
+};
+
+console.log("Config:", config);
+
+// Long function that should be refactored
+function veryLongFunctionThatDoesTooMuch() {
+  var step1 = "first step";
+  console.log(step1);
+  
+  var step2 = "second step";
+  console.log(step2);
+  
+  var step3 = "third step";
+  console.log(step3);
+  
+  var step4 = "fourth step";
+  console.log(step4);
+  
+  var step5 = "fifth step";
+  console.log(step5);
+  
+  var step6 = "sixth step";
+  console.log(step6);
+  
+  var step7 = "seventh step";
+  console.log(step7);
+  
+  var step8 = "eighth step";
+  console.log(step8);
+  
+  var step9 = "ninth step";
+  console.log(step9);
+  
+  var step10 = "tenth step";
+  console.log(step10);
+  
+  return step1 + step2 + step3 + step4 + step5 + step6 + step7 + step8 + step9 + step10;
+}
+
+// Magic numbers
+var delay = 1000;
+setTimeout(() => {
+  console.log("Delayed execution");
+}, delay);
+
+veryLongFunctionThatDoesTooMuch();

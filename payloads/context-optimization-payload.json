@@ -1,6 +1,32 @@
 {
-  "target_path": "agents/context/",
-  "optimization_types": ["performance", "maintainability"],
-  "scan_depth": 1,
-  "auto_fix": false
+  "sources": [
+    "package.json",
+    "README.md",
+    "MANUAL-COMPLETO-CURSOR.md",
+    "tools/run-autofix.mjs",
+    "tools/optimization-autofix-integration.mjs",
+    "tools/auto-correction-engine-v2.mjs",
+    "tools/retry-rollback-system-v3.mjs",
+    "tools/smart-test-runner.mjs",
+    "tools/base-correction-tool.mjs",
+    "agents/optimization/agent.js",
+    "agents/security/agent.js",
+    "agents/metrics/agent.js"
+  ],
+  "selectors": [
+    "performance",
+    "optimization",
+    "configuration",
+    "logging",
+    "metrics",
+    "benchmarks",
+    "error handling",
+    "retry logic",
+    "rollback",
+    "timeout",
+    "memory",
+    "cpu",
+    "efficiency"
+  ],
+  "max_tokens": 1024
 }

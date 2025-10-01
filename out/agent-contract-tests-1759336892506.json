@@ -1,0 +1,152 @@
+{
+  "timestamp": "2025-10-01T16:41:32.505Z",
+  "summary": {
+    "totalPassed": 7,
+    "totalFailed": 0,
+    "successRate": 100
+  },
+  "results": {
+    "context": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "context"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "context",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:41:32.258Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "context",
+            "capability": "context.resolve",
+            "payload": {},
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "project": "demo-repo",
+            "branch": "main",
+            "filesChanged": [
+              "src/index.js"
+            ],
+            "ok": true,
+            "ts": "2025-10-01T16:41:32.296Z"
+          }
+        }
+      ]
+    },
+    "prompting": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "prompting"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "prompting",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:41:32.343Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "prompting",
+            "capability": "prompting.buildPrompt",
+            "payload": {
+              "templateId": "default",
+              "vars": {}
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "templateId": "default",
+            "filled": "Template default with vars: {}",
+            "ok": true,
+            "ts": "2025-10-01T16:41:32.387Z"
+          }
+        }
+      ]
+    },
+    "rules": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "rules"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "rules",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:41:32.427Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "rules",
+            "capability": "rules.validate",
+            "payload": {
+              "touchesCI": false,
+              "secretsFound": false,
+              "lintOK": true
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "rulesetVersion": "1.0.0",
+            "violations": [],
+            "policy_ok": true,
+            "ok": true,
+            "ts": "2025-10-01T16:41:32.463Z"
+          }
+        }
+      ]
+    },
+    "orchestration": {
+      "passed": 1,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "orchestration"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "orchestration",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:41:32.501Z"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "target_path": ".",
+  "metric_types": ["performance", "coverage", "quality", "complexity"],
+  "scan_depth": 3,
+  "include_tests": true,
+  "exclude_patterns": ["node_modules/**", "*.log", "*.tmp", ".git/**"],
+  "quality_thresholds": {
+    "max_function_length": 50,
+    "max_complexity": 10,
+    "min_coverage": 80
+  }
+}

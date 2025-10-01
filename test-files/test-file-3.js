@@ -4,39 +4,39 @@ const config = {
   host: 'localhost'
 };
 
-console.log('Config:', config);
+// console.log removed for production
 
 // Long function that should be refactored
 function veryLongFunctionThatDoesTooMuch() {
   const step1 = 'first step';
-  console.log(step1);
+  // console.log removed for production
 
   const step2 = 'second step';
-  console.log(step2);
+  // console.log removed for production
 
   const step3 = 'third step';
-  console.log(step3);
+  // console.log removed for production
 
   const step4 = 'fourth step';
-  console.log(step4);
+  // console.log removed for production
 
   const step5 = 'fifth step';
-  console.log(step5);
+  // console.log removed for production
 
   const step6 = 'sixth step';
-  console.log(step6);
+  // console.log removed for production
 
   const step7 = 'seventh step';
-  console.log(step7);
+  // console.log removed for production
 
   const step8 = 'eighth step';
-  console.log(step8);
+  // console.log removed for production
 
   const step9 = 'ninth step';
-  console.log(step9);
+  // console.log removed for production
 
   const step10 = 'tenth step';
-  console.log(step10);
+  // console.log removed for production
 
   return (
     step1 +
@@ -55,7 +55,7 @@ function veryLongFunctionThatDoesTooMuch() {
 // Magic numbers
 const delay = 1000;
 setTimeout(() => {
-  console.log('Delayed execution');
+  // console.log removed for production
 }, delay);
 
 veryLongFunctionThatDoesTooMuch();

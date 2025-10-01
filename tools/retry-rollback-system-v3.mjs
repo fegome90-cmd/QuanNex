@@ -7,7 +7,10 @@
 
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
-import { BaseCorrectionTool, createCommonCLI } from './base-correction-tool.mjs';
+import {
+  BaseCorrectionTool,
+  createCommonCLI
+} from './base-correction-tool.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,7 +30,7 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
       retryAttempts: argv.retryAttempts,
       retryDelay: argv.retryDelay
     });
-    
+
     this.retryHistory = [];
     this.rollbackHistory = [];
   }
@@ -38,23 +41,22 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
   async run() {
     try {
       this.log('Iniciando Retry Rollback System v3...');
-      
+
       // Paso 1: Obtener correcciones del sistema de corrección automática
       const corrections = await this.getCorrectionsFromSystem();
-      
+
       // Paso 2: Ejecutar correcciones con retry logic
       const results = await this.executeCorrectionsWithRetry(corrections);
-      
+
       // Paso 3: Procesar rollbacks si es necesario
       if (this.config.backup) {
         await this.processRollbacks(results);
       }
-      
+
       // Paso 4: Generar reporte final
       await this.generateReport(results);
-      
+
       this.log('Retry Rollback System v3 completado exitosamente', 'success');
-      
     } catch (error) {
       this.log(`Error en Retry Rollback System v3: ${error.message}`, 'error');
       throw error;
@@ -66,7 +68,7 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
    */
   async getCorrectionsFromSystem() {
     this.log('Obteniendo correcciones del sistema...');
-    
+
     // Simular obtención de correcciones reales
     // En una implementación real, esto vendría del auto-correction-engine
     return [
@@ -87,7 +89,7 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
       {
         id: 'correction-3',
         file: 'test-file-3.js',
-        command: 'sed -i \'\' \'s/var /const /g\' test-file-3.js',
+        command: "sed -i '' 's/var /const /g' test-file-3.js",
         type: 'text_replace',
         priority: 'low'
       }
@@ -98,15 +100,17 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
    * Ejecutar correcciones con lógica de retry
    */
   async executeCorrectionsWithRetry(corrections) {
-    this.log(`Ejecutando ${corrections.length} correcciones con retry logic...`);
-    
+    this.log(
+      `Ejecutando ${corrections.length} correcciones con retry logic...`
+    );
+
     const results = [];
-    
+
     for (const correction of corrections) {
       const result = await this.executeCorrectionWithRetry(correction);
       results.push(result);
     }
-    
+
     return results;
   }
 
@@ -117,23 +121,25 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
     let attempts = 0;
     let success = false;
     let lastError = null;
-    
+
     try {
       this.verbose(`Procesando corrección: ${correction.id}`);
-      
+
       // Ejecutar con retry usando la clase base
       await this.executeCommandWithRetry(correction.command);
-      
+
       success = true;
       attempts = 1; // Se ejecutó en el primer intento
-      
+
       this.log(`Corrección exitosa: ${correction.id}`, 'success');
-      
     } catch (error) {
       lastError = error;
-      this.log(`Corrección fallida: ${correction.id} - ${error.message}`, 'error');
+      this.log(
+        `Corrección fallida: ${correction.id} - ${error.message}`,
+        'error'
+      );
     }
-    
+
     // Registrar en historial
     this.retryHistory.push({
       correction_id: correction.id,
@@ -142,7 +148,7 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
       error: lastError?.message,
       timestamp: new Date().toISOString()
     });
-    
+
     return {
       correction,
       success,
@@ -156,14 +162,17 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
    */
   async processRollbacks(results) {
     this.log('Procesando rollbacks para correcciones fallidas...');
-    
+
     const failedCorrections = results.filter(result => !result.success);
-    
+
     if (failedCorrections.length === 0) {
-      this.log('No hay correcciones fallidas que requieran rollback', 'success');
+      this.log(
+        'No hay correcciones fallidas que requieran rollback',
+        'success'
+      );
       return;
     }
-    
+
     for (const failedResult of failedCorrections) {
       await this.performRollback(failedResult.correction);
     }
@@ -175,14 +184,17 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
   async performRollback(correction) {
     try {
       this.log(`Realizando rollback para: ${correction.id}`);
-      
+
       // Buscar backup del archivo
       const backupPath = await this.findBackup(correction.file);
-      
+
       if (backupPath) {
         // Restaurar desde backup usando la clase base
-        const restored = await this.restoreFromBackup(correction.file, backupPath);
-        
+        const restored = await this.restoreFromBackup(
+          correction.file,
+          backupPath
+        );
+
         this.rollbackHistory.push({
           correction_id: correction.id,
           file: correction.file,
@@ -190,7 +202,7 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
           success: restored,
           timestamp: new Date().toISOString()
         });
-        
+
         if (restored) {
           this.log(`Rollback exitoso: ${correction.file}`, 'success');
         } else {
@@ -198,7 +210,7 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
         }
       } else {
         this.log(`No se encontró backup para: ${correction.file}`, 'warn');
-        
+
         this.rollbackHistory.push({
           correction_id: correction.id,
           file: correction.file,
@@ -208,10 +220,12 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
           timestamp: new Date().toISOString()
         });
       }
-      
     } catch (error) {
-      this.log(`Error en rollback para ${correction.id}: ${error.message}`, 'error');
-      
+      this.log(
+        `Error en rollback para ${correction.id}: ${error.message}`,
+        'error'
+      );
+
       this.rollbackHistory.push({
         correction_id: correction.id,
         file: correction.file,
@@ -237,8 +251,11 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
   async generateReport(results) {
     const successfulCorrections = results.filter(r => r.success).length;
     const failedCorrections = results.filter(r => !r.success).length;
-    const totalAttempts = results.reduce((sum, r) => sum + (r.attempts || 0), 0);
-    
+    const totalAttempts = results.reduce(
+      (sum, r) => sum + (r.attempts || 0),
+      0
+    );
+
     const report = this.generateBaseReport('retry_rollback_v3', {
       max_retries: this.config.retryAttempts,
       retry_delay: this.config.retryDelay,
@@ -247,11 +264,13 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
         total_corrections: results.length,
         successful: successfulCorrections,
         failed: failedCorrections,
-        success_rate: results.length > 0 ? 
-          ((successfulCorrections / results.length) * 100).toFixed(2) + '%' : '0%',
+        success_rate:
+          results.length > 0
+            ? ((successfulCorrections / results.length) * 100).toFixed(2) + '%'
+            : '0%',
         total_attempts: totalAttempts,
-        average_attempts: results.length > 0 ? 
-          (totalAttempts / results.length).toFixed(2) : '0'
+        average_attempts:
+          results.length > 0 ? (totalAttempts / results.length).toFixed(2) : '0'
       },
       retry_history: this.retryHistory,
       rollback_history: this.rollbackHistory
@@ -259,8 +278,10 @@ class RetryRollbackSystemV3 extends BaseCorrectionTool {
 
     const filename = `retry-rollback-v3-${Date.now()}.json`;
     await this.saveReport(report, filename);
-    
-    this.log(`Resumen: ${successfulCorrections} exitosas, ${failedCorrections} fallidas, ${totalAttempts} intentos totales`);
+
+    this.log(
+      `Resumen: ${successfulCorrections} exitosas, ${failedCorrections} fallidas, ${totalAttempts} intentos totales`
+    );
   }
 }
 

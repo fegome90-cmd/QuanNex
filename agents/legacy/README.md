@@ -14,5 +14,5 @@ Se mantienen por compatibilidad hacia atrás.
 ## Migración
 
 Para usar estos agentes, actualiza las referencias de:
-- `antigeneric-agents/` → `agents/legacy/antigeneric/`
 
+- `antigeneric-agents/` → `agents/legacy/antigeneric/`

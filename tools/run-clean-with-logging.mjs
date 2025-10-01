@@ -21,10 +21,10 @@ class MCPAgentRunner {
 
   async runAgent(agentName, payloadPath, options = {}) {
     const startTime = Date.now();
-    
+
     console.log(`🚀 Running agent: ${agentName}`);
     console.log(`📄 Payload: ${payloadPath}`);
-    
+
     // Leer payload de entrada
     let inputPayload;
     try {
@@ -36,14 +36,14 @@ class MCPAgentRunner {
 
     // Ejecutar agente usando run-clean.sh
     const result = await this.executeAgent(agentName, payloadPath, options);
-    
+
     if (!result.success) {
       console.error(`❌ Agent ${agentName} failed:`, result.error);
       return null;
     }
 
     const processingTime = Date.now() - startTime;
-    
+
     // Loggear según el tipo de agente
     this.logAgentExecution(agentName, inputPayload, result.output, {
       processing_time: processingTime,
@@ -55,10 +55,15 @@ class MCPAgentRunner {
   }
 
   async executeAgent(agentName, payloadPath, options = {}) {
-    return new Promise((resolve) => {
-      const runCleanPath = join(PROJECT_ROOT, 'core', 'scripts', 'run-clean.sh');
+    return new Promise(resolve => {
+      const runCleanPath = join(
+        PROJECT_ROOT,
+        'core',
+        'scripts',
+        'run-clean.sh'
+      );
       const agentPath = join(PROJECT_ROOT, 'agents', agentName);
-      
+
       const child = spawn('bash', [runCleanPath, agentName, payloadPath], {
         stdio: ['pipe', 'pipe', 'pipe'],
         cwd: PROJECT_ROOT
@@ -67,15 +72,15 @@ class MCPAgentRunner {
       let stdout = '';
       let stderr = '';
 
-      child.stdout.on('data', (data) => {
+      child.stdout.on('data', data => {
         stdout += data.toString();
       });
 
-      child.stderr.on('data', (data) => {
+      child.stderr.on('data', data => {
         stderr += data.toString();
       });
 
-      child.on('close', (code) => {
+      child.on('close', code => {
         if (code === 0) {
           try {
             const output = JSON.parse(stdout);
@@ -103,7 +108,7 @@ class MCPAgentRunner {
         }
       });
 
-      child.on('error', (error) => {
+      child.on('error', error => {
         resolve({
           success: false,
           error: error.message,
@@ -126,14 +131,16 @@ class MCPAgentRunner {
         this.logger.logRules(agentName, input, output, metadata);
         break;
       default:
-        console.warn(`⚠️  Unknown agent type: ${agentName}, logging as context`);
+        console.warn(
+          `⚠️  Unknown agent type: ${agentName}, logging as context`
+        );
         this.logger.logContext(agentName, input, output, metadata);
     }
   }
 
   async runRestructureAnalysis() {
     console.log('🔍 Running restructure analysis with MCP agents...');
-    
+
     const analysisSteps = [
       {
         agent: 'context',
@@ -153,14 +160,14 @@ class MCPAgentRunner {
     ];
 
     const results = [];
-    
+
     for (const step of analysisSteps) {
       console.log(`\n📋 Step: ${step.description}`);
       const result = await this.runAgent(step.agent, step.payload, {
         step: step.description,
         analysis_type: 'restructure'
       });
-      
+
       if (result) {
         results.push({
           step: step.description,
@@ -173,7 +180,7 @@ class MCPAgentRunner {
     // Generar reporte final
     console.log('\n📊 Generating analysis report...');
     const report = this.logger.generateReport();
-    
+
     return {
       results: results,
       report: report
@@ -182,23 +189,23 @@ class MCPAgentRunner {
 
   async runBenchmarkWithLogging() {
     console.log('🏃 Running benchmark with context logging...');
-    
+
     const agents = ['context', 'prompting', 'rules'];
     const results = [];
-    
+
     for (const agent of agents) {
       console.log(`\n📈 Benchmarking ${agent}...`);
-      
+
       const payloadPath = `payloads/${agent}-test-payload.json`;
       const iterations = 3; // Reducido para logging
-      
+
       for (let i = 0; i < iterations; i++) {
         const result = await this.runAgent(agent, payloadPath, {
           iteration: i + 1,
           total_iterations: iterations,
           benchmark: true
         });
-        
+
         if (result) {
           results.push({
             agent: agent,
@@ -208,10 +215,10 @@ class MCPAgentRunner {
         }
       }
     }
-    
+
     // Generar reporte de benchmark
     const report = this.logger.generateReport();
-    
+
     return {
       benchmark_results: results,
       report: report
@@ -223,10 +230,11 @@ class MCPAgentRunner {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const runner = new MCPAgentRunner();
   const command = process.argv[2];
-  
+
   switch (command) {
     case 'analyze':
-      runner.runRestructureAnalysis()
+      runner
+        .runRestructureAnalysis()
         .then(result => {
           console.log('\n✅ Analysis completed');
           console.log('📊 Report generated in .reports/restructure-logs/');
@@ -236,9 +244,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
           process.exit(1);
         });
       break;
-      
+
     case 'benchmark':
-      runner.runBenchmarkWithLogging()
+      runner
+        .runBenchmarkWithLogging()
         .then(result => {
           console.log('\n✅ Benchmark completed');
           console.log('📊 Report generated in .reports/restructure-logs/');
@@ -248,17 +257,20 @@ if (import.meta.url === `file://${process.argv[1]}`) {
           process.exit(1);
         });
       break;
-      
+
     case 'agent':
       const agentName = process.argv[3];
       const payloadPath = process.argv[4];
-      
+
       if (!agentName || !payloadPath) {
-        console.error('Usage: node tools/run-clean-with-logging.mjs agent <agent-name> <payload-path>');
+        console.error(
+          'Usage: node tools/run-clean-with-logging.mjs agent <agent-name> <payload-path>'
+        );
         process.exit(1);
       }
-      
-      runner.runAgent(agentName, payloadPath)
+
+      runner
+        .runAgent(agentName, payloadPath)
         .then(result => {
           if (result) {
             console.log('✅ Agent execution completed and logged');
@@ -272,12 +284,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
           process.exit(1);
         });
       break;
-      
+
     default:
       console.log('Usage:');
       console.log('  node tools/run-clean-with-logging.mjs analyze');
       console.log('  node tools/run-clean-with-logging.mjs benchmark');
-      console.log('  node tools/run-clean-with-logging.mjs agent <agent-name> <payload-path>');
+      console.log(
+        '  node tools/run-clean-with-logging.mjs agent <agent-name> <payload-path>'
+      );
       break;
   }
 }

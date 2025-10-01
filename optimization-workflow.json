@@ -1,0 +1,131 @@
+{
+  "name": "Fase 4: Optimización Completa del Sistema",
+  "description": "Workflow integral de optimización usando todos los agentes disponibles del proyecto",
+  "context": {
+    "project_type": "optimization",
+    "target_dir": ".",
+    "phase": "4",
+    "objective": "Optimización completa de performance, configuración y logging"
+  },
+  "steps": [
+    {
+      "step_id": "context_analysis",
+      "agent": "context",
+      "action": "analyze",
+      "input": {
+        "sources": [
+          "tools/",
+          "agents/",
+          "core/",
+          "package.json",
+          "README.md"
+        ],
+        "selectors": [
+          "performance",
+          "optimization",
+          "configuration",
+          "logging",
+          "metrics",
+          "benchmarks"
+        ],
+        "max_tokens": 1024
+      },
+      "depends_on": [],
+      "max_retries": 3,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "security_scan",
+      "agent": "security",
+      "action": "scan",
+      "input": {
+        "scan_type": "comprehensive",
+        "target_path": ".",
+        "include_dependencies": true
+      },
+      "depends_on": ["context_analysis"],
+      "max_retries": 2,
+      "timeout_ms": 45000
+    },
+    {
+      "step_id": "metrics_analysis",
+      "agent": "metrics",
+      "action": "analyze",
+      "input": {
+        "target_path": ".",
+        "include_benchmarks": true,
+        "performance_analysis": true
+      },
+      "depends_on": ["context_analysis"],
+      "max_retries": 2,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "optimization_suggestions",
+      "agent": "optimization",
+      "action": "analyze",
+      "input": {
+        "target_path": ".",
+        "auto_fix": true,
+        "include_performance": true,
+        "include_security": true,
+        "include_quality": true
+      },
+      "depends_on": ["security_scan", "metrics_analysis"],
+      "max_retries": 2,
+      "timeout_ms": 60000
+    },
+    {
+      "step_id": "lint_analysis",
+      "agent": "lint",
+      "action": "analyze",
+      "input": {
+        "target_path": ".",
+        "include_all_files": true,
+        "generate_sarif": true
+      },
+      "depends_on": ["optimization_suggestions"],
+      "max_retries": 2,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "refactor_application",
+      "agent": "refactor",
+      "action": "apply",
+      "input": {
+        "target_path": ".",
+        "apply_codemods": true,
+        "backup_changes": true
+      },
+      "depends_on": ["lint_analysis"],
+      "max_retries": 2,
+      "timeout_ms": 45000
+    },
+    {
+      "step_id": "test_execution",
+      "agent": "tests",
+      "action": "run",
+      "input": {
+        "target_path": ".",
+        "include_coverage": true,
+        "coverage_threshold": 80
+      },
+      "depends_on": ["refactor_application"],
+      "max_retries": 2,
+      "timeout_ms": 60000
+    },
+    {
+      "step_id": "final_optimization",
+      "agent": "optimization",
+      "action": "finalize",
+      "input": {
+        "target_path": ".",
+        "generate_report": true,
+        "include_recommendations": true
+      },
+      "depends_on": ["test_execution"],
+      "max_retries": 1,
+      "timeout_ms": 30000
+    }
+  ]
+}

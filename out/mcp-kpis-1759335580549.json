@@ -1,0 +1,70 @@
+{
+  "timestamp": "2025-10-01T16:19:40.549Z",
+  "kpis": {
+    "system": {
+      "totalRequests": 5,
+      "totalErrors": 1,
+      "averageLatency": 250,
+      "uptime": 3,
+      "lastUpdate": "2025-10-01T16:19:40.547Z",
+      "healthyAgents": 3,
+      "totalAgents": 4,
+      "healthPercentage": 75
+    },
+    "agents": [
+      {
+        "agent": "context",
+        "requests": 2,
+        "errors": 1,
+        "errorRate": 50,
+        "averageLatency": 325,
+        "minLatency": 150,
+        "maxLatency": 500,
+        "status": "unhealthy",
+        "healthScore": 47,
+        "lastRequest": "2025-10-01T16:19:40.547Z",
+        "uptime": 2
+      },
+      {
+        "agent": "prompting",
+        "requests": 1,
+        "errors": 0,
+        "errorRate": 0,
+        "averageLatency": 200,
+        "minLatency": 200,
+        "maxLatency": 200,
+        "status": "healthy",
+        "healthScore": 98,
+        "lastRequest": "2025-10-01T16:19:40.547Z",
+        "uptime": 2
+      },
+      {
+        "agent": "rules",
+        "requests": 1,
+        "errors": 0,
+        "errorRate": 0,
+        "averageLatency": 100,
+        "minLatency": 100,
+        "maxLatency": 100,
+        "status": "healthy",
+        "healthScore": 99,
+        "lastRequest": "2025-10-01T16:19:40.547Z",
+        "uptime": 2
+      },
+      {
+        "agent": "orchestration",
+        "requests": 1,
+        "errors": 0,
+        "errorRate": 0,
+        "averageLatency": 300,
+        "minLatency": 300,
+        "maxLatency": 300,
+        "status": "healthy",
+        "healthScore": 97,
+        "lastRequest": "2025-10-01T16:19:40.547Z",
+        "uptime": 2
+      }
+    ]
+  },
+  "analysis": {}
+}

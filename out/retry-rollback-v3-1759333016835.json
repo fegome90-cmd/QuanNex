@@ -1,0 +1,79 @@
+{
+  "report_type": "retry_rollback_v3",
+  "timestamp": "2025-10-01T15:36:56.835Z",
+  "tool_version": "2.0.0",
+  "config": {
+    "target_path": ".",
+    "dry_run": false,
+    "backup_enabled": true,
+    "verbose": true
+  },
+  "results": {
+    "applied": 0,
+    "failed": 0,
+    "skipped": 0,
+    "total": 0
+  },
+  "data": {
+    "max_retries": 3,
+    "retry_delay": 1000,
+    "rollback_enabled": true,
+    "results": {
+      "total_corrections": 3,
+      "successful": 0,
+      "failed": 3,
+      "success_rate": "0.00%",
+      "total_attempts": 0,
+      "average_attempts": "0.00"
+    },
+    "retry_history": [
+      {
+        "correction_id": "correction-1",
+        "attempts": 0,
+        "success": false,
+        "error": "Comando falló después de 3 intentos: Comando falló: Command failed: npx eslint --fix test-file-1.js\n\nOops! Something went wrong! :(\n\nESLint: 9.34.0\n\nNo files matching the pattern \"test-file-1.js\" were found.\nPlease check for typing mistakes in the pattern.\n\nCommand failed: /Users/felipe/Developer/startkit-main/node_modules/.bin/eslint --fix,test-file-1.js\n",
+        "timestamp": "2025-10-01T15:36:52.277Z"
+      },
+      {
+        "correction_id": "correction-2",
+        "attempts": 0,
+        "success": false,
+        "error": "Comando falló después de 3 intentos: Comando falló: Command failed: npx prettier --write test-file-2.js\n[error] No files matching the pattern were found: \"test-file-2.js\".\nCommand failed: /Users/felipe/Developer/startkit-main/node_modules/.bin/prettier --write,test-file-2.js\n",
+        "timestamp": "2025-10-01T15:36:54.798Z"
+      },
+      {
+        "correction_id": "correction-3",
+        "attempts": 0,
+        "success": false,
+        "error": "Comando falló después de 3 intentos: Comando falló: Command failed: sed -i '' 's/var /const /g' test-file-3.js\nsed: test-file-3.js: No such file or directory\n",
+        "timestamp": "2025-10-01T15:36:56.834Z"
+      }
+    ],
+    "rollback_history": [
+      {
+        "correction_id": "correction-1",
+        "file": "test-file-1.js",
+        "backup_path": null,
+        "success": false,
+        "error": "Backup no encontrado",
+        "timestamp": "2025-10-01T15:36:56.834Z"
+      },
+      {
+        "correction_id": "correction-2",
+        "file": "test-file-2.js",
+        "backup_path": null,
+        "success": false,
+        "error": "Backup no encontrado",
+        "timestamp": "2025-10-01T15:36:56.834Z"
+      },
+      {
+        "correction_id": "correction-3",
+        "file": "test-file-3.js",
+        "backup_path": null,
+        "success": false,
+        "error": "Backup no encontrado",
+        "timestamp": "2025-10-01T15:36:56.835Z"
+      }
+    ]
+  }
+}

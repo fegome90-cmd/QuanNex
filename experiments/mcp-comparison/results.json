@@ -1,0 +1,35 @@
+{
+  "timestamp": "2025-10-01T17:28:27.829Z",
+  "testDocuments": 100,
+  "withMCP": {
+    "totalTime": 6037.194874999999,
+    "memoryUsed": 43640,
+    "successCount": 100,
+    "errorCount": 0,
+    "errorRate": 0,
+    "avgLatency": 60.33967579000003,
+    "p95Latency": 78.50433299999986,
+    "p99Latency": 83.36116700000002,
+    "throughput": 16.56398411356566,
+    "errors": []
+  },
+  "withoutMCP": {
+    "totalTime": 24929.399667,
+    "memoryUsed": -20464,
+    "successCount": 100,
+    "errorCount": 0,
+    "errorRate": 0,
+    "avgLatency": 249.27156754,
+    "p95Latency": 336.34420899999895,
+    "p99Latency": 344.83616699999766,
+    "throughput": 4.011328043826656,
+    "errors": []
+  },
+  "improvements": {
+    "timeReduction": 75.78283089186596,
+    "latencyReduction": 75.79359877041834,
+    "throughputIncrease": 312.9301800449171,
+    "errorReduction": null,
+    "successIncrease": 0
+  }
+}

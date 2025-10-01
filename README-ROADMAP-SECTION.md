@@ -1,4 +1,3 @@
-
 ---
 
 ## 🗺️ Roadmap del Proyecto
@@ -23,4 +22,3 @@ Para consultar el roadmap completo con todos los PRs, métricas y próximos paso
 - 🟡 **PR-O**: Distribución Core + Overlay (planeado - Códex)
 
 Consulta [`ROADMAP.yaml`](./ROADMAP.yaml) para detalles completos de cada PR.
-

@@ -10,10 +10,12 @@ const MIN_TOKENS = 256;
 const DEFAULT_MAX_TOKENS = 512;
 const ROOT = process.cwd();
 
-const toWords = (value) => (value.trim() === '' ? [] : value.trim().split(/\s+/));
+const toWords = value => (value.trim() === '' ? [] : value.trim().split(/\s+/));
 
 const ensureWithinRoot = (absPath, stats) => {
-  const normalized = absPath.startsWith(ROOT) ? absPath : resolve(ROOT, absPath);
+  const normalized = absPath.startsWith(ROOT) ?
+    absPath :
+    resolve(ROOT, absPath);
   if (!normalized.startsWith(ROOT + sep) && normalized !== ROOT) {
     throw new Error(`Path escapes workspace: ${absPath}`);
   }
@@ -37,9 +39,12 @@ try {
   }
 
   const selectors = Array.isArray(input.selectors) ? input.selectors : [];
-  const selectorsLower = selectors.map((item) => item.toLowerCase());
+  const selectorsLower = selectors.map(item => item.toLowerCase());
 
-  let effectiveMax = typeof input.max_tokens === 'number' ? input.max_tokens : DEFAULT_MAX_TOKENS;
+  let effectiveMax =
+    typeof input.max_tokens === 'number' ?
+      input.max_tokens :
+      DEFAULT_MAX_TOKENS;
   let adjusted = false;
   const trace = [];
   if (effectiveMax < MIN_TOKENS) {
@@ -84,8 +89,8 @@ try {
     const content = readFileSync(absPath, 'utf8');
     const lines = content.split(/\r?\n/);
     const matchedLines = selectorsLower.length ?
-      lines.filter((line) =>
-        selectorsLower.some((sel) => line.toLowerCase().includes(sel))
+      lines.filter(line =>
+        selectorsLower.some(sel => line.toLowerCase().includes(sel))
       ) :
       lines;
 

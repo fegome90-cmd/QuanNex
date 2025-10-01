@@ -7,7 +7,7 @@
 
 /**
  * Logger Estratégico
- * 
+ *
  * Principios:
  * - CLI output: SIEMPRE visible (scripts bash dependen de esto)
  * - Debug logs: Solo con DEBUG=1 o --verbose
@@ -16,8 +16,14 @@
  */
 class StrategicLogger {
   constructor(options = {}) {
-    this.verbose = options.verbose || process.env.DEBUG === '1' || process.argv.includes('--verbose');
-    this.quiet = options.quiet || process.env.QUIET === '1' || process.argv.includes('--quiet');
+    this.verbose =
+      options.verbose ||
+      process.env.DEBUG === '1' ||
+      process.argv.includes('--verbose');
+    this.quiet =
+      options.quiet ||
+      process.env.QUIET === '1' ||
+      process.argv.includes('--quiet');
     this.component = options.component || 'system';
   }
 
@@ -40,7 +46,10 @@ class StrategicLogger {
   debug(message, ...args) {
     if (this.verbose) {
       const timestamp = new Date().toISOString().substring(11, 23);
-      console.log(`[${timestamp}][DEBUG][${this.component}] ${message}`, ...args);
+      console.log(
+        `[${timestamp}][DEBUG][${this.component}] ${message}`,
+        ...args
+      );
     }
   }
 
@@ -51,7 +60,10 @@ class StrategicLogger {
   info(message, ...args) {
     if (!this.quiet) {
       const timestamp = new Date().toISOString().substring(11, 23);
-      console.log(`[${timestamp}][INFO][${this.component}] ${message}`, ...args);
+      console.log(
+        `[${timestamp}][INFO][${this.component}] ${message}`,
+        ...args
+      );
     }
   }
 
@@ -70,7 +82,10 @@ class StrategicLogger {
    */
   error(message, ...args) {
     const timestamp = new Date().toISOString().substring(11, 23);
-    console.error(`[${timestamp}][ERROR][${this.component}] ${message}`, ...args);
+    console.error(
+      `[${timestamp}][ERROR][${this.component}] ${message}`,
+      ...args
+    );
   }
 
   /**
@@ -90,7 +105,9 @@ class StrategicLogger {
    */
   metric(name, value, unit = '') {
     const timestamp = new Date().toISOString().substring(11, 23);
-    console.log(`[${timestamp}][📊][${this.component}] ${name}: ${value}${unit}`);
+    console.log(
+      `[${timestamp}][📊][${this.component}] ${name}: ${value}${unit}`
+    );
   }
 
   /**
@@ -100,7 +117,9 @@ class StrategicLogger {
   progress(current, total, message = '') {
     if (!this.quiet) {
       const percentage = Math.round((current / total) * 100);
-      const bar = '█'.repeat(Math.floor(percentage / 5)) + '░'.repeat(20 - Math.floor(percentage / 5));
+      const bar =
+        '█'.repeat(Math.floor(percentage / 5)) +
+        '░'.repeat(20 - Math.floor(percentage / 5));
       process.stdout.write(`\r[${bar}] ${percentage}% ${message}`.padEnd(80));
       if (current === total) {
         console.log(''); // Nueva línea al completar
@@ -126,13 +145,13 @@ export const logger = new StrategicLogger({ component: 'global' });
  */
 export function shouldKeepConsoleLog(context) {
   const keepContexts = [
-    'cli_output',      // Output de comandos CLI
-    'command_result',  // Resultado de comandos
-    'json_output',     // JSON para scripts
-    'error',           // Mensajes de error
-    'metric'           // Métricas
+    'cli_output', // Output de comandos CLI
+    'command_result', // Resultado de comandos
+    'json_output', // JSON para scripts
+    'error', // Mensajes de error
+    'metric' // Métricas
   ];
-  
+
   return keepContexts.includes(context);
 }
 

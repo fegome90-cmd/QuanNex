@@ -1,0 +1,139 @@
+{
+  "name": "Workflow de Reparación de Problemas",
+  "description": "Plan de reparación sistemático para problemas identificados en el sistema de optimización",
+  "context": {
+    "project_type": "repair",
+    "target_dir": ".",
+    "phase": "repair",
+    "objective": "Reparar problemas críticos sin perder contexto ni ruta de trabajo"
+  },
+  "steps": [
+    {
+      "step_id": "diagnose_dependencies",
+      "agent": "context",
+      "action": "analyze",
+      "input": {
+        "sources": [
+          "package.json",
+          ".eslintrc.json",
+          ".prettierrc",
+          "eslint.config.js",
+          "prettier.config.js"
+        ],
+        "selectors": [
+          "dependencies",
+          "devDependencies",
+          "scripts",
+          "configuration",
+          "rules",
+          "settings"
+        ],
+        "max_tokens": 512
+      },
+      "depends_on": [],
+      "max_retries": 2,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "fix_eslint",
+      "agent": "lint",
+      "action": "fix",
+      "input": {
+        "target_path": "test-files/",
+        "fix_eslint": true,
+        "create_config": true
+      },
+      "depends_on": ["diagnose_dependencies"],
+      "max_retries": 3,
+      "timeout_ms": 60000
+    },
+    {
+      "step_id": "fix_prettier",
+      "agent": "refactor",
+      "action": "format",
+      "input": {
+        "target_path": "test-files/",
+        "format_code": true,
+        "create_config": true
+      },
+      "depends_on": ["fix_eslint"],
+      "max_retries": 3,
+      "timeout_ms": 45000
+    },
+    {
+      "step_id": "install_snyk",
+      "agent": "context",
+      "action": "execute",
+      "input": {
+        "command": "npm install -g snyk",
+        "description": "Instalar Snyk globalmente"
+      },
+      "depends_on": ["fix_prettier"],
+      "max_retries": 2,
+      "timeout_ms": 120000
+    },
+    {
+      "step_id": "fix_security_agent",
+      "agent": "optimization",
+      "action": "analyze",
+      "input": {
+        "target_path": "agents/security/",
+        "optimization_types": ["maintainability", "readability"],
+        "auto_fix": true
+      },
+      "depends_on": ["install_snyk"],
+      "max_retries": 2,
+      "timeout_ms": 45000
+    },
+    {
+      "step_id": "fix_metrics_agent",
+      "agent": "optimization",
+      "action": "analyze",
+      "input": {
+        "target_path": "agents/metrics/",
+        "optimization_types": ["maintainability", "readability"],
+        "auto_fix": true
+      },
+      "depends_on": ["fix_security_agent"],
+      "max_retries": 2,
+      "timeout_ms": 45000
+    },
+    {
+      "step_id": "create_test_files",
+      "agent": "context",
+      "action": "execute",
+      "input": {
+        "command": "mkdir -p test-files && echo '// Test file for repair' > test-files/test-file-1.js",
+        "description": "Crear archivos de prueba estables"
+      },
+      "depends_on": ["fix_metrics_agent"],
+      "max_retries": 1,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "validate_repairs",
+      "agent": "tests",
+      "action": "run",
+      "input": {
+        "target_path": ".",
+        "include_coverage": true,
+        "coverage_threshold": 80
+      },
+      "depends_on": ["create_test_files"],
+      "max_retries": 2,
+      "timeout_ms": 60000
+    },
+    {
+      "step_id": "generate_repair_report",
+      "agent": "context",
+      "action": "execute",
+      "input": {
+        "command": "npm run reports:detailed",
+        "description": "Generar reporte de reparaciones"
+      },
+      "depends_on": ["validate_repairs"],
+      "max_retries": 1,
+      "timeout_ms": 30000
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "timestamp": "2025-10-01T16:46:18.953Z",
+  "summary": {
+    "totalPassed": 6,
+    "totalFailed": 1,
+    "successRate": 85.71428571428571
+  },
+  "results": {
+    "context": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "context"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "context",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:46:18.637Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "context",
+            "capability": "context.resolve",
+            "payload": {},
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "project": "demo-repo",
+            "branch": "main",
+            "filesChanged": [
+              "src/index.js"
+            ],
+            "ok": true,
+            "ts": "2025-10-01T16:46:18.679Z"
+          }
+        }
+      ]
+    },
+    "prompting": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "prompting"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "prompting",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:46:18.718Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "prompting",
+            "capability": "prompting.buildPrompt",
+            "payload": {
+              "templateId": "default",
+              "vars": {}
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "templateId": "default",
+            "filled": "Template default with vars: {}",
+            "ok": true,
+            "ts": "2025-10-01T16:46:18.754Z"
+          }
+        }
+      ]
+    },
+    "rules": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "rules"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "rules",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:46:18.790Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "rules",
+            "capability": "rules.validate",
+            "payload": {
+              "touchesCI": false,
+              "secretsFound": false,
+              "lintOK": true
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "rulesetVersion": "1.0.0",
+            "violations": [],
+            "policy_ok": true,
+            "ok": true,
+            "ts": "2025-10-01T16:46:18.825Z"
+          }
+        }
+      ]
+    },
+    "orchestration": {
+      "passed": 0,
+      "failed": 1,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "ERROR",
+          "input": {
+            "type": "hello",
+            "agent": "orchestration"
+          },
+          "error": "Agent failed with code 1: Debes proporcionar un comando.\n"
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { hello, isHello } from '../../contracts/handshake.js';
+import { validateReq, ok, fail } from '../../contracts/schema.js';
 
 const baseDir = new URL('../../', import.meta.url);
 const resolvePath = relative => new URL(relative, baseDir).pathname;
@@ -111,8 +113,58 @@ const validateOutput = data => {
   return errors;
 };
 
+// Nueva función para manejar mensajes con handshake
+async function onMessage(msg) {
+  if (isHello(msg)) return hello("rules");
+  if (!validateReq(msg)) return fail("INVALID_SCHEMA_MIN");
+
+  if (msg.capability === "rules.validate") {
+    try {
+      // Usar funcionalidad real del servidor
+      const { policy_refs, compliance_level, tone } = msg.payload;
+      const payload = {
+        policy_refs: policy_refs || [],
+        compliance_level: compliance_level || "basic",
+        tone: tone || "neutral"
+      };
+      
+      const serverPath = resolvePath('agents/rules/server.js');
+      const result = spawnSync('node', [serverPath], {
+        input: JSON.stringify(payload),
+        encoding: 'utf8'
+      });
+      
+      if (result.status !== 0) {
+        return fail(`Rules validation failed: ${result.stderr}`);
+      }
+      
+      const rulesData = JSON.parse(result.stdout);
+      return ok({
+        rulesetVersion: "1.0.0",
+        violations: rulesData.violations,
+        suggestions: rulesData.suggestions || [],
+        policyRefs: rulesData.policy_refs || [],
+        complianceLevel: rulesData.compliance_level || "basic",
+        policy_ok: rulesData.violations.length === 0,
+      });
+    } catch (e) {
+      return fail(e);
+    }
+  }
+  return fail("UNKNOWN_CAPABILITY");
+}
+
 const rawInput = readFileSync(0, 'utf8');
 const data = JSON.parse(rawInput);
+
+// Verificar si es un mensaje de handshake o con schema
+if (data.type === "hello" || data.requestId) {
+  const response = await onMessage(data);
+  console.log(JSON.stringify(response, null, 2));
+  process.exit(0);
+}
+
+// Lógica original para compatibilidad
 const inputErrors = validateInput(data);
 if (inputErrors.length > 0) {
   console.error(JSON.stringify(inputErrors, null, 2));

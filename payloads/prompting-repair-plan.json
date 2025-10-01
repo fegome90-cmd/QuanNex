@@ -1,0 +1,21 @@
+{
+  "goal": "Crear un plan de reparación estructurado para los problemas identificados en el sistema de optimización",
+  "style": "technical",
+  "constraints": [
+    "Mantener contexto y ruta de trabajo actual",
+    "Usar agentes disponibles del proyecto",
+    "Priorizar problemas críticos primero",
+    "Incluir validación y testing",
+    "Documentar cada paso del proceso"
+  ],
+  "context_refs": [
+    "Problemas identificados: ESLint falla, Prettier falla, Snyk ENOENT, agentes de validación fallan",
+    "Sistema actual: 12 agentes disponibles, 4 herramientas principales funcionando",
+    "Estado: Fase 4 completada, 29 correcciones encontradas, 11 reportes generados"
+  ],
+  "ruleset_refs": [
+    "Principios de reparación sin pérdida de contexto",
+    "Metodología de debugging sistemático",
+    "Validación de agentes MCP"
+  ]
+}

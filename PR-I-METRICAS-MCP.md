@@ -13,6 +13,7 @@ Usar agentes MCP (@optimization, @security, @metrics) para analizar el estado ac
 **Profundidad**: 1 nivel
 
 **Resultados**:
+
 ```json
 {
   "total_optimizations": 1,
@@ -23,6 +24,7 @@ Usar agentes MCP (@optimization, @security, @metrics) para analizar el estado ac
 ```
 
 **Optimizaciones encontradas**:
+
 1. **Console.logs en debug-orchestrator.js**
    - Tipo: console_logs
    - Línea: 6
@@ -41,6 +43,7 @@ Usar agentes MCP (@optimization, @security, @metrics) para analizar el estado ac
 **Profundidad**: 1 nivel
 
 **Resultados**:
+
 ```json
 {
   "total_findings": 5,
@@ -56,6 +59,7 @@ Usar agentes MCP (@optimization, @security, @metrics) para analizar el estado ac
 ```
 
 **Vulnerabilidades encontradas**:
+
 - **5 console.logs** (severidad: low)
   - File: `tools/debug-orchestrator.js`
   - Recomendación: Remover en producción
@@ -71,6 +75,7 @@ Usar agentes MCP (@optimization, @security, @metrics) para analizar el estado ac
 **Profundidad**: 1 nivel
 
 **Resultados**:
+
 ```json
 {
   "files_analyzed": 1,
@@ -83,6 +88,7 @@ Usar agentes MCP (@optimization, @security, @metrics) para analizar el estado ac
 ```
 
 **Métricas de calidad**:
+
 - **Quality score**: 85/100 (good)
 - **Test coverage**: 0% (tools sin tests)
 - **Code duplication**: None
@@ -126,13 +132,16 @@ Usar agentes MCP (@optimization, @security, @metrics) para analizar el estado ac
 ### Basado en Métricas MCP
 
 #### Optimizaciones a Aplicar (@optimization)
+
 1. ✅ Remover console.logs de debug-orchestrator.js
 
 #### Seguridad a Mejorar (@security)
+
 1. ✅ Compliance score de 75 → 100
 2. ✅ Remover 5 console.logs
 
 #### Calidad a Mantener (@metrics)
+
 1. ✅ Quality score de 85 (mantener)
 2. 🔄 Coverage de 0% → 80% (añadir tests)
 
@@ -141,6 +150,7 @@ Usar agentes MCP (@optimization, @security, @metrics) para analizar el estado ac
 ## 🔧 Implementación con MCP
 
 ### Paso 1: Análisis Automático
+
 ```bash
 # Ya completado ✅
 node agents/optimization/agent.js <payload>
@@ -149,12 +159,14 @@ node agents/metrics/agent.js <payload>
 ```
 
 ### Paso 2: Aplicar Correcciones
+
 ```bash
 # A implementar
 node tools/run-autofix.mjs apply --source mcp-agents
 ```
 
 ### Paso 3: Verificar Mejoras
+
 ```bash
 # A implementar
 node tools/bench-agents.mjs
@@ -162,6 +174,7 @@ node orchestration/orchestrator.js health
 ```
 
 ### Paso 4: Registrar en TaskDB
+
 ```bash
 # Actualizar tareas a "done"
 node tools/taskdb-kernel.mjs --action updateTask --task-id <id> --status done
@@ -171,13 +184,13 @@ node tools/taskdb-kernel.mjs --action updateTask --task-id <id> --status done
 
 ## 📈 Métricas Esperadas Post-PR-I
 
-| Métrica | Antes | Target | Mejora |
-|---------|-------|--------|--------|
-| **Console.logs** | 5 | 0 | -100% |
-| **Compliance Score** | 75 | 100 | +33% |
-| **Auto-fixes aplicados** | 0 | 50+ | +∞ |
-| **Tools con tests** | 0 | 5+ | +∞ |
-| **Quality score** | 85 | 90+ | +6% |
+| Métrica                  | Antes | Target | Mejora |
+| ------------------------ | ----- | ------ | ------ |
+| **Console.logs**         | 5     | 0      | -100%  |
+| **Compliance Score**     | 75    | 100    | +33%   |
+| **Auto-fixes aplicados** | 0     | 50+    | +∞     |
+| **Tools con tests**      | 0     | 5+     | +∞     |
+| **Quality score**        | 85    | 90+    | +6%    |
 
 ---
 

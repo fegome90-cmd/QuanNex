@@ -32,9 +32,16 @@ class OptimizationAgent {
    */
   async process(input) {
     try {
-      const { target_path, optimization_types = ['performance', 'maintainability'], scan_depth = 2 } = input;
+      const {
+        target_path,
+        optimization_types = ['performance', 'maintainability'],
+        scan_depth = 2,
+        auto_fix = false
+      } = input;
 
-      console.log(`🔧 Optimization Agent: Analizando ${target_path}...`);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`🔧 Optimization Agent: Analizando ${target_path}...`);
+      }
 
       // Analizar optimizaciones según tipos solicitados
       for (const optType of optimization_types) {
@@ -43,7 +50,10 @@ class OptimizationAgent {
             await this.analyzePerformanceOptimizations(target_path, scan_depth);
             break;
           case 'maintainability':
-            await this.analyzeMaintainabilityOptimizations(target_path, scan_depth);
+            await this.analyzeMaintainabilityOptimizations(
+              target_path,
+              scan_depth
+            );
             break;
           case 'readability':
             await this.analyzeReadabilityOptimizations(target_path, scan_depth);
@@ -57,20 +67,24 @@ class OptimizationAgent {
       // Generar reporte
       const report = this.generateReport();
 
+      // Si auto_fix está habilitado, generar comandos de autofix
+      if (auto_fix) {
+        report.auto_fix_commands = this.generateAutofixCommands();
+      }
+
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         optimization_report: report,
         stats: this.stats,
-        trace: ["optimization.server:ok"]
+        trace: ['optimization.server:ok']
       };
-
     } catch (error) {
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         error: `optimization.server:error:${error.message}`,
-        trace: ["optimization.server:error"]
+        trace: ['optimization.server:error']
       };
     }
   }
@@ -79,14 +93,18 @@ class OptimizationAgent {
    * Analizar optimizaciones de rendimiento
    */
   async analyzePerformanceOptimizations(targetPath, scanDepth) {
-    console.log(`⚡ Analizando optimizaciones de rendimiento...`);
-    
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('⚡ Analizando optimizaciones de rendimiento...');
+    }
+
     try {
       await this.scanDirectory(targetPath, scanDepth, (filePath, content) => {
         this.analyzeFilePerformance(filePath, content);
       });
     } catch (error) {
-      console.warn(`⚠️ Error analizando rendimiento: ${error.message}`);
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(`⚠️ Error analizando rendimiento: ${error.message}`);
+      }
     }
   }
 
@@ -94,8 +112,8 @@ class OptimizationAgent {
    * Analizar optimizaciones de mantenibilidad
    */
   async analyzeMaintainabilityOptimizations(targetPath, scanDepth) {
-    console.log(`🔧 Analizando optimizaciones de mantenibilidad...`);
-    
+    console.log('🔧 Analizando optimizaciones de mantenibilidad...');
+
     try {
       await this.scanDirectory(targetPath, scanDepth, (filePath, content) => {
         this.analyzeFileMaintainability(filePath, content);
@@ -109,8 +127,8 @@ class OptimizationAgent {
    * Analizar optimizaciones de legibilidad
    */
   async analyzeReadabilityOptimizations(targetPath, scanDepth) {
-    console.log(`📖 Analizando optimizaciones de legibilidad...`);
-    
+    console.log('📖 Analizando optimizaciones de legibilidad...');
+
     try {
       await this.scanDirectory(targetPath, scanDepth, (filePath, content) => {
         this.analyzeFileReadability(filePath, content);
@@ -124,8 +142,8 @@ class OptimizationAgent {
    * Analizar optimizaciones de seguridad
    */
   async analyzeSecurityOptimizations(targetPath, scanDepth) {
-    console.log(`🔒 Analizando optimizaciones de seguridad...`);
-    
+    console.log('🔒 Analizando optimizaciones de seguridad...');
+
     try {
       await this.scanDirectory(targetPath, scanDepth, (filePath, content) => {
         this.analyzeFileSecurity(filePath, content);
@@ -143,13 +161,17 @@ class OptimizationAgent {
 
     try {
       const entries = await this.readDirectory(path);
-      
+
       for (const entry of entries) {
         const fullPath = join(path, entry);
         const stat = statSync(fullPath);
 
         if (stat.isDirectory()) {
-          if (!['node_modules', '.git', 'dist', 'build', 'coverage'].includes(entry)) {
+          if (
+            !['node_modules', '.git', 'dist', 'build', 'coverage'].includes(
+              entry
+            )
+          ) {
             await this.scanDirectory(fullPath, depth - 1, callback);
           }
         } else if (stat.isFile()) {
@@ -160,7 +182,9 @@ class OptimizationAgent {
               callback(fullPath, content);
               this.stats.files_analyzed++;
             } catch (error) {
-              console.warn(`⚠️ No se pudo analizar ${fullPath}: ${error.message}`);
+              console.warn(
+                `⚠️ No se pudo analizar ${fullPath}: ${error.message}`
+              );
             }
           }
         }
@@ -183,9 +207,12 @@ class OptimizationAgent {
    */
   analyzeFilePerformance(filePath, content) {
     const lines = content.split('\n');
-    
+
     // Detectar loops ineficientes
-    const inefficientLoops = content.match(/for\s*\(\s*let\s+\w+\s*=\s*0\s*;\s*\w+\s*<\s*array\.length/g) || [];
+    const inefficientLoops =
+      content.match(
+        /for\s*\(\s*let\s+\w+\s*=\s*0\s*;\s*\w+\s*<\s*array\.length/g
+      ) || [];
     if (inefficientLoops.length > 0) {
       this.optimizations.performance.push({
         file: filePath,
@@ -219,7 +246,8 @@ class OptimizationAgent {
         file: filePath,
         type: 'setTimeout_cleanup',
         line: this.getLineNumber(content, content.indexOf(setTimeoutUsage[0])),
-        suggestion: 'Implementar cleanup de setTimeout para evitar memory leaks',
+        suggestion:
+          'Implementar cleanup de setTimeout para evitar memory leaks',
         impact: 'medium',
         effort: 'low'
       });
@@ -233,7 +261,8 @@ class OptimizationAgent {
         file: filePath,
         type: 'console_logs',
         line: this.getLineNumber(content, content.indexOf(consoleLogs[0])),
-        suggestion: 'Remover console.logs en producción o usar logger condicional',
+        suggestion:
+          'Remover console.logs en producción o usar logger condicional',
         impact: 'low',
         effort: 'low'
       });
@@ -246,7 +275,7 @@ class OptimizationAgent {
    */
   analyzeFileMaintainability(filePath, content) {
     const lines = content.split('\n');
-    
+
     // Detectar funciones largas
     const longFunctions = this.findLongFunctions(content);
     if (longFunctions.length > 0) {
@@ -309,9 +338,12 @@ class OptimizationAgent {
    */
   analyzeFileReadability(filePath, content) {
     const lines = content.split('\n');
-    
+
     // Detectar nombres de variables poco descriptivos
-    const badVariableNames = content.match(/\b(let|const|var)\s+(a|b|c|temp|tmp|data|item|obj|arr)\b/g) || [];
+    const badVariableNames =
+      content.match(
+        /\b(let|const|var)\s+(a|b|c|temp|tmp|data|item|obj|arr)\b/g
+      ) || [];
     if (badVariableNames.length > 0) {
       this.optimizations.readability.push({
         file: filePath,
@@ -324,7 +356,8 @@ class OptimizationAgent {
     }
 
     // Detectar comentarios TODO sin fecha
-    const todoComments = content.match(/\/\/\s*TODO(?!\s*\(\d{4}-\d{2}-\d{2}\))/g) || [];
+    const todoComments =
+      content.match(/\/\/\s*TODO(?!\s*\(\d{4}-\d{2}-\d{2}\))/g) || [];
     if (todoComments.length > 0) {
       this.optimizations.readability.push({
         file: filePath,
@@ -337,8 +370,10 @@ class OptimizationAgent {
     }
 
     // Detectar funciones sin documentación
-    const functions = content.match(/function\s+\w+|const\s+\w+\s*=\s*(?:async\s+)?\(/g) || [];
-    const documentedFunctions = content.match(/\/\*\*[\s\S]*?\*\/\s*(?:function|const)/g) || [];
+    const functions =
+      content.match(/function\s+\w+|const\s+\w+\s*=\s*(?:async\s+)?\(/g) || [];
+    const documentedFunctions =
+      content.match(/\/\*\*[\s\S]*?\*\/\s*(?:function|const)/g) || [];
     if (functions.length > documentedFunctions.length) {
       this.optimizations.readability.push({
         file: filePath,
@@ -369,20 +404,25 @@ class OptimizationAgent {
     }
 
     // Detectar concatenación de SQL
-    const sqlConcatenation = content.match(/SELECT.*\+|INSERT.*\+|UPDATE.*\+|DELETE.*\+/g) || [];
+    const sqlConcatenation =
+      content.match(/SELECT.*\+|INSERT.*\+|UPDATE.*\+|DELETE.*\+/g) || [];
     if (sqlConcatenation.length > 0) {
       this.optimizations.security.push({
         file: filePath,
         type: 'sql_injection_risk',
         line: this.getLineNumber(content, content.indexOf(sqlConcatenation[0])),
-        suggestion: 'Usar consultas preparadas o ORM para prevenir SQL injection',
+        suggestion:
+          'Usar consultas preparadas o ORM para prevenir SQL injection',
         impact: 'high',
         effort: 'high'
       });
     }
 
     // Detectar hardcoded secrets
-    const hardcodedSecrets = content.match(/(password|secret|key|token)\s*[:=]\s*['"][^'"]{8,}['"]/gi) || [];
+    const hardcodedSecrets =
+      content.match(
+        /(password|secret|key|token)\s*[:=]\s*['"][^'"]{8,}['"]/gi
+      ) || [];
     if (hardcodedSecrets.length > 0) {
       this.optimizations.security.push({
         file: filePath,
@@ -406,8 +446,10 @@ class OptimizationAgent {
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      const functionMatch = line.match(/function\s+(\w+)|const\s+(\w+)\s*=\s*(?:async\s+)?\(/);
-      
+      const functionMatch = line.match(
+        /function\s+(\w+)|const\s+(\w+)\s*=\s*(?:async\s+)?\(/
+      );
+
       if (functionMatch) {
         if (currentFunction && i - functionStart > 50) {
           functions.push({ name: currentFunction, line: functionStart + 1 });
@@ -430,12 +472,13 @@ class OptimizationAgent {
   findDuplicatedCode(content) {
     const lines = content.split('\n');
     const duplicates = [];
-    
+
     // Buscar líneas repetidas (simplificado)
     const lineCounts = {};
     lines.forEach((line, index) => {
       const trimmed = line.trim();
-      if (trimmed.length > 20) { // Solo líneas significativas
+      if (trimmed.length > 20) {
+        // Solo líneas significativas
         if (lineCounts[trimmed]) {
           lineCounts[trimmed].count++;
           if (lineCounts[trimmed].count === 2) {
@@ -454,7 +497,10 @@ class OptimizationAgent {
    * Encontrar funciones con muchos parámetros
    */
   findHighParamFunctions(content) {
-    const functionMatches = content.match(/function\s+(\w+)\s*\([^)]*\)|const\s+(\w+)\s*=\s*(?:async\s+)?\([^)]*\)/g) || [];
+    const functionMatches =
+      content.match(
+        /function\s+(\w+)\s*\([^)]*\)|const\s+(\w+)\s*=\s*(?:async\s+)?\([^)]*\)/g
+      ) || [];
     const highParamFunctions = [];
 
     functionMatches.forEach(match => {
@@ -463,7 +509,7 @@ class OptimizationAgent {
         const paramCount = params[1].split(',').filter(p => p.trim()).length;
         if (paramCount > 5) {
           const nameMatch = match.match(/function\s+(\w+)|const\s+(\w+)/);
-          const name = nameMatch ? (nameMatch[1] || nameMatch[2]) : 'unknown';
+          const name = nameMatch ? nameMatch[1] || nameMatch[2] : 'unknown';
           highParamFunctions.push({ name, line: 1 }); // Simplificado
         }
       }
@@ -483,19 +529,26 @@ class OptimizationAgent {
    * Generar reporte de optimizaciones
    */
   generateReport() {
-    const totalOptimizations = Object.values(this.optimizations).reduce((sum, arr) => sum + arr.length, 0);
+    const totalOptimizations = Object.values(this.optimizations).reduce(
+      (sum, arr) => sum + arr.length,
+      0
+    );
     this.stats.optimizations_found = totalOptimizations;
 
     return {
       summary: {
         total_optimizations: totalOptimizations,
         performance_optimizations: this.optimizations.performance.length,
-        maintainability_optimizations: this.optimizations.maintainability.length,
+        maintainability_optimizations:
+          this.optimizations.maintainability.length,
         readability_optimizations: this.optimizations.readability.length,
         security_optimizations: this.optimizations.security.length,
         files_analyzed: this.stats.files_analyzed
       },
-      optimizations: this.optimizations,
+      performance_optimizations: this.optimizations.performance,
+      maintainability_optimizations: this.optimizations.maintainability,
+      readability_optimizations: this.optimizations.readability,
+      security_optimizations: this.optimizations.security,
       recommendations: this.generateRecommendations()
     };
   }
@@ -547,24 +600,167 @@ class OptimizationAgent {
 
     return recommendations;
   }
+
+  /**
+   * Generar comandos de autofix basados en las optimizaciones encontradas
+   */
+  generateAutofixCommands() {
+    const commands = [];
+
+    // Procesar optimizaciones de performance
+    for (const opt of this.optimizations.performance) {
+      if (this.isAutofixable(opt)) {
+        commands.push({
+          type: 'performance',
+          file_path: opt.file,
+          description: opt.suggestion,
+          fix_command: this.generateFixCommand(opt),
+          priority: this.getPriority(opt.impact),
+          auto_fixable: true
+        });
+      }
+    }
+
+    // Procesar optimizaciones de mantenibilidad
+    for (const opt of this.optimizations.maintainability) {
+      if (this.isAutofixable(opt)) {
+        commands.push({
+          type: 'maintainability',
+          file_path: opt.file,
+          description: opt.suggestion,
+          fix_command: this.generateFixCommand(opt),
+          priority: this.getPriority(opt.impact),
+          auto_fixable: true
+        });
+      }
+    }
+
+    // Procesar optimizaciones de legibilidad
+    for (const opt of this.optimizations.readability) {
+      if (this.isAutofixable(opt)) {
+        commands.push({
+          type: 'readability',
+          file_path: opt.file,
+          description: opt.suggestion,
+          fix_command: this.generateFixCommand(opt),
+          priority: this.getPriority(opt.impact),
+          auto_fixable: true
+        });
+      }
+    }
+
+    // Procesar optimizaciones de seguridad
+    for (const opt of this.optimizations.security) {
+      if (this.isAutofixable(opt)) {
+        commands.push({
+          type: 'security',
+          file_path: opt.file,
+          description: opt.suggestion,
+          fix_command: this.generateFixCommand(opt),
+          priority: this.getPriority(opt.impact),
+          auto_fixable: true
+        });
+      }
+    }
+
+    return commands;
+  }
+
+  /**
+   * Determinar si una optimización es automáticamente corregible
+   */
+  isAutofixable(optimization) {
+    const autofixableTypes = [
+      'console_logs',
+      'magic_numbers',
+      'unused_imports',
+      'missing_semicolons',
+      'trailing_whitespace',
+      'inconsistent_quotes',
+      'missing_const',
+      'var_usage'
+    ];
+
+    return (
+      autofixableTypes.includes(optimization.type) &&
+      optimization.effort === 'low'
+    );
+  }
+
+  /**
+   * Generar comando de corrección específico
+   */
+  generateFixCommand(optimization) {
+    switch (optimization.type) {
+      case 'console_logs':
+        return `sed -i '' '/console\\.(log|warn|error|info)/d' "${optimization.file}"`;
+
+      case 'magic_numbers':
+        return '# Reemplazar números mágicos con constantes - requiere revisión manual';
+
+      case 'unused_imports':
+        return `npx eslint --fix "${optimization.file}"`;
+
+      case 'missing_semicolons':
+        return `npx eslint --fix "${optimization.file}"`;
+
+      case 'trailing_whitespace':
+        return `sed -i '' 's/[[:space:]]*$//' "${optimization.file}"`;
+
+      case 'inconsistent_quotes':
+        return `npx eslint --fix "${optimization.file}"`;
+
+      case 'missing_const':
+        return `npx eslint --fix "${optimization.file}"`;
+
+      case 'var_usage':
+        return `npx eslint --fix "${optimization.file}"`;
+
+      default:
+        return `# Corrección manual requerida: ${optimization.suggestion}`;
+    }
+  }
+
+  /**
+   * Obtener prioridad basada en el impacto
+   */
+  getPriority(impact) {
+    switch (impact) {
+      case 'high':
+        return 'high';
+      case 'medium':
+        return 'medium';
+      case 'low':
+        return 'low';
+      default:
+        return 'medium';
+    }
+  }
 }
 
 // CLI interface
 if (import.meta.url === `file://${process.argv[1]}`) {
   const agent = new OptimizationAgent();
   const input = JSON.parse(process.argv[2] || '{}');
-  
-  agent.process(input)
+
+  agent
+    .process(input)
     .then(result => {
       console.log(JSON.stringify(result, null, 2));
     })
     .catch(error => {
-      console.error(JSON.stringify({
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
-        error: `optimization.server:error:${error.message}`,
-        trace: ["optimization.server:error"]
-      }, null, 2));
+      console.error(
+        JSON.stringify(
+          {
+            schema_version: '1.0.0',
+            agent_version: '1.0.0',
+            error: `optimization.server:error:${error.message}`,
+            trace: ['optimization.server:error']
+          },
+          null,
+          2
+        )
+      );
       process.exit(1);
     });
 }

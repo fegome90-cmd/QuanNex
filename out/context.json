@@ -1,21 +1,19 @@
 {
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
-  "context_bundle": "# Source: docs/audits/2025-09-initial-gap.md\n# REPORTE DE AUDITORÍA INICIAL - GAPS DEL PROYECTO MCP\nEsta auditoría inicial identifica **23 gaps críticos y mayores** distribuidos en 5 categorías principales. El proyecto MCP demuestra una arquitectura sólida pero requiere atención inmediata en áreas de seguridad, testing y documentación para alcanzar estándares de producción.\n- **Total de Gaps Identificados**: 23\n- **Gaps Críticos (P0)**: 5\n- **Gaps Mayores (P1)**: 8\n- **Gaps Menores (P2)**: 10\n## 🔍 DETALLE DE GAPS POR CATEGORÍA\n### 1. SEGURIDAD (5 Gaps Críticos) 🔴\n### 2. ARQUITECTURA (4 Gaps Mayores) 🟠\n### 3. TESTING (4 Gaps Mayores) 🟠\n**Impacto**: Alto - Problemas de integración no detectados\n**Impacto**: Medio - Problemas de performance no anticipados\n### 4. DOCUMENTACIÓN (4 Gaps Mayores) 🟠\n**Descripción**: Falta guía estructurada para resolución de problemas comunes.\n## Common Issues\n### 5. PERFORMANCE Y MANTENIBILIDAD (6 Gaps Menores) 🟡\n**Impacto**: Bajo-Medio - Problemas detectados tardíamente\n### Versionado de Gaps\n- **Gaps Totales**: 23\n- **Gaps Críticos**: 5 (22%)\n- **Gaps Mayores**: 8 (35%)\n- **Gaps Menores**: 10 (43%)\n- **Gaps Críticos Resueltos**: 100% (5/5)\n- **Gaps Mayores Resueltos**: ≥80% (≥6/8)\n- **Gaps Menores Resueltos**: ≥50% (≥5/10)\n1. **Revisar tabla de gaps**: Verificar estado actual de cada gap\n3. **Agregar nuevos gaps**: Si se identifican nuevos problemas\nEl proyecto MCP tiene una **base sólida** pero requiere **atención inmediata** en seguridad y **inversión sostenida** en calidad de código. Los gaps identificados son abordables con el equipo y recursos actuales.\n1. **Seguridad primero**: Resolver los 5 gaps críticos antes de cualquier despliegue en producción\n- ✅ 0 gaps críticos abiertos\n- ✅ ≥80% de gaps mayores resueltos\n- **Objetivo**: Validar resolución de gaps críticos y mayores\n\n# Source: docs/audits/AUDITORIA-CRITICA-COMANDOS.md\n## 🔧 Correcciones Inmediatas\n\n# Source: docs/audits/HALLAZGOS-CRITICOS-SOLUCION.md\n# HALLAZGOS CRÍTICOS Y SOLUCIÓN APLICADA\n\n# Source: docs/reports/AUDIT-CURSOR.md\n## 2. PRs pendientes / próximos pasos\n| **PR-J** | TaskDB portable (taskbd/taskkernel) – base de datos de tareas | **Pendiente** | Requiere definir schema y conexión mínima; aún sin BO. |\n| **PR-K** | Benchmarks reproducibles / métricas de rendimiento | **Pendiente** | Implementar `tools/bench-agents.mjs`, reportes `reports/bench/*.json`, KPIs p50/p95, CPU, residuos = 0. |\n| **PR-L** | Integración agentes ↔ TaskBD (TaskKernel) | **Pendiente** | Requiere conectar agentes core con TaskDB + contratos de I/O validados. |\n- Revisar detalladamente `/Users/felipe/Developer/startkit-main/AUDIT-CURSOR.md` (el presente documento) para validar los hallazgos heredados y cerrar los que ya quedaron obsoletos tras PR-M y PR-N.  \n# AUDITORÍA CURSOR - HALLAZGOS CRÍTICOS (histórico)\n- Aunque los archivos existen físicamente en el directorio `out/`, hay evidencia de problemas en su generación y contenido\n## Resumen de Hallazgos\n**Total de problemas críticos identificados:** 4  \n   - Revisar el documento periódicamente y actualizar estados conforme se cierren hallazgos o emerjan nuevos.",
+  "context_bundle": "# Source: README.md\n- Testing setup con Playwright\n- **Design Validation**: Testing visual con Playwright\n- `/test-ui` - Testing visual con Playwright\n- **Playwright MCP**: Testing visual y automation\n- Testing y quality assurance automático\n## 🧪 **Testing**\n# Ejecutar tests del kit\n./scripts/test-claude-init.sh",
   "provenance": [
-    "loaded:docs/audits/2025-09-initial-gap.md",
-    "loaded:docs/audits/AUDITORIA-CRITICA-COMANDOS.md",
-    "loaded:docs/audits/HALLAZGOS-CRITICOS-SOLUCION.md",
-    "loaded:docs/reports/AUDIT-CURSOR.md"
+    "loaded:README.md"
   ],
   "stats": {
-    "tokens_estimated": 538,
-    "chunks": 4,
-    "matched": 44,
+    "tokens_estimated": 256,
+    "chunks": 1,
+    "matched": 8,
     "truncated": false,
-    "adjusted": false
+    "adjusted": true
   },
   "trace": [
-    "context.server:ok"
+    "context.server:ok",
+    "context.server:adjusted_max_tokens"
   ]
 }

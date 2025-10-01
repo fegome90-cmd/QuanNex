@@ -38,41 +38,40 @@ class MetricsAgent {
 
       console.log(`📊 Metrics Agent: Analizando ${target_path}...`);
 
-    // Analizar métricas según tipos solicitados
-    for (const metricType of metric_types || ['performance', 'coverage', 'quality']) {
-      switch (metricType) {
-        case 'performance':
-          await this.analyzePerformance(target_path, scan_depth);
-          break;
-        case 'coverage':
-          await this.analyzeCoverage(target_path, scan_depth);
-          break;
-        case 'quality':
-          await this.analyzeQuality(target_path, scan_depth);
-          break;
-        case 'complexity':
-          await this.analyzeComplexity(target_path, scan_depth);
-          break;
+      // Analizar métricas según tipos solicitados
+      for (const metricType of metric_types || ['performance', 'coverage', 'quality']) {
+        switch (metricType) {
+          case 'performance':
+            await this.analyzePerformance(target_path, scan_depth);
+            break;
+          case 'coverage':
+            await this.analyzeCoverage(target_path, scan_depth);
+            break;
+          case 'quality':
+            await this.analyzeQuality(target_path, scan_depth);
+            break;
+          case 'complexity':
+            await this.analyzeComplexity(target_path, scan_depth);
+            break;
+        }
       }
-    }
 
       // Generar reporte consolidado
       const report = this.generateReport();
 
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         metrics_report: report,
         stats: this.stats,
-        trace: ["metrics.server:ok"]
+        trace: ['metrics.server:ok']
       };
-
     } catch (error) {
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         error: `metrics.server:error:${error.message}`,
-        trace: ["metrics.server:error"]
+        trace: ['metrics.server:error']
       };
     }
   }
@@ -82,7 +81,7 @@ class MetricsAgent {
    */
   async analyzePerformance(targetPath, scanDepth) {
     console.log(`⚡ Analizando rendimiento en ${targetPath}...`);
-    
+
     const performanceMetrics = {
       file_sizes: [],
       function_counts: [],
@@ -109,7 +108,7 @@ class MetricsAgent {
    */
   async analyzeCoverage(targetPath, scanDepth) {
     console.log(`📈 Analizando cobertura en ${targetPath}...`);
-    
+
     const coverageMetrics = {
       test_files: [],
       test_functions: [],
@@ -133,7 +132,7 @@ class MetricsAgent {
    */
   async analyzeQuality(targetPath, scanDepth) {
     console.log(`🔍 Analizando calidad en ${targetPath}...`);
-    
+
     const qualityMetrics = {
       code_duplication: [],
       long_functions: [],
@@ -159,7 +158,7 @@ class MetricsAgent {
    */
   async analyzeComplexity(targetPath, scanDepth) {
     console.log(`🧮 Analizando complejidad en ${targetPath}...`);
-    
+
     const complexityMetrics = {
       cyclomatic_complexity: [],
       nesting_depth: [],
@@ -183,7 +182,7 @@ class MetricsAgent {
 
     try {
       const entries = await this.readDirectory(path);
-      
+
       for (const entry of entries) {
         const fullPath = join(path, entry);
         const stat = statSync(fullPath);
@@ -224,9 +223,9 @@ class MetricsAgent {
   analyzeFilePerformance(filePath, content, metrics) {
     const lines = content.split('\n');
     const fileSize = Buffer.byteLength(content, 'utf8');
-    
+
     metrics.file_sizes.push({ file: filePath, size: fileSize });
-    
+
     if (fileSize > 100000) { // > 100KB
       metrics.large_files.push({ file: filePath, size: fileSize });
     }
@@ -284,7 +283,7 @@ class MetricsAgent {
     // Detectar funciones no cubiertas (sin tests)
     const functions = content.match(/function\s+\w+|const\s+\w+\s*=\s*(?:async\s+)?\(/g) || [];
     const hasTests = testFunctions.length > 0;
-    
+
     if (functions.length > 0 && !hasTests) {
       metrics.uncovered_functions.push({ file: filePath, count: functions.length });
     }
@@ -332,7 +331,7 @@ class MetricsAgent {
    */
   analyzeFileComplexity(filePath, content, metrics) {
     const lines = content.split('\n');
-    
+
     // Calcular complejidad ciclomática (simplificado)
     const complexity = this.calculateCyclomaticComplexity(content);
     if (complexity > 10) {
@@ -431,7 +430,7 @@ class MetricsAgent {
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       const functionMatch = line.match(/function\s+(\w+)|const\s+(\w+)\s*=\s*(?:async\s+)?\(/);
-      
+
       if (functionMatch) {
         if (currentFunction) {
           functions.push({ function: currentFunction, lines: i - functionStart });
@@ -466,7 +465,7 @@ class MetricsAgent {
         const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
         if (packageJson.scripts && packageJson.scripts.test) {
           console.log('🧪 Ejecutando tests para cobertura...');
-          
+
           // Simular ejecución de tests (en un entorno real se ejecutarían)
           coverageMetrics.test_coverage_percentage = Math.floor(Math.random() * 40) + 60; // 60-100%
           this.stats.coverage_percentage = coverageMetrics.test_coverage_percentage;
@@ -584,17 +583,17 @@ class MetricsAgent {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const agent = new MetricsAgent();
   const input = JSON.parse(process.argv[2] || '{}');
-  
+
   agent.process(input)
     .then(result => {
       console.log(JSON.stringify(result, null, 2));
     })
     .catch(error => {
       console.error(JSON.stringify({
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         error: `metrics.server:error:${error.message}`,
-        trace: ["metrics.server:error"]
+        trace: ['metrics.server:error']
       }, null, 2));
       process.exit(1);
     });

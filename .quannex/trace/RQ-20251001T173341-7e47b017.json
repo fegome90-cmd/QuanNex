@@ -1,0 +1,31 @@
+{
+  "requestId": "RQ-20251001T173341-7e47b017",
+  "timestamp": "2025-10-01T17:33:41.938Z",
+  "operation": "commit",
+  "details": {
+    "message": "-m feat: sistema de garantías operativas QuanNex",
+    "options": {},
+    "files": [
+      ".quannex/hooks/pre-commit",
+      ".quannex/hooks/pre-push",
+      ".quannex/hooks/pre-receive",
+      "tools/qnx-cli.mjs",
+      "tools/quannex-audit.mjs"
+    ]
+  },
+  "mcp": {
+    "handshake": true,
+    "router_rule_id": "quannex-cli",
+    "state": "completed",
+    "policy_ok": true,
+    "tools_invoked": [
+      "git",
+      "filesystem"
+    ]
+  },
+  "cli": {
+    "version": "1.0.0",
+    "user": "felipe",
+    "hostname": "unknown"
+  }
+}

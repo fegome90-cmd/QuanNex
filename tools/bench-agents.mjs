@@ -3,7 +3,7 @@
 /**
  * Bench Agents - Herramienta de benchmarks reproducibles
  * PR-K: Benchmarks reproducibles / métricas de rendimiento
- * 
+ *
  * Implementa benchmarks para agentes con métricas p50/p95, CPU, memoria
  * y reportes estructurados para análisis de rendimiento
  */
@@ -35,7 +35,7 @@ class BenchAgents {
     this.results = [];
     this.startTime = null;
     this.endTime = null;
-    
+
     // Asegurar que el directorio de salida existe
     if (!existsSync(this.config.outputDir)) {
       mkdirSync(this.config.outputDir, { recursive: true });
@@ -51,11 +51,15 @@ class BenchAgents {
 
     try {
       // Warmup
-      console.log(`🔥 Ejecutando warmup (${this.config.warmup} iteraciones)...`);
+      console.log(
+        `🔥 Ejecutando warmup (${this.config.warmup} iteraciones)...`
+      );
       await this.warmup();
 
       // Benchmark principal
-      console.log(`📊 Ejecutando benchmark (${this.config.iterations} iteraciones)...`);
+      console.log(
+        `📊 Ejecutando benchmark (${this.config.iterations} iteraciones)...`
+      );
       for (const agent of this.config.agents) {
         console.log(`\n📈 Benchmarking agente: ${agent}`);
         const agentResults = await this.benchmarkAgent(agent);
@@ -65,15 +69,14 @@ class BenchAgents {
       // Generar reporte
       console.log('\n📋 Generando reporte...');
       const report = await this.generateReport();
-      
+
       this.endTime = Date.now();
       const totalTime = this.endTime - this.startTime;
-      
+
       console.log(`\n✅ Benchmark completado en ${totalTime}ms`);
       console.log(`📁 Reporte guardado en: ${report.filePath}`);
-      
+
       return report;
-      
     } catch (error) {
       console.error(`❌ Error en benchmark: ${error.message}`);
       throw error;
@@ -100,15 +103,17 @@ class BenchAgents {
    */
   async benchmarkAgent(agentName) {
     const iterations = [];
-    
+
     for (let i = 0; i < this.config.iterations; i++) {
       try {
         const result = await this.runAgentOnce(agentName, { iteration: i + 1 });
         iterations.push(result);
-        
+
         // Mostrar progreso
         const progress = Math.round(((i + 1) / this.config.iterations) * 100);
-        process.stdout.write(`\r  Progreso: ${progress}% (${i + 1}/${this.config.iterations})`);
+        process.stdout.write(
+          `\r  Progreso: ${progress}% (${i + 1}/${this.config.iterations})`
+        );
       } catch (error) {
         console.error(`\n❌ Error en iteración ${i + 1}: ${error.message}`);
         iterations.push({
@@ -120,12 +125,12 @@ class BenchAgents {
         });
       }
     }
-    
+
     console.log(''); // Nueva línea después del progreso
-    
+
     // Calcular métricas
     const metrics = this.calculateMetrics(iterations);
-    
+
     return {
       agent: agentName,
       iterations: iterations,
@@ -141,20 +146,20 @@ class BenchAgents {
     const startTime = process.hrtime.bigint();
     const startCpu = process.cpuUsage();
     const startMemory = process.memoryUsage();
-    
+
     try {
       // Ejecutar agente
       const result = await this.executeAgent(agentName);
-      
+
       const endTime = process.hrtime.bigint();
       const endCpu = process.cpuUsage(startCpu);
       const endMemory = process.memoryUsage();
-      
+
       const duration = Number(endTime - startTime) / 1000000; // Convertir a ms
       const cpu = (endCpu.user + endCpu.system) / 1000; // Convertir a ms
       const memory = endMemory.heapUsed - startMemory.heapUsed;
       const throughput = result.throughput || 1; // Operaciones por segundo
-      
+
       return {
         duration: duration,
         cpu: cpu,
@@ -163,11 +168,10 @@ class BenchAgents {
         success: true,
         timestamp: new Date().toISOString()
       };
-      
     } catch (error) {
       const endTime = process.hrtime.bigint();
       const duration = Number(endTime - startTime) / 1000000;
-      
+
       return {
         duration: duration,
         cpu: 0,
@@ -185,14 +189,14 @@ class BenchAgents {
    */
   async executeAgent(agentName) {
     const agentPath = join(PROJECT_ROOT, 'agents', agentName, 'server.js');
-    
+
     if (!existsSync(agentPath)) {
       throw new Error(`Agente no encontrado: ${agentPath}`);
     }
 
     // Crear input de prueba
     const testInput = this.createTestInput(agentName);
-    
+
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error(`Timeout después de ${this.config.timeout}ms`));
@@ -206,17 +210,17 @@ class BenchAgents {
       let stdout = '';
       let stderr = '';
 
-      child.stdout.on('data', (data) => {
+      child.stdout.on('data', data => {
         stdout += data.toString();
       });
 
-      child.stderr.on('data', (data) => {
+      child.stderr.on('data', data => {
         stderr += data.toString();
       });
 
-      child.on('close', (code) => {
+      child.on('close', code => {
         clearTimeout(timeout);
-        
+
         if (code !== 0) {
           reject(new Error(`Agente falló con código ${code}: ${stderr}`));
           return;
@@ -226,11 +230,13 @@ class BenchAgents {
           const result = JSON.parse(stdout);
           resolve(result);
         } catch (error) {
-          reject(new Error(`Error parseando output del agente: ${error.message}`));
+          reject(
+            new Error(`Error parseando output del agente: ${error.message}`)
+          );
         }
       });
 
-      child.on('error', (error) => {
+      child.on('error', error => {
         clearTimeout(timeout);
         reject(error);
       });
@@ -245,17 +251,25 @@ class BenchAgents {
    * Crear input de prueba para un agente
    */
   createTestInput(agentName) {
-    const candidate = join(PROJECT_ROOT, 'payloads', `${agentName}-test-payload.json`);
+    const candidate = join(
+      PROJECT_ROOT,
+      'payloads',
+      `${agentName}-test-payload.json`
+    );
 
     if (existsSync(candidate)) {
       try {
         return JSON.parse(readFileSync(candidate, 'utf8'));
       } catch (error) {
-        console.warn(`⚠️  Payload inválido para ${agentName}: ${error.message}`);
+        console.warn(
+          `⚠️  Payload inválido para ${agentName}: ${error.message}`
+        );
       }
     }
 
-    console.warn(`⚠️  No se encontró payload para ${agentName}, usando fallback genérico`);
+    console.warn(
+      `⚠️  No se encontró payload para ${agentName}, usando fallback genérico`
+    );
 
     switch (agentName) {
       case 'context':
@@ -317,8 +331,8 @@ class BenchAgents {
   calculatePercentiles(values) {
     const sorted = [...values].sort((a, b) => a - b);
     const len = sorted.length;
-    
-    const percentile = (p) => {
+
+    const percentile = p => {
       const index = Math.ceil((p / 100) * len) - 1;
       return sorted[Math.max(0, index)];
     };
@@ -354,7 +368,7 @@ class BenchAgents {
     };
 
     writeFileSync(filePath, JSON.stringify(report, null, 2));
-    
+
     // Generar reporte HTML
     const htmlReport = this.generateHTMLReport(report);
     const htmlPath = join(this.config.outputDir, `benchmark-${timestamp}.html`);
@@ -397,12 +411,14 @@ class BenchAgents {
       r.iterations.filter(i => i.success).map(i => i.memory)
     );
 
-    const totalSuccess = this.results.reduce((sum, r) =>
-      sum + (r.metrics.successful_iterations || 0), 0
+    const totalSuccess = this.results.reduce(
+      (sum, r) => sum + (r.metrics.successful_iterations || 0),
+      0
     );
 
-    const totalIterations = this.results.reduce((sum, r) =>
-      sum + (r.metrics.total_iterations || 0), 0
+    const totalIterations = this.results.reduce(
+      (sum, r) => sum + (r.metrics.total_iterations || 0),
+      0
     );
 
     return {
@@ -425,8 +441,12 @@ class BenchAgents {
     if (this.results.length === 0) return null;
 
     return this.results.reduce((best, current) => {
-      const bestScore = ((best.metrics.duration || {}).p50 || 0) + ((best.metrics.cpu || {}).p50 || 0);
-      const currentScore = ((current.metrics.duration || {}).p50 || 0) + ((current.metrics.cpu || {}).p50 || 0);
+      const bestScore =
+        ((best.metrics.duration || {}).p50 || 0) +
+        ((best.metrics.cpu || {}).p50 || 0);
+      const currentScore =
+        ((current.metrics.duration || {}).p50 || 0) +
+        ((current.metrics.cpu || {}).p50 || 0);
       return currentScore < bestScore ? current : best;
     });
   }
@@ -438,8 +458,12 @@ class BenchAgents {
     if (this.results.length === 0) return null;
 
     return this.results.reduce((worst, current) => {
-      const worstScore = ((worst.metrics.duration || {}).p50 || 0) + ((worst.metrics.cpu || {}).p50 || 0);
-      const currentScore = ((current.metrics.duration || {}).p50 || 0) + ((current.metrics.cpu || {}).p50 || 0);
+      const worstScore =
+        ((worst.metrics.duration || {}).p50 || 0) +
+        ((worst.metrics.cpu || {}).p50 || 0);
+      const currentScore =
+        ((current.metrics.duration || {}).p50 || 0) +
+        ((current.metrics.cpu || {}).p50 || 0);
       return currentScore > worstScore ? current : worst;
     });
   }
@@ -449,54 +473,58 @@ class BenchAgents {
    */
   generateRecommendations() {
     const recommendations = [];
-    
+
     // Análisis de rendimiento
-    const avgDuration = this.results.reduce((sum, r) => 
-      sum + r.metrics.duration.p50, 0
-    ) / this.results.length;
-    
+    const avgDuration =
+      this.results.reduce((sum, r) => sum + r.metrics.duration.p50, 0) /
+      this.results.length;
+
     if (avgDuration > 1000) {
       recommendations.push({
         type: 'performance',
         priority: 'high',
-        message: 'Duración promedio alta (>1000ms). Considerar optimización de código.',
+        message:
+          'Duración promedio alta (>1000ms). Considerar optimización de código.',
         suggestion: 'Revisar algoritmos y operaciones costosas'
       });
     }
-    
+
     // Análisis de CPU
-    const avgCpu = this.results.reduce((sum, r) => 
-      sum + r.metrics.cpu.p50, 0
-    ) / this.results.length;
-    
+    const avgCpu =
+      this.results.reduce((sum, r) => sum + r.metrics.cpu.p50, 0) /
+      this.results.length;
+
     if (avgCpu > 500) {
       recommendations.push({
         type: 'cpu',
         priority: 'medium',
-        message: 'Uso de CPU alto (>500ms). Considerar optimización de procesamiento.',
+        message:
+          'Uso de CPU alto (>500ms). Considerar optimización de procesamiento.',
         suggestion: 'Implementar procesamiento asíncrono o paralelo'
       });
     }
-    
+
     // Análisis de memoria
-    const avgMemory = this.results.reduce((sum, r) => 
-      sum + r.metrics.memory.p50, 0
-    ) / this.results.length;
-    
-    if (avgMemory > 10 * 1024 * 1024) { // 10MB
+    const avgMemory =
+      this.results.reduce((sum, r) => sum + r.metrics.memory.p50, 0) /
+      this.results.length;
+
+    if (avgMemory > 10 * 1024 * 1024) {
+      // 10MB
       recommendations.push({
         type: 'memory',
         priority: 'medium',
-        message: 'Uso de memoria alto (>10MB). Considerar optimización de memoria.',
+        message:
+          'Uso de memoria alto (>10MB). Considerar optimización de memoria.',
         suggestion: 'Implementar garbage collection y liberación de memoria'
       });
     }
-    
+
     // Análisis de éxito
-    const avgSuccess = this.results.reduce((sum, r) => 
-      sum + r.metrics.success_rate, 0
-    ) / this.results.length;
-    
+    const avgSuccess =
+      this.results.reduce((sum, r) => sum + r.metrics.success_rate, 0) /
+      this.results.length;
+
     if (avgSuccess < 0.95) {
       recommendations.push({
         type: 'reliability',
@@ -505,7 +533,7 @@ class BenchAgents {
         suggestion: 'Implementar mejor manejo de errores y validación'
       });
     }
-    
+
     return recommendations;
   }
 
@@ -568,7 +596,9 @@ class BenchAgents {
         
         <h2>🤖 Resultados por Agente</h2>
         <div class="agent-results">
-            ${report.agents.map(agent => `
+            ${report.agents
+              .map(
+                agent => `
                 <div class="agent">
                     <h3>${agent.agent}</h3>
                     <p><strong>Éxito:</strong> ${((agent.metrics.success_rate || 0) * 100).toFixed(1)}% (${agent.metrics.successful_iterations || 0}/${agent.metrics.total_iterations || 0})</p>
@@ -576,17 +606,23 @@ class BenchAgents {
                     <p><strong>CPU P50:</strong> ${((agent.metrics.cpu || {}).p50 || 0).toFixed(1)}ms</p>
                     <p><strong>Memoria P50:</strong> ${(((agent.metrics.memory || {}).p50 || 0) / 1024 / 1024).toFixed(2)}MB</p>
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
         
         <h2>💡 Recomendaciones</h2>
         <div class="recommendations">
-            ${report.recommendations.map(rec => `
+            ${report.recommendations
+              .map(
+                rec => `
                 <div class="recommendation priority-${rec.priority}">
                     <strong>${rec.type.toUpperCase()}</strong> - ${rec.message}
                     <br><em>Sugerencia: ${rec.suggestion}</em>
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
     </div>
 </body>
@@ -598,12 +634,12 @@ class BenchAgents {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2);
   const config = {};
-  
+
   // Parsear argumentos de línea de comandos
   for (let i = 0; i < args.length; i += 2) {
     const key = args[i]?.replace('--', '');
     const value = args[i + 1];
-    
+
     if (key && value) {
       if (key === 'iterations' || key === 'warmup' || key === 'timeout') {
         config[key] = parseInt(value);
@@ -619,7 +655,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   try {
     const report = await bench.runBenchmark();
-    console.log(`\n📊 Reporte generado:`);
+    console.log('\n📊 Reporte generado:');
     console.log(`   JSON: ${report.filePath}`);
     console.log(`   HTML: ${report.htmlPath}`);
   } catch (error) {

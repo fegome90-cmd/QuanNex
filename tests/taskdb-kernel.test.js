@@ -23,7 +23,7 @@ describe('TaskDB Kernel', () => {
     if (!existsSync(TEST_DATA_DIR)) {
       mkdirSync(TEST_DATA_DIR, { recursive: true });
     }
-    
+
     // Inicializar TaskDB con directorio de test
     taskdb = new TaskDBKernel({
       dataDir: TEST_DATA_DIR,
@@ -63,7 +63,7 @@ describe('TaskDB Kernel', () => {
       };
 
       const project = taskdb.createProject(projectData);
-      
+
       assert.ok(project.id);
       assert.strictEqual(project.title, 'Proyecto Test');
       assert.strictEqual(project.description, 'Descripción del proyecto');
@@ -76,7 +76,7 @@ describe('TaskDB Kernel', () => {
     test('debe obtener un proyecto por ID', () => {
       const project = taskdb.createProject({ title: 'Proyecto Test' });
       const retrieved = taskdb.getProject(project.id);
-      
+
       assert.ok(retrieved);
       assert.strictEqual(retrieved.id, project.id);
       assert.strictEqual(retrieved.title, 'Proyecto Test');
@@ -85,19 +85,19 @@ describe('TaskDB Kernel', () => {
     test('debe listar todos los proyectos', () => {
       taskdb.createProject({ title: 'Proyecto 1' });
       taskdb.createProject({ title: 'Proyecto 2' });
-      
+
       const projects = taskdb.listProjects();
       assert.strictEqual(projects.length, 2);
     });
 
     test('debe actualizar un proyecto', () => {
       const project = taskdb.createProject({ title: 'Proyecto Original' });
-      
+
       const updated = taskdb.updateProject(project.id, {
         title: 'Proyecto Actualizado',
         description: 'Nueva descripción'
       });
-      
+
       assert.strictEqual(updated.title, 'Proyecto Actualizado');
       assert.strictEqual(updated.description, 'Nueva descripción');
       assert.ok(updated.updated_at > project.updated_at);
@@ -105,10 +105,10 @@ describe('TaskDB Kernel', () => {
 
     test('debe eliminar un proyecto', () => {
       const project = taskdb.createProject({ title: 'Proyecto a Eliminar' });
-      
+
       const result = taskdb.deleteProject(project.id);
       assert.strictEqual(result, true);
-      
+
       const retrieved = taskdb.getProject(project.id);
       assert.strictEqual(retrieved, undefined);
     });
@@ -133,7 +133,7 @@ describe('TaskDB Kernel', () => {
       };
 
       const task = taskdb.createTask(taskData);
-      
+
       assert.ok(task.id);
       assert.strictEqual(task.project_id, project.id);
       assert.strictEqual(task.title, 'Tarea Test');
@@ -149,7 +149,7 @@ describe('TaskDB Kernel', () => {
         project_id: project.id,
         title: 'Tarea Test'
       });
-      
+
       const retrieved = taskdb.getTask(task.id);
       assert.ok(retrieved);
       assert.strictEqual(retrieved.id, task.id);
@@ -162,14 +162,14 @@ describe('TaskDB Kernel', () => {
         status: 'todo',
         assignee: 'User1'
       });
-      
+
       taskdb.createTask({
         project_id: project.id,
         title: 'Tarea 2',
         status: 'doing',
         assignee: 'User2'
       });
-      
+
       taskdb.createTask({
         project_id: project.id,
         title: 'Tarea 3',
@@ -200,12 +200,12 @@ describe('TaskDB Kernel', () => {
         title: 'Tarea Original',
         status: 'todo'
       });
-      
+
       const updated = taskdb.updateTask(task.id, {
         title: 'Tarea Actualizada',
         status: 'doing'
       });
-      
+
       assert.strictEqual(updated.title, 'Tarea Actualizada');
       assert.strictEqual(updated.status, 'doing');
       assert.ok(updated.updated_at > task.updated_at);
@@ -216,9 +216,9 @@ describe('TaskDB Kernel', () => {
         project_id: project.id,
         title: 'Tarea a Archivar'
       });
-      
+
       const archived = taskdb.archiveTask(task.id, 'TestUser');
-      
+
       assert.strictEqual(archived.archived, true);
       assert.ok(archived.archived_at);
       assert.strictEqual(archived.archived_by, 'TestUser');
@@ -229,10 +229,10 @@ describe('TaskDB Kernel', () => {
         project_id: project.id,
         title: 'Tarea Archivada'
       });
-      
+
       taskdb.archiveTask(task.id);
       const unarchived = taskdb.unarchiveTask(task.id);
-      
+
       assert.strictEqual(unarchived.archived, false);
       assert.strictEqual(unarchived.archived_at, null);
       assert.strictEqual(unarchived.archived_by, null);
@@ -243,10 +243,10 @@ describe('TaskDB Kernel', () => {
         project_id: project.id,
         title: 'Tarea a Eliminar'
       });
-      
+
       const result = taskdb.deleteTask(task.id);
       assert.strictEqual(result, true);
-      
+
       const retrieved = taskdb.getTask(task.id);
       assert.strictEqual(retrieved, undefined);
     });
@@ -257,15 +257,36 @@ describe('TaskDB Kernel', () => {
       // Crear datos de test
       const project1 = taskdb.createProject({ title: 'Proyecto 1' });
       const project2 = taskdb.createProject({ title: 'Proyecto 2' });
-      
-      taskdb.createTask({ project_id: project1.id, title: 'Tarea 1', status: 'todo' });
-      taskdb.createTask({ project_id: project1.id, title: 'Tarea 2', status: 'doing' });
-      taskdb.createTask({ project_id: project2.id, title: 'Tarea 3', status: 'review' });
-      taskdb.createTask({ project_id: project2.id, title: 'Tarea 4', status: 'done' });
-      taskdb.createTask({ project_id: project1.id, title: 'Tarea 5', status: 'todo', archived: true });
-      
+
+      taskdb.createTask({
+        project_id: project1.id,
+        title: 'Tarea 1',
+        status: 'todo'
+      });
+      taskdb.createTask({
+        project_id: project1.id,
+        title: 'Tarea 2',
+        status: 'doing'
+      });
+      taskdb.createTask({
+        project_id: project2.id,
+        title: 'Tarea 3',
+        status: 'review'
+      });
+      taskdb.createTask({
+        project_id: project2.id,
+        title: 'Tarea 4',
+        status: 'done'
+      });
+      taskdb.createTask({
+        project_id: project1.id,
+        title: 'Tarea 5',
+        status: 'todo',
+        archived: true
+      });
+
       const stats = taskdb.getStats();
-      
+
       assert.strictEqual(stats.total_projects, 2);
       assert.strictEqual(stats.total_tasks, 5);
       assert.strictEqual(stats.tasks_by_status.todo, 2);
@@ -281,9 +302,9 @@ describe('TaskDB Kernel', () => {
     test('debe exportar datos correctamente', () => {
       const project = taskdb.createProject({ title: 'Proyecto Export' });
       taskdb.createTask({ project_id: project.id, title: 'Tarea Export' });
-      
+
       const exportData = taskdb.export();
-      
+
       assert.ok(exportData.exported_at);
       assert.strictEqual(exportData.version, '1.0.0');
       assert.strictEqual(exportData.projects.length, 1);
@@ -328,12 +349,12 @@ describe('TaskDB Kernel', () => {
           }
         ]
       };
-      
+
       taskdb.import(importData);
-      
+
       const projects = taskdb.listProjects();
       const tasks = taskdb.listTasks();
-      
+
       assert.strictEqual(projects.length, 1);
       assert.strictEqual(tasks.length, 1);
       assert.strictEqual(projects[0].title, 'Proyecto Importado');
@@ -345,9 +366,9 @@ describe('TaskDB Kernel', () => {
     test('debe limpiar la base de datos', () => {
       taskdb.createProject({ title: 'Proyecto Test' });
       taskdb.createTask({ title: 'Tarea Test' });
-      
+
       const result = taskdb.clear();
-      
+
       assert.strictEqual(result, true);
       assert.strictEqual(taskdb.listProjects().length, 0);
       assert.strictEqual(taskdb.listTasks().length, 0);

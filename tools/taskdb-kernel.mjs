@@ -3,7 +3,7 @@
 /**
  * TaskDB Kernel - Base de datos de tareas portable
  * PR-J: TaskDB portable (taskbd/taskkernel) – base de datos de tareas
- * 
+ *
  * Implementa una interfaz portable para gestionar tareas y proyectos
  * con soporte para múltiples backends (SQLite, PostgreSQL, JSON)
  */
@@ -34,12 +34,12 @@ class TaskDBKernel {
     this.dataDir = this.config.dataDir;
     this.dbFile = join(this.dataDir, this.config.dbFile);
     this.schema = this.config.schema;
-    
+
     // Asegurar que el directorio de datos existe
     if (!existsSync(this.dataDir)) {
       mkdirSync(this.dataDir, { recursive: true });
     }
-    
+
     this.init();
   }
 
@@ -99,7 +99,7 @@ class TaskDBKernel {
 
     this.schema.projects.push(project);
     this.save();
-    
+
     console.log(`✅ Proyecto creado: ${project.title} (${project.id})`);
     return project;
   }
@@ -122,7 +122,9 @@ class TaskDBKernel {
    * Actualizar proyecto
    */
   updateProject(projectId, updateData) {
-    const projectIndex = this.schema.projects.findIndex(p => p.id === projectId);
+    const projectIndex = this.schema.projects.findIndex(
+      p => p.id === projectId
+    );
     if (projectIndex === -1) {
       throw new Error(`Proyecto no encontrado: ${projectId}`);
     }
@@ -142,18 +144,22 @@ class TaskDBKernel {
    * Eliminar proyecto
    */
   deleteProject(projectId) {
-    const projectIndex = this.schema.projects.findIndex(p => p.id === projectId);
+    const projectIndex = this.schema.projects.findIndex(
+      p => p.id === projectId
+    );
     if (projectIndex === -1) {
       throw new Error(`Proyecto no encontrado: ${projectId}`);
     }
 
     // Eliminar todas las tareas del proyecto
-    this.schema.tasks = this.schema.tasks.filter(t => t.project_id !== projectId);
-    
+    this.schema.tasks = this.schema.tasks.filter(
+      t => t.project_id !== projectId
+    );
+
     // Eliminar el proyecto
     this.schema.projects.splice(projectIndex, 1);
     this.save();
-    
+
     console.log(`✅ Proyecto eliminado: ${projectId}`);
     return true;
   }
@@ -183,7 +189,7 @@ class TaskDBKernel {
 
     this.schema.tasks.push(task);
     this.save();
-    
+
     console.log(`✅ Tarea creada: ${task.title} (${task.id})`);
     return task;
   }
@@ -258,7 +264,7 @@ class TaskDBKernel {
 
     this.schema.tasks.splice(taskIndex, 1);
     this.save();
-    
+
     console.log(`✅ Tarea eliminada: ${taskId}`);
     return true;
   }
@@ -334,7 +340,9 @@ class TaskDBKernel {
     };
 
     this.save();
-    console.log(`✅ Datos importados: ${data.projects.length} proyectos, ${data.tasks.length} tareas`);
+    console.log(
+      `✅ Datos importados: ${data.projects.length} proyectos, ${data.tasks.length} tareas`
+    );
     return true;
   }
 
@@ -372,7 +380,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
       case 'export':
         const exportData = taskdb.export();
-        const exportFile = join(taskdb.dataDir, `taskdb-export-${Date.now()}.json`);
+        const exportFile = join(
+          taskdb.dataDir,
+          `taskdb-export-${Date.now()}.json`
+        );
         writeFileSync(exportFile, JSON.stringify(exportData, null, 2));
         console.log(`✅ Datos exportados a: ${exportFile}`);
         break;

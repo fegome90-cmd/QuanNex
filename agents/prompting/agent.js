@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { hello, isHello } from '../../contracts/handshake.js';
+import { validateReq, ok, fail } from '../../contracts/schema.js';
 
 const baseDir = new URL('../../', import.meta.url);
 const resolvePath = relative => new URL(relative, baseDir).pathname;
@@ -93,8 +95,59 @@ const validateOutput = data => {
   return errors;
 };
 
+// Nueva función para manejar mensajes con handshake
+async function onMessage(msg) {
+  if (isHello(msg)) return hello("prompting");
+  if (!validateReq(msg)) return fail("INVALID_SCHEMA_MIN");
+
+  if (msg.capability === "prompting.buildPrompt") {
+    try {
+      // Usar funcionalidad real del servidor
+      const { goal, style, constraints, context_refs, ruleset_refs } = msg.payload;
+      const payload = {
+        goal: goal || "Generate prompt",
+        style: style || "default",
+        constraints: constraints || [],
+        context_refs: context_refs || [],
+        ruleset_refs: ruleset_refs || []
+      };
+      
+      const serverPath = resolvePath('agents/prompting/server.js');
+      const result = spawnSync('node', [serverPath], {
+        input: JSON.stringify(payload),
+        encoding: 'utf8'
+      });
+      
+      if (result.status !== 0) {
+        return fail(`Prompt generation failed: ${result.stderr}`);
+      }
+      
+      const promptData = JSON.parse(result.stdout);
+      return ok({
+        templateId: style || "default",
+        filled: promptData.system_prompt + "\n\n" + promptData.user_prompt,
+        systemPrompt: promptData.system_prompt,
+        userPrompt: promptData.user_prompt,
+        guardrails: promptData.guardrails || []
+      });
+    } catch (error) {
+      return fail(`Prompt generation error: ${error.message}`);
+    }
+  }
+  return fail("UNKNOWN_CAPABILITY");
+}
+
 const rawInput = readFileSync(0, 'utf8');
 const data = JSON.parse(rawInput);
+
+// Verificar si es un mensaje de handshake o con schema
+if (data.type === "hello" || data.requestId) {
+  const response = await onMessage(data);
+  console.log(JSON.stringify(response, null, 2));
+  process.exit(0);
+}
+
+// Lógica original para compatibilidad
 const inputErrors = validateInput(data);
 if (inputErrors.length > 0) {
   console.error(JSON.stringify(inputErrors, null, 2));

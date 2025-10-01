@@ -1,0 +1,138 @@
+# Declarative routing rules for MCP autonomous workflow
+version: 1
+metadata:
+  owner: "mcp-orchestrator"
+  description: "Routes Cursor automation requests to specialized agents based on intent, artifact type, and confidence."
+  last_updated: "2025-03-12"
+
+defaults:
+  fallback_agent: "orchestrator.fallback"
+  confidence_floor: 0.35
+  max_reroute_attempts: 2
+  budget_alias: "standard"
+
+budgets:
+  standard:
+    max_hops: 6
+    max_latency_ms: 90000
+    critic_max_tokens: 900
+  diagnostic:
+    max_hops: 4
+    max_latency_ms: 60000
+    critic_max_tokens: 600
+
+signals:
+  - name: "intent"
+    source: "planner.intent"
+    description: "High-level task flavor inferred by PlannerAgent."
+  - name: "confidence"
+    source: "planner.intent_confidence"
+    description: "Probability estimate returned by PlannerAgent classification head."
+  - name: "artifacts"
+    source: "context.artifacts"
+    description: "List of files or file types touched in the current thread state."
+  - name: "thread_state_id"
+    source: "context.thread_state_id"
+    description: "Opaque identifier tracing the request lineage for observability."
+
+routes:
+  - name: "refactor-core-code"
+    match:
+      intent: "refactor"
+      confidence: ">=0.65"
+      artifacts:
+        include: ["*.ts", "*.js", "src/**", "core/**"]
+    target_agent: "agents.refactor.coder"
+    handoff_template: "docs/handoff_contract.md#refactor"
+    budget: "standard"
+    emit_context:
+      include_payload: true
+      payload_builder: "agents.context.build_thread_state_payload"
+    metrics:
+      route_id: "router.refactor"
+      expected_latency_ms: 6000
+
+  - name: "unit-test-authoring"
+    match:
+      intent: "test"
+      confidence: ">=0.6"
+    target_agent: "agents.test.writer"
+    handoff_template: "docs/handoff_contract.md#tests"
+    budget: "diagnostic"
+    emit_context:
+      include_payload: true
+      payload_builder: "agents.context.build_test_context_payload"
+    metrics:
+      route_id: "router.tests"
+      expected_latency_ms: 8000
+
+  - name: "docstring-updates"
+    match:
+      intent: "docstring"
+      confidence: ">=0.55"
+    target_agent: "agents.docs.writer"
+    handoff_template: "docs/handoff_contract.md#docstring"
+    budget: "diagnostic"
+    emit_context:
+      include_payload: true
+      payload_builder: "agents.context.build_light_payload"
+    metrics:
+      route_id: "router.docstring"
+      expected_latency_ms: 5000
+
+  - name: "bugfix-critical"
+    match:
+      intent: "bugfix"
+      confidence: ">=0.6"
+      artifacts:
+        include: ["core/**", "agents/**"]
+    target_agent: "agents.executor.hotfix"
+    handoff_template: "docs/handoff_contract.md#bugfix"
+    budget: "standard"
+    policy_gates:
+      - "policies.require_regression_reference"
+      - "policies.block_sensitive_files"
+    emit_context:
+      include_payload: true
+      payload_builder: "agents.context.build_thread_state_payload"
+    metrics:
+      route_id: "router.bugfix"
+      expected_latency_ms: 9000
+
+  - name: "lint-repair"
+    match:
+      intent: "lint"
+      confidence: ">=0.5"
+    target_agent: "agents.lint.autofix"
+    handoff_template: "docs/handoff_contract.md#lint"
+    budget: "diagnostic"
+    emit_context:
+      include_payload: true
+      payload_builder: "agents.context.build_light_payload"
+    metrics:
+      route_id: "router.lint"
+      expected_latency_ms: 4000
+
+  - name: "rag-code-inspection"
+    match:
+      intent: "rag"
+      confidence: ">=0.45"
+    target_agent: "agents.context.rag"
+    handoff_template: "docs/handoff_contract.md#rag"
+    budget: "standard"
+    emit_context:
+      include_payload: true
+      payload_builder: "agents.context.build_rag_payload"
+    metrics:
+      route_id: "router.rag"
+      expected_latency_ms: 7000
+
+fallbacks:
+  - condition: "confidence < 0.45"
+    action: "route_to"
+    target_agent: "agents.planner.retry"
+    note: "Re-plan low-confidence requests before executing."
+  - condition: "no_route_matched"
+    action: "escalate"
+    target_agent: "agents.orchestrator.human_review"
+    note: "Escalate to human when no declarative rule applies."

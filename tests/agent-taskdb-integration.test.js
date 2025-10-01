@@ -24,7 +24,7 @@ describe('Agent TaskDB Integration', () => {
     if (!existsSync(TEST_DATA_DIR)) {
       mkdirSync(TEST_DATA_DIR, { recursive: true });
     }
-    
+
     // Inicializar integración con directorio de test
     integration = new AgentTaskDBIntegration({
       taskdb: {
@@ -143,14 +143,14 @@ describe('Agent TaskDB Integration', () => {
   });
 
   describe('Gestión de Tareas', () => {
-    test('debe crear tarea para agente', async () => {
+    test('debe crear tarea para agente', async() => {
       const input = {
         action: 'process',
         data: { text: 'Texto de prueba' }
       };
 
       const task = await integration.createAgentTask('context', input);
-      
+
       assert.ok(task.id);
       assert.strictEqual(task.title, 'Tarea context - process');
       assert.strictEqual(task.status, 'doing');
@@ -159,7 +159,7 @@ describe('Agent TaskDB Integration', () => {
       assert.strictEqual(task.data.agent, 'context');
     });
 
-    test('debe actualizar tarea de agente', async () => {
+    test('debe actualizar tarea de agente', async() => {
       const input = {
         action: 'process',
         data: { text: 'Texto de prueba' }
@@ -178,7 +178,7 @@ describe('Agent TaskDB Integration', () => {
       assert.ok(updated.data.result);
     });
 
-    test('debe obtener tareas por agente', async () => {
+    test('debe obtener tareas por agente', async() => {
       const input1 = { action: 'process', data: { text: 'Texto 1' } };
       const input2 = { action: 'process', data: { text: 'Texto 2' } };
 
@@ -194,7 +194,7 @@ describe('Agent TaskDB Integration', () => {
       assert.strictEqual(promptingTasks[0].agent, 'prompting');
     });
 
-    test('debe obtener tareas por estado', async () => {
+    test('debe obtener tareas por estado', async() => {
       const input = { action: 'process', data: { text: 'Texto de prueba' } };
       const task = await integration.createAgentTask('context', input);
 
@@ -208,7 +208,7 @@ describe('Agent TaskDB Integration', () => {
   });
 
   describe('Estadísticas de Integración', () => {
-    test('debe generar estadísticas correctas', async () => {
+    test('debe generar estadísticas correctas', async() => {
       const input = { action: 'process', data: { text: 'Texto de prueba' } };
       await integration.createAgentTask('context', input);
       await integration.createAgentTask('prompting', input);
@@ -223,10 +223,10 @@ describe('Agent TaskDB Integration', () => {
       assert.strictEqual(stats.tasks_by_status.doing, 2);
     });
 
-    test('debe incluir métricas de rendimiento', async () => {
+    test('debe incluir métricas de rendimiento', async() => {
       const input = { action: 'process', data: { text: 'Texto de prueba' } };
       const task = await integration.createAgentTask('context', input);
-      
+
       await integration.updateAgentTask(task.id, {
         status: 'done',
         data: {
@@ -243,7 +243,7 @@ describe('Agent TaskDB Integration', () => {
       });
 
       const stats = integration.getIntegrationStats();
-      
+
       assert.ok(stats.performance_metrics);
       assert.strictEqual(stats.performance_metrics.avg_duration, 100);
       assert.strictEqual(stats.performance_metrics.min_duration, 100);
@@ -252,7 +252,7 @@ describe('Agent TaskDB Integration', () => {
   });
 
   describe('Limpieza de Tareas', () => {
-    test('debe limpiar tareas completadas', async () => {
+    test('debe limpiar tareas completadas', async() => {
       const input = { action: 'process', data: { text: 'Texto de prueba' } };
       const task1 = await integration.createAgentTask('context', input);
       const task2 = await integration.createAgentTask('prompting', input);
@@ -261,21 +261,21 @@ describe('Agent TaskDB Integration', () => {
       await integration.updateAgentTask(task1.id, { status: 'done' });
 
       const cleaned = await integration.cleanupCompletedTasks();
-      
+
       assert.strictEqual(cleaned, 1);
       assert.strictEqual(integration.tasks.size, 1);
     });
   });
 
   describe('Exportación de Datos', () => {
-    test('debe exportar datos de integración', async () => {
+    test('debe exportar datos de integración', async() => {
       const input = { action: 'process', data: { text: 'Texto de prueba' } };
       await integration.createAgentTask('context', input);
 
       const exportFile = integration.exportIntegrationData();
-      
+
       assert.ok(existsSync(exportFile));
-      
+
       const data = JSON.parse(readFileSync(exportFile, 'utf8'));
       assert.ok(data.timestamp);
       assert.ok(data.version);
@@ -334,21 +334,21 @@ describe('Agent TaskDB Integration', () => {
   });
 
   describe('Manejo de Errores', () => {
-    test('debe manejar errores de agente inexistente', async () => {
+    test('debe manejar errores de agente inexistente', async() => {
       const input = { action: 'process', data: { text: 'Texto de prueba' } };
 
-      await assert.rejects(async () => {
+      await assert.rejects(async() => {
         await integration.processAgentInput('nonexistent', input);
       }, /Proyecto no encontrado para agente/);
     });
 
-    test('debe manejar errores de validación', async () => {
+    test('debe manejar errores de validación', async() => {
       const invalidInput = {
         action: 'invalid_action',
         data: 'invalid_data'
       };
 
-      await assert.rejects(async () => {
+      await assert.rejects(async() => {
         await integration.processAgentInput('context', invalidInput);
       }, /Input inválido/);
     });
@@ -364,58 +364,82 @@ describe('Agent TaskDB Contracts', () => {
 
   describe('Validación de Esquemas', () => {
     test('debe validar esquema de string', () => {
-      const validation = contracts.validateField('test', {
-        type: 'string',
-        minLength: 1,
-        maxLength: 10
-      }, 'test_field');
+      const validation = contracts.validateField(
+        'test',
+        {
+          type: 'string',
+          minLength: 1,
+          maxLength: 10
+        },
+        'test_field'
+      );
 
       assert.strictEqual(validation.valid, true);
     });
 
     test('debe rechazar string inválido', () => {
-      const validation = contracts.validateField('', {
-        type: 'string',
-        minLength: 1
-      }, 'test_field');
+      const validation = contracts.validateField(
+        '',
+        {
+          type: 'string',
+          minLength: 1
+        },
+        'test_field'
+      );
 
       assert.strictEqual(validation.valid, false);
       assert.ok(validation.errors.length > 0);
     });
 
     test('debe validar esquema de number', () => {
-      const validation = contracts.validateField(5, {
-        type: 'number',
-        minimum: 1,
-        maximum: 10
-      }, 'test_field');
+      const validation = contracts.validateField(
+        5,
+        {
+          type: 'number',
+          minimum: 1,
+          maximum: 10
+        },
+        'test_field'
+      );
 
       assert.strictEqual(validation.valid, true);
     });
 
     test('debe rechazar number inválido', () => {
-      const validation = contracts.validateField(15, {
-        type: 'number',
-        maximum: 10
-      }, 'test_field');
+      const validation = contracts.validateField(
+        15,
+        {
+          type: 'number',
+          maximum: 10
+        },
+        'test_field'
+      );
 
       assert.strictEqual(validation.valid, false);
       assert.ok(validation.errors.length > 0);
     });
 
     test('debe validar esquema de array', () => {
-      const validation = contracts.validateField(['item1', 'item2'], {
-        type: 'array',
-        items: { type: 'string' }
-      }, 'test_field');
+      const validation = contracts.validateField(
+        ['item1', 'item2'],
+        {
+          type: 'array',
+          items: { type: 'string' }
+        },
+        'test_field'
+      );
 
       assert.strictEqual(validation.valid, true);
     });
 
     test('debe rechazar array inválido', () => {
-      const validation = contracts.validateField('not_array', {
-        type: 'array'
-      }, 'test_field');
+      const validation = contracts.validateField(
+        'not_array',
+        {
+          type: 'array'
+        },
+        'test_field'
+      );
 
       assert.strictEqual(validation.valid, false);
       assert.ok(validation.errors.length > 0);
@@ -425,7 +449,7 @@ describe('Agent TaskDB Contracts', () => {
   describe('Generación de Ejemplos', () => {
     test('debe generar ejemplo de input para context', () => {
       const example = contracts.generateInputExample('context');
-      
+
       assert.ok(example.action);
       assert.ok(example.data);
       assert.ok(example.data.text);
@@ -434,7 +458,7 @@ describe('Agent TaskDB Contracts', () => {
 
     test('debe generar ejemplo de output para context', () => {
       const example = contracts.generateOutputExample('context');
-      
+
       assert.strictEqual(example.success, true);
       assert.ok(example.timestamp);
       assert.ok(example.result);
@@ -444,7 +468,7 @@ describe('Agent TaskDB Contracts', () => {
 
     test('debe generar ejemplo de input para prompting', () => {
       const example = contracts.generateInputExample('prompting');
-      
+
       assert.ok(example.action);
       assert.ok(example.data);
       assert.ok(example.data.prompt);
@@ -453,7 +477,7 @@ describe('Agent TaskDB Contracts', () => {
 
     test('debe generar ejemplo de output para prompting', () => {
       const example = contracts.generateOutputExample('prompting');
-      
+
       assert.strictEqual(example.success, true);
       assert.ok(example.timestamp);
       assert.ok(example.result);
@@ -465,7 +489,7 @@ describe('Agent TaskDB Contracts', () => {
   describe('Listado de Agentes', () => {
     test('debe listar todos los agentes', () => {
       const agents = contracts.listAgents();
-      
+
       assert.ok(agents.includes('context'));
       assert.ok(agents.includes('prompting'));
       assert.ok(agents.includes('rules'));
@@ -476,7 +500,7 @@ describe('Agent TaskDB Contracts', () => {
   describe('Generación de Documentación', () => {
     test('debe generar documentación completa', () => {
       const docs = contracts.generateDocumentation();
-      
+
       assert.ok(docs.timestamp);
       assert.ok(docs.version);
       assert.ok(docs.agents);
@@ -487,7 +511,7 @@ describe('Agent TaskDB Contracts', () => {
 
     test('debe incluir ejemplos en documentación', () => {
       const docs = contracts.generateDocumentation();
-      
+
       assert.ok(docs.agents.context.input.example);
       assert.ok(docs.agents.context.output.example);
       assert.ok(docs.agents.prompting.input.example);

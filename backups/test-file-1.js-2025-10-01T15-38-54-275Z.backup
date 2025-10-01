@@ -1,0 +1,30 @@
+// Test file for real testing
+var x = 1;
+var y = 2;
+var z = x + y;
+
+console.log("Sum:", z);
+
+function badFunction() {
+  var temp = "hello";
+  console.log(temp);
+  return temp;
+}
+
+// Magic numbers
+setTimeout(function() {
+  console.log("Timeout after 5000ms");
+}, 5000);
+
+// Inconsistent quotes
+var message = "Hello world";
+var other = 'Another message';
+
+// Missing semicolons
+var a = 1
+var b = 2
+
+// Unused variable
+var unused = "not used";
+
+badFunction();

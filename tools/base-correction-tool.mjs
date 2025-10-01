@@ -31,7 +31,7 @@ export class BaseCorrectionTool {
       retryDelay: 1000,
       ...config
     };
-    
+
     this.reportsDir = join(PROJECT_ROOT, 'out');
     this.backupDir = join(PROJECT_ROOT, 'backups');
     this.results = {
@@ -40,7 +40,7 @@ export class BaseCorrectionTool {
       skipped: 0,
       total: 0
     };
-    
+
     this.ensureDirectories();
   }
 
@@ -62,7 +62,7 @@ export class BaseCorrectionTool {
   log(message, level = 'info') {
     const timestamp = new Date().toISOString();
     const prefix = `[${timestamp}] [${level.toUpperCase()}]`;
-    
+
     switch (level) {
       case 'error':
         console.error(`${prefix} ❌ ${message}`);
@@ -96,11 +96,11 @@ export class BaseCorrectionTool {
     if (!input) {
       throw new Error('Input is required');
     }
-    
+
     if (input.targetPath && !existsSync(input.targetPath)) {
       throw new Error(`Target path does not exist: ${input.targetPath}`);
     }
-    
+
     return true;
   }
 
@@ -110,27 +110,32 @@ export class BaseCorrectionTool {
   async executeCommandWithRetry(command, maxRetries = null) {
     const retries = maxRetries || this.config.retryAttempts;
     let lastError = null;
-    
+
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
-        this.verbose(`Ejecutando comando (intento ${attempt}/${retries}): ${command}`);
-        
+        this.verbose(
+          `Ejecutando comando (intento ${attempt}/${retries}): ${command}`
+        );
+
         const result = await this.executeCommand(command);
         this.log(`Comando exitoso en intento ${attempt}`, 'success');
         return result;
-        
       } catch (error) {
         lastError = error;
         this.log(`Intento ${attempt} falló: ${error.message}`, 'warn');
-        
+
         if (attempt < retries) {
-          this.verbose(`Esperando ${this.config.retryDelay}ms antes del siguiente intento...`);
+          this.verbose(
+            `Esperando ${this.config.retryDelay}ms antes del siguiente intento...`
+          );
           await this.delay(this.config.retryDelay);
         }
       }
     }
-    
-    throw new Error(`Comando falló después de ${retries} intentos: ${lastError.message}`);
+
+    throw new Error(
+      `Comando falló después de ${retries} intentos: ${lastError.message}`
+    );
   }
 
   /**
@@ -144,22 +149,26 @@ export class BaseCorrectionTool {
         return;
       }
 
-      exec(command, { 
-        cwd: PROJECT_ROOT,
-        timeout: 30000 // 30 segundos timeout
-      }, (error, stdout, stderr) => {
-        if (error) {
-          reject(new Error(`Comando falló: ${error.message}`));
-        } else {
-          if (this.config.verbose && stdout) {
-            this.verbose(`Output: ${stdout}`);
+      exec(
+        command,
+        {
+          cwd: PROJECT_ROOT,
+          timeout: 30000 // 30 segundos timeout
+        },
+        (error, stdout, stderr) => {
+          if (error) {
+            reject(new Error(`Comando falló: ${error.message}`));
+          } else {
+            if (this.config.verbose && stdout) {
+              this.verbose(`Output: ${stdout}`);
+            }
+            if (this.config.verbose && stderr) {
+              this.verbose(`Stderr: ${stderr}`);
+            }
+            resolve({ stdout, stderr });
           }
-          if (this.config.verbose && stderr) {
-            this.verbose(`Stderr: ${stderr}`);
-          }
-          resolve({ stdout, stderr });
         }
-      });
+      );
     });
   }
 
@@ -178,7 +187,7 @@ export class BaseCorrectionTool {
       /eval\s+/,
       /exec\s+/
     ];
-    
+
     return !dangerousPatterns.some(pattern => pattern.test(command));
   }
 
@@ -200,14 +209,17 @@ export class BaseCorrectionTool {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const fileName = filePath.split('/').pop();
     const backupPath = join(this.backupDir, `${fileName}-${timestamp}.backup`);
-    
+
     try {
       const content = readFileSync(filePath, 'utf8');
       writeFileSync(backupPath, content);
       this.verbose(`Backup creado: ${backupPath}`);
       return backupPath;
     } catch (error) {
-      this.log(`Error creando backup para ${filePath}: ${error.message}`, 'warn');
+      this.log(
+        `Error creando backup para ${filePath}: ${error.message}`,
+        'warn'
+      );
       return null;
     }
   }
@@ -239,11 +251,11 @@ export class BaseCorrectionTool {
     try {
       const jsonRegex = new RegExp('\\{[\\s\\S]*\\}');
       const jsonMatch = jsonRegex.exec(jsonString);
-      
+
       if (!jsonMatch) {
         throw new Error('No se encontró JSON válido en la salida');
       }
-      
+
       return JSON.parse(jsonMatch[0]);
     } catch (error) {
       throw new Error(`Error parseando JSON: ${error.message}`);

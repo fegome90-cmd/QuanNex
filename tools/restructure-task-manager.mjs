@@ -4,7 +4,13 @@
  * @description Integra TaskDB con agentes MCP para gestión completa de reestructuración
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, unlinkSync } from 'node:fs';
+import {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+  unlinkSync
+} from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import TaskDBKernel from './taskdb-kernel.mjs';
@@ -28,7 +34,8 @@ class RestructureTaskManager {
     const project = {
       id: this.projectId,
       title: 'Reestructuración y Consolidación de Agentes MCP',
-      description: 'Plan completo de reestructuración de archivos y completar agentes especializados',
+      description:
+        'Plan completo de reestructuración de archivos y completar agentes especializados',
       status: 'active',
       created_at: new Date().toISOString(),
       metadata: {
@@ -114,7 +121,8 @@ class RestructureTaskManager {
         id: 'security-agent-implementation',
         project_id: this.projectId,
         title: 'Implementar @security Agent',
-        description: 'Crear agente especializado para compliance, detección de secretos y hardening',
+        description:
+          'Crear agente especializado para compliance, detección de secretos y hardening',
         status: 'todo',
         priority: 'high',
         phase: 'specialized_implementation',
@@ -136,7 +144,8 @@ class RestructureTaskManager {
         id: 'metrics-agent-implementation',
         project_id: this.projectId,
         title: 'Implementar @metrics Agent',
-        description: 'Crear agente especializado para recolectar métricas de performance y cobertura',
+        description:
+          'Crear agente especializado para recolectar métricas de performance y cobertura',
         status: 'todo',
         priority: 'medium',
         phase: 'specialized_implementation',
@@ -158,7 +167,8 @@ class RestructureTaskManager {
         id: 'optimization-agent-implementation',
         project_id: this.projectId,
         title: 'Implementar @optimization Agent',
-        description: 'Crear agente especializado para sugerencias de refactor y mejoras de performance',
+        description:
+          'Crear agente especializado para sugerencias de refactor y mejoras de performance',
         status: 'todo',
         priority: 'low',
         phase: 'specialized_implementation',
@@ -182,7 +192,8 @@ class RestructureTaskManager {
         id: 'legacy-antigeneric-migration',
         project_id: this.projectId,
         title: 'Migrar antigeneric-agents/',
-        description: 'Consolidar y migrar agentes legacy a agents/legacy/antigeneric/',
+        description:
+          'Consolidar y migrar agentes legacy a agents/legacy/antigeneric/',
         status: 'todo',
         priority: 'medium',
         phase: 'legacy_migration',
@@ -241,31 +252,43 @@ class RestructureTaskManager {
     }
 
     console.log(`🚀 Ejecutando tarea: ${task.title}`);
-    
+
     // Actualizar estado a 'doing'
     this.taskdb.updateTask(taskId, { status: 'doing' });
 
     try {
       // Generar contexto específico para la tarea
       const contextPayload = this.generateContextPayload(task);
-      const contextResult = await this.runAgentWithLogging('context', contextPayload, {
-        task_id: taskId,
-        phase: task.phase
-      });
+      const contextResult = await this.runAgentWithLogging(
+        'context',
+        contextPayload,
+        {
+          task_id: taskId,
+          phase: task.phase
+        }
+      );
 
       // Generar prompt específico para la tarea
       const promptPayload = this.generatePromptPayload(task, contextResult);
-      const promptResult = await this.runAgentWithLogging('prompting', promptPayload, {
-        task_id: taskId,
-        phase: task.phase
-      });
+      const promptResult = await this.runAgentWithLogging(
+        'prompting',
+        promptPayload,
+        {
+          task_id: taskId,
+          phase: task.phase
+        }
+      );
 
       // Validar con rules
       const rulesPayload = this.generateRulesPayload(task);
-      const rulesResult = await this.runAgentWithLogging('rules', rulesPayload, {
-        task_id: taskId,
-        phase: task.phase
-      });
+      const rulesResult = await this.runAgentWithLogging(
+        'rules',
+        rulesPayload,
+        {
+          task_id: taskId,
+          phase: task.phase
+        }
+      );
 
       // Ejecutar la tarea específica
       const taskResult = await this.executeSpecificTask(task, {
@@ -283,7 +306,6 @@ class RestructureTaskManager {
 
       console.log(`✅ Tarea completada: ${task.title}`);
       return taskResult;
-
     } catch (error) {
       // Actualizar tarea como fallida
       this.taskdb.updateTask(taskId, {
@@ -340,27 +362,24 @@ class RestructureTaskManager {
         'Optimizar para rendimiento y escalabilidad'
       ],
       context_refs: contextResult.provenance || [],
-      ruleset_refs: [
-        'policies/security.md',
-        'policies/coding-standards.md'
-      ]
+      ruleset_refs: ['policies/security.md', 'policies/coding-standards.md']
     };
   }
 
   generateRulesPayload(task) {
     return {
-      policy_refs: [
-        'policies/security.md',
-        'policies/coding-standards.md'
-      ],
-      target_path: (task.metadata && task.metadata.agent) ? `agents/${task.metadata.agent}/` : 'agents/',
+      policy_refs: ['policies/security.md', 'policies/coding-standards.md'],
+      target_path:
+        task.metadata && task.metadata.agent
+          ? `agents/${task.metadata.agent}/`
+          : 'agents/',
       check_mode: 'validate'
     };
   }
 
   async runAgentWithLogging(agentName, payload, metadata) {
     const startTime = Date.now();
-    
+
     // Crear payload temporal
     const payloadPath = `/tmp/restructure-${agentName}-${Date.now()}.json`;
     writeFileSync(payloadPath, JSON.stringify(payload, null, 2));
@@ -408,8 +427,13 @@ class RestructureTaskManager {
 
   async executeAgent(agentName, payloadPath) {
     return new Promise((resolve, reject) => {
-      const runCleanPath = join(PROJECT_ROOT, 'core', 'scripts', 'run-clean.sh');
-      
+      const runCleanPath = join(
+        PROJECT_ROOT,
+        'core',
+        'scripts',
+        'run-clean.sh'
+      );
+
       const child = spawn('bash', [runCleanPath, agentName, payloadPath], {
         stdio: ['pipe', 'pipe', 'pipe'],
         cwd: PROJECT_ROOT
@@ -418,15 +442,15 @@ class RestructureTaskManager {
       let stdout = '';
       let stderr = '';
 
-      child.stdout.on('data', (data) => {
+      child.stdout.on('data', data => {
         stdout += data.toString();
       });
 
-      child.stderr.on('data', (data) => {
+      child.stderr.on('data', data => {
         stderr += data.toString();
       });
 
-      child.on('close', (code) => {
+      child.on('close', code => {
         if (code === 0) {
           try {
             const output = JSON.parse(stdout);
@@ -439,7 +463,7 @@ class RestructureTaskManager {
         }
       });
 
-      child.on('error', (error) => {
+      child.on('error', error => {
         reject(new Error(error.message));
       });
     });
@@ -463,30 +487,39 @@ class RestructureTaskManager {
   }
 
   async executeCoreOptimization(task, mcpResults) {
-    const agent = (task.metadata && task.metadata.agent) ? task.metadata.agent : 'unknown';
+    const agent =
+      task.metadata && task.metadata.agent ? task.metadata.agent : 'unknown';
     console.log(`🔧 Optimizando ${agent}...`);
-    
+
     // Aquí implementarías la lógica específica de optimización
     // Por ahora, simulamos la ejecución
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     return {
       success: true,
-      optimizations_applied: (task.metadata && task.metadata.optimizations) ? task.metadata.optimizations : [],
-      performance_improvement: (task.metadata && task.metadata.current_performance && task.metadata.target_performance) 
-        ? `${task.metadata.current_performance} → ${task.metadata.target_performance}` 
-        : 'N/A',
+      optimizations_applied:
+        task.metadata && task.metadata.optimizations
+          ? task.metadata.optimizations
+          : [],
+      performance_improvement:
+        task.metadata &&
+        task.metadata.current_performance &&
+        task.metadata.target_performance
+          ? `${task.metadata.current_performance} → ${task.metadata.target_performance}`
+          : 'N/A',
       mcp_context: mcpResults.context ? mcpResults.context.stats : {},
-      mcp_prompt: mcpResults.prompting ? (mcpResults.prompting.system_prompt?.substring(0, 100) + '...') : 'N/A'
+      mcp_prompt: mcpResults.prompting
+        ? mcpResults.prompting.system_prompt?.substring(0, 100) + '...'
+        : 'N/A'
     };
   }
 
   async executeSpecializedImplementation(task, mcpResults) {
     console.log(`🛠️ Implementando ${task.metadata.agent}...`);
-    
+
     // Aquí implementarías la lógica específica de implementación
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
     return {
       success: true,
       agent_implemented: task.metadata.agent,
@@ -499,10 +532,10 @@ class RestructureTaskManager {
 
   async executeLegacyMigration(task, mcpResults) {
     console.log(`📦 Migrando ${task.metadata.source}...`);
-    
+
     // Aquí implementarías la lógica específica de migración
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     return {
       success: true,
       source: task.metadata.source,
@@ -514,11 +547,11 @@ class RestructureTaskManager {
   }
 
   async executeOrchestratorOptimization(task, mcpResults) {
-    console.log(`🎼 Optimizando orchestrator...`);
-    
+    console.log('🎼 Optimizando orchestrator...');
+
     // Aquí implementarías la lógica específica de optimización del orchestrator
     await new Promise(resolve => setTimeout(resolve, 1800));
-    
+
     return {
       success: true,
       improvements: task.metadata.improvements,
@@ -530,7 +563,7 @@ class RestructureTaskManager {
   getProjectStatus() {
     const project = this.taskdb.getProject(this.projectId);
     const tasks = this.taskdb.listTasks({ project_id: this.projectId });
-    
+
     const status = {
       project: project,
       tasks: {
@@ -541,10 +574,16 @@ class RestructureTaskManager {
         failed: tasks.filter(t => t.status === 'failed').length
       },
       phases: {
-        core_optimization: tasks.filter(t => t.phase === 'core_optimization').length,
-        specialized_implementation: tasks.filter(t => t.phase === 'specialized_implementation').length,
-        legacy_migration: tasks.filter(t => t.phase === 'legacy_migration').length,
-        orchestrator_optimization: tasks.filter(t => t.phase === 'orchestrator_optimization').length
+        core_optimization: tasks.filter(t => t.phase === 'core_optimization')
+          .length,
+        specialized_implementation: tasks.filter(
+          t => t.phase === 'specialized_implementation'
+        ).length,
+        legacy_migration: tasks.filter(t => t.phase === 'legacy_migration')
+          .length,
+        orchestrator_optimization: tasks.filter(
+          t => t.phase === 'orchestrator_optimization'
+        ).length
       }
     };
 
@@ -554,7 +593,7 @@ class RestructureTaskManager {
   generateReport() {
     const status = this.getProjectStatus();
     const mcpReport = this.logger.generateReport();
-    
+
     const report = {
       generated_at: new Date().toISOString(),
       project_status: status,
@@ -562,16 +601,20 @@ class RestructureTaskManager {
       recommendations: this.generateRecommendations(status)
     };
 
-    const reportPath = join(PROJECT_ROOT, '.reports', 'restructure-task-report.json');
+    const reportPath = join(
+      PROJECT_ROOT,
+      '.reports',
+      'restructure-task-report.json'
+    );
     writeFileSync(reportPath, JSON.stringify(report, null, 2));
-    
+
     console.log(`📊 Reporte generado: ${reportPath}`);
     return report;
   }
 
   generateRecommendations(status) {
     const recommendations = [];
-    
+
     if (status.tasks.todo > 0) {
       recommendations.push({
         type: 'task_management',
@@ -579,7 +622,7 @@ class RestructureTaskManager {
         priority: 'high'
       });
     }
-    
+
     if (status.tasks.failed > 0) {
       recommendations.push({
         type: 'error_handling',
@@ -587,15 +630,16 @@ class RestructureTaskManager {
         priority: 'high'
       });
     }
-    
+
     if (status.phases.core_optimization > 0) {
       recommendations.push({
         type: 'optimization',
-        message: 'Optimizaciones core pendientes. Priorizar para mejorar rendimiento base.',
+        message:
+          'Optimizaciones core pendientes. Priorizar para mejorar rendimiento base.',
         priority: 'medium'
       });
     }
-    
+
     return recommendations;
   }
 }
@@ -604,26 +648,29 @@ class RestructureTaskManager {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const manager = new RestructureTaskManager();
   const command = process.argv[2];
-  
+
   switch (command) {
     case 'init':
       manager.createRestructureTasks();
       console.log('✅ Tareas de reestructuración inicializadas');
       break;
-      
+
     case 'status':
       const status = manager.getProjectStatus();
       console.log(JSON.stringify(status, null, 2));
       break;
-      
+
     case 'execute':
       const taskId = process.argv[3];
       if (!taskId) {
-        console.error('Usage: node tools/restructure-task-manager.mjs execute <task-id>');
+        console.error(
+          'Usage: node tools/restructure-task-manager.mjs execute <task-id>'
+        );
         process.exit(1);
       }
-      
-      manager.executeTaskWithMCP(taskId)
+
+      manager
+        .executeTaskWithMCP(taskId)
         .then(result => {
           console.log('✅ Tarea ejecutada exitosamente');
           console.log(JSON.stringify(result, null, 2));
@@ -633,17 +680,19 @@ if (import.meta.url === `file://${process.argv[1]}`) {
           process.exit(1);
         });
       break;
-      
+
     case 'report':
       const report = manager.generateReport();
       console.log('📊 Reporte generado');
       break;
-      
+
     default:
       console.log('Usage:');
       console.log('  node tools/restructure-task-manager.mjs init');
       console.log('  node tools/restructure-task-manager.mjs status');
-      console.log('  node tools/restructure-task-manager.mjs execute <task-id>');
+      console.log(
+        '  node tools/restructure-task-manager.mjs execute <task-id>'
+      );
       console.log('  node tools/restructure-task-manager.mjs report');
       break;
   }

@@ -43,19 +43,18 @@ class MetricsAgent {
       const report = this.generateReport();
 
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         metrics_report: report,
         stats: this.stats,
-        trace: ["metrics.server:ok"]
+        trace: ['metrics.server:ok']
       };
-
     } catch (error) {
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         error: `metrics.server:error:${error.message}`,
-        trace: ["metrics.server:error"]
+        trace: ['metrics.server:error']
       };
     }
   }
@@ -66,7 +65,7 @@ class MetricsAgent {
   async basicAnalysis(targetPath, scanDepth) {
     try {
       const entries = await this.readDirectory(targetPath);
-      
+
       for (const entry of entries) {
         const fullPath = join(targetPath, entry);
         const stat = statSync(fullPath);
@@ -105,7 +104,7 @@ class MetricsAgent {
    */
   analyzeFile(filePath, content) {
     this.stats.files_analyzed++;
-    
+
     const lines = content.split('\n');
     this.stats.lines_analyzed += lines.length;
 
@@ -169,17 +168,17 @@ class MetricsAgent {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const agent = new MetricsAgent();
   const input = JSON.parse(process.argv[2] || '{}');
-  
+
   agent.process(input)
     .then(result => {
       console.log(JSON.stringify(result, null, 2));
     })
     .catch(error => {
       console.error(JSON.stringify({
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         error: `metrics.server:error:${error.message}`,
-        trace: ["metrics.server:error"]
+        trace: ['metrics.server:error']
       }, null, 2));
       process.exit(1);
     });

@@ -12,11 +12,19 @@ class ImprovedSecurityAgent extends SecurityAgent {
    */
   async scanFile(filePath) {
     const ext = require('path').extname(filePath).toLowerCase();
-    
+
     // Solo escanear archivos de código, NO documentación
-    const codeExtensions = ['.js', '.ts', '.jsx', '.tsx', '.json', '.env', '.config'];
+    const codeExtensions = [
+      '.js',
+      '.ts',
+      '.jsx',
+      '.tsx',
+      '.json',
+      '.env',
+      '.config'
+    ];
     if (!codeExtensions.includes(ext)) {
-      return;  // Skip .md, .txt, .html, etc
+      return; // Skip .md, .txt, .html, etc
     }
 
     // Llamar a la implementación original

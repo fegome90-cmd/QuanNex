@@ -1,0 +1,8 @@
+{
+  "target_path": ".",
+  "optimization_types": ["performance", "maintainability", "readability", "security"],
+  "auto_fix": true,
+  "include_performance": true,
+  "include_security": true,
+  "include_quality": true
+}

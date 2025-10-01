@@ -1,0 +1,24 @@
+// Test file 2 for real testing
+var data = {
+  name: "test",
+  value: 42
+};
+
+console.log("Data:", data);
+
+function processData(input) {
+  var result = input * 2;
+  console.log("Result:", result);
+  return result;
+}
+
+// More magic numbers
+var timeout = 3000;
+setTimeout(() => {
+  console.log("Another timeout");
+}, timeout);
+
+// Inconsistent formatting
+var obj={a:1,b:2,c:3};
+
+processData(21);

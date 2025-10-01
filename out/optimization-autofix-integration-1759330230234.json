@@ -1,0 +1,19 @@
+{
+  "integration_report": {
+    "timestamp": "2025-10-01T14:50:30.232Z",
+    "optimization_agent": {
+      "version": "1.0.0"
+    },
+    "autofix_commands": {
+      "total": 0,
+      "by_type": {},
+      "by_priority": {}
+    },
+    "execution_mode": "apply",
+    "target_path": ".",
+    "optimization_types": [
+      "performance",
+      "maintainability"
+    ]
+  }
+}

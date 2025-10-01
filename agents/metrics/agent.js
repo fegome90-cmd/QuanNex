@@ -15,70 +15,70 @@ const PROJECT_ROOT = join(__dirname, '../../..');
 
 // Schema de entrada
 const INPUT_SCHEMA = {
-  type: "object",
+  type: 'object',
   properties: {
-    target_path: { type: "string", description: "Ruta del directorio a analizar" },
-    metric_types: { 
-      type: "array", 
-      items: { 
-        type: "string",
-        enum: ["performance", "coverage", "quality", "complexity"]
+    target_path: { type: 'string', description: 'Ruta del directorio a analizar' },
+    metric_types: {
+      type: 'array',
+      items: {
+        type: 'string',
+        enum: ['performance', 'coverage', 'quality', 'complexity']
       },
-      description: "Tipos de métricas a recopilar"
+      description: 'Tipos de métricas a recopilar'
     },
-    scan_depth: { 
-      type: "number", 
-      minimum: 1, 
+    scan_depth: {
+      type: 'number',
+      minimum: 1,
       maximum: 5,
-      description: "Profundidad de escaneo recursivo"
+      description: 'Profundidad de escaneo recursivo'
     },
     include_tests: {
-      type: "boolean",
-      description: "Incluir análisis de tests y cobertura"
+      type: 'boolean',
+      description: 'Incluir análisis de tests y cobertura'
     }
   },
-  required: ["target_path"]
+  required: ['target_path']
 };
 
 // Schema de salida
 const OUTPUT_SCHEMA = {
-  type: "object",
+  type: 'object',
   properties: {
-    schema_version: { type: "string" },
-    agent_version: { type: "string" },
+    schema_version: { type: 'string' },
+    agent_version: { type: 'string' },
     metrics_report: {
-      type: "object",
+      type: 'object',
       properties: {
         summary: {
-          type: "object",
+          type: 'object',
           properties: {
-            files_analyzed: { type: "number" },
-            functions_analyzed: { type: "number" },
-            lines_analyzed: { type: "number" },
-            tests_found: { type: "number" },
-            coverage_percentage: { type: "number" }
+            files_analyzed: { type: 'number' },
+            functions_analyzed: { type: 'number' },
+            lines_analyzed: { type: 'number' },
+            tests_found: { type: 'number' },
+            coverage_percentage: { type: 'number' }
           }
         },
-        performance: { type: "object" },
-        coverage: { type: "object" },
-        quality: { type: "object" },
-        complexity: { type: "object" },
-        recommendations: { type: "array" }
+        performance: { type: 'object' },
+        coverage: { type: 'object' },
+        quality: { type: 'object' },
+        complexity: { type: 'object' },
+        recommendations: { type: 'array' }
       }
     },
     stats: {
-      type: "object",
+      type: 'object',
       properties: {
-        files_analyzed: { type: "number" },
-        functions_analyzed: { type: "number" },
-        lines_analyzed: { type: "number" },
-        tests_found: { type: "number" },
-        coverage_percentage: { type: "number" }
+        files_analyzed: { type: 'number' },
+        functions_analyzed: { type: 'number' },
+        lines_analyzed: { type: 'number' },
+        tests_found: { type: 'number' },
+        coverage_percentage: { type: 'number' }
       }
     },
-    trace: { type: "array", items: { type: "string" } }
+    trace: { type: 'array', items: { type: 'string' } }
   },
-  required: ["schema_version", "agent_version", "metrics_report", "stats", "trace"]
+  required: ['schema_version', 'agent_version', 'metrics_report', 'stats', 'trace']
 };
 
 class MetricsAgentWrapper {
@@ -91,19 +91,19 @@ class MetricsAgentWrapper {
    */
   validateInput(input) {
     const errors = [];
-    
+
     // Validar propiedades requeridas
     if (!input.target_path) {
-      errors.push("target_path es requerido");
+      errors.push('target_path es requerido');
     }
 
     // Validar tipos
     if (input.scan_depth && (typeof input.scan_depth !== 'number' || input.scan_depth < 1 || input.scan_depth > 5)) {
-      errors.push("scan_depth debe ser un número entre 1 y 5");
+      errors.push('scan_depth debe ser un número entre 1 y 5');
     }
 
     if (input.metric_types && !Array.isArray(input.metric_types)) {
-      errors.push("metric_types debe ser un array");
+      errors.push('metric_types debe ser un array');
     } else if (input.metric_types) {
       const validTypes = ['performance', 'coverage', 'quality', 'complexity'];
       const invalidTypes = input.metric_types.filter(type => !validTypes.includes(type));
@@ -113,7 +113,7 @@ class MetricsAgentWrapper {
     }
 
     if (input.include_tests && typeof input.include_tests !== 'boolean') {
-      errors.push("include_tests debe ser un booleano");
+      errors.push('include_tests debe ser un booleano');
     }
 
     return errors;
@@ -124,25 +124,25 @@ class MetricsAgentWrapper {
    */
   validateOutput(output) {
     const errors = [];
-    
+
     if (!output.schema_version) {
-      errors.push("schema_version es requerido en la salida");
+      errors.push('schema_version es requerido en la salida');
     }
-    
+
     if (!output.agent_version) {
-      errors.push("agent_version es requerido en la salida");
+      errors.push('agent_version es requerido en la salida');
     }
-    
+
     if (!output.metrics_report) {
-      errors.push("metrics_report es requerido en la salida");
+      errors.push('metrics_report es requerido en la salida');
     }
-    
+
     if (!output.stats) {
-      errors.push("stats es requerido en la salida");
+      errors.push('stats es requerido en la salida');
     }
-    
+
     if (!output.trace || !Array.isArray(output.trace)) {
-      errors.push("trace debe ser un array en la salida");
+      errors.push('trace debe ser un array en la salida');
     }
 
     return errors;
@@ -157,10 +157,10 @@ class MetricsAgentWrapper {
       const inputErrors = this.validateInput(input);
       if (inputErrors.length > 0) {
         return {
-          schema_version: "1.0.0",
-          agent_version: "1.0.0",
+          schema_version: '1.0.0',
+          agent_version: '1.0.0',
           error: `metrics.agent:error:${inputErrors.join(', ')}`,
-          trace: ["metrics.agent:error"]
+          trace: ['metrics.agent:error']
         };
       }
 
@@ -171,21 +171,20 @@ class MetricsAgentWrapper {
       const outputErrors = this.validateOutput(result);
       if (outputErrors.length > 0) {
         return {
-          schema_version: "1.0.0",
-          agent_version: "1.0.0",
+          schema_version: '1.0.0',
+          agent_version: '1.0.0',
           error: `metrics.agent:error:${outputErrors.join(', ')}`,
-          trace: ["metrics.agent:error"]
+          trace: ['metrics.agent:error']
         };
       }
 
       return result;
-
     } catch (error) {
       return {
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         error: `metrics.agent:error:${error.message}`,
-        trace: ["metrics.agent:error"]
+        trace: ['metrics.agent:error']
       };
     }
   }
@@ -195,17 +194,17 @@ class MetricsAgentWrapper {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const agent = new MetricsAgentWrapper();
   const input = JSON.parse(process.argv[2] || '{}');
-  
+
   agent.process(input)
     .then(result => {
       console.log(JSON.stringify(result, null, 2));
     })
     .catch(error => {
       console.error(JSON.stringify({
-        schema_version: "1.0.0",
-        agent_version: "1.0.0",
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
         error: `metrics.agent:error:${error.message}`,
-        trace: ["metrics.agent:error"]
+        trace: ['metrics.agent:error']
       }, null, 2));
       process.exit(1);
     });

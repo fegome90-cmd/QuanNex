@@ -3,7 +3,7 @@
 /**
  * Agent TaskDB Contracts - Contratos de I/O para integración
  * PR-L: Integración agentes ↔ TaskDB (TaskKernel)
- * 
+ *
  * Define y valida contratos de entrada y salida para la integración
  * entre agentes y la base de datos de tareas
  */
@@ -53,7 +53,10 @@ const AGENT_CONTRACTS = {
             tokens_used: { type: 'number', minimum: 0 },
             confidence: { type: 'number', minimum: 0, maximum: 1 },
             entities: { type: 'array' },
-            sentiment: { type: 'string', enum: ['positive', 'negative', 'neutral'] }
+            sentiment: {
+              type: 'string',
+              enum: ['positive', 'negative', 'neutral']
+            }
           }
         },
         task_id: { type: 'string', format: 'uuid' },
@@ -69,7 +72,7 @@ const AGENT_CONTRACTS = {
       }
     }
   },
-  
+
   prompting: {
     input: {
       required: ['action', 'data'],
@@ -122,7 +125,7 @@ const AGENT_CONTRACTS = {
       }
     }
   },
-  
+
   rules: {
     input: {
       required: ['action', 'data'],
@@ -193,7 +196,9 @@ class AgentTaskDBContracts {
 
     const validation = this.validateAgainstSchema(input, contract.input.schema);
     if (!validation.valid) {
-      throw new Error(`Input inválido para agente ${agentName}: ${validation.errors.join(', ')}`);
+      throw new Error(
+        `Input inválido para agente ${agentName}: ${validation.errors.join(', ')}`
+      );
     }
 
     return true;
@@ -208,9 +213,14 @@ class AgentTaskDBContracts {
       throw new Error(`Contrato no encontrado para agente: ${agentName}`);
     }
 
-    const validation = this.validateAgainstSchema(output, contract.output.schema);
+    const validation = this.validateAgainstSchema(
+      output,
+      contract.output.schema
+    );
     if (!validation.valid) {
-      throw new Error(`Output inválido para agente ${agentName}: ${validation.errors.join(', ')}`);
+      throw new Error(
+        `Output inválido para agente ${agentName}: ${validation.errors.join(', ')}`
+      );
     }
 
     return true;
@@ -221,7 +231,7 @@ class AgentTaskDBContracts {
    */
   validateAgainstSchema(data, schema) {
     const errors = [];
-    
+
     // Validar campos requeridos
     if (schema.required) {
       for (const field of schema.required) {
@@ -235,7 +245,11 @@ class AgentTaskDBContracts {
     if (schema.properties) {
       for (const [field, fieldSchema] of Object.entries(schema.properties)) {
         if (field in data) {
-          const fieldValidation = this.validateField(data[field], fieldSchema, field);
+          const fieldValidation = this.validateField(
+            data[field],
+            fieldSchema,
+            field
+          );
           if (!fieldValidation.valid) {
             errors.push(...fieldValidation.errors);
           }
@@ -259,15 +273,19 @@ class AgentTaskDBContracts {
     if (schema.type) {
       const expectedType = schema.type;
       const actualType = this.getType(value);
-      
+
       if (actualType !== expectedType) {
-        errors.push(`${fieldName}: tipo esperado ${expectedType}, obtenido ${actualType}`);
+        errors.push(
+          `${fieldName}: tipo esperado ${expectedType}, obtenido ${actualType}`
+        );
       }
     }
 
     // Validar enum
     if (schema.enum && !schema.enum.includes(value)) {
-      errors.push(`${fieldName}: valor debe ser uno de ${schema.enum.join(', ')}`);
+      errors.push(
+        `${fieldName}: valor debe ser uno de ${schema.enum.join(', ')}`
+      );
     }
 
     // Validar string
@@ -296,7 +314,11 @@ class AgentTaskDBContracts {
         errors.push(`${fieldName}: debe ser array`);
       } else if (schema.items) {
         for (let i = 0; i < value.length; i++) {
-          const itemValidation = this.validateField(value[i], schema.items, `${fieldName}[${i}]`);
+          const itemValidation = this.validateField(
+            value[i],
+            schema.items,
+            `${fieldName}[${i}]`
+          );
           if (!itemValidation.valid) {
             errors.push(...itemValidation.errors);
           }
@@ -311,7 +333,11 @@ class AgentTaskDBContracts {
       } else if (schema.properties) {
         for (const [prop, propSchema] of Object.entries(schema.properties)) {
           if (prop in value) {
-            const propValidation = this.validateField(value[prop], propSchema, `${fieldName}.${prop}`);
+            const propValidation = this.validateField(
+              value[prop],
+              propSchema,
+              `${fieldName}.${prop}`
+            );
             if (!propValidation.valid) {
               errors.push(...propValidation.errors);
             }
@@ -351,7 +377,9 @@ class AgentTaskDBContracts {
 
     // Generar ejemplo de data basado en schema
     if (contract.input.schema.data.properties) {
-      for (const [field, fieldSchema] of Object.entries(contract.input.schema.data.properties)) {
+      for (const [field, fieldSchema] of Object.entries(
+        contract.input.schema.data.properties
+      )) {
         if (fieldSchema.type === 'string') {
           example.data[field] = `ejemplo_${field}`;
         } else if (fieldSchema.type === 'number') {
@@ -386,7 +414,9 @@ class AgentTaskDBContracts {
 
     // Generar ejemplo de result basado en schema
     if (contract.output.schema.result.properties) {
-      for (const [field, fieldSchema] of Object.entries(contract.output.schema.result.properties)) {
+      for (const [field, fieldSchema] of Object.entries(
+        contract.output.schema.result.properties
+      )) {
         if (fieldSchema.type === 'string') {
           example.result[field] = `resultado_${field}`;
         } else if (fieldSchema.type === 'number') {
@@ -479,7 +509,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         const agentName = process.argv[3];
         const data = JSON.parse(process.argv[4] || '{}');
         const type = process.argv[5] || 'input';
-        
+
         if (type === 'input') {
           contracts.validateInput(agentName, data);
         } else {
@@ -491,7 +521,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       case 'example':
         const exampleAgent = process.argv[3];
         const exampleType = process.argv[4] || 'input';
-        
+
         if (exampleType === 'input') {
           const example = contracts.generateInputExample(exampleAgent);
           console.log(JSON.stringify(example, null, 2));

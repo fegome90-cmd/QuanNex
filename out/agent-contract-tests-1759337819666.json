@@ -1,0 +1,161 @@
+{
+  "timestamp": "2025-10-01T16:56:59.665Z",
+  "summary": {
+    "totalPassed": 5,
+    "totalFailed": 2,
+    "successRate": 71.42857142857143
+  },
+  "results": {
+    "context": {
+      "passed": 1,
+      "failed": 1,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "context"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "context",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:56:59.254Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "FAIL",
+          "input": {
+            "requestId": "test-123",
+            "agent": "context",
+            "capability": "context.resolve",
+            "payload": {},
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "ok": false,
+            "error": "Context resolution failed: context.server:error:sources array required\n",
+            "ts": "2025-10-01T16:56:59.330Z"
+          },
+          "expected": {
+            "ok": true,
+            "project": "string",
+            "branch": "string",
+            "filesChanged": "array"
+          }
+        }
+      ]
+    },
+    "prompting": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "prompting"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "prompting",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:56:59.367Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "prompting",
+            "capability": "prompting.buildPrompt",
+            "payload": {
+              "templateId": "default",
+              "vars": {}
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "templateId": "default",
+            "filled": "You are a helpful coding assistant. Style: default.\n\nGoal: Generate prompt",
+            "systemPrompt": "You are a helpful coding assistant. Style: default.",
+            "userPrompt": "Goal: Generate prompt",
+            "guardrails": [],
+            "ok": true,
+            "ts": "2025-10-01T16:56:59.444Z"
+          }
+        }
+      ]
+    },
+    "rules": {
+      "passed": 1,
+      "failed": 1,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "rules"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "rules",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:56:59.482Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "FAIL",
+          "input": {
+            "requestId": "test-123",
+            "agent": "rules",
+            "capability": "rules.validate",
+            "payload": {
+              "touchesCI": false,
+              "secretsFound": false,
+              "lintOK": true
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "ok": false,
+            "error": "Rules validation failed: rules.server:error:policy_refs array required\n",
+            "ts": "2025-10-01T16:56:59.554Z"
+          },
+          "expected": {
+            "ok": true,
+            "rulesetVersion": "string",
+            "violations": "array",
+            "policy_ok": "boolean"
+          }
+        }
+      ]
+    },
+    "orchestration": {
+      "passed": 1,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "orchestration"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "orchestration",
+            "version": "1.0.0",
+            "ts": "2025-10-01T16:56:59.662Z"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "name": "Fase 4: Optimización Completa del Sistema v2",
+  "description": "Workflow integral de optimización usando todos los agentes disponibles del proyecto",
+  "context": {
+    "project_type": "optimization",
+    "target_dir": ".",
+    "phase": "4",
+    "objective": "Optimización completa de performance, configuración y logging"
+  },
+  "steps": [
+    {
+      "step_id": "context_analysis",
+      "agent": "context",
+      "action": "analyze",
+      "input": {
+        "sources": [
+          "package.json",
+          "README.md",
+          "MANUAL-COMPLETO-CURSOR.md",
+          "tools/run-autofix.mjs",
+          "tools/optimization-autofix-integration.mjs",
+          "tools/auto-correction-engine-v2.mjs",
+          "tools/retry-rollback-system-v3.mjs",
+          "tools/smart-test-runner.mjs",
+          "tools/base-correction-tool.mjs",
+          "agents/optimization/agent.js",
+          "agents/security/agent.js",
+          "agents/metrics/agent.js"
+        ],
+        "selectors": [
+          "performance",
+          "optimization",
+          "configuration",
+          "logging",
+          "metrics",
+          "benchmarks",
+          "error handling",
+          "retry logic",
+          "rollback"
+        ],
+        "max_tokens": 1024
+      },
+      "depends_on": [],
+      "max_retries": 3,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "security_scan",
+      "agent": "security",
+      "action": "scan",
+      "input": {
+        "scan_type": "comprehensive",
+        "target_path": ".",
+        "include_dependencies": true
+      },
+      "depends_on": ["context_analysis"],
+      "max_retries": 2,
+      "timeout_ms": 45000
+    },
+    {
+      "step_id": "metrics_analysis",
+      "agent": "metrics",
+      "action": "analyze",
+      "input": {
+        "target_path": ".",
+        "include_benchmarks": true,
+        "performance_analysis": true
+      },
+      "depends_on": ["context_analysis"],
+      "max_retries": 2,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "optimization_suggestions",
+      "agent": "optimization",
+      "action": "analyze",
+      "input": {
+        "target_path": ".",
+        "auto_fix": true,
+        "include_performance": true,
+        "include_security": true,
+        "include_quality": true
+      },
+      "depends_on": ["security_scan", "metrics_analysis"],
+      "max_retries": 2,
+      "timeout_ms": 60000
+    },
+    {
+      "step_id": "final_optimization",
+      "agent": "optimization",
+      "action": "finalize",
+      "input": {
+        "target_path": ".",
+        "generate_report": true,
+        "include_recommendations": true
+      },
+      "depends_on": ["optimization_suggestions"],
+      "max_retries": 1,
+      "timeout_ms": 30000
+    }
+  ]
+}

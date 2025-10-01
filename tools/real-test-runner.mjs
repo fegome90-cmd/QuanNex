@@ -5,7 +5,10 @@
  * Fase 3: Testing Real - Tests con archivos reales, integración, casos límite
  */
 
-import { BaseCorrectionTool, createCommonCLI } from './base-correction-tool.mjs';
+import {
+  BaseCorrectionTool,
+  createCommonCLI
+} from './base-correction-tool.mjs';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
@@ -41,7 +44,7 @@ class RealTestRunner extends BaseCorrectionTool {
       retryAttempts: argv.retryAttempts,
       retryDelay: argv.retryDelay
     });
-    
+
     this.testFilesDir = argv.testFilesDir;
     this.testScenarios = argv.testScenarios;
     this.testResults = [];
@@ -54,21 +57,20 @@ class RealTestRunner extends BaseCorrectionTool {
   async run() {
     try {
       this.log('Iniciando Real Test Runner...');
-      
+
       // Paso 1: Preparar archivos de prueba
       await this.prepareTestFiles();
-      
+
       // Paso 2: Ejecutar escenarios de prueba
       await this.runTestScenarios();
-      
+
       // Paso 3: Validar resultados
       await this.validateResults();
-      
+
       // Paso 4: Generar reporte de testing
       await this.generateTestReport();
-      
+
       this.log('Real Test Runner completado exitosamente', 'success');
-      
     } catch (error) {
       this.log(`Error en Real Test Runner: ${error.message}`, 'error');
       throw error;
@@ -80,18 +82,20 @@ class RealTestRunner extends BaseCorrectionTool {
    */
   async prepareTestFiles() {
     this.log('Preparando archivos de prueba...');
-    
+
     if (!existsSync(this.testFilesDir)) {
-      throw new Error(`Directorio de archivos de prueba no encontrado: ${this.testFilesDir}`);
+      throw new Error(
+        `Directorio de archivos de prueba no encontrado: ${this.testFilesDir}`
+      );
     }
 
     // Listar archivos de prueba
     const fs = await import('node:fs');
     const files = fs.readdirSync(this.testFilesDir);
     this.testFiles = files.filter(file => file.endsWith('.js'));
-    
+
     this.log(`Encontrados ${this.testFiles.length} archivos de prueba`);
-    
+
     // Crear backups de archivos originales
     for (const file of this.testFiles) {
       const filePath = join(this.testFilesDir, file);
@@ -107,7 +111,7 @@ class RealTestRunner extends BaseCorrectionTool {
    */
   async runTestScenarios() {
     this.log(`Ejecutando ${this.testScenarios.length} escenarios de prueba...`);
-    
+
     for (const scenario of this.testScenarios) {
       await this.runTestScenario(scenario);
     }
@@ -118,7 +122,7 @@ class RealTestRunner extends BaseCorrectionTool {
    */
   async runTestScenario(scenario) {
     this.log(`Ejecutando escenario: ${scenario}`);
-    
+
     const scenarioResults = {
       scenario,
       timestamp: new Date().toISOString(),
@@ -151,31 +155,39 @@ class RealTestRunner extends BaseCorrectionTool {
     try {
       // Leer contenido original
       testResult.beforeContent = readFileSync(filePath, 'utf8');
-      
+
       // Ejecutar comando según escenario
       const command = this.getCommandForScenario(scenario, filePath);
       if (command) {
         await this.executeCommandWithRetry(command);
       }
-      
+
       // Leer contenido después del cambio
       testResult.afterContent = readFileSync(filePath, 'utf8');
-      
+
       // Analizar cambios
-      testResult.changes = this.analyzeChanges(testResult.beforeContent, testResult.afterContent);
-      
+      testResult.changes = this.analyzeChanges(
+        testResult.beforeContent,
+        testResult.afterContent
+      );
+
       // Validar que el cambio fue aplicado correctamente
-      testResult.success = this.validateScenarioResult(scenario, testResult.changes);
-      
+      testResult.success = this.validateScenarioResult(
+        scenario,
+        testResult.changes
+      );
+
       if (testResult.success) {
         this.log(`✅ Test exitoso: ${scenario} en ${file}`, 'success');
       } else {
         this.log(`❌ Test fallido: ${scenario} en ${file}`, 'error');
       }
-      
     } catch (error) {
       testResult.error = error.message;
-      this.log(`❌ Error en test ${scenario} para ${file}: ${error.message}`, 'error');
+      this.log(
+        `❌ Error en test ${scenario} para ${file}: ${error.message}`,
+        'error'
+      );
     }
 
     return testResult;
@@ -186,12 +198,12 @@ class RealTestRunner extends BaseCorrectionTool {
    */
   getCommandForScenario(scenario, filePath) {
     const commands = {
-      'eslint': `npx eslint --fix "${filePath}"`,
-      'prettier': `npx prettier --write "${filePath}"`,
+      eslint: `npx eslint --fix "${filePath}"`,
+      prettier: `npx prettier --write "${filePath}"`,
       'console-removal': `sed -i '' '/console\\.(log|warn|error|info)/d' "${filePath}"`,
       'var-to-const': `sed -i '' 's/var /const /g' "${filePath}"`
     };
-    
+
     return commands[scenario] || null;
   }
 
@@ -202,7 +214,7 @@ class RealTestRunner extends BaseCorrectionTool {
     const changes = [];
     const beforeLines = before.split('\n');
     const afterLines = after.split('\n');
-    
+
     // Detectar líneas eliminadas
     for (let i = 0; i < beforeLines.length; i++) {
       if (!afterLines[i] || beforeLines[i] !== afterLines[i]) {
@@ -214,7 +226,7 @@ class RealTestRunner extends BaseCorrectionTool {
         });
       }
     }
-    
+
     // Detectar líneas añadidas
     if (afterLines.length > beforeLines.length) {
       for (let i = beforeLines.length; i < afterLines.length; i++) {
@@ -226,7 +238,7 @@ class RealTestRunner extends BaseCorrectionTool {
         });
       }
     }
-    
+
     return changes;
   }
 
@@ -237,31 +249,34 @@ class RealTestRunner extends BaseCorrectionTool {
     switch (scenario) {
       case 'eslint':
         // ESLint debería haber corregido problemas de sintaxis
-        return changes.some(change => 
-          change.type === 'modified' && 
-          (change.after.includes('const ') || change.after.includes(';'))
+        return changes.some(
+          change =>
+            change.type === 'modified' &&
+            (change.after.includes('const ') || change.after.includes(';'))
         );
-        
+
       case 'prettier':
         // Prettier debería haber formateado el código
         return changes.length > 0;
-        
+
       case 'console-removal':
         // Debería haber eliminado console.log
-        return changes.some(change => 
-          change.type === 'modified' && 
-          change.before.includes('console.') && 
-          change.after === '[ELIMINADA]'
+        return changes.some(
+          change =>
+            change.type === 'modified' &&
+            change.before.includes('console.') &&
+            change.after === '[ELIMINADA]'
         );
-        
+
       case 'var-to-const':
         // Debería haber cambiado var por const
-        return changes.some(change => 
-          change.type === 'modified' && 
-          change.before.includes('var ') && 
-          change.after.includes('const ')
+        return changes.some(
+          change =>
+            change.type === 'modified' &&
+            change.before.includes('var ') &&
+            change.after.includes('const ')
         );
-        
+
       default:
         return false;
     }
@@ -272,11 +287,11 @@ class RealTestRunner extends BaseCorrectionTool {
    */
   async validateResults() {
     this.log('Validando resultados de tests...');
-    
+
     let totalTests = 0;
     let successfulTests = 0;
     let failedTests = 0;
-    
+
     for (const scenarioResult of this.testResults) {
       for (const test of scenarioResult.tests) {
         totalTests++;
@@ -287,11 +302,14 @@ class RealTestRunner extends BaseCorrectionTool {
         }
       }
     }
-    
-    const successRate = totalTests > 0 ? (successfulTests / totalTests * 100).toFixed(2) : 0;
-    
-    this.log(`Validación completada: ${successfulTests}/${totalTests} tests exitosos (${successRate}%)`);
-    
+
+    const successRate =
+      totalTests > 0 ? ((successfulTests / totalTests) * 100).toFixed(2) : 0;
+
+    this.log(
+      `Validación completada: ${successfulTests}/${totalTests} tests exitosos (${successRate}%)`
+    );
+
     if (failedTests > 0) {
       this.log(`${failedTests} tests fallaron`, 'warn');
     }
@@ -306,17 +324,24 @@ class RealTestRunner extends BaseCorrectionTool {
       test_scenarios: this.testScenarios,
       test_files_count: this.testFiles.length,
       total_scenarios: this.testResults.length,
-      total_tests: this.testResults.reduce((sum, sr) => sum + sr.tests.length, 0),
-      successful_tests: this.testResults.reduce((sum, sr) => 
-        sum + sr.tests.filter(t => t.success).length, 0),
-      failed_tests: this.testResults.reduce((sum, sr) => 
-        sum + sr.tests.filter(t => !t.success).length, 0),
+      total_tests: this.testResults.reduce(
+        (sum, sr) => sum + sr.tests.length,
+        0
+      ),
+      successful_tests: this.testResults.reduce(
+        (sum, sr) => sum + sr.tests.filter(t => t.success).length,
+        0
+      ),
+      failed_tests: this.testResults.reduce(
+        (sum, sr) => sum + sr.tests.filter(t => !t.success).length,
+        0
+      ),
       test_results: this.testResults
     });
 
     const filename = `real-test-runner-${Date.now()}.json`;
     await this.saveReport(report, filename);
-    
+
     this.log(`Reporte de testing generado: ${filename}`, 'success');
   }
 }

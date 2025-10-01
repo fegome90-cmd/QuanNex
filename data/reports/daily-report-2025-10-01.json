@@ -1,0 +1,102 @@
+{
+  "timestamp": "2025-10-01T17:07:14.515Z",
+  "date": "2025-10-01",
+  "summary": {
+    "semaphore_status": "RED",
+    "recommendation": "STABILIZE_FIRST",
+    "key_metrics": {
+      "defects": "0 P0/P1, 3 P2",
+      "ci_success": "0%",
+      "contracts": "100% (7 días)",
+      "error_rate": "5%",
+      "latency": "8s p95"
+    }
+  },
+  "details": {
+    "timestamp": "2025-10-01T17:06:43.624Z",
+    "date": "2025-10-01",
+    "defects": {
+      "p0_open": 0,
+      "p1_open": 0,
+      "p2_open": 3,
+      "p2_trend": "decreasing",
+      "p2_burndown_rate": 0.2,
+      "total_defects": 3
+    },
+    "ci_cd": {
+      "success_rate": 0,
+      "total_runs": 1,
+      "failed_runs": 1,
+      "mttr_minutes": 15,
+      "last_failure": "2025-10-01T17:06:43.848Z",
+      "recent_failures": [
+        {
+          "timestamp": "2025-10-01T17:06:43.848Z",
+          "reason": "Makefile:31: *** target pattern contains no `%'.  Stop.\n",
+          "duration_minutes": 5
+        }
+      ]
+    },
+    "contracts": {
+      "success_rate": 100,
+      "total_tests": 7,
+      "passed_tests": 7,
+      "failed_tests": 0,
+      "flaky_tests": 0,
+      "consecutive_days": 7,
+      "last_failure": null
+    },
+    "operation": {
+      "error_rate": 5,
+      "latency_p95": 8,
+      "orchestrator_p95": 4,
+      "consecutive_restarts": 0,
+      "total_tasks": 100,
+      "failed_tasks": 5,
+      "uptime_percent": 95
+    },
+    "observability": {
+      "trace_coverage": 100,
+      "audit_coverage": 100,
+      "log_noise_level": 25,
+      "structured_logs_percent": 95,
+      "error_trace_completeness": 100,
+      "performance_trace_completeness": 100
+    },
+    "semaphore_status": {
+      "status": "RED",
+      "checks": {
+        "defects": true,
+        "ci_cd": false,
+        "contracts": true,
+        "operation": false,
+        "observability": true
+      },
+      "all_green": false,
+      "recommendation": "STABILIZE_FIRST"
+    }
+  },
+  "trends": {
+    "defects_trend": "stable",
+    "ci_stability": "improving",
+    "performance_trend": "stable",
+    "error_trend": "decreasing"
+  },
+  "actions": [
+    {
+      "priority": "HIGH",
+      "action": "Execute stabilization checklist",
+      "reason": "Semáforo rojo - estabilización requerida"
+    },
+    {
+      "priority": "HIGH",
+      "action": "Fix CI/CD stability",
+      "reason": "CI success rate: 0% < 98%"
+    },
+    {
+      "priority": "HIGH",
+      "action": "Reduce error rate",
+      "reason": "Error rate: 5% > 1%"
+    }
+  ]
+}

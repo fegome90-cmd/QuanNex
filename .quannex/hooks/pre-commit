@@ -6,8 +6,14 @@ set -euo pipefail
 
 echo "🔍 Verificando trailer QuanNex..."
 
-# Obtener el mensaje del último commit
-MSG=$(git log -1 --pretty=%B)
+# Obtener el mensaje del commit que se está creando
+MSG=""
+if [ -n "${1:-}" ] && [ -f "$1" ]; then
+    MSG=$(cat "$1")
+else
+    # Si no hay archivo, obtener del último commit (fallback)
+    MSG=$(git log -1 --pretty=%B)
+fi
 
 # Verificar que existe el trailer QuanNex
 TRAILER=$(echo "$MSG" | grep -E "QuanNex: requestId=.* sig=[0-9a-f]+" || true)
@@ -19,6 +25,9 @@ if [ -z "$TRAILER" ]; then
     echo "Usa: qnx commit -m 'tu mensaje'"
     echo "O agrega manualmente:"
     echo "QuanNex: requestId=RQ-$(date +%Y%m%d)-$(openssl rand -hex 4) sig=<firma>"
+    echo ""
+    echo "Mensaje actual:"
+    echo "$MSG"
     echo ""
     exit 1
 fi

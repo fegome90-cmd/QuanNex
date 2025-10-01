@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import WorkflowOrchestrator from '../orchestrator.js';
 
-test('runs rules→context→prompting with gates', async () => {
+test('runs rules→context→prompting with gates', async() => {
   const orch = new WorkflowOrchestrator({ timeoutMs: 15000 });
   const cfg = JSON.parse(
     readFileSync(join(process.cwd(), 'orchestration/plan.json'))
@@ -22,7 +22,7 @@ test('runs rules→context→prompting with gates', async () => {
   assert.ok(exec.results.prompting);
 });
 
-test('validates workflow configuration', async () => {
+test('validates workflow configuration', async() => {
   const orch = new WorkflowOrchestrator();
 
   // Test valid config
@@ -61,7 +61,7 @@ test('validates workflow configuration', async () => {
   }
 });
 
-test('handles timeouts correctly', async () => {
+test('handles timeouts correctly', async() => {
   const orch = new WorkflowOrchestrator({ timeoutMs: 1000 }); // Very short timeout
 
   const config = {
@@ -88,7 +88,7 @@ test('handles timeouts correctly', async () => {
   }
 });
 
-test('cleanup removes artifacts', async () => {
+test('cleanup removes artifacts', async() => {
   const orch = new WorkflowOrchestrator();
 
   const config = {
@@ -113,7 +113,7 @@ test('cleanup removes artifacts', async () => {
   assert.ok(cleaned);
 });
 
-test('health check works', async () => {
+test('health check works', async() => {
   const orch = new WorkflowOrchestrator();
   const health = await orch.healthCheck();
 

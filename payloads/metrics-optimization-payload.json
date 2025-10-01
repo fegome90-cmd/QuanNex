@@ -1,0 +1,6 @@
+{
+  "target_path": ".",
+  "analysis_types": ["performance", "coverage", "quality", "complexity"],
+  "include_benchmarks": true,
+  "performance_analysis": true
+}

@@ -1,0 +1,289 @@
+{
+  "report_type": "smart_test_runner",
+  "timestamp": "2025-10-01T16:09:53.157Z",
+  "tool_version": "2.0.0",
+  "config": {
+    "target_path": ".",
+    "dry_run": false,
+    "backup_enabled": true,
+    "verbose": false
+  },
+  "results": {
+    "applied": 0,
+    "failed": 0,
+    "skipped": 0,
+    "total": 0
+  },
+  "data": {
+    "adaptive_testing": true,
+    "total_files": 3,
+    "total_tests": 12,
+    "successful_tests": 0,
+    "skipped_tests": 4,
+    "failed_tests": 8,
+    "success_rate": "0.00%",
+    "file_analysis": [
+      {
+        "file": "test-file-1.js",
+        "path": "test-files/test-file-1.js",
+        "hasVarDeclarations": false,
+        "hasConsoleStatements": true,
+        "hasInconsistentQuotes": true,
+        "hasMissingSemicolons": false,
+        "needsPrettier": false,
+        "needsESLint": true,
+        "lineCount": 17,
+        "complexity": {
+          "functions": 1,
+          "loops": 0,
+          "conditionals": 0,
+          "codeLines": 10,
+          "totalComplexity": 11
+        }
+      },
+      {
+        "file": "test-file-2.js",
+        "path": "test-files/test-file-2.js",
+        "hasVarDeclarations": false,
+        "hasConsoleStatements": true,
+        "hasInconsistentQuotes": true,
+        "hasMissingSemicolons": false,
+        "needsPrettier": true,
+        "needsESLint": true,
+        "lineCount": 25,
+        "complexity": {
+          "functions": 1,
+          "loops": 0,
+          "conditionals": 0,
+          "codeLines": 13,
+          "totalComplexity": 14
+        }
+      },
+      {
+        "file": "test-file-3.js",
+        "path": "test-files/test-file-3.js",
+        "hasVarDeclarations": false,
+        "hasConsoleStatements": true,
+        "hasInconsistentQuotes": true,
+        "hasMissingSemicolons": false,
+        "needsPrettier": true,
+        "needsESLint": true,
+        "lineCount": 62,
+        "complexity": {
+          "functions": 2,
+          "loops": 0,
+          "conditionals": 0,
+          "codeLines": 32,
+          "totalComplexity": 34
+        }
+      }
+    ],
+    "test_results": [
+      {
+        "file": "test-file-1.js",
+        "analysis": {
+          "file": "test-file-1.js",
+          "path": "test-files/test-file-1.js",
+          "hasVarDeclarations": false,
+          "hasConsoleStatements": true,
+          "hasInconsistentQuotes": true,
+          "hasMissingSemicolons": false,
+          "needsPrettier": false,
+          "needsESLint": true,
+          "lineCount": 17,
+          "complexity": {
+            "functions": 1,
+            "loops": 0,
+            "conditionals": 0,
+            "codeLines": 10,
+            "totalComplexity": 11
+          }
+        },
+        "tests": [
+          {
+            "name": "prettier-formatting",
+            "description": "Formateo con Prettier (ya formateado)",
+            "expectedChange": false,
+            "skipReason": "Archivo ya está formateado correctamente",
+            "success": true,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file for repair validation\nconst testData = {\n  name: 'test',\n  value: 42\n};\n\nfunction testFunction(input) {\n  const result = input * 2;\n  return result;\n}\n\n// Test execution\nconst result = testFunction(21);\n// console.log removed for production\n\nmodule.exports = { testFunction, testData };\n",
+            "afterContent": "",
+            "changes": []
+          },
+          {
+            "name": "eslint-fixes",
+            "description": "Correcciones con ESLint",
+            "expectedChange": true,
+            "success": false,
+            "error": "Comando falló después de 3 intentos: Comando falló: Command failed: npx eslint --fix \"test-files/test-file-1.js\"\nCommand failed: /Users/felipe/Developer/startkit-main/node_modules/.bin/eslint --fix,test-files/test-file-1.js\n",
+            "actualChange": false,
+            "beforeContent": "// Test file for repair validation\nconst testData = {\n  name: 'test',\n  value: 42\n};\n\nfunction testFunction(input) {\n  const result = input * 2;\n  return result;\n}\n\n// Test execution\nconst result = testFunction(21);\n// console.log removed for production\n\nmodule.exports = { testFunction, testData };\n",
+            "afterContent": "",
+            "changes": []
+          },
+          {
+            "name": "console-removal",
+            "description": "Eliminación de console statements",
+            "expectedChange": true,
+            "success": false,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file for repair validation\nconst testData = {\n  name: 'test',\n  value: 42\n};\n\nfunction testFunction(input) {\n  const result = input * 2;\n  return result;\n}\n\n// Test execution\nconst result = testFunction(21);\n// console.log removed for production\n\nmodule.exports = { testFunction, testData };\n",
+            "afterContent": "// Test file for repair validation\nconst testData = {\n  name: 'test',\n  value: 42\n};\n\nfunction testFunction(input) {\n  const result = input * 2;\n  return result;\n}\n\n// Test execution\nconst result = testFunction(21);\n// console.log removed for production\n\nmodule.exports = { testFunction, testData };\n",
+            "changes": []
+          },
+          {
+            "name": "var-to-const",
+            "description": "Cambio de var a const (no hay var)",
+            "expectedChange": false,
+            "skipReason": "No hay declaraciones var para cambiar",
+            "success": true,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file for repair validation\nconst testData = {\n  name: 'test',\n  value: 42\n};\n\nfunction testFunction(input) {\n  const result = input * 2;\n  return result;\n}\n\n// Test execution\nconst result = testFunction(21);\n// console.log removed for production\n\nmodule.exports = { testFunction, testData };\n",
+            "afterContent": "",
+            "changes": []
+          }
+        ]
+      },
+      {
+        "file": "test-file-2.js",
+        "analysis": {
+          "file": "test-file-2.js",
+          "path": "test-files/test-file-2.js",
+          "hasVarDeclarations": false,
+          "hasConsoleStatements": true,
+          "hasInconsistentQuotes": true,
+          "hasMissingSemicolons": false,
+          "needsPrettier": true,
+          "needsESLint": true,
+          "lineCount": 25,
+          "complexity": {
+            "functions": 1,
+            "loops": 0,
+            "conditionals": 0,
+            "codeLines": 13,
+            "totalComplexity": 14
+          }
+        },
+        "tests": [
+          {
+            "name": "prettier-formatting",
+            "description": "Formateo con Prettier",
+            "expectedChange": true,
+            "success": false,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file 2 for real testing\nconst data = {\n  name: 'test',\n  value: 42\n};\n\n// console.log removed for production\n\nfunction processData(input) {\n  const result = input * 2;\n  // console.log removed for production\n  return result;\n}\n\n// More magic numbers\nconst timeout = 3000;\nsetTimeout(() => {\n  // console.log removed for production\n}, timeout);\n\n// Inconsistent formatting\nconst obj = { a: 1, b: 2, c: 3 };\n\nprocessData(21);\n",
+            "afterContent": "// Test file 2 for real testing\nconst data = {\n  name: 'test',\n  value: 42\n};\n\n// console.log removed for production\n\nfunction processData(input) {\n  const result = input * 2;\n  // console.log removed for production\n  return result;\n}\n\n// More magic numbers\nconst timeout = 3000;\nsetTimeout(() => {\n  // console.log removed for production\n}, timeout);\n\n// Inconsistent formatting\nconst obj = { a: 1, b: 2, c: 3 };\n\nprocessData(21);\n",
+            "changes": []
+          },
+          {
+            "name": "eslint-fixes",
+            "description": "Correcciones con ESLint",
+            "expectedChange": true,
+            "success": false,
+            "error": "Comando falló después de 3 intentos: Comando falló: Command failed: npx eslint --fix \"test-files/test-file-2.js\"\nCommand failed: /Users/felipe/Developer/startkit-main/node_modules/.bin/eslint --fix,test-files/test-file-2.js\n",
+            "actualChange": false,
+            "beforeContent": "// Test file 2 for real testing\nconst data = {\n  name: 'test',\n  value: 42\n};\n\n// console.log removed for production\n\nfunction processData(input) {\n  const result = input * 2;\n  // console.log removed for production\n  return result;\n}\n\n// More magic numbers\nconst timeout = 3000;\nsetTimeout(() => {\n  // console.log removed for production\n}, timeout);\n\n// Inconsistent formatting\nconst obj = { a: 1, b: 2, c: 3 };\n\nprocessData(21);\n",
+            "afterContent": "",
+            "changes": []
+          },
+          {
+            "name": "console-removal",
+            "description": "Eliminación de console statements",
+            "expectedChange": true,
+            "success": false,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file 2 for real testing\nconst data = {\n  name: 'test',\n  value: 42\n};\n\n// console.log removed for production\n\nfunction processData(input) {\n  const result = input * 2;\n  // console.log removed for production\n  return result;\n}\n\n// More magic numbers\nconst timeout = 3000;\nsetTimeout(() => {\n  // console.log removed for production\n}, timeout);\n\n// Inconsistent formatting\nconst obj = { a: 1, b: 2, c: 3 };\n\nprocessData(21);\n",
+            "afterContent": "// Test file 2 for real testing\nconst data = {\n  name: 'test',\n  value: 42\n};\n\n// console.log removed for production\n\nfunction processData(input) {\n  const result = input * 2;\n  // console.log removed for production\n  return result;\n}\n\n// More magic numbers\nconst timeout = 3000;\nsetTimeout(() => {\n  // console.log removed for production\n}, timeout);\n\n// Inconsistent formatting\nconst obj = { a: 1, b: 2, c: 3 };\n\nprocessData(21);\n",
+            "changes": []
+          },
+          {
+            "name": "var-to-const",
+            "description": "Cambio de var a const (no hay var)",
+            "expectedChange": false,
+            "skipReason": "No hay declaraciones var para cambiar",
+            "success": true,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file 2 for real testing\nconst data = {\n  name: 'test',\n  value: 42\n};\n\n// console.log removed for production\n\nfunction processData(input) {\n  const result = input * 2;\n  // console.log removed for production\n  return result;\n}\n\n// More magic numbers\nconst timeout = 3000;\nsetTimeout(() => {\n  // console.log removed for production\n}, timeout);\n\n// Inconsistent formatting\nconst obj = { a: 1, b: 2, c: 3 };\n\nprocessData(21);\n",
+            "afterContent": "",
+            "changes": []
+          }
+        ]
+      },
+      {
+        "file": "test-file-3.js",
+        "analysis": {
+          "file": "test-file-3.js",
+          "path": "test-files/test-file-3.js",
+          "hasVarDeclarations": false,
+          "hasConsoleStatements": true,
+          "hasInconsistentQuotes": true,
+          "hasMissingSemicolons": false,
+          "needsPrettier": true,
+          "needsESLint": true,
+          "lineCount": 62,
+          "complexity": {
+            "functions": 2,
+            "loops": 0,
+            "conditionals": 0,
+            "codeLines": 32,
+            "totalComplexity": 34
+          }
+        },
+        "tests": [
+          {
+            "name": "prettier-formatting",
+            "description": "Formateo con Prettier",
+            "expectedChange": true,
+            "success": false,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file 3 for real testing\nconst config = {\n  port: 3000,\n  host: 'localhost'\n};\n\n// console.log removed for production\n\n// Long function that should be refactored\nfunction veryLongFunctionThatDoesTooMuch() {\n  const step1 = 'first step';\n  // console.log removed for production\n\n  const step2 = 'second step';\n  // console.log removed for production\n\n  const step3 = 'third step';\n  // console.log removed for production\n\n  const step4 = 'fourth step';\n  // console.log removed for production\n\n  const step5 = 'fifth step';\n  // console.log removed for production\n\n  const step6 = 'sixth step';\n  // console.log removed for production\n\n  const step7 = 'seventh step';\n  // console.log removed for production\n\n  const step8 = 'eighth step';\n  // console.log removed for production\n\n  const step9 = 'ninth step';\n  // console.log removed for production\n\n  const step10 = 'tenth step';\n  // console.log removed for production\n\n  return (\n    step1 +\n    step2 +\n    step3 +\n    step4 +\n    step5 +\n    step6 +\n    step7 +\n    step8 +\n    step9 +\n    step10\n  );\n}\n\n// Magic numbers\nconst delay = 1000;\nsetTimeout(() => {\n  // console.log removed for production\n}, delay);\n\nveryLongFunctionThatDoesTooMuch();\n",
+            "afterContent": "// Test file 3 for real testing\nconst config = {\n  port: 3000,\n  host: 'localhost'\n};\n\n// console.log removed for production\n\n// Long function that should be refactored\nfunction veryLongFunctionThatDoesTooMuch() {\n  const step1 = 'first step';\n  // console.log removed for production\n\n  const step2 = 'second step';\n  // console.log removed for production\n\n  const step3 = 'third step';\n  // console.log removed for production\n\n  const step4 = 'fourth step';\n  // console.log removed for production\n\n  const step5 = 'fifth step';\n  // console.log removed for production\n\n  const step6 = 'sixth step';\n  // console.log removed for production\n\n  const step7 = 'seventh step';\n  // console.log removed for production\n\n  const step8 = 'eighth step';\n  // console.log removed for production\n\n  const step9 = 'ninth step';\n  // console.log removed for production\n\n  const step10 = 'tenth step';\n  // console.log removed for production\n\n  return (\n    step1 +\n    step2 +\n    step3 +\n    step4 +\n    step5 +\n    step6 +\n    step7 +\n    step8 +\n    step9 +\n    step10\n  );\n}\n\n// Magic numbers\nconst delay = 1000;\nsetTimeout(() => {\n  // console.log removed for production\n}, delay);\n\nveryLongFunctionThatDoesTooMuch();\n",
+            "changes": []
+          },
+          {
+            "name": "eslint-fixes",
+            "description": "Correcciones con ESLint",
+            "expectedChange": true,
+            "success": false,
+            "error": "Comando falló después de 3 intentos: Comando falló: Command failed: npx eslint --fix \"test-files/test-file-3.js\"\nCommand failed: /Users/felipe/Developer/startkit-main/node_modules/.bin/eslint --fix,test-files/test-file-3.js\n",
+            "actualChange": false,
+            "beforeContent": "// Test file 3 for real testing\nconst config = {\n  port: 3000,\n  host: 'localhost'\n};\n\n// console.log removed for production\n\n// Long function that should be refactored\nfunction veryLongFunctionThatDoesTooMuch() {\n  const step1 = 'first step';\n  // console.log removed for production\n\n  const step2 = 'second step';\n  // console.log removed for production\n\n  const step3 = 'third step';\n  // console.log removed for production\n\n  const step4 = 'fourth step';\n  // console.log removed for production\n\n  const step5 = 'fifth step';\n  // console.log removed for production\n\n  const step6 = 'sixth step';\n  // console.log removed for production\n\n  const step7 = 'seventh step';\n  // console.log removed for production\n\n  const step8 = 'eighth step';\n  // console.log removed for production\n\n  const step9 = 'ninth step';\n  // console.log removed for production\n\n  const step10 = 'tenth step';\n  // console.log removed for production\n\n  return (\n    step1 +\n    step2 +\n    step3 +\n    step4 +\n    step5 +\n    step6 +\n    step7 +\n    step8 +\n    step9 +\n    step10\n  );\n}\n\n// Magic numbers\nconst delay = 1000;\nsetTimeout(() => {\n  // console.log removed for production\n}, delay);\n\nveryLongFunctionThatDoesTooMuch();\n",
+            "afterContent": "",
+            "changes": []
+          },
+          {
+            "name": "console-removal",
+            "description": "Eliminación de console statements",
+            "expectedChange": true,
+            "success": false,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file 3 for real testing\nconst config = {\n  port: 3000,\n  host: 'localhost'\n};\n\n// console.log removed for production\n\n// Long function that should be refactored\nfunction veryLongFunctionThatDoesTooMuch() {\n  const step1 = 'first step';\n  // console.log removed for production\n\n  const step2 = 'second step';\n  // console.log removed for production\n\n  const step3 = 'third step';\n  // console.log removed for production\n\n  const step4 = 'fourth step';\n  // console.log removed for production\n\n  const step5 = 'fifth step';\n  // console.log removed for production\n\n  const step6 = 'sixth step';\n  // console.log removed for production\n\n  const step7 = 'seventh step';\n  // console.log removed for production\n\n  const step8 = 'eighth step';\n  // console.log removed for production\n\n  const step9 = 'ninth step';\n  // console.log removed for production\n\n  const step10 = 'tenth step';\n  // console.log removed for production\n\n  return (\n    step1 +\n    step2 +\n    step3 +\n    step4 +\n    step5 +\n    step6 +\n    step7 +\n    step8 +\n    step9 +\n    step10\n  );\n}\n\n// Magic numbers\nconst delay = 1000;\nsetTimeout(() => {\n  // console.log removed for production\n}, delay);\n\nveryLongFunctionThatDoesTooMuch();\n",
+            "afterContent": "// Test file 3 for real testing\nconst config = {\n  port: 3000,\n  host: 'localhost'\n};\n\n// console.log removed for production\n\n// Long function that should be refactored\nfunction veryLongFunctionThatDoesTooMuch() {\n  const step1 = 'first step';\n  // console.log removed for production\n\n  const step2 = 'second step';\n  // console.log removed for production\n\n  const step3 = 'third step';\n  // console.log removed for production\n\n  const step4 = 'fourth step';\n  // console.log removed for production\n\n  const step5 = 'fifth step';\n  // console.log removed for production\n\n  const step6 = 'sixth step';\n  // console.log removed for production\n\n  const step7 = 'seventh step';\n  // console.log removed for production\n\n  const step8 = 'eighth step';\n  // console.log removed for production\n\n  const step9 = 'ninth step';\n  // console.log removed for production\n\n  const step10 = 'tenth step';\n  // console.log removed for production\n\n  return (\n    step1 +\n    step2 +\n    step3 +\n    step4 +\n    step5 +\n    step6 +\n    step7 +\n    step8 +\n    step9 +\n    step10\n  );\n}\n\n// Magic numbers\nconst delay = 1000;\nsetTimeout(() => {\n  // console.log removed for production\n}, delay);\n\nveryLongFunctionThatDoesTooMuch();\n",
+            "changes": []
+          },
+          {
+            "name": "var-to-const",
+            "description": "Cambio de var a const (no hay var)",
+            "expectedChange": false,
+            "skipReason": "No hay declaraciones var para cambiar",
+            "success": true,
+            "error": null,
+            "actualChange": false,
+            "beforeContent": "// Test file 3 for real testing\nconst config = {\n  port: 3000,\n  host: 'localhost'\n};\n\n// console.log removed for production\n\n// Long function that should be refactored\nfunction veryLongFunctionThatDoesTooMuch() {\n  const step1 = 'first step';\n  // console.log removed for production\n\n  const step2 = 'second step';\n  // console.log removed for production\n\n  const step3 = 'third step';\n  // console.log removed for production\n\n  const step4 = 'fourth step';\n  // console.log removed for production\n\n  const step5 = 'fifth step';\n  // console.log removed for production\n\n  const step6 = 'sixth step';\n  // console.log removed for production\n\n  const step7 = 'seventh step';\n  // console.log removed for production\n\n  const step8 = 'eighth step';\n  // console.log removed for production\n\n  const step9 = 'ninth step';\n  // console.log removed for production\n\n  const step10 = 'tenth step';\n  // console.log removed for production\n\n  return (\n    step1 +\n    step2 +\n    step3 +\n    step4 +\n    step5 +\n    step6 +\n    step7 +\n    step8 +\n    step9 +\n    step10\n  );\n}\n\n// Magic numbers\nconst delay = 1000;\nsetTimeout(() => {\n  // console.log removed for production\n}, delay);\n\nveryLongFunctionThatDoesTooMuch();\n",
+            "afterContent": "",
+            "changes": []
+          }
+        ]
+      }
+    ]
+  }
+}

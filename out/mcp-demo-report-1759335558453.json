@@ -1,0 +1,72 @@
+{
+  "demo_info": {
+    "timestamp": "2025-10-01T16:19:18.451Z",
+    "mode": "MCP_DEMO",
+    "agents_tested": [
+      "context",
+      "prompting",
+      "rules",
+      "orchestration"
+    ],
+    "description": "Demo de conectividad entre agentes MCP internos"
+  },
+  "demo_data": {
+    "context": {
+      "input": {
+        "sources": [
+          "README.md",
+          "package.json"
+        ],
+        "selectors": [
+          "dependencies",
+          "scripts",
+          "description"
+        ],
+        "max_tokens": 200
+      },
+      "description": "Análisis contextual de archivos del proyecto"
+    },
+    "prompting": {
+      "input": {
+        "goal": "Crear un resumen del proyecto",
+        "style": "technical",
+        "constraints": [
+          "Usar lenguaje claro",
+          "Incluir ejemplos"
+        ],
+        "context_refs": [
+          "README.md",
+          "package.json"
+        ],
+        "ruleset_refs": [
+          "Manual del proyecto"
+        ]
+      },
+      "description": "Generación de prompts para resumir el proyecto"
+    },
+    "rules": {
+      "input": {
+        "policy_refs": [
+          "README.md",
+          "docs/AGENTS.md"
+        ],
+        "compliance_level": "strict",
+        "tone": "formal"
+      },
+      "description": "Compilación de políticas y guardrails"
+    },
+    "orchestration": {
+      "input": {
+        "action": "health"
+      },
+      "description": "Verificación de salud del sistema"
+    }
+  },
+  "recommendations": [
+    "Los agentes están funcionando correctamente",
+    "La integración entre agentes es exitosa",
+    "El sistema MCP autónomo está listo para producción",
+    "Considerar implementar logs estructurados para monitoreo",
+    "Agregar métricas de performance para optimización"
+  ]
+}

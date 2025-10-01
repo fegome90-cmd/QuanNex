@@ -1,0 +1,9 @@
+{
+  "criticalViolations": 0,
+  "highViolations": 0,
+  "mediumViolations": 2,
+  "lowViolations": 5,
+  "securityScore": 95,
+  "lastScan": "2025-10-01T17:23:36.221Z",
+  "generatedAt": "2025-10-01T17:23:36.221Z"
+}

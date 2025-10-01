@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { hello, isHello } from '../../contracts/handshake.js';
+import { validateReq, ok, fail } from '../../contracts/schema.js';
 
 const baseDir = new URL('../../', import.meta.url);
 const resolvePath = relative => new URL(relative, baseDir).pathname;
 
 const MAX_LIST_ITEMS = 50;
+const DEFAULT_MAX_TOKENS = 512;
 
 const ensureStringArray = (
   field,
@@ -131,8 +134,58 @@ const validateOutput = data => {
   return errors;
 };
 
+// Nueva función para manejar mensajes con handshake
+async function onMessage(msg) {
+  if (isHello(msg)) return hello("context");
+  if (!validateReq(msg)) return fail("INVALID_SCHEMA_MIN");
+
+  if (msg.capability === "context.resolve") {
+    try {
+      // Usar funcionalidad real del servidor
+      const { sources, selectors, max_tokens } = msg.payload;
+      const payload = {
+        sources: sources || [],
+        selectors: selectors || [],
+        max_tokens: max_tokens || DEFAULT_MAX_TOKENS
+      };
+      
+      const serverPath = resolvePath('agents/context/server.js');
+      const result = spawnSync('node', [serverPath], {
+        input: JSON.stringify(payload),
+        encoding: 'utf8'
+      });
+      
+      if (result.status !== 0) {
+        return fail(`Context resolution failed: ${result.stderr}`);
+      }
+      
+      const contextData = JSON.parse(result.stdout);
+      return ok({
+        project: process.cwd().split('/').pop(),
+        branch: "main", // TODO: Implement git branch detection
+        filesChanged: sources || [],
+        contextBundle: contextData.context_bundle,
+        provenance: contextData.provenance,
+        stats: contextData.stats
+      });
+    } catch (error) {
+      return fail(`Context resolution error: ${error.message}`);
+    }
+  }
+  return fail("UNKNOWN_CAPABILITY");
+}
+
 const rawInput = readFileSync(0, 'utf8');
 const data = JSON.parse(rawInput);
+
+// Verificar si es un mensaje de handshake o con schema
+if (data.type === "hello" || data.requestId) {
+  const response = await onMessage(data);
+  console.log(JSON.stringify(response, null, 2));
+  process.exit(0);
+}
+
+// Lógica original para compatibilidad
 const inputErrors = validateInput(data);
 if (inputErrors.length > 0) {
   console.error(JSON.stringify(inputErrors, null, 2));

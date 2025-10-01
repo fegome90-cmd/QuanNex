@@ -6,6 +6,7 @@ import {
   ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 import WorkflowOrchestrator from '../orchestrator.js';
+import RouterEngine from '../router.js';
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,7 +19,7 @@ class OrchestrationMCPServer {
   constructor() {
     this.server = new Server(
       {
-        name: 'orchestration-mcp-server',
+        name: 'quannex-mcp-server',
         version: '1.0.0'
       },
       {
@@ -29,11 +30,12 @@ class OrchestrationMCPServer {
     );
 
     this.orchestrator = new WorkflowOrchestrator();
+    this.router = new RouterEngine();
     this.setupHandlers();
   }
 
   setupHandlers() {
-    this.server.setRequestHandler(ListToolsRequestSchema, async () => {
+    this.server.setRequestHandler(ListToolsRequestSchema, async() => {
       return {
         tools: [
           {
@@ -75,6 +77,41 @@ class OrchestrationMCPServer {
                 }
               },
               required: ['name', 'steps']
+            }
+          },
+          {
+            name: 'route_task',
+            description:
+              'Resolve the best downstream agent using declarative router rules',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                intent: {
+                  type: 'string',
+                  description: 'High level task intent (refactor, test, bugfix, lint, docstring, rag)'
+                },
+                confidence: {
+                  type: 'number',
+                  description: 'Confidence score provided by planner (0-1)'
+                },
+                artifacts: {
+                  type: 'array',
+                  description:
+                    'Artifacts or file paths involved in the task, used for routing filters',
+                  items: {
+                    type: 'string'
+                  }
+                },
+                thread_state_id: {
+                  type: 'string',
+                  description: 'Opaque identifier for observability correlation'
+                },
+                metadata: {
+                  type: 'object',
+                  description: 'Optional planner metadata or overrides'
+                }
+              },
+              required: ['intent', 'confidence']
             }
           },
           {
@@ -190,6 +227,9 @@ class OrchestrationMCPServer {
           case 'call_agent_direct':
             return await this.handleCallAgentDirect(args);
 
+          case 'route_task':
+            return await this.handleRouteTask(args);
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -204,6 +244,25 @@ class OrchestrationMCPServer {
         };
       }
     });
+  }
+
+  async handleRouteTask(args) {
+    const decision = this.router.route({
+      intent: args.intent,
+      confidence: args.confidence,
+      artifacts: args.artifacts || [],
+      threadStateId: args.thread_state_id,
+      metadata: args.metadata || {}
+    });
+
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Routing decision:\n\`\`\`json\n${JSON.stringify(decision, null, 2)}\n\`\`\``
+        }
+      ]
+    };
   }
 
   async handleCreateWorkflow(args) {

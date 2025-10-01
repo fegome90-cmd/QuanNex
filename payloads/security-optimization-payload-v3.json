@@ -1,0 +1,7 @@
+{
+  "target_path": ".",
+  "check_mode": "scan",
+  "scan_depth": 3,
+  "severity_threshold": "low",
+  "exclude_patterns": ["node_modules/**", "*.log", "*.tmp", ".git/**"]
+}

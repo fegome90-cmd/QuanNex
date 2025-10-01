@@ -258,7 +258,7 @@ scan_basic() {
         fi
     fi
     
-    echo "${findings[@]}"
+    echo "${findings[@]:-}"
 }
 
 # Función para escanear APIs
@@ -317,7 +317,7 @@ scan_api() {
         findings+=("{\"type\":\"missing_rate_limiting\",\"severity\":\"medium\",\"description\":\"No rate limiting headers detected\"}")
     fi
     
-    echo "${findings[@]}"
+    echo "${findings[@]:-}"
 }
 
 # Función para escanear aplicaciones web
@@ -371,7 +371,7 @@ scan_web() {
         fi
     done
     
-    echo "${findings[@]}"
+    echo "${findings[@]:-}"
 }
 
 # Función principal de escaneo
@@ -448,7 +448,10 @@ main() {
     }"
     
     # Guardar reporte
-    echo "$report_json" | jq '.' > "$OUTPUT_FILE"
+    echo "$report_json" | jq '.' > "$OUTPUT_FILE" 2>/dev/null || {
+        # Si jq falla, guardar como JSON válido manualmente
+        echo "$report_json" > "$OUTPUT_FILE"
+    }
     
     # Mostrar resumen
     local total_findings=${#all_findings[@]}

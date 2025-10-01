@@ -4,18 +4,18 @@ const data = {
   value: 42
 };
 
-console.log('Data:', data);
+// console.log removed for production
 
 function processData(input) {
   const result = input * 2;
-  console.log('Result:', result);
+  // console.log removed for production
   return result;
 }
 
 // More magic numbers
 const timeout = 3000;
 setTimeout(() => {
-  console.log('Another timeout');
+  // console.log removed for production
 }, timeout);
 
 // Inconsistent formatting

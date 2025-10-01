@@ -1,0 +1,191 @@
+{
+  "timestamp": "2025-10-01T16:32:40.079Z",
+  "summary": {
+    "totalPassed": 3,
+    "totalFailed": 4,
+    "successRate": 42.857142857142854
+  },
+  "results": {
+    "context": {
+      "passed": 1,
+      "failed": 1,
+      "tests": [
+        {
+          "name": "Valid input with sources",
+          "status": "PASS",
+          "input": {
+            "sources": [
+              "README.md"
+            ],
+            "selectors": [
+              "test"
+            ],
+            "max_tokens": 100
+          },
+          "output": {
+            "schema_version": "1.0.0",
+            "agent_version": "1.0.0",
+            "context_bundle": "# Source: README.md\n- Testing setup con Playwright\n- **Design Validation**: Testing visual con Playwright\n- `/test-ui` - Testing visual con Playwright\n- **Playwright MCP**: Testing visual y automation\n- Testing y quality assurance automático\n## 🧪 **Testing**\n# Ejecutar tests del kit\n./scripts/test-claude-init.sh",
+            "provenance": [
+              "loaded:README.md"
+            ],
+            "stats": {
+              "tokens_estimated": 256,
+              "chunks": 1,
+              "matched": 8,
+              "truncated": false,
+              "adjusted": true
+            },
+            "trace": [
+              "context.server:ok",
+              "context.server:adjusted_max_tokens"
+            ]
+          }
+        },
+        {
+          "name": "Empty sources array",
+          "status": "ERROR",
+          "input": {
+            "sources": [],
+            "selectors": [
+              "test"
+            ],
+            "max_tokens": 100
+          },
+          "error": "Agent failed with code 1: [\n  \"sources must be a non-empty array of strings\"\n]\n"
+        }
+      ]
+    },
+    "prompting": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Basic prompt generation",
+          "status": "PASS",
+          "input": {
+            "goal": "Test goal",
+            "style": "technical",
+            "constraints": [
+              "Test constraint"
+            ],
+            "context_refs": [
+              "Test context"
+            ],
+            "ruleset_refs": [
+              "Test rules"
+            ]
+          },
+          "output": {
+            "schema_version": "1.0.0",
+            "agent_version": "1.0.0",
+            "system_prompt": "You are a helpful coding assistant. Style: technical. Constraints: Test constraint. Rules: Test rules. Context references: Test context.",
+            "user_prompt": "Goal: Test goal",
+            "guardrails": [
+              "Test constraint"
+            ],
+            "trace": [
+              "prompting.server:ok"
+            ]
+          }
+        },
+        {
+          "name": "Minimal input",
+          "status": "PASS",
+          "input": {
+            "goal": "Test"
+          },
+          "output": {
+            "schema_version": "1.0.0",
+            "agent_version": "1.0.0",
+            "system_prompt": "You are a helpful coding assistant. Style: default.",
+            "user_prompt": "Goal: Test",
+            "guardrails": [],
+            "trace": [
+              "prompting.server:ok"
+            ]
+          }
+        }
+      ]
+    },
+    "rules": {
+      "passed": 0,
+      "failed": 2,
+      "tests": [
+        {
+          "name": "Basic policy compilation",
+          "status": "FAIL",
+          "input": {
+            "policy_refs": [
+              "README.md"
+            ],
+            "compliance_level": "basic",
+            "tone": "neutral"
+          },
+          "output": {
+            "schema_version": "1.0.0",
+            "agent_version": "1.0.0",
+            "rules_compiled": [
+              "[README.md] # 🚀 Claude Project Init Kit  ## 📋 **Resumen**  El **Claude Project Init Kit** es un sistema avanzado de inicialización de proyectos que integra Claude Code con herramientas especializadas para crear proyectos de alta calidad de forma sistemática y eficiente."
+            ],
+            "violations": [],
+            "advice": [
+              "tone:neutral",
+              "domain:general",
+              "Ensure primary policies are acknowledged."
+            ],
+            "trace": [
+              "rules.server:ok"
+            ]
+          },
+          "expected": {
+            "policies": "array",
+            "guardrails": "array"
+          }
+        },
+        {
+          "name": "Minimal input",
+          "status": "FAIL",
+          "input": {
+            "policy_refs": [
+              "README.md"
+            ]
+          },
+          "output": {
+            "schema_version": "1.0.0",
+            "agent_version": "1.0.0",
+            "rules_compiled": [
+              "[README.md] # 🚀 Claude Project Init Kit  ## 📋 **Resumen**  El **Claude Project Init Kit** es un sistema avanzado de inicialización de proyectos que integra Claude Code con herramientas especializadas para crear proyectos de alta calidad de forma sistemática y eficiente."
+            ],
+            "violations": [],
+            "advice": [
+              "tone:neutral",
+              "domain:general",
+              "Ensure primary policies are acknowledged."
+            ],
+            "trace": [
+              "rules.server:ok"
+            ]
+          },
+          "expected": {
+            "policies": "array"
+          }
+        }
+      ]
+    },
+    "orchestration": {
+      "passed": 0,
+      "failed": 1,
+      "tests": [
+        {
+          "name": "Health check",
+          "status": "ERROR",
+          "input": {
+            "action": "health"
+          },
+          "error": "Agent failed with code 1: Debes proporcionar un comando.\n"
+        }
+      ]
+    }
+  }
+}

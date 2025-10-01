@@ -17,6 +17,14 @@ export default {
     '**/*.test.js',
     '**/*.spec.js'
   ],
+  // Configuración para soportar ES modules
+  preset: 'jest-preset-default',
+  extensionsToTreatAsEsm: ['.js'],
+  globals: {
+    'ts-jest': {
+      useESM: true
+    }
+  },
   transform: {},
   // Excluir archivos de agentes que usan ES modules
   testPathIgnorePatterns: [

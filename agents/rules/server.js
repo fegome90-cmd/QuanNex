@@ -15,7 +15,9 @@ const COMPLIANCE_ADVICE = {
 };
 
 const ensureWithinRoot = (absPath, stats) => {
-  const normalized = absPath.startsWith(ROOT) ? absPath : resolve(ROOT, absPath);
+  const normalized = absPath.startsWith(ROOT) ?
+    absPath :
+    resolve(ROOT, absPath);
   if (!normalized.startsWith(ROOT + sep) && normalized !== ROOT) {
     throw new Error(`Path escapes workspace: ${absPath}`);
   }
@@ -37,13 +39,19 @@ try {
     throw new Error(`policy_refs list exceeds ${MAX_POLICIES} entries`);
   }
 
-  const tone = typeof input.tone === 'string' && ALLOWED_TONES.includes(input.tone) ?
-    input.tone :
-    'neutral';
-  const domain = typeof input.domain === 'string' && input.domain.trim() !== '' ? input.domain : 'general';
-  const compliance = typeof input.compliance_level === 'string' && ['none', 'basic', 'strict'].includes(input.compliance_level) ?
-    input.compliance_level :
-    'basic';
+  const tone =
+    typeof input.tone === 'string' && ALLOWED_TONES.includes(input.tone) ?
+      input.tone :
+      'neutral';
+  const domain =
+    typeof input.domain === 'string' && input.domain.trim() !== '' ?
+      input.domain :
+      'general';
+  const compliance =
+    typeof input.compliance_level === 'string' &&
+    ['none', 'basic', 'strict'].includes(input.compliance_level) ?
+      input.compliance_level :
+      'basic';
 
   const compiled = [];
   const violations = [];

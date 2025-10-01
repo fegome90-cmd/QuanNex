@@ -3,11 +3,11 @@
 
 describe('.eslintrc.js', () => {
   // TODO: Implementar tests específicos
-  
+
   test('should be defined', () => {
     expect(true).toBe(true);
   });
-  
+
   // Generar tests para cada función encontrada
   // TODO: Agregar tests específicos para funciones
 });

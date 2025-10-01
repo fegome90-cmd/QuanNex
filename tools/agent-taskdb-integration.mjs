@@ -3,7 +3,7 @@
 /**
  * Agent TaskDB Integration - Integración entre agentes y TaskDB
  * PR-L: Integración agentes ↔ TaskDB (TaskKernel)
- * 
+ *
  * Proporciona integración completa entre agentes y la base de datos de tareas
  * con contratos de I/O validados y gestión automática de tareas
  */
@@ -55,7 +55,7 @@ class AgentTaskDBIntegration {
     this.taskdb = new TaskDBKernel(this.config.taskdb);
     this.projects = new Map();
     this.tasks = new Map();
-    
+
     this.init();
   }
 
@@ -64,14 +64,14 @@ class AgentTaskDBIntegration {
    */
   async init() {
     console.log('🔄 Inicializando integración Agent ↔ TaskDB...');
-    
+
     try {
       // Crear proyectos para cada agente si no existen
       await this.ensureAgentProjects();
-      
+
       // Cargar tareas existentes
       await this.loadExistingTasks();
-      
+
       console.log('✅ Integración Agent ↔ TaskDB inicializada');
     } catch (error) {
       console.error(`❌ Error inicializando integración: ${error.message}`);
@@ -86,7 +86,7 @@ class AgentTaskDBIntegration {
     for (const [agentName, agentConfig] of Object.entries(this.config.agents)) {
       const existingProjects = this.taskdb.listProjects();
       let project = existingProjects.find(p => p.title === agentConfig.project);
-      
+
       if (!project) {
         project = this.taskdb.createProject({
           title: agentConfig.project,
@@ -97,9 +97,11 @@ class AgentTaskDBIntegration {
             integration_version: '1.0.0'
           }
         });
-        console.log(`✅ Proyecto creado para agente ${agentName}: ${project.id}`);
+        console.log(
+          `✅ Proyecto creado para agente ${agentName}: ${project.id}`
+        );
       }
-      
+
       this.projects.set(agentName, project);
     }
   }
@@ -109,7 +111,7 @@ class AgentTaskDBIntegration {
    */
   async loadExistingTasks() {
     const allTasks = this.taskdb.listTasks();
-    
+
     for (const task of allTasks) {
       const project = this.taskdb.getProject(task.project_id);
       if (project) {
@@ -119,7 +121,7 @@ class AgentTaskDBIntegration {
         }
       }
     }
-    
+
     console.log(`📋 Cargadas ${this.tasks.size} tareas existentes`);
   }
 
@@ -142,13 +144,13 @@ class AgentTaskDBIntegration {
     try {
       // Validar input según contrato
       this.validateInput(input);
-      
+
       // Crear tarea en TaskDB
       const task = await this.createAgentTask(agentName, input);
-      
+
       // Procesar con agente
       const result = await this.executeAgent(agentName, input);
-      
+
       // Actualizar tarea con resultado
       await this.updateAgentTask(task.id, {
         status: result.success ? 'done' : 'review',
@@ -158,10 +160,10 @@ class AgentTaskDBIntegration {
           completed_at: new Date().toISOString()
         }
       });
-      
+
       // Validar output según contrato
       this.validateOutput(result);
-      
+
       return {
         ...result,
         task_id: task.id,
@@ -172,10 +174,11 @@ class AgentTaskDBIntegration {
           completed_at: new Date().toISOString()
         }
       };
-      
     } catch (error) {
-      console.error(`❌ Error procesando input de agente ${agentName}: ${error.message}`);
-      
+      console.error(
+        `❌ Error procesando input de agente ${agentName}: ${error.message}`
+      );
+
       // Crear tarea de error si es posible
       try {
         const task = await this.createAgentTask(agentName, input);
@@ -190,7 +193,7 @@ class AgentTaskDBIntegration {
       } catch (taskError) {
         console.error(`❌ Error creando tarea de error: ${taskError.message}`);
       }
-      
+
       throw error;
     }
   }
@@ -236,14 +239,14 @@ class AgentTaskDBIntegration {
    */
   async executeAgent(agentName, input) {
     const agentPath = join(PROJECT_ROOT, 'agents', agentName, 'server.js');
-    
+
     if (!existsSync(agentPath)) {
       throw new Error(`Agente no encontrado: ${agentPath}`);
     }
 
     return new Promise((resolve, reject) => {
       const { spawn } = require('child_process');
-      
+
       const child = spawn('node', [agentPath], {
         stdio: ['pipe', 'pipe', 'pipe'],
         cwd: PROJECT_ROOT
@@ -252,15 +255,15 @@ class AgentTaskDBIntegration {
       let stdout = '';
       let stderr = '';
 
-      child.stdout.on('data', (data) => {
+      child.stdout.on('data', data => {
         stdout += data.toString();
       });
 
-      child.stderr.on('data', (data) => {
+      child.stderr.on('data', data => {
         stderr += data.toString();
       });
 
-      child.on('close', (code) => {
+      child.on('close', code => {
         if (code !== 0) {
           reject(new Error(`Agente falló con código ${code}: ${stderr}`));
           return;
@@ -270,11 +273,13 @@ class AgentTaskDBIntegration {
           const result = JSON.parse(stdout);
           resolve(result);
         } catch (error) {
-          reject(new Error(`Error parseando output del agente: ${error.message}`));
+          reject(
+            new Error(`Error parseando output del agente: ${error.message}`)
+          );
         }
       });
 
-      child.on('error', (error) => {
+      child.on('error', error => {
         reject(error);
       });
 
@@ -289,19 +294,19 @@ class AgentTaskDBIntegration {
    */
   validateInput(input) {
     const contract = this.config.contracts.input;
-    
+
     // Validar campos requeridos
     for (const field of contract.required) {
       if (!(field in input)) {
         throw new Error(`Campo requerido faltante: ${field}`);
       }
     }
-    
+
     // Validar tipos básicos
     if (typeof input.action !== 'string') {
       throw new Error('Campo "action" debe ser string');
     }
-    
+
     if (typeof input.data !== 'object' || input.data === null) {
       throw new Error('Campo "data" debe ser objeto');
     }
@@ -312,19 +317,19 @@ class AgentTaskDBIntegration {
    */
   validateOutput(output) {
     const contract = this.config.contracts.output;
-    
+
     // Validar campos requeridos
     for (const field of contract.required) {
       if (!(field in output)) {
         throw new Error(`Campo requerido faltante en output: ${field}`);
       }
     }
-    
+
     // Validar tipos básicos
     if (typeof output.success !== 'boolean') {
       throw new Error('Campo "success" debe ser boolean');
     }
-    
+
     if (typeof output.timestamp !== 'string') {
       throw new Error('Campo "timestamp" debe ser string');
     }
@@ -344,7 +349,9 @@ class AgentTaskDBIntegration {
 
     // Estadísticas por agente
     for (const [agentName] of Object.entries(this.config.agents)) {
-      const agentTasks = Array.from(this.tasks.values()).filter(t => t.agent === agentName);
+      const agentTasks = Array.from(this.tasks.values()).filter(
+        t => t.agent === agentName
+      );
       stats.tasks_by_agent[agentName] = agentTasks.length;
     }
 
@@ -361,7 +368,7 @@ class AgentTaskDBIntegration {
       const durations = completedTasks
         .filter(t => t.data?.result?.performance?.duration)
         .map(t => t.data.result.performance.duration);
-      
+
       if (durations.length > 0) {
         stats.performance_metrics = {
           avg_duration: durations.reduce((a, b) => a + b, 0) / durations.length,
@@ -421,9 +428,12 @@ class AgentTaskDBIntegration {
       stats: this.getIntegrationStats()
     };
 
-    const outputFile = join(this.config.taskdb.dataDir, `integration-export-${Date.now()}.json`);
+    const outputFile = join(
+      this.config.taskdb.dataDir,
+      `integration-export-${Date.now()}.json`
+    );
     writeFileSync(outputFile, JSON.stringify(data, null, 2));
-    
+
     console.log(`📤 Datos de integración exportados a: ${outputFile}`);
     return outputFile;
   }
@@ -452,9 +462,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
           action: 'test',
           data: { test: true }
         };
-        
+
         console.log('🧪 Probando integración con agente context...');
-        integration.processAgentInput('context', testInput)
+        integration
+          .processAgentInput('context', testInput)
           .then(result => {
             console.log('✅ Test exitoso:', result);
           })
