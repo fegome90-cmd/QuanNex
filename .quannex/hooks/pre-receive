@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# QuanNex Pre-receive Hook (Servidor)
+# Garantía final: no entra nada sin traza QuanNex válida
+
+set -euo pipefail
+
+echo "🔒 Verificando commits QuanNex..."
+
+# Leer referencias del push
+while read old new ref; do
+    echo "📋 Procesando ref: $ref ($old -> $new)"
+    
+    # Verificar cada commit en el push
+    for commit in $(git rev-list $old..$new); do
+        echo "  🔍 Verificando commit: $commit"
+        
+        # Obtener mensaje del commit
+        MSG=$(git log -1 --pretty=%B $commit)
+        
+        # Verificar trailer QuanNex
+        if ! echo "$MSG" | grep -q "QuanNex: requestId="; then
+            echo "❌ COMMIT SIN QUANNEX: $commit"
+            echo "   Mensaje: $(echo "$MSG" | head -1)"
+            echo "   Error: Falta trailer QuanNex"
+            exit 1
+        fi
+        
+        # Extraer requestId
+        REQ=$(echo "$MSG" | sed -n 's/.*requestId=\([^ ]*\).*/\1/p')
+        
+        if [ -z "$REQ" ]; then
+            echo "❌ TRAILER MALFORMADO: $commit"
+            exit 1
+        fi
+        
+        # Verificar que existe la traza
+        if [ ! -f ".quannex/trace/$REQ.json" ]; then
+            echo "❌ FALTA TRAZA: $commit"
+            echo "   RequestId: $REQ"
+            echo "   Archivo esperado: .quannex/trace/$REQ.json"
+            exit 1
+        fi
+        
+        # Verificar contenido de la traza
+        TRACE_FILE=".quannex/trace/$REQ.json"
+        if ! jq -e '.mcp.handshake == true' "$TRACE_FILE" >/dev/null 2>&1; then
+            echo "❌ TRAZA INVÁLIDA: $commit"
+            echo "   RequestId: $REQ"
+            echo "   Error: MCP handshake no detectado"
+            exit 1
+        fi
+        
+        if ! jq -e '.mcp.policy_ok == true' "$TRACE_FILE" >/dev/null 2>&1; then
+            echo "❌ POLÍTICA FALLO: $commit"
+            echo "   RequestId: $REQ"
+            echo "   Error: Policy check falló"
+            exit 1
+        fi
+        
+        echo "  ✅ Commit válido: $REQ"
+    done
+done
+
+echo "✅ Gate remoto: TODOS LOS COMMITS VÁLIDOS"
+echo "🚀 Push autorizado"

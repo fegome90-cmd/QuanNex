@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# QuanNex Pre-commit Hook
+# Garantiza que todos los commits tengan trailer QuanNex válido
+
+set -euo pipefail
+
+echo "🔍 Verificando trailer QuanNex..."
+
+# Obtener el mensaje del último commit
+MSG=$(git log -1 --pretty=%B)
+
+# Verificar que existe el trailer QuanNex
+TRAILER=$(echo "$MSG" | grep -E "QuanNex: requestId=.* sig=[0-9a-f]+" || true)
+
+if [ -z "$TRAILER" ]; then
+    echo "❌ FALTA TRAILER QUANNEX"
+    echo ""
+    echo "Este commit no tiene el trailer obligatorio de QuanNex."
+    echo "Usa: qnx commit -m 'tu mensaje'"
+    echo "O agrega manualmente:"
+    echo "QuanNex: requestId=RQ-$(date +%Y%m%d)-$(openssl rand -hex 4) sig=<firma>"
+    echo ""
+    exit 1
+fi
+
+echo "✅ Trailer QuanNex detectado: $TRAILER"
+
+# Verificar que el requestId existe en trazas
+REQ=$(echo "$TRAILER" | sed -n 's/.*requestId=\([^ ]*\).*/\1/p')
+if [ -n "$REQ" ]; then
+    if [ -f ".quannex/trace/$REQ.json" ]; then
+        echo "✅ Traza encontrada: .quannex/trace/$REQ.json"
+    else
+        echo "⚠️  Traza no encontrada: .quannex/trace/$REQ.json"
+        echo "   (Commit permitido, pero sin traza completa)"
+    fi
+fi
+
+echo "✅ Pre-commit QuanNex: OK"

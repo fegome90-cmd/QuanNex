@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# QuanNex Pre-push Hook
+# Verifica firma HMAC del último commit
+
+set -euo pipefail
+
+echo "🔐 Verificando firma QuanNex..."
+
+# Verificar que existe la clave de firma
+KEY="${QUANNEX_SIGNING_KEY:-}"
+if [ -z "$KEY" ]; then
+    echo "❌ QUANNEX_SIGNING_KEY no configurada"
+    echo "Configura: export QUANNEX_SIGNING_KEY='tu-clave-secreta'"
+    exit 1
+fi
+
+# Obtener mensaje del último commit
+MSG=$(git log -1 --pretty=%B)
+
+# Extraer requestId y firma del trailer
+REQ=$(echo "$MSG" | sed -n 's/.*requestId=\([^ ]*\).*/\1/p')
+SIG=$(echo "$MSG" | sed -n 's/.*sig=\([0-9a-f]*\).*/\1/p')
+
+if [ -z "$REQ" ] || [ -z "$SIG" ]; then
+    echo "❌ Trailer QuanNex malformado"
+    echo "Esperado: QuanNex: requestId=XXX sig=YYY"
+    exit 1
+fi
+
+# Calcular firma esperada
+CALC=$(printf "%s" "$REQ" | openssl dgst -sha256 -hmac "$KEY" | awk '{print $2}')
+
+if [ "$SIG" = "$CALC" ]; then
+    echo "✅ Firma QuanNex válida"
+    echo "   RequestId: $REQ"
+    echo "   Firma: $SIG"
+else
+    echo "❌ FIRMA QUANNEX INVÁLIDA"
+    echo "   Esperada: $CALC"
+    echo "   Recibida: $SIG"
+    echo "   RequestId: $REQ"
+    exit 1
+fi
+
+echo "✅ Pre-push QuanNex: OK"
