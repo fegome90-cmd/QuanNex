@@ -1,0 +1,13 @@
+{
+  "task": {
+    "task_id": "test_001",
+    "intent": "refactor",
+    "confidence": 0.8,
+    "artifacts": ["src/core/utils.js", "tests/utils.test.js"],
+    "metadata": {
+      "complexity": 1.5,
+      "priority": "high"
+    },
+    "thread_state_id": "thread_123"
+  }
+}

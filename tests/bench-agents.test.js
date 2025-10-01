@@ -5,7 +5,7 @@
 
 import { test, describe, beforeEach, afterEach } from 'node:test';
 import { strict as assert } from 'node:assert';
-import { readFileSync, unlinkSync, existsSync, mkdirSync } from 'fs';
+import { unlinkSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import BenchAgents from '../tools/bench-agents.mjs';
@@ -43,7 +43,7 @@ describe('Bench Agents', () => {
           unlinkSync(join(TEST_REPORTS_DIR, file));
         });
       }
-    } catch (error) {
+    } catch {
       // Ignorar errores de limpieza
     }
   });

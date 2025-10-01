@@ -1,0 +1,21 @@
+{
+  "id": "fsm_1759341208845_6c4075d0_critic",
+  "timestamp": "2025-10-01T17:53:29.965Z",
+  "data": {
+    "id": "fsm_1759341208845_6c4075d0",
+    "timestamp": "2025-10-01T17:53:29.663Z",
+    "analysis": {
+      "tokenAccuracy": "medium",
+      "executionTime": "normal",
+      "quality": "good",
+      "issues": []
+    },
+    "recommendations": [
+      "Optimizar token usage",
+      "Mejorar precisión de estimación"
+    ],
+    "needsRerun": true,
+    "confidence": 65
+  },
+  "hash": "50ba46e6578abe4b6568312617193633ce4d5842fa723c7b84e4e14ec007fcc2"
+}

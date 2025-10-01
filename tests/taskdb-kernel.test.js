@@ -5,7 +5,7 @@
 
 import { test, describe, beforeEach, afterEach } from 'node:test';
 import { strict as assert } from 'node:assert';
-import { readFileSync, unlinkSync, existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import TaskDBKernel from '../tools/taskdb-kernel.mjs';
@@ -35,7 +35,7 @@ describe('TaskDB Kernel', () => {
     // Limpiar datos de test
     try {
       taskdb.clear();
-    } catch (error) {
+    } catch {
       // Ignorar errores de limpieza
     }
   });

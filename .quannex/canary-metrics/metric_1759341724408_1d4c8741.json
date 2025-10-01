@@ -1,0 +1,51 @@
+{
+  "id": "metric_1759341724408_1d4c8741",
+  "timestamp": "2025-10-01T18:02:04.409Z",
+  "isCanary": false,
+  "request": {
+    "task_id": "test_001",
+    "intent": "refactor",
+    "confidence": 0.8,
+    "artifacts": [
+      "src/core/utils.js",
+      "tests/utils.test.js"
+    ],
+    "metadata": {
+      "complexity": 1.5,
+      "priority": "high"
+    },
+    "thread_state_id": "thread_123",
+    "threadStateId": "thread_123"
+  },
+  "result": {
+    "success": true,
+    "route": "fallback",
+    "target_agent": "agents.orchestrator.fallback",
+    "fsm_state": "unknown",
+    "latency": 612.285625,
+    "latency_ms": 612,
+    "optimized": false,
+    "canary": false,
+    "version": {
+      "router": "v1",
+      "fsm": "v1"
+    },
+    "performance": {
+      "p95": 953,
+      "errorRate": 0,
+      "throughput": 52.1
+    },
+    "metadata": {
+      "requestId": "req_1759341724408_1b8nul8em",
+      "timestamp": "2025-10-01T18:02:04.408Z",
+      "hops": 0,
+      "performance_gain": 0
+    }
+  },
+  "performance": {
+    "p95": 953,
+    "errorRate": 1.9413440896125977,
+    "latency": 739.2422880588547,
+    "throughput": 52.1
+  }
+}

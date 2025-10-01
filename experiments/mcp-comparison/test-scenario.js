@@ -5,7 +5,6 @@
  * Tarea: Procesar 100 documentos con análisis de contexto y generación de prompts
  */
 import { performance } from 'node:perf_hooks';
-import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -296,7 +295,7 @@ class MCPComparisonTest {
     };
   }
 
-  async simulateManualPromptGeneration(doc, context) {
+  async simulateManualPromptGeneration(doc, _context) {
     // Simular generación manual (más lenta y de menor calidad)
     await new Promise(resolve => setTimeout(resolve, 80 + Math.random() * 120)); // 80-200ms
     
@@ -308,7 +307,7 @@ class MCPComparisonTest {
     };
   }
 
-  async simulateProcessing(result) {
+  async simulateProcessing(_result) {
     // Simular procesamiento final
     await new Promise(resolve => setTimeout(resolve, 5 + Math.random() * 15)); // 5-20ms
   }

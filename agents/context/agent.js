@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { hello, isHello } from '../../contracts/handshake.js';
 import { validateReq, ok, fail } from '../../contracts/schema.js';
+import { ZThreadState, buildThreadState, validateThreadState } from '../../contracts/threadstate.js';
 
 const baseDir = new URL('../../', import.meta.url);
 const resolvePath = relative => new URL(relative, baseDir).pathname;
@@ -180,9 +181,9 @@ const data = JSON.parse(rawInput);
 
 // Verificar si es un mensaje de handshake o con schema
 if (data.type === "hello" || data.requestId) {
-  const response = await onMessage(data);
-  console.log(JSON.stringify(response, null, 2));
-  process.exit(0);
+const response = await onMessage(data);
+console.log(JSON.stringify(response, null, 2));
+process.exit(response.ok === false ? 1 : 0);
 }
 
 // Lógica original para compatibilidad
@@ -217,6 +218,35 @@ if (!rawOutput) {
 }
 
 const output = JSON.parse(rawOutput);
+
+// SEMANA 2: Agregar ThreadState explícito
+if (data.capability === 'context.resolve') {
+  try {
+    const threadState = await buildThreadState(data.payload);
+    const validation = validateThreadState(threadState);
+    
+    if (!validation.valid) {
+      console.error(`ThreadState validation failed: ${validation.error}`);
+      process.exit(1);
+    }
+    
+    // Agregar ThreadState al output
+    output.threadstate = threadState;
+    output.threadstate_meta = {
+      files_count: threadState.files.length,
+      diffs_count: threadState.diffs.length,
+      build_errors_count: threadState.build_errors.length,
+      sources_count: threadState.sources.length,
+      constraints_keys: Object.keys(threadState.constraints)
+    };
+    
+    console.log('✅ ThreadState explícito agregado');
+  } catch (error) {
+    console.error(`Error building ThreadState: ${error.message}`);
+    process.exit(1);
+  }
+}
+
 const outputErrors = validateOutput(output);
 if (outputErrors.length > 0) {
   console.error(JSON.stringify(outputErrors, null, 2));

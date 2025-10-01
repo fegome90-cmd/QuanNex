@@ -51,7 +51,7 @@ echo "🔍 Probando agentes individuales..."
 
 # Test context agent
 echo "  🧠 Probando agente context..."
-if echo '{"sources": ["README.md"], "selectors": ["test"]}' | node agents/context/agent.js > .reports/context-test.json 2>&1; then
+if echo '{"requestId":"health-context","agent":"context","capability":"context.resolve","payload":{"sources":["README.md"],"selectors":["test"]},"ts":"'"$(date -Iseconds)"'"}' | node agents/context/agent.js > .reports/context-test.json 2>&1; then
     echo "    ✅ Agente context operativo"
 else
     echo "    ⚠️ Agente context falló"
@@ -59,7 +59,7 @@ fi
 
 # Test prompting agent
 echo "  💬 Probando agente prompting..."
-if echo '{"goal": "test", "style": "formal"}' | node agents/prompting/agent.js > .reports/prompting-test.json 2>&1; then
+if echo '{"requestId":"health-prompting","agent":"prompting","capability":"prompting.generate","payload":{"goal":"test","style":"formal"},"ts":"'"$(date -Iseconds)"'"}' | node agents/prompting/agent.js > .reports/prompting-test.json 2>&1; then
     echo "    ✅ Agente prompting operativo"
 else
     echo "    ⚠️ Agente prompting falló"
@@ -67,7 +67,7 @@ fi
 
 # Test rules agent
 echo "  📋 Probando agente rules..."
-if echo '{"policy_refs": ["README.md"], "compliance_level": "basic"}' | node agents/rules/agent.js > .reports/rules-test.json 2>&1; then
+if echo '{"requestId":"health-rules","agent":"rules","capability":"rules.enforce","payload":{"policy_refs":["README.md"],"compliance_level":"basic"},"ts":"'"$(date -Iseconds)"'"}' | node agents/rules/agent.js > .reports/rules-test.json 2>&1; then
     echo "    ✅ Agente rules operativo"
 else
     echo "    ⚠️ Agente rules falló"

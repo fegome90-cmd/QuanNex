@@ -1,0 +1,43 @@
+{
+  "id": "fsm_1759341208845_6c4075d0_exec",
+  "timestamp": "2025-10-01T17:53:29.662Z",
+  "data": {
+    "id": "fsm_1759341208845_6c4075d0",
+    "timestamp": "2025-10-01T17:53:29.662Z",
+    "steps": [
+      {
+        "id": "step_1",
+        "name": "analyze_request",
+        "success": true,
+        "tokens": 133,
+        "timestamp": "2025-10-01T17:53:29.200Z"
+      },
+      {
+        "id": "step_2",
+        "name": "prepare_context",
+        "success": true,
+        "tokens": 98,
+        "timestamp": "2025-10-01T17:53:29.336Z"
+      },
+      {
+        "id": "step_3",
+        "name": "execute_action",
+        "success": true,
+        "tokens": 103,
+        "timestamp": "2025-10-01T17:53:29.444Z"
+      },
+      {
+        "id": "step_4",
+        "name": "validate_result",
+        "success": true,
+        "tokens": 131,
+        "timestamp": "2025-10-01T17:53:29.662Z"
+      }
+    ],
+    "totalTokens": 465,
+    "actualTokens": 465,
+    "tokenVariance": 535,
+    "success": true
+  },
+  "hash": "242f63ee2d7104fd3e5696fb7e82915e04310c938cf470b43c0882bcb9cf32ae"
+}

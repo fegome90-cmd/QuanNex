@@ -1,5 +1,5 @@
 .PHONY: plan orchestrate status clean help ci-gate1 lint typecheck contracts init smoke \
-	quannex-init quannex-contracts quannex-resilience
+	quannex-init quannex-contracts quannex-resilience quannex-perf quannex-verify quannex-snapshot quannex-ab
 
 # Default target
 help:
@@ -18,7 +18,11 @@ lint:
 	npx eslint . --config eslint.gate1.config.js --max-warnings=15
 
 typecheck:
-	npx tsc -p . || echo 'skip typecheck'
+	@if [ -f tsconfig.json ]; then \
+		npx tsc -p tsconfig.json; \
+	else \
+		echo 'skip typecheck (tsconfig.json not found)'; \
+	fi
 
 contracts:
 	node tests/agent-contract-tests.mjs
@@ -37,6 +41,23 @@ quannex-contracts:
 
 quannex-resilience:
 	node tools/mcp-resilience-simple.mjs
+
+# Performance verification targets
+quannex-perf:
+	@echo "📊 Ejecutando performance gate QuanNex..."
+	node tools/performance-gate.mjs run
+
+quannex-verify:
+	@echo "🔍 Verificando performance desde trazas crudas..."
+	node tools/verify-perf.js
+
+quannex-snapshot:
+	@echo "📸 Generando snapshot de performance..."
+	node tools/snapshot-perf.js generate
+
+quannex-ab:
+	@echo "🧪 Ejecutando experimento A/B..."
+	node tools/ab-experiment.mjs run
 
 plan:
 	npm run plan:build

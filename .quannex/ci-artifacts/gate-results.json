@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-10-01T17:44:41.236Z",
+  "baseline_snapshot": {
+    "ts": "2025-10-01T17:44:41.157Z",
+    "raw_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "mcp_workflow_wf_1759340219615_dcf2dd",
+    "mcp_verified": true,
+    "total": 100,
+    "p50_ms": 45.2,
+    "p95_ms": 78.5,
+    "p99_ms": 95.1,
+    "error_rate_pct": 0.8,
+    "avg_latency_ms": 52.3,
+    "throughput_per_sec": 16.2,
+    "tokens_in_total": 15420,
+    "tokens_out_total": 8930,
+    "time_span_sec": 6.17
+  },
+  "current_metrics": {
+    "timestamp": "2025-10-01T17:44:41.233Z",
+    "source": "raw_traces",
+    "statistics": {
+      "total": 0,
+      "p50_ms": null,
+      "p95_ms": null,
+      "p99_ms": null,
+      "error_rate_pct": null,
+      "avg_latency_ms": null,
+      "throughput_per_sec": null,
+      "tokens_in_total": 0,
+      "tokens_out_total": 0
+    },
+    "breakdown": {},
+    "raw_events_count": 0
+  },
+  "evaluation": {
+    "p95_improvement": null,
+    "error_rate_acceptable": null,
+    "tokens_overhead_acceptable": null,
+    "overall_pass": false
+  },
+  "gate_passed": false,
+  "criteria": {
+    "p95_improvement": 0.85,
+    "error_rate_max": 1,
+    "tokens_overhead": 1.1
+  }
+}

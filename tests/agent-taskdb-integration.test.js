@@ -43,7 +43,7 @@ describe('Agent TaskDB Integration', () => {
           unlinkSync(join(TEST_DATA_DIR, file));
         });
       }
-    } catch (error) {
+    } catch {
       // Ignorar errores de limpieza
     }
   });
@@ -264,6 +264,7 @@ describe('Agent TaskDB Integration', () => {
 
       assert.strictEqual(cleaned, 1);
       assert.strictEqual(integration.tasks.size, 1);
+      assert.ok(integration.tasks.has(task2.id));
     });
   });
 

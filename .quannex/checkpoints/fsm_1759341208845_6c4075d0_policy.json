@@ -1,0 +1,21 @@
+{
+  "id": "fsm_1759341208845_6c4075d0_policy",
+  "timestamp": "2025-10-01T17:53:30.117Z",
+  "data": {
+    "id": "fsm_1759341208845_6c4075d0",
+    "timestamp": "2025-10-01T17:53:29.966Z",
+    "policies": {
+      "tokenPolicy": true,
+      "qualityPolicy": false,
+      "performancePolicy": true
+    },
+    "approved": false,
+    "riskLevel": "medium",
+    "rollbackTriggers": [
+      "performance_degradation",
+      "high_token_variance",
+      "low_confidence"
+    ]
+  },
+  "hash": "c711462ec0c23343f7669a3dc732b153b3bc1fae5894fb26af49a599dc265d1d"
+}

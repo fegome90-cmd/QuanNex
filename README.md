@@ -1,8 +1,10 @@
-# 🚀 Claude Project Init Kit
+# 🚀 Claude Project Init Kit v2.1.0
 
 ## 📋 **Resumen**
 
-El **Claude Project Init Kit** es un sistema avanzado de inicialización de proyectos que integra Claude Code con herramientas especializadas para crear proyectos de alta calidad de forma sistemática y eficiente.
+El **Claude Project Init Kit** es un sistema avanzado de inicialización de proyectos que integra Claude Code con herramientas especializadas para crear proyectos de alta calidad de forma sistemática y eficiente. 
+
+**✨ Nuevo en v2.1.0**: ThreadState explícito, Handoffs estructurados, Canary 20% exacto, y monitoreo continuo.
 
 ---
 

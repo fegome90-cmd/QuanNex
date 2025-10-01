@@ -1,0 +1,19 @@
+{
+  "id": "fsm_1759341208845_6c4075d0",
+  "timestamp": "2025-10-01T17:53:30.118Z",
+  "success": false,
+  "finalState": "done",
+  "performance": {
+    "p95": 1238.6659048985368,
+    "errorRate": 1.2556272867836897,
+    "throughput": 59.688191244072925
+  },
+  "reproducibility": 100,
+  "summary": {
+    "executionId": "fsm_1759341208845_6c4075d0",
+    "approved": false,
+    "riskLevel": "medium",
+    "reproducibility": 100,
+    "timestamp": "2025-10-01T17:53:30.118Z"
+  }
+}

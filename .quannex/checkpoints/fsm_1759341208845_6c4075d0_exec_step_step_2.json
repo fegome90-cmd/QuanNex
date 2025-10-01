@@ -1,0 +1,12 @@
+{
+  "id": "fsm_1759341208845_6c4075d0_exec_step_step_2",
+  "timestamp": "2025-10-01T17:53:29.336Z",
+  "data": {
+    "id": "step_2",
+    "name": "prepare_context",
+    "success": true,
+    "tokens": 98,
+    "timestamp": "2025-10-01T17:53:29.336Z"
+  },
+  "hash": "3892ad1329b4a88bef570c2472131c0d3e873ce70aa5378ee26bb4a5199db817"
+}

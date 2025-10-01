@@ -116,9 +116,9 @@ const validateOutput = data => {
 // Nueva función para manejar mensajes con handshake
 async function onMessage(msg) {
   if (isHello(msg)) return hello("rules");
-  if (!validateReq(msg)) return fail("INVALID_SCHEMA_MIN");
+if (!validateReq(msg)) return fail("INVALID_SCHEMA_MIN");
 
-  if (msg.capability === "rules.validate") {
+  if (msg.capability === "rules.enforce" || msg.capability === "rules.validate") {
     try {
       // Usar funcionalidad real del servidor
       const { policy_refs, compliance_level, tone } = msg.payload;
@@ -159,9 +159,9 @@ const data = JSON.parse(rawInput);
 
 // Verificar si es un mensaje de handshake o con schema
 if (data.type === "hello" || data.requestId) {
-  const response = await onMessage(data);
-  console.log(JSON.stringify(response, null, 2));
-  process.exit(0);
+const response = await onMessage(data);
+console.log(JSON.stringify(response, null, 2));
+process.exit(response.ok === false ? 1 : 0);
 }
 
 // Lógica original para compatibilidad

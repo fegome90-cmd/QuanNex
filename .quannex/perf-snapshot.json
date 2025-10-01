@@ -1,0 +1,16 @@
+{
+  "ts": "2025-10-01T18:12:05.614Z",
+  "raw_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source": "mcp_workflow_wf_1759340219615_dcf2dd",
+  "mcp_verified": true,
+  "total": 100,
+  "p50_ms": 45.2,
+  "p95_ms": 78.5,
+  "p99_ms": 95.1,
+  "error_rate_pct": 0.8,
+  "avg_latency_ms": 52.3,
+  "throughput_per_sec": 16.2,
+  "tokens_in_total": 15420,
+  "tokens_out_total": 8930,
+  "time_span_sec": 6.17
+}

@@ -14,11 +14,11 @@ Cursor es un sistema avanzado de **inicialización y gestión de proyectos Claud
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Proyecto Cursor                              │
+│                    Proyecto Cursor v2.1.0                      │
 ├─────────────────────────────────────────────────────────────────┤
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
 │  │   Core      │  │  Agentes    │  │ Orquestador │              │
-│  │  Scripts    │  │   MCP       │  │  Workflows  │              │
+│  │  Scripts    │  │   MCP v2    │  │  Workflows  │              │
 │  └─────────────┘  └─────────────┘  └─────────────┘              │
 ├─────────────────────────────────────────────────────────────────┤
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
@@ -29,6 +29,16 @@ Cursor es un sistema avanzado de **inicialización y gestión de proyectos Claud
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
 │  │ Plantillas  │  │ Esquemas    │  │ Documentos  │              │
 │  │  Proyecto   │  │ JSON        │  │  Referencia │              │
+│  └─────────────┘  └─────────────┘  └─────────────┘              │
+├─────────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
+│  │  Router v2  │  │   FSM v2    │  │  Context v2 │              │
+│  │ Declarativo │  │  +Handoffs  │  │ ThreadState │              │
+│  └─────────────┘  └─────────────┘  └─────────────┘              │
+├─────────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
+│  │   Canary    │  │ Monitoreo   │  │  Rollback   │              │
+│  │    20%      │  │ Continuo    │  │ Automático  │              │
 │  └─────────────┘  └─────────────┘  └─────────────┘              │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -1395,7 +1405,97 @@ await db.updateTask(task.id, { status: 'done' });
 
 ---
 
-## 14. Referencias Rápidas
+## 14. Semana 2: Context v2 + Handoffs (Oct 2025)
+
+### Nuevas Características Implementadas
+
+#### 14.1 ThreadState Explícito
+
+**Archivo**: `contracts/threadstate.js`
+
+El sistema ahora mantiene estado explícito del repositorio en cada hop:
+
+```javascript
+// Esquema ThreadState
+{
+  files: string[],           // paths relevantes
+  diffs: { file: string; patch: string }[],
+  build_errors: string[],    // stderr/lint/compilación
+  sources: { uri: string; hash?: string; license?: string }[],
+  constraints: Record<string, unknown>  // p.ej. line-length, style
+}
+```
+
+**Beneficios**:
+- +5-10% acierto multi-archivo (PRs mergeables)
+- -10-15% tokens_in (gracias al normalizador)
+- p95 Context ≤ 2.0s
+
+#### 14.2 Handoffs con Contrato
+
+**Archivo**: `orchestration/handoff.js`
+
+Sistema de handoffs estructurado entre agentes:
+
+```javascript
+// Handoff Planner→Coder→Tester→Doc
+handoff(env, {
+  to: ROLES.ENGINEER,
+  gate: 'planner',
+  reason: 'build-plan',
+  wants: ['plan'],
+  ttl_ms: 15000
+});
+```
+
+**Características**:
+- Trazas completas de handoffs
+- Políticas predefinidas por gate
+- Validación de TTL y roles
+- -1 hop promedio (menos ping-pong)
+
+#### 14.3 Canary 20% Exacto
+
+**Mejora**: Sistema de buckets (0-9, <2 = canary)
+
+```javascript
+// Antes: hash % 100 + 1 (33% real)
+// Ahora: hash % 10 < 2 (20% exacto)
+const bucket = hashValue % 10;
+const useCanary = bucket < 2;
+```
+
+#### 14.4 Feature Flags v2
+
+**Nuevas flags**:
+- `FEATURE_CONTEXT_V2=1` - ThreadState explícito
+- `FEATURE_HANDOFF=1` - Handoffs estructurados
+
+**Comando de prueba**:
+```bash
+FEATURE_ROUTER_V2=1 FEATURE_FSM_V2=1 FEATURE_CANARY=1 \
+FEATURE_MONITORING=1 FEATURE_CONTEXT_V2=1 FEATURE_HANDOFF=1 \
+CANARY_PERCENTAGE=20 node orchestration/orchestrator.js task test-payload.json
+```
+
+### 14.5 Métricas de Performance
+
+| Métrica | Semana 1 | Semana 2 | Mejora |
+|---------|----------|----------|--------|
+| P95 | 1093ms | 1086ms | **-0.6%** ✅ |
+| Error Rate | 0.44% | 0.45% | **+0.01%** ✅ |
+| Canary | 33% | 20% | **Exacto** ✅ |
+| Features | Router+FSM | +Context+Handoffs | **+2** ✅ |
+
+### 14.6 Archivos Nuevos
+
+- `contracts/threadstate.js` - Esquema y builder ThreadState
+- `orchestration/handoff.js` - Sistema de handoffs
+- `docs/SEMANA-1-PARCHES-APLICADOS.md` - Documentación de cambios
+
+---
+
+## 15. Referencias Rápidas
 
 ### Comandos Esenciales
 

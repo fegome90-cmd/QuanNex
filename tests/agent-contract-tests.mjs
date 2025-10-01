@@ -96,7 +96,7 @@ class AgentContractTester {
           try {
             const result = JSON.parse(stdout);
             resolve(result);
-          } catch (error) {
+          } catch {
             reject(new Error(`Invalid JSON output: ${stdout}`));
           }
         } else {
@@ -112,7 +112,7 @@ class AgentContractTester {
   /**
    * Validar respuesta del agente
    */
-  validateResponse(agentName, response, expected) {
+  validateResponse(agentName, response, _expected) {
     // Validar estructura básica para el nuevo sistema de contratos
     if (response.type === 'hello') {
       return response.agent === agentName && response.version;

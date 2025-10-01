@@ -1,0 +1,177 @@
+{
+  "timestamp": "2025-10-01T17:50:40.994Z",
+  "summary": {
+    "totalPassed": 7,
+    "totalFailed": 0,
+    "successRate": 100
+  },
+  "results": {
+    "context": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "context"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "context",
+            "version": "1.0.0",
+            "ts": "2025-10-01T17:50:40.585Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "context",
+            "capability": "context.resolve",
+            "payload": {
+              "sources": [
+                "README.md"
+              ],
+              "selectors": [
+                "test"
+              ]
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "project": "startkit-main",
+            "branch": "main",
+            "filesChanged": [
+              "README.md"
+            ],
+            "contextBundle": "# Source: README.md\n- Testing setup con Playwright\n- **Design Validation**: Testing visual con Playwright\n- `/test-ui` - Testing visual con Playwright\n- **Playwright MCP**: Testing visual y automation\n- Testing y quality assurance automático\n## 🧪 **Testing**\n# Ejecutar tests del kit\n./scripts/test-claude-init.sh",
+            "provenance": [
+              "loaded:README.md"
+            ],
+            "stats": {
+              "tokens_estimated": 256,
+              "chunks": 1,
+              "matched": 8,
+              "truncated": false,
+              "adjusted": false
+            },
+            "ok": true,
+            "ts": "2025-10-01T17:50:40.670Z"
+          }
+        }
+      ]
+    },
+    "prompting": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "prompting"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "prompting",
+            "version": "1.0.0",
+            "ts": "2025-10-01T17:50:40.707Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "prompting",
+            "capability": "prompting.buildPrompt",
+            "payload": {
+              "goal": "test prompt",
+              "style": "formal"
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "templateId": "formal",
+            "filled": "You are a helpful coding assistant. Style: formal.\n\nGoal: test prompt",
+            "systemPrompt": "You are a helpful coding assistant. Style: formal.",
+            "userPrompt": "Goal: test prompt",
+            "guardrails": [],
+            "ok": true,
+            "ts": "2025-10-01T17:50:40.786Z"
+          }
+        }
+      ]
+    },
+    "rules": {
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "rules"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "rules",
+            "version": "1.0.0",
+            "ts": "2025-10-01T17:50:40.823Z"
+          }
+        },
+        {
+          "name": "Schema validation test",
+          "status": "PASS",
+          "input": {
+            "requestId": "test-123",
+            "agent": "rules",
+            "capability": "rules.validate",
+            "payload": {
+              "policy_refs": [
+                "docs/CHARTER.md"
+              ],
+              "compliance_level": "basic"
+            },
+            "ts": "2025-01-01T00:00:00Z"
+          },
+          "output": {
+            "rulesetVersion": "1.0.0",
+            "violations": [],
+            "suggestions": [],
+            "policyRefs": [],
+            "complianceLevel": "basic",
+            "policy_ok": true,
+            "ok": true,
+            "ts": "2025-10-01T17:50:40.894Z"
+          }
+        }
+      ]
+    },
+    "orchestration": {
+      "passed": 1,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Handshake test",
+          "status": "PASS",
+          "input": {
+            "type": "hello",
+            "agent": "orchestration"
+          },
+          "output": {
+            "type": "hello",
+            "agent": "orchestration",
+            "version": "1.0.0",
+            "ts": "2025-10-01T17:50:40.990Z"
+          }
+        }
+      ]
+    }
+  }
+}

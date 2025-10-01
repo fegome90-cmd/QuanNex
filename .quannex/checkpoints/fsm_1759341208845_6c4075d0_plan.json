@@ -1,0 +1,39 @@
+{
+  "id": "fsm_1759341208845_6c4075d0_plan",
+  "timestamp": "2025-10-01T17:53:29.048Z",
+  "data": {
+    "id": "fsm_1759341208845_6c4075d0",
+    "timestamp": "2025-10-01T17:53:28.846Z",
+    "request": {
+      "intent": "refactor",
+      "artifacts": [
+        "src/core/utils.js"
+      ]
+    },
+    "steps": [
+      {
+        "id": "step_1",
+        "name": "analyze_request",
+        "type": "analysis"
+      },
+      {
+        "id": "step_2",
+        "name": "prepare_context",
+        "type": "preparation"
+      },
+      {
+        "id": "step_3",
+        "name": "execute_action",
+        "type": "execution"
+      },
+      {
+        "id": "step_4",
+        "name": "validate_result",
+        "type": "validation"
+      }
+    ],
+    "estimatedTokens": 1000,
+    "checkpoints": []
+  },
+  "hash": "8143ca71102acac36360599d248cb3504d7f47aaabf7300482044f9e19b1c370"
+}

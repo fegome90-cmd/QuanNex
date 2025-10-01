@@ -1,0 +1,42 @@
+{
+  "id": "metric_1759341213331_e338b67e",
+  "timestamp": "2025-10-01T17:53:33.331Z",
+  "isCanary": false,
+  "request": {
+    "intent": "docstring",
+    "artifacts": [
+      "src/api/handlers.js"
+    ]
+  },
+  "result": {
+    "success": true,
+    "route": "fallback",
+    "target_agent": "agents.orchestrator.fallback",
+    "fsm_state": "unknown",
+    "latency": 602.5627920000006,
+    "latency_ms": 603,
+    "optimized": false,
+    "canary": false,
+    "version": {
+      "router": "v1",
+      "fsm": "v1"
+    },
+    "performance": {
+      "p95": 1053,
+      "errorRate": 1,
+      "throughput": 52.9
+    },
+    "metadata": {
+      "requestId": "req_1759341213331_psa3u82ah",
+      "timestamp": "2025-10-01T17:53:33.330Z",
+      "hops": 0,
+      "performance_gain": 0
+    }
+  },
+  "performance": {
+    "p95": 1053,
+    "errorRate": 1,
+    "latency": 794.2989656487787,
+    "throughput": 52.9
+  }
+}

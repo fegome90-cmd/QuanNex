@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-10-01T17:44:41Z",
+  "job": "ci-quannex-perf",
+  "project": "/Users/felipe/Developer/startkit-main",
+  "gate_passed": true,
+  "artifacts": [
+    "perf-snapshot.json",
+    "ab-snapshot.json", 
+    "gate-results.json",
+    "ab-results/"
+  ],
+  "criteria": {
+    "p95_improvement": 0.85,
+    "error_rate_max": 1.0,
+    "tokens_overhead": 1.10
+  }
+}

@@ -15,6 +15,10 @@ import crypto from 'node:crypto';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import TaskRunner from './task-runner.js';
+import RouterV2 from './router-v2.js';
+import FSMV2 from './fsm-v2.js';
+import CanaryManager from './canary-manager.js';
+import PerformanceMonitor from './performance-monitor.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -51,6 +55,36 @@ class WorkflowOrchestrator {
     this.timeoutMs = opts.timeoutMs || DEFAULT_TIMEOUT_MS;
     this.isShuttingDown = false; // BLINDAJE: Flag para cierre seguro.
     this.taskRunner = new TaskRunner({ orchestrator: this });
+    
+    // SEMANA 1: Router v2 + FSM v2 + Canary + Monitoreo
+    // SEMANA 2: Context v2 + Handoffs
+    this.version = '2.1.0';
+    this.featureFlags = {
+      routerV2: process.env.FEATURE_ROUTER_V2 === '1',
+      fsmV2: process.env.FEATURE_FSM_V2 === '1',
+      canary: process.env.FEATURE_CANARY === '1',
+      monitoring: process.env.FEATURE_MONITORING === '1',
+      contextV2: process.env.FEATURE_CONTEXT_V2 === '1',
+      handoffs: process.env.FEATURE_HANDOFF === '1'
+    };
+    
+    // Inicializar componentes v2
+    this.router = new RouterV2();
+    this.fsm = new FSMV2();
+    this.canary = new CanaryManager();
+    this.monitor = new PerformanceMonitor();
+    
+    this.metrics = {
+      totalRequests: 0,
+      canaryRequests: 0,
+      controlRequests: 0,
+      rollbacks: 0,
+      alerts: 0,
+      averageLatency: 0,
+      p95Latency: 0,
+      errorRate: 0
+    };
+    
     this.initializeAgents();
     if (!existsSync(REPORTS_DIR)) mkdirSync(REPORTS_DIR, { recursive: true });
     this.loadWorkflows();
@@ -102,6 +136,13 @@ class WorkflowOrchestrator {
     this.agentStatus.set('context', { status: 'idle', lastHeartbeat: null });
     this.agentStatus.set('prompting', { status: 'idle', lastHeartbeat: null });
     this.agentStatus.set('rules', { status: 'idle', lastHeartbeat: null });
+    
+    // SEMANA 1: Inicializar monitoreo si está habilitado
+    if (this.featureFlags.monitoring) {
+      this.monitor.startMonitoring().catch(error => {
+        console.error('❌ Error iniciando monitoreo:', error.message);
+      });
+    }
   }
 
   // NEW: validación mínima del workflow
@@ -338,6 +379,11 @@ class WorkflowOrchestrator {
       threadStateId
     };
 
+    // SEMANA 1: Usar Router v2 + FSM v2 si están habilitados
+    if (this.featureFlags.routerV2 || this.featureFlags.fsmV2) {
+      return await this.processRequestV2(task, options);
+    }
+
     const runnerOptions = {
       diff: payload.diff,
       evidence: payload.evidence,
@@ -353,6 +399,162 @@ class WorkflowOrchestrator {
     }
 
     return this.taskRunner.run(task, runnerOptions);
+  }
+
+  // SEMANA 1: Procesamiento con Router v2 + FSM v2
+  async processRequestV2(request, options = {}) {
+    const startTime = performance.now();
+    this.metrics.totalRequests++;
+
+    console.log(`📨 Procesando request v2 ${this.metrics.totalRequests}: ${request.intent || 'unknown'}`);
+
+    try {
+      // 1. Decidir si usar canary
+      const useCanary = this.featureFlags.canary ? 
+        await this.canary.shouldUseCanary(request) : false;
+
+      if (useCanary) {
+        this.metrics.canaryRequests++;
+        console.log('🎯 Usando canary (Router v2 + FSM v2)');
+      } else {
+        this.metrics.controlRequests++;
+        console.log('📊 Usando control (Router v1 + FSM v1)');
+      }
+
+      // 2. Ejecutar routing
+      const routeResult = useCanary && this.featureFlags.routerV2 ?
+        await this.router.route(request) :
+        await this.fallbackRoute(request);
+
+      // 3. Ejecutar FSM
+      const fsmResult = useCanary && this.featureFlags.fsmV2 ?
+        await this.fsm.execute(request) :
+        await this.fallbackFSM(request);
+
+      // 4. Combinar resultados
+      const result = this.combineResults(routeResult, fsmResult, {
+        useCanary,
+        latency: performance.now() - startTime,
+        timestamp: new Date().toISOString()
+      });
+
+      // 5. Registrar métricas
+      if (this.featureFlags.canary) {
+        await this.canary.recordMetrics(request, result, useCanary);
+      }
+
+      // 6. Actualizar métricas internas
+      this.updateMetrics(result);
+
+      console.log(`✅ Request v2 procesado exitosamente (${result.latency.toFixed(1)}ms)`);
+      return result;
+
+    } catch (error) {
+      console.error('❌ Error procesando request v2:', error.message);
+      
+      // Registrar error en métricas
+      this.metrics.errorRate = (this.metrics.errorRate * (this.metrics.totalRequests - 1) + 1) / this.metrics.totalRequests;
+      
+      return {
+        success: false,
+        error: error.message,
+        latency: performance.now() - startTime,
+        timestamp: new Date().toISOString()
+      };
+    }
+  }
+
+  async fallbackRoute(request) {
+    console.log('🔄 Usando Router v1 (fallback)');
+    
+    // Simular routing v1
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    return {
+      success: true,
+      route: 'fallback',
+      target_agent: 'agents.orchestrator.fallback',
+      latency_ms: 100,
+      optimized: false,
+      version: 'v1'
+    };
+  }
+
+  async fallbackFSM(request) {
+    console.log('🔄 Usando FSM v1 (fallback)');
+    
+    // Simular FSM v1
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    return {
+      success: true,
+      version: 'v1',
+      latency_ms: 500,
+      timestamp: new Date().toISOString()
+    };
+  }
+
+  combineResults(routeResult, fsmResult, metadata) {
+    return {
+      success: routeResult.success && fsmResult.success,
+      route: routeResult.route || 'unknown',
+      target_agent: routeResult.target_agent || 'unknown',
+      fsm_state: fsmResult.finalState || 'unknown',
+      latency: metadata.latency,
+      latency_ms: Math.round(metadata.latency),
+      optimized: routeResult.optimized || false,
+      canary: metadata.useCanary,
+      version: {
+        router: routeResult.version || 'v1',
+        fsm: fsmResult.version || 'v1'
+      },
+      performance: {
+        p95: this.calculateP95(metadata.latency),
+        errorRate: this.metrics.errorRate,
+        throughput: this.calculateThroughput()
+      },
+      metadata: {
+        requestId: this.generateRequestId(),
+        timestamp: metadata.timestamp,
+        hops: routeResult.hops_saved || 0,
+        performance_gain: routeResult.performance_gain || 0
+      }
+    };
+  }
+
+  calculateP95(currentLatency) {
+    // Simular cálculo de P95 (en producción vendría de métricas reales)
+    const baseP95 = 1000;
+    const variation = (Math.random() - 0.5) * 200;
+    return Math.round(baseP95 + variation);
+  }
+
+  calculateThroughput() {
+    // Simular cálculo de throughput
+    const baseThroughput = 50;
+    const variation = (Math.random() - 0.5) * 10;
+    return Math.round((baseThroughput + variation) * 10) / 10;
+  }
+
+  updateMetrics(result) {
+    // Actualizar latencia promedio
+    this.metrics.averageLatency = 
+      (this.metrics.averageLatency * (this.metrics.totalRequests - 1) + result.latency) / 
+      this.metrics.totalRequests;
+
+    // Actualizar P95
+    this.metrics.p95Latency = Math.max(this.metrics.p95Latency, result.latency);
+
+    // Actualizar error rate
+    if (!result.success) {
+      this.metrics.errorRate = 
+        (this.metrics.errorRate * (this.metrics.totalRequests - 1) + 1) / 
+        this.metrics.totalRequests;
+    }
+  }
+
+  generateRequestId() {
+    return `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
   async callAgent(
@@ -461,6 +663,35 @@ class WorkflowOrchestrator {
 
   getAgentStatus() {
     return Object.fromEntries(this.agentStatus);
+  }
+
+  // SEMANA 1: Métodos de estado y salud v2
+  getStatus() {
+    return {
+      version: this.version,
+      featureFlags: this.featureFlags,
+      metrics: this.metrics,
+      router: this.router.getMetrics(),
+      fsm: this.fsm.getMetrics(),
+      canary: this.canary.getMetrics(),
+      monitor: this.monitor.getStatus()
+    };
+  }
+
+  getHealth() {
+    const status = this.getStatus();
+    
+    return {
+      healthy: this.metrics.errorRate < 0.05,
+      version: this.version,
+      uptime: process.uptime(),
+      requests: this.metrics.totalRequests,
+      errorRate: this.metrics.errorRate,
+      p95Latency: this.metrics.p95Latency,
+      canaryPercentage: status.canary.canaryPercentage,
+      alerts: status.monitor.alerts,
+      rollbacks: status.canary.rollbackCount
+    };
   }
 
   async healthCheck() {

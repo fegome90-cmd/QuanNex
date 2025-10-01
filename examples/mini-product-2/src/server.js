@@ -11,10 +11,8 @@ const server = http.createServer((req, res) => {
 
 if (process.env.NODE_ENV !== 'test') {
   server.listen(PORT, () => {
-    // eslint-disable-next-line no-console
     console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 
 export default server;
-
