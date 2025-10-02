@@ -1,0 +1,16 @@
+{
+  "traceId": "3a3e08d9a8b0493257d94f86054f6240",
+  "timestamp": "2025-10-02T17:24:34.790Z",
+  "operation": "test_update",
+  "agentId": "test-agent",
+  "context": {
+    "input": {
+      "test": "data"
+    },
+    "metadata": {}
+  },
+  "status": "running",
+  "duration": null,
+  "error": null,
+  "progress": 50
+}

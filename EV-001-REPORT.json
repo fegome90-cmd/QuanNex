@@ -1,0 +1,70 @@
+{
+  "experiment": "EV-001",
+  "timestamp": "2025-10-02T17:38:04.304Z",
+  "summary": {
+    "recommendation": "NO-GO",
+    "mcpShare": 50,
+    "totalRequests": 20,
+    "sessions": 1
+  },
+  "metrics": {
+    "totalRequests": 20,
+    "mcpCalls": 10,
+    "cursorFallbacks": 10,
+    "mcpShare": 50,
+    "latencyStats": {
+      "avg": 17173.85,
+      "p95": 34840,
+      "p99": 34840,
+      "values": [
+        669,
+        1977,
+        2633,
+        6200,
+        7979,
+        8599,
+        10131,
+        10835,
+        15218,
+        17282,
+        17943,
+        19934,
+        20662,
+        24241,
+        26441,
+        27093,
+        28718,
+        29319,
+        32763,
+        34840
+      ],
+      "min": 669,
+      "max": 34840
+    },
+    "tokenStats": {
+      "input": 460,
+      "output": 766,
+      "total": 1226
+    },
+    "agentDistribution": {
+      "prompting": 3,
+      "context": 5,
+      "security": 1,
+      "rules": 1
+    },
+    "timeDistribution": {
+      "14": 42
+    },
+    "errorRate": 0,
+    "recommendation": "NO-GO"
+  },
+  "sessions": {
+    "ev001_1759426649307_15024760": {
+      "startTime": "2025-10-02T17:37:29.308Z",
+      "endTime": "2025-10-02T17:38:04.250Z",
+      "requests": [],
+      "mcpCalls": 10,
+      "cursorFallbacks": 10
+    }
+  }
+}

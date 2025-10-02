@@ -1,0 +1,13 @@
+{
+  "traceId": "e9b49cdf6f277a71f25264bda0e39210",
+  "timestamp": "2025-10-02T17:25:29.231Z",
+  "operation": "operation1",
+  "agentId": "agent1",
+  "context": {
+    "input": "test1",
+    "metadata": {}
+  },
+  "status": "started",
+  "duration": null,
+  "error": null
+}

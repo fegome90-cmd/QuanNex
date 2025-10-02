@@ -1,0 +1,20 @@
+{
+  "traceId": "48b7e85af821fc597417660d809c77a2",
+  "timestamp": "2025-10-02T17:24:34.791Z",
+  "operation": "test_complete",
+  "agentId": "test-agent",
+  "context": {
+    "input": {
+      "test": "data"
+    },
+    "metadata": {}
+  },
+  "status": "completed",
+  "duration": 0,
+  "error": null,
+  "completedAt": "2025-10-02T17:24:34.791Z",
+  "result": {
+    "success": true,
+    "data": "test result"
+  }
+}

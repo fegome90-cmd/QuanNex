@@ -2,33 +2,62 @@
 /**
  * AGENT SERVER WRAPPER V3 - ULTRA SIMPLIFICADO
  * Wrapper que simula respuestas sin llamar agentes reales
+ * Integrado con EV-001 Tracer para medición de uso real
  */
 import { readFileSync } from 'node:fs';
+import { traceMCP, completeMCP, initEV001Tracer } from '../../tools/ev-001-tracer.mjs';
 
 class MockAgentWrapper {
+  constructor() {
+    // Inicializar tracer EV-001
+    this.tracer = initEV001Tracer();
+  }
+
   async callAgent(agentName, request) {
-    // Simular respuesta exitosa para health checks
-    switch (agentName) {
-      case 'context':
-        return {
-          success: true,
-          data: { sources: ['test'], result: 'context resolved' }
-        };
-      case 'prompting':
-        return {
-          success: true,
-          data: { prompt: 'test prompt generated' }
-        };
-      case 'rules':
-        return {
-          success: true,
-          data: { validation: 'rules validated' }
-        };
-      default:
-        return {
-          success: true,
-          data: { message: 'agent response' }
-        };
+    // Trazar llamada MCP
+    const requestId = traceMCP({
+      agent: agentName,
+      operation: 'callAgent',
+      payload: request
+    });
+
+    try {
+      // Simular respuesta exitosa para health checks
+      let result;
+      switch (agentName) {
+        case 'context':
+          result = {
+            success: true,
+            data: { sources: ['test'], result: 'context resolved' }
+          };
+          break;
+        case 'prompting':
+          result = {
+            success: true,
+            data: { prompt: 'test prompt generated' }
+          };
+          break;
+        case 'rules':
+          result = {
+            success: true,
+            data: { validation: 'rules validated' }
+          };
+          break;
+        default:
+          result = {
+            success: true,
+            data: { message: 'agent response' }
+          };
+      }
+
+      // Completar traza MCP
+      completeMCP(requestId, result);
+      return result;
+
+    } catch (error) {
+      // Completar traza con error
+      completeMCP(requestId, null, error.message);
+      throw error;
     }
   }
 
