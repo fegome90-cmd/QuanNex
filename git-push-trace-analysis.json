@@ -1,0 +1,55 @@
+{
+  "name": "Análisis Problema Git Push Trace",
+  "description": "Investigar y resolver el problema con el sistema de trazas MCP en git push",
+  "steps": [
+    {
+      "step_id": "analizar_problema",
+      "agent": "context",
+      "input": {
+        "sources": [
+          ".git/hooks/pre-push.disabled",
+          "tools/mcp-signer.js",
+          "tools/mcp-tracer.js",
+          ".quannex/trace/a1b2c3d4e5f678901234567890123456.json"
+        ],
+        "selectors": ["error", "validation", "trace", "signature"],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "diagnosticar_causa",
+      "agent": "security",
+      "depends_on": ["analizar_problema"],
+      "input": {
+        "context": "{{analizar_problema.output.context_bundle}}",
+        "analysis_type": "security_audit",
+        "focus": "mcp_enforcement_validation"
+      }
+    },
+    {
+      "step_id": "generar_solucion",
+      "agent": "prompting",
+      "depends_on": ["diagnosticar_causa"],
+      "input": {
+        "goal": "Crear solución para el problema de validación de trazas MCP en git push",
+        "context": "{{diagnosticar_causa.output.context_bundle}}",
+        "requirements": [
+          "Mantener seguridad del sistema MCP",
+          "Permitir push exitoso",
+          "Validación correcta de trazas",
+          "Firma HMAC válida"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_solucion",
+      "agent": "rules",
+      "depends_on": ["generar_solucion"],
+      "input": {
+        "context": "{{generar_solucion.output.context_bundle}}",
+        "compliance_check": "mcp_enforcement",
+        "security_requirements": "trace_validation"
+      }
+    }
+  ]
+}
