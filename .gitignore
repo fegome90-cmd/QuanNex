@@ -131,3 +131,51 @@ out/detailed-reports-*.json
 out/retry-rollback-*.json
 out/repair-report-*.json
 out/smart-test-runner-*.json
+
+# === SECURITY CLEANUP - PATTERNS ADDED ===
+# Configuraciones sensibles
+.cursor/
+.mcp.json
+.secretsallow
+
+# Archivos de backup
+*.backup
+*.bak
+
+# Logs del sistema
+logs/
+*.log
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Cache completo
+.quannex/cache/
+
+# === SONARQUBE OPTIMIZATION ===
+# Directorios grandes innecesarios para análisis
+node_modules/
+logs/
+archived/
+experiments/
+coverage/
+out/
+backups/
+tmp/
+
+# Archivos de cache y temporales
+.cache/
+*.cache
+*.tmp
+*.temp
+
+# Archivos de backup y versiones
+*.backup
+*.bak
+versions/v1/
+versions/v2/
+
+# Documentación experimental
+docs/research/imported/
+docs/audits/*.md
