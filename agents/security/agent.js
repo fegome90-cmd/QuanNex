@@ -7,10 +7,13 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkRateLimit } from '../utils/file-rate-limiter.js';
+import { safeErrorLog, safeOutputLog } from '../utils/log-sanitizer.js';
+import { validateAuthenticatedInput, prepareAuthenticatedOutput } from '../utils/agent-auth-middleware.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const PROJECT_ROOT = join(__dirname, '../..');
+const PROJECT_ROOT = join(__dirname, '..');
 
 // Configuración del agente
 const AGENT_CONFIG = {
@@ -33,6 +36,61 @@ const validateInput = (data) => {
   
   if (data.target_path && typeof data.target_path !== 'string') {
     errors.push('target_path must be a string');
+  }
+  
+  // Sanitización de path traversal en cualquier campo de string
+  for (const [key, value] of Object.entries(data)) {
+    if (typeof value === 'string' && value.includes('..')) {
+      errors.push(`${key} must not contain parent directory traversal (..)`);
+    }
+    if (typeof value === 'string' && /[<>\"'&]/.test(value)) {
+      errors.push(`${key} must not contain dangerous characters (<, >, ", \', &)`);
+    }
+  }
+  
+  // Sanitización específica de arrays de strings (como sources, selectors)
+  if (Array.isArray(data.sources)) {
+    for (const source of data.sources) {
+      if (typeof source === 'string') {
+        if (source.includes('..')) {
+          errors.push('sources must not contain parent directory traversal (..)');
+        }
+        if (/[<>\"'&]/.test(source)) {
+          errors.push('sources must not contain dangerous characters (<, >, ", \', &)');
+        }
+      }
+    }
+  }
+  
+  if (Array.isArray(data.selectors)) {
+    for (const selector of data.selectors) {
+      if (typeof selector === 'string') {
+        if (selector.includes('..')) {
+          errors.push('selectors must not contain parent directory traversal (..)');
+        }
+        if (/[<>\"'&]/.test(selector)) {
+          errors.push('selectors must not contain dangerous characters (<, >, ", \', &)');
+        }
+      }
+    }
+  }
+  
+  // Sanitización específica de target_path
+  if (data.target_path && data.target_path.includes('..')) {
+    errors.push('target_path must not contain parent directory traversal (..)');
+  }
+  
+  if (data.target_path && /[<>\"'&]/.test(data.target_path)) {
+    errors.push('target_path must not contain dangerous characters (<, >, ", \', &)');
+  }
+  
+  // Validación de max_tokens si está presente
+  if (data.max_tokens !== undefined) {
+    if (typeof data.max_tokens !== 'number' || !Number.isInteger(data.max_tokens)) {
+      errors.push('max_tokens must be an integer when provided');
+    } else if (data.max_tokens <= 0) {
+      errors.push('max_tokens must be greater than zero when provided');
+    }
   }
   
   return errors;
@@ -196,6 +254,20 @@ const processSecurityScan = (data) => {
 
 // Manejo de entrada desde stdin
 if (import.meta.url === `file://${process.argv[1]}`) {
+  // Verificar rate limiting antes de procesar
+  if (!checkRateLimit('security')) {
+    console.error(JSON.stringify({
+      schema_version: '1.0.0',
+      agent_version: AGENT_CONFIG.version,
+      error: ['Rate limit exceeded for security agent. Please retry in 1 minute.'],
+      rate_limit_info: {
+        agent: 'security',
+        retry_after_seconds: 60
+      }
+    }, null, 2));
+    process.exit(1);
+  }
+
   let inputData = '';
   
   process.stdin.setEncoding('utf8');
@@ -206,8 +278,27 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   process.stdin.on('end', () => {
     try {
       const data = inputData.trim() ? JSON.parse(inputData) : {};
+      
+      // Autenticar entrada
+      try {
+        const authContext = validateAuthenticatedInput('security', data);
+        console.log(`🔐 [Auth] Security agent authenticated: ${authContext.sourceAgent} -> ${authContext.targetAgent}`);
+      } catch (error) {
+        safeErrorLog('Authentication failed:', { error: error.message });
+        process.exit(1);
+      }
+      
+      // Aplicar validación de entrada
+      const inputErrors = validateInput(data);
+      if (inputErrors.length > 0) {
+        safeErrorLog('Input validation errors:', inputErrors);
+        process.exit(1);
+      }
+      
       const result = processSecurityScan(data);
-      console.log(JSON.stringify(result, null, 2));
+      // Preparar salida autenticada
+      const authenticatedOutput = prepareAuthenticatedOutput('security', result);
+      safeOutputLog(authenticatedOutput);
     } catch (error) {
       console.error(JSON.stringify({
         schema_version: '1.0.0',

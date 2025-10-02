@@ -1,0 +1,102 @@
+{
+  "name": "GAP-004: Análisis de Autenticación entre Agentes",
+  "description": "Workflow para analizar el estado actual de autenticación entre agentes y diseñar sistema JWT",
+  "steps": [
+    {
+      "step_id": "analizar_comunicacion_agentes",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "orchestration/orchestrator.js",
+          "agents/context/agent.js",
+          "agents/prompting/agent.js",
+          "agents/rules/agent.js",
+          "agents/security/agent.js"
+        ],
+        "selectors": [
+          "spawnSync",
+          "spawn",
+          "exec",
+          "execSync",
+          "handleRequest",
+          "onMessage",
+          "process.stdin",
+          "process.stdout",
+          "communication",
+          "agent",
+          "server",
+          "client",
+          "request",
+          "response",
+          "payload",
+          "message",
+          "token",
+          "auth",
+          "authentication",
+          "authorization",
+          "jwt",
+          "session",
+          "credential",
+          "identity",
+          "verify",
+          "validate"
+        ],
+        "max_tokens": 2000,
+        "exclude_patterns": [
+          "console.log",
+          "console.error",
+          "console.warn",
+          "console.info"
+        ]
+      }
+    },
+    {
+      "step_id": "generar_plan_autenticacion_jwt",
+      "agent": "prompting",
+      "depends_on": ["analizar_comunicacion_agentes"],
+      "input": {
+        "goal": "Crear plan detallado de implementación de autenticación JWT entre agentes",
+        "context": "{{analizar_comunicacion_agentes.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Implementar sistema JWT para autenticación entre agentes",
+          "Crear middleware de autenticación para comunicación",
+          "Implementar generación y validación de tokens",
+          "Asegurar comunicación segura entre agentes",
+          "Mantener compatibilidad con sistema actual",
+          "Implementar rotación de tokens",
+          "Crear sistema de identidad de agentes",
+          "Implementar autorización basada en roles",
+          "Asegurar que solo agentes autorizados puedan comunicarse",
+          "Implementar logging de autenticación",
+          "Crear sistema de gestión de claves"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_plan_autenticacion_jwt",
+      "agent": "rules",
+      "depends_on": ["generar_plan_autenticacion_jwt"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md",
+          "docs/security-policies.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_plan_autenticacion_jwt.output.system_prompt}}",
+        "rules": [
+          "Todos los agentes deben autenticarse antes de comunicarse",
+          "Usar JWT con claves seguras y rotación",
+          "Implementar autorización basada en roles",
+          "Logging de todas las autenticaciones",
+          "Validación estricta de tokens",
+          "Comunicación encriptada entre agentes",
+          "Gestión segura de claves y secretos",
+          "Prevención de ataques de replay",
+          "Timeout de tokens apropiado",
+          "Sistema de revocación de tokens"
+        ]
+      }
+    }
+  ]
+}

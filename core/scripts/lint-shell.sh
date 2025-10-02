@@ -14,7 +14,12 @@ fail=0
 
 if has_cmd shellcheck; then
   echo -e "${GREEN}▶ shellcheck${NC}"
+  # Lint core scripts
   shellcheck core/claude-project-init.sh core/scripts/*.sh || fail=1
+  # Lint scripts directory
+  shellcheck scripts/*.sh 2>/dev/null || fail=1
+  # Lint any other shell scripts
+  find . -name "*.sh" -not -path "./node_modules/*" -not -path "./.git/*" -exec shellcheck {} \; 2>/dev/null || fail=1
 else
   echo -e "${YELLOW}⚠ shellcheck not found. Skipping static analysis.${NC}"
 fi
@@ -22,7 +27,7 @@ fi
 if has_cmd shfmt; then
   echo -e "${GREEN}▶ shfmt (diff only)${NC}"
   # Show formatting diff; do not modify files automatically here
-  shfmt -d -i 2 -ci -s core/claude-project-init.sh scripts || fail=1
+  shfmt -d -i 2 -ci -s core/claude-project-init.sh core/scripts/*.sh scripts/*.sh 2>/dev/null || fail=1
 else
   echo -e "${YELLOW}⚠ shfmt not found. Skipping format check.${NC}"
 fi

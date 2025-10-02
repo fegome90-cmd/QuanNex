@@ -1,0 +1,78 @@
+{
+  "name": "GAP-002: Implementación de Rate Limiting",
+  "description": "Workflow para implementar rate limiting basado en resultados de tests reales",
+  "steps": [
+    {
+      "step_id": "analizar_fallos_rate_limiting",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "gap-002-test-report.json",
+          "orchestration/orchestrator.js",
+          "agents/context/agent.js",
+          "agents/prompting/agent.js",
+          "agents/rules/agent.js",
+          "agents/security/agent.js"
+        ],
+        "selectors": [
+          "NOT DETECTED",
+          "No rate limiting detected",
+          "Performance degradation",
+          "spawnSync",
+          "process",
+          "stdin",
+          "stdout",
+          "stderr",
+          "concurrent",
+          "parallel",
+          "rate",
+          "limit",
+          "throttle"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "generar_implementacion_rate_limiting",
+      "agent": "prompting",
+      "depends_on": ["analizar_fallos_rate_limiting"],
+      "input": {
+        "goal": "Generar código específico para implementar rate limiting en todos los agentes",
+        "context": "{{analizar_fallos_rate_limiting.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Implementar rate limiting en TODOS los agentes",
+          "Usar algoritmo Token Bucket o Sliding Window",
+          "Configurar límites por agente (context: 10 req/min, security: 5 req/min, etc)",
+          "Implementar middleware de rate limiting",
+          "Logging de requests bloqueados",
+          "Mantener funcionalidad existente",
+          "Usar Map para almacenar contadores por IP/usuario",
+          "Implementar cleanup automático de contadores expirados"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_implementacion_rate_limiting",
+      "agent": "rules",
+      "depends_on": ["generar_implementacion_rate_limiting"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md",
+          "docs/security-policies.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_implementacion_rate_limiting.output.system_prompt}}",
+        "rules": [
+          "Todos los agentes deben tener rate limiting implementado",
+          "Prevenir ataques DoS efectivamente",
+          "Implementar límites configurables por agente",
+          "Mantener logs de seguridad de requests bloqueados",
+          "No degradar performance significativamente",
+          "Usar algoritmos probados de rate limiting",
+          "Limpiar contadores expirados automáticamente"
+        ]
+      }
+    }
+  ]
+}

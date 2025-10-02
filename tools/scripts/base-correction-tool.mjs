@@ -5,7 +5,7 @@
  * Refactoring: Fase 2 - Crear arquitectura base común
  */
 
-import { spawn, exec } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
@@ -15,6 +15,50 @@ import { hideBin } from 'yargs/helpers';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PROJECT_ROOT = join(__dirname, '..');
+
+// QNX-SEC-003: Allowlist de comandos permitidos (reemplaza denylist frágil)
+const ALLOWLIST = new Map([
+  // comando -> args permitidos (regex)
+  ['npm', [/^(install|run|test|audit|ci|lint|fix)$/]],
+  ['node', [/^[\w\-/.]+$/]],
+  ['git', [/^(add|commit|push|pull|status|diff|log)$/]],
+  ['eslint', [/^[\w\-/.]+$/]],
+  ['prettier', [/^(--write|--check)$/]],
+  ['mkdir', [/^[\w\-/.]+$/]],
+  ['cp', [/^[\w\-/.]+$/]],
+  ['mv', [/^[\w\-/.]+$/]],
+  ['rm', [/^[\w\-/.]+$/]],
+]);
+
+/**
+ * Validar comando contra allowlist
+ * @param {string} cmd - Comando a validar
+ * @param {string[]} args - Argumentos del comando
+ * @throws {Error} Si el comando no está permitido
+ */
+function validateCommand(cmd, args) {
+  if (!ALLOWLIST.has(cmd)) {
+    throw new Error(`Command not allowed: ${cmd}`);
+  }
+  
+  const rules = ALLOWLIST.get(cmd);
+  if (!Array.isArray(args)) {
+    throw new Error('Args must be an array');
+  }
+  
+  for (const [i, arg] of args.entries()) {
+    const isValid = rules.some((rule) => {
+      if (rule instanceof RegExp) {
+        return rule.test(arg);
+      }
+      return rule === arg;
+    });
+    
+    if (!isValid) {
+      throw new Error(`Arg not allowed at position ${i}: ${arg}`);
+    }
+  }
+}
 
 /**
  * Clase base para herramientas de corrección
@@ -139,26 +183,35 @@ export class BaseCorrectionTool {
   }
 
   /**
-   * Ejecutar comando individual
+   * Ejecutar comando individual con validación estricta
+   * QNX-SEC-003: Migrado de exec a spawn con allowlist
    */
   async executeCommand(command) {
     return new Promise((resolve, reject) => {
-      // Validar comando seguro
-      if (!this.isSafeCommand(command)) {
-        reject(new Error(`Comando no seguro detectado: ${command}`));
-        return;
-      }
+      try {
+        // QNX-SEC-003: Validación estricta previa a ejecución
+        const [cmd, ...rawArgs] = command.trim().split(/\s+/);
+        validateCommand(cmd, rawArgs);
 
-      exec(
-        command,
-        {
+        // Usar spawn en lugar de exec para mayor seguridad
+        const child = spawn(cmd, rawArgs, {
           cwd: PROJECT_ROOT,
-          timeout: 30000 // 30 segundos timeout
-        },
-        (error, stdout, stderr) => {
-          if (error) {
-            reject(new Error(`Comando falló: ${error.message}`));
-          } else {
+          stdio: ['ignore', 'pipe', 'pipe']
+        });
+
+        let stdout = '';
+        let stderr = '';
+
+        child.stdout.on('data', (data) => {
+          stdout += data.toString();
+        });
+
+        child.stderr.on('data', (data) => {
+          stderr += data.toString();
+        });
+
+        child.on('close', (code) => {
+          if (code === 0) {
             if (this.config.verbose && stdout) {
               this.verbose(`Output: ${stdout}`);
             }
@@ -166,29 +219,33 @@ export class BaseCorrectionTool {
               this.verbose(`Stderr: ${stderr}`);
             }
             resolve({ stdout, stderr });
+          } else {
+            reject(new Error(`Command failed with exit code ${code}: ${stderr}`));
           }
-        }
-      );
+        });
+
+        child.on('error', (error) => {
+          reject(new Error(`Command execution failed: ${error.message}`));
+        });
+
+      } catch (validationError) {
+        reject(new Error(`Command validation failed: ${validationError.message}`));
+      }
     });
   }
 
   /**
-   * Validar comando seguro
+   * Validar comando seguro usando allowlist
+   * QNX-SEC-003: Reemplazado denylist frágil por allowlist estricto
    */
   isSafeCommand(command) {
-    const dangerousPatterns = [
-      /rm\s+-rf/,
-      /sudo/,
-      /chmod\s+777/,
-      /dd\s+if=/,
-      /mkfs/,
-      /fdisk/,
-      /:(){ :|:& };:/, // Fork bomb
-      /eval\s+/,
-      /exec\s+/
-    ];
-
-    return !dangerousPatterns.some(pattern => pattern.test(command));
+    try {
+      const [cmd, ...args] = command.trim().split(/\s+/);
+      validateCommand(cmd, args);
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   /**
@@ -249,7 +306,7 @@ export class BaseCorrectionTool {
    */
   parseJSON(jsonString) {
     try {
-      const jsonRegex = new RegExp('\\{[\\s\\S]*\\}');
+      const jsonRegex = /\{[\s\S]*\}/;
       const jsonMatch = jsonRegex.exec(jsonString);
 
       if (!jsonMatch) {

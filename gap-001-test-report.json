@@ -1,0 +1,256 @@
+{
+  "timestamp": "2025-10-02T16:12:09.251Z",
+  "test_name": "GAP-001 Sanitization Test",
+  "results": [
+    {
+      "agent": "agents/context/agent.js",
+      "tests": [
+        {
+          "name": "Entrada válida",
+          "expected": "success",
+          "actual": "success",
+          "status": 0,
+          "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"context_bundle\": \"{\\\"extracted\\\":[{\\\"file\\\":\\\"README.md\\\",\\\"content\\\":\\\"Content from README.md\\\",\\\"relevance\\\":0.8}],\\\"metadata\\\":{\\\"total_sources\\\":1,\\\"selectors_applied\\\":[\\\"descripción\\\"],\\\"max_tokens\\\":1000}}\",\n  \"provenance\": [\n    \"README.md\"\n  ],\n  \"stats\": {\n    \"tokens_estimated\": 1000,\n    \"chunks\": 1,\n    \"matched\": 1,\n    \"truncated\": false,\n    \"adjusted\": false\n  }\n}\n",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "name": "Entrada válida para prompting",
+          "expected": "success",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"sources must be a non-empty array of strings\"\n]\n",
+          "passed": false
+        },
+        {
+          "name": "Entrada válida para rules",
+          "expected": "success",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"sources must be a non-empty array of strings\"\n]\n",
+          "passed": false
+        },
+        {
+          "name": "Entrada con path traversal",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"sources must not contain parent directory traversal (..)\"\n]\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con caracteres peligrosos",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"sources must not contain dangerous characters (<, >, \\\", ', &)\"\n]\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con JSON malformado",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "<anonymous_script>:1\n{\"sources\": [\"test\"], \"selectors\": [\"test\"], \"max_tokens\": 1000, \"malformed\": }\n                                                                              ^\n\nSyntaxError: Unexpected token '}', ...\"lformed\": }\" is not valid JSON\n    at JSON.parse (<anonymous>)\n    at file:///Users/felipe/Developer/startkit-main/agents/context/agent.js:114:19\n    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:689:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.9.0\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con max_tokens negativo",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"max_tokens must be greater than zero when provided\"\n]\n",
+          "passed": true
+        }
+      ],
+      "overall": "fail",
+      "score": "5/7"
+    },
+    {
+      "agent": "agents/prompting/agent.js",
+      "tests": [
+        {
+          "name": "Entrada válida para prompting",
+          "expected": "success",
+          "actual": "success",
+          "status": 0,
+          "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"system_prompt\": \"# Test goal\\n\\n## Context\\nTest context\\n\\n## Constraints\\ntest\\n\\n## Style\\ndefault\\n\\nGenerated at: 2025-10-02T16:12:05.241Z\",\n  \"metadata\": {\n    \"goal\": \"Test goal\",\n    \"style\": \"default\",\n    \"constraints_count\": 1,\n    \"timestamp\": \"2025-10-02T16:12:05.241Z\"\n  },\n  \"stats\": {\n    \"prompt_length\": 115,\n    \"constraints_applied\": 1,\n    \"context_length\": 12\n  }\n}\n",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "name": "Entrada con path traversal",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"goal must be a non-empty string\"\n]\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con caracteres peligrosos",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"goal must be a non-empty string\"\n]\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con JSON malformado",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "<anonymous_script>:1\n{\"sources\": [\"test\"], \"selectors\": [\"test\"], \"max_tokens\": 1000, \"malformed\": }\n                                                                              ^\n\nSyntaxError: Unexpected token '}', ...\"lformed\": }\" is not valid JSON\n    at JSON.parse (<anonymous>)\n    at file:///Users/felipe/Developer/startkit-main/agents/prompting/agent.js:37:19\n    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:689:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.9.0\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con max_tokens negativo",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"goal must be a non-empty string\"\n]\n",
+          "passed": true
+        }
+      ],
+      "overall": "pass",
+      "score": "5/5"
+    },
+    {
+      "agent": "agents/rules/agent.js",
+      "tests": [
+        {
+          "name": "Entrada válida para rules",
+          "expected": "success",
+          "actual": "success",
+          "status": 0,
+          "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"rules_compiled\": [\n    \"[SECURITY.md] Policy loaded from SECURITY.md\"\n  ],\n  \"validation_result\": {\n    \"passed\": true,\n    \"violations\": [],\n    \"warnings\": [],\n    \"score\": 100\n  },\n  \"violations\": [],\n  \"advice\": [\n    \"tone:neutral\",\n    \"domain:general\",\n    \"Ensure primary policies are acknowledged.\"\n  ],\n  \"trace\": [\n    \"rules.server:ok\"\n  ],\n  \"metadata\": {\n    \"policy_refs\": [\n      \"SECURITY.md\"\n    ],\n    \"tone\": \"neutral\",\n    \"domain\": \"general\",\n    \"compliance_level\": \"strict\",\n    \"timestamp\": \"2025-10-02T16:12:05.469Z\"\n  },\n  \"stats\": {\n    \"policies_checked\": 1,\n    \"violations_found\": 0,\n    \"warnings_found\": 0,\n    \"compliance_score\": 100\n  }\n}\n",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "name": "Entrada con path traversal",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"policy_refs must be an array\"\n]\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con caracteres peligrosos",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"policy_refs must be an array\"\n]\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con JSON malformado",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "<anonymous_script>:1\n{\"sources\": [\"test\"], \"selectors\": [\"test\"], \"max_tokens\": 1000, \"malformed\": }\n                                                                              ^\n\nSyntaxError: Unexpected token '}', ...\"lformed\": }\" is not valid JSON\n    at JSON.parse (<anonymous>)\n    at file:///Users/felipe/Developer/startkit-main/agents/rules/agent.js:37:19\n    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:689:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.9.0\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con max_tokens negativo",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"policy_refs must be an array\"\n]\n",
+          "passed": true
+        }
+      ],
+      "overall": "pass",
+      "score": "5/5"
+    },
+    {
+      "agent": "agents/security/agent.js",
+      "tests": [
+        {
+          "name": "Entrada válida",
+          "expected": "success",
+          "actual": "success",
+          "status": 0,
+          "stdout": "🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditoría de dependencias completada\n🔐 [Security Scan] Escaneando secretos...\n🔐 [Security Scan] Archivos escaneados: 0\n🔐 [Security Scan] Archivos con secretos: 0\n✅ [SUCCESS] No se encontraron secretos\n📋 [Security Scan] Verificando compliance...\n✅ [SUCCESS] Verificación de compliance completada\n✅ [SUCCESS] ✅ Escaneo de seguridad completado exitosamente\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"2.0.0\",\n  \"scan_type\": \"full\",\n  \"target_path\": \".\",\n  \"timestamp\": \"2025-10-02T16:12:05.655Z\",\n  \"results\": {\n    \"vulnerability_scan\": {\n      \"files_scanned\": 0,\n      \"vulnerabilities_found\": 0,\n      \"critical_issues\": 0,\n      \"high_issues\": 0,\n      \"medium_issues\": 0,\n      \"low_issues\": 0,\n      \"details\": []\n    },\n    \"dependency_audit\": {\n      \"vulnerabilities\": {},\n      \"details\": []\n    },\n    \"secret_scan\": {\n      \"files_scanned\": 0,\n      \"secrets_found\": 0,\n      \"details\": []\n    },\n    \"compliance_check\": {\n      \"frameworks_checked\": [\n        \"OWASP\",\n        \"NIST\",\n        \"CIS\"\n      ],\n      \"compliance_score\": 85,\n      \"issues_found\": 0,\n      \"details\": []\n    }\n  }\n}\n",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "name": "Entrada válida para prompting",
+          "expected": "success",
+          "actual": "success",
+          "status": 0,
+          "stdout": "🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditoría de dependencias completada\n🔐 [Security Scan] Escaneando secretos...\n🔐 [Security Scan] Archivos escaneados: 0\n🔐 [Security Scan] Archivos con secretos: 0\n✅ [SUCCESS] No se encontraron secretos\n📋 [Security Scan] Verificando compliance...\n✅ [SUCCESS] Verificación de compliance completada\n✅ [SUCCESS] ✅ Escaneo de seguridad completado exitosamente\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"2.0.0\",\n  \"scan_type\": \"full\",\n  \"target_path\": \".\",\n  \"timestamp\": \"2025-10-02T16:12:07.050Z\",\n  \"results\": {\n    \"vulnerability_scan\": {\n      \"files_scanned\": 0,\n      \"vulnerabilities_found\": 0,\n      \"critical_issues\": 0,\n      \"high_issues\": 0,\n      \"medium_issues\": 0,\n      \"low_issues\": 0,\n      \"details\": []\n    },\n    \"dependency_audit\": {\n      \"vulnerabilities\": {},\n      \"details\": []\n    },\n    \"secret_scan\": {\n      \"files_scanned\": 0,\n      \"secrets_found\": 0,\n      \"details\": []\n    },\n    \"compliance_check\": {\n      \"frameworks_checked\": [\n        \"OWASP\",\n        \"NIST\",\n        \"CIS\"\n      ],\n      \"compliance_score\": 85,\n      \"issues_found\": 0,\n      \"details\": []\n    }\n  }\n}\n",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "name": "Entrada válida para rules",
+          "expected": "success",
+          "actual": "success",
+          "status": 0,
+          "stdout": "🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditoría de dependencias completada\n🔐 [Security Scan] Escaneando secretos...\n🔐 [Security Scan] Archivos escaneados: 0\n🔐 [Security Scan] Archivos con secretos: 0\n✅ [SUCCESS] No se encontraron secretos\n📋 [Security Scan] Verificando compliance...\n✅ [SUCCESS] Verificación de compliance completada\n✅ [SUCCESS] ✅ Escaneo de seguridad completado exitosamente\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"2.0.0\",\n  \"scan_type\": \"full\",\n  \"target_path\": \".\",\n  \"timestamp\": \"2025-10-02T16:12:08.080Z\",\n  \"results\": {\n    \"vulnerability_scan\": {\n      \"files_scanned\": 0,\n      \"vulnerabilities_found\": 0,\n      \"critical_issues\": 0,\n      \"high_issues\": 0,\n      \"medium_issues\": 0,\n      \"low_issues\": 0,\n      \"details\": []\n    },\n    \"dependency_audit\": {\n      \"vulnerabilities\": {},\n      \"details\": []\n    },\n    \"secret_scan\": {\n      \"files_scanned\": 0,\n      \"secrets_found\": 0,\n      \"details\": []\n    },\n    \"compliance_check\": {\n      \"frameworks_checked\": [\n        \"OWASP\",\n        \"NIST\",\n        \"CIS\"\n      ],\n      \"compliance_score\": 85,\n      \"issues_found\": 0,\n      \"details\": []\n    }\n  }\n}\n",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "name": "Entrada con path traversal",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"sources must not contain parent directory traversal (..)\"\n]\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con caracteres peligrosos",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"sources must not contain dangerous characters (<, >, \\\", ', &)\"\n]\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con JSON malformado",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"2.0.0\",\n  \"error\": [\n    \"Parse error: Unexpected token '}', ...\\\"lformed\\\": }\\\" is not valid JSON\"\n  ]\n}\n",
+          "passed": true
+        },
+        {
+          "name": "Entrada con max_tokens negativo",
+          "expected": "reject",
+          "actual": "reject",
+          "status": 1,
+          "stdout": "",
+          "stderr": "[\n  \"max_tokens must be greater than zero when provided\"\n]\n",
+          "passed": true
+        }
+      ],
+      "overall": "pass",
+      "score": "7/7"
+    }
+  ],
+  "overall_passed": false,
+  "summary": {
+    "total_agents": 4,
+    "total_tests": 24,
+    "passed_tests": 22
+  }
+}

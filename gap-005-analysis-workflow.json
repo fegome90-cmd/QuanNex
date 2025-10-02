@@ -1,0 +1,52 @@
+{
+  "name": "GAP-005: Análisis de Gestión Segura de Secretos",
+  "description": "Workflow para analizar el estado actual de gestión de secretos y diseñar sistema seguro",
+  "steps": [
+    {
+      "step_id": "generar_plan_gestion_secretos",
+      "agent": "prompting",
+      "input": {
+        "goal": "Crear plan detallado de implementación de gestión segura de secretos",
+        "context": "Análisis directo del sistema: Necesitamos migrar secretos hardcodeados a variables de entorno y gestor de secretos seguro. El sistema actual tiene claves JWT, tokens de API, y credenciales que deben ser gestionadas de forma segura.",
+        "style": "technical",
+        "constraints": [
+          "Migrar secretos hardcodeados a variables de entorno",
+          "Implementar gestor de secretos seguro",
+          "Crear sistema de rotación de secretos",
+          "Implementar cifrado de secretos en reposo",
+          "Asegurar que no hay secretos en código fuente",
+          "Implementar validación de secretos",
+          "Crear sistema de backup seguro de secretos",
+          "Implementar auditoría de acceso a secretos",
+          "Asegurar que los secretos se cargan de forma segura",
+          "Implementar sistema de revocación de secretos",
+          "Crear documentación de gestión de secretos"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_plan_gestion_secretos",
+      "agent": "rules",
+      "depends_on": ["generar_plan_gestion_secretos"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_plan_gestion_secretos.output.system_prompt}}",
+        "rules": [
+          "Ningún secreto debe estar hardcodeado en el código",
+          "Usar variables de entorno para secretos",
+          "Implementar cifrado de secretos en reposo",
+          "Rotación regular de secretos",
+          "Auditoría de acceso a secretos",
+          "Backup seguro de secretos",
+          "Validación de secretos al cargar",
+          "Sistema de revocación de secretos",
+          "Documentación completa de gestión",
+          "Prevención de exposición de secretos en logs"
+        ]
+      }
+    }
+  ]
+}

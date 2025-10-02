@@ -1,0 +1,145 @@
+# Gates de Avance MCP (Versión Endurecida)
+# Makefile para ejecutar todos los gates de validación
+
+.PHONY: help layout contracts init e2e security resilience perf ci-gate all-gates
+
+# Configuración
+QUANNEX_PROJECT_ROOT := $(shell pwd)
+QUANNEX_TIMEOUT := 300000
+
+# Colores para output
+GREEN := \033[32m
+RED := \033[31m
+YELLOW := \033[33m
+BLUE := \033[34m
+NC := \033[0m
+
+help: ## Mostrar ayuda
+	@echo "$(BLUE)🚦 Gates de Avance MCP (Versión Endurecida)$(NC)"
+	@echo ""
+	@echo "$(GREEN)Gates disponibles:$(NC)"
+	@echo "  layout      - Gate 0: Integridad & Layout"
+	@echo "  contracts   - Gate 1: Conformidad de contratos"
+	@echo "  init        - Gate 2: MCP Autonomous Init"
+	@echo "  e2e         - Gate 4: Orquestador sano"
+	@echo "  security    - Gate 7: Seguridad & Exfil"
+	@echo "  resilience  - Gate 9: Disponibilidad & Resiliencia"
+	@echo "  perf        - Gate 5: Telemetría mínima"
+	@echo "  ci-gate     - Gate 12: CI/CD Go/No-Go"
+	@echo "  all-gates   - Ejecutar todos los gates"
+	@echo ""
+	@echo "$(YELLOW)Comandos especiales:$(NC)"
+	@echo "  audit       - Gate 10: MCP Enforcement"
+	@echo "  supply-chain - Gate 8: Dependencias & Supply Chain"
+	@echo "  quick-check - Verificación rápida de gates básicos"
+	@echo ""
+
+layout: ## Gate 0: Verificar integridad y layout
+	@echo "$(BLUE)🚦 Gate 0: Integridad & Layout$(NC)"
+	@bash tools/find-broken-imports.sh
+	@node tools/registry-sanity.js
+	@echo "$(GREEN)✅ Gate 0: PASÓ$(NC)"
+
+contracts: ## Gate 1: Verificar conformidad de contratos
+	@echo "$(BLUE)🚦 Gate 1: Conformidad de Contratos$(NC)"
+	@npm run quannex:contracts
+	@echo "$(GREEN)✅ Gate 1: PASÓ$(NC)"
+
+init: ## Gate 2: Verificar MCP Autonomous Init
+	@echo "$(BLUE)🚦 Gate 2: MCP Autonomous Init$(NC)"
+	@./scripts/mcp-autonomous-init.sh --verbose
+	@echo "$(GREEN)✅ Gate 2: PASÓ$(NC)"
+
+e2e: ## Gate 4: Verificar orquestador sano
+	@echo "$(BLUE)🚦 Gate 4: Orquestador Sano$(NC)"
+	@npm run quannex:smoke
+	@echo "$(GREEN)✅ Gate 4: PASÓ$(NC)"
+
+security: ## Gate 7: Verificar seguridad y exfil
+	@echo "$(BLUE)🚦 Gate 7: Seguridad & Exfil$(NC)"
+	@node tools/security-gate.js
+	@echo "$(GREEN)✅ Gate 7: PASÓ$(NC)"
+
+resilience: ## Gate 9: Verificar disponibilidad y resiliencia
+	@echo "$(BLUE)🚦 Gate 9: Disponibilidad & Resiliencia$(NC)"
+	@node tools/resilience-gate.js
+	@echo "$(GREEN)✅ Gate 9: PASÓ$(NC)"
+
+perf: ## Gate 5: Verificar telemetría mínima
+	@echo "$(BLUE)🚦 Gate 5: Telemetría Mínima$(NC)"
+	@node tools/verify-perf.js
+	@node tools/snapshot-perf.js
+	@npm run ci-quannex-perf
+	@echo "$(GREEN)✅ Gate 5: PASÓ$(NC)"
+
+audit: ## Gate 10: Verificar MCP Enforcement
+	@echo "$(BLUE)🚦 Gate 10: MCP Enforcement$(NC)"
+	@bash ops/audit.sh
+	@echo "$(GREEN)✅ Gate 10: PASÓ$(NC)"
+
+supply-chain: ## Gate 8: Verificar dependencias y supply chain
+	@echo "$(BLUE)🚦 Gate 8: Dependencias & Supply Chain$(NC)"
+	@node tools/supply-chain-gate.js
+	@echo "$(GREEN)✅ Gate 8: PASÓ$(NC)"
+
+ci-gate: ## Gate 12: CI/CD Go/No-Go
+	@echo "$(BLUE)🚦 Gate 12: CI/CD Go/No-Go$(NC)"
+	@node tools/ci-gate.js
+	@echo "$(GREEN)✅ Gate 12: PASÓ$(NC)"
+
+quick-check: ## Verificación rápida de gates básicos
+	@echo "$(YELLOW)⚡ Verificación rápida de gates básicos$(NC)"
+	@echo "$(BLUE)▶ Gate 0: Layout$(NC)"
+	@bash tools/find-broken-imports.sh
+	@echo "$(BLUE)▶ MCP init$(NC)"
+	@./scripts/mcp-autonomous-init.sh --verbose
+	@echo "$(BLUE)▶ Gate 1: Contracts$(NC)"
+	@npm run quannex:contracts
+	@echo "$(BLUE)▶ Gate 4: Orchestrator$(NC)"
+	@npm run quannex:smoke
+	@echo "$(BLUE)▶ Gate 7: Security$(NC)"
+	@node tools/security-gate.js
+	@echo "$(BLUE)▶ Gate 9: Resilience$(NC)"
+	@node tools/resilience-gate.js
+	@echo "$(BLUE)▶ Gate 10: MCP Enf.$(NC)"
+	@bash ops/audit.sh
+	@echo "$(BLUE)▶ Gate 11: PerfGate$(NC)"
+	@npm run ci-quannex-perf
+	@echo "$(GREEN)✅ Todos los gates básicos pasaron$(NC)"
+
+all-gates: layout contracts init e2e security resilience perf audit supply-chain ci-gate ## Ejecutar todos los gates
+	@echo "$(GREEN)🎉 TODOS LOS GATES COMPLETADOS EXITOSAMENTE$(NC)"
+	@echo "$(BLUE)Sistema MCP QuanNex completamente validado y listo para producción$(NC)"
+
+# Gate específico para CI/CD
+ci-quannex-gate1: layout contracts init e2e security resilience perf ## Pipeline CI/CD completo
+	@echo "$(GREEN)✅ Pipeline CI/CD completado$(NC)"
+
+# Verificación de dependencias
+check-deps: ## Verificar dependencias del sistema
+	@echo "$(BLUE)🔍 Verificando dependencias...$(NC)"
+	@which node > /dev/null || (echo "$(RED)❌ Node.js no encontrado$(NC)" && exit 1)
+	@which npm > /dev/null || (echo "$(RED)❌ npm no encontrado$(NC)" && exit 1)
+	@which git > /dev/null || (echo "$(RED)❌ git no encontrado$(NC)" && exit 1)
+	@which jq > /dev/null || (echo "$(RED)❌ jq no encontrado$(NC)" && exit 1)
+	@echo "$(GREEN)✅ Todas las dependencias están disponibles$(NC)"
+
+# Limpieza
+clean: ## Limpiar archivos temporales
+	@echo "$(YELLOW)🧹 Limpiando archivos temporales...$(NC)"
+	@rm -rf .quannex/tmp/*
+	@rm -rf .quannex/logs/*
+	@echo "$(GREEN)✅ Limpieza completada$(NC)"
+
+# Información del sistema
+info: ## Mostrar información del sistema
+	@echo "$(BLUE)📊 Información del Sistema MCP QuanNex$(NC)"
+	@echo "  Node.js: $(shell node --version)"
+	@echo "  npm: $(shell npm --version)"
+	@echo "  Git: $(shell git --version)"
+	@echo "  Plataforma: $(shell uname -s) $(shell uname -m)"
+	@echo "  Directorio: $(QUANNEX_PROJECT_ROOT)"
+	@echo "  Timestamp: $(shell date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+# Default target
+.DEFAULT_GOAL := help

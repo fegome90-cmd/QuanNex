@@ -35,9 +35,9 @@ perf: ## Ejecutar pruebas de performance
 	@echo "🧪 Ejecutando pruebas de performance..."
 	npm run test:perf
 
-security: ## Ejecutar pruebas de seguridad
-	@echo "🧪 Ejecutando pruebas de seguridad..."
-	npm run test:security
+security: ## Ejecutar Security Gate Pack completo
+	@echo "🛡️ Ejecutando Security Gate Pack (GAP-001...005)..."
+	bash ops/security-gate.sh
 
 ci-quannex-gate1: contracts e2e ## CI Gate 1: contracts + e2e (sin init-mcp problemático)
 	@echo "✅ CI QuanNex Gate 1 completado"

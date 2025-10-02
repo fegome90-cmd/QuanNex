@@ -65,9 +65,7 @@ install_cron() {
     fi
     
     # Agregar nuevo cron job
-    (crontab -l 2>/dev/null; echo "$cron_entry") | crontab -
-    
-    if [[ $? -eq 0 ]]; then
+    if (crontab -l 2>/dev/null; echo "$cron_entry") | crontab -; then
         echo "✅ Cron job instalado exitosamente"
         echo "📋 Entrada: $cron_entry"
     else
@@ -81,9 +79,7 @@ uninstall_cron() {
     echo "🗑️ Desinstalando cron job de QuanNex..."
     
     # Remover cron job existente
-    crontab -l 2>/dev/null | grep -v "quannex-daily-automation.sh" | crontab -
-    
-    if [[ $? -eq 0 ]]; then
+    if crontab -l 2>/dev/null | grep -v "quannex-daily-automation.sh" | crontab -; then
         echo "✅ Cron job desinstalado exitosamente"
     else
         echo "❌ Error al desinstalar cron job"

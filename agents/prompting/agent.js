@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { safeErrorLog, safeOutputLog } from '../utils/log-sanitizer.js';
 
-const baseDir = new URL('../../', import.meta.url);
+const baseDir = new URL('../', import.meta.url);
 const resolvePath = (relative) => new URL(relative, baseDir).pathname;
 
 const validateInput = (data) => {
@@ -37,7 +38,7 @@ const rawInput = readFileSync(0, 'utf8');
 const data = JSON.parse(rawInput);
 const inputErrors = validateInput(data);
 if (inputErrors.length > 0) {
-  console.error(JSON.stringify(inputErrors, null, 2));
+  safeErrorLog('Input validation errors:', inputErrors);
   process.exit(1);
 }
 
@@ -64,8 +65,8 @@ if (!rawOutput) {
 const output = JSON.parse(rawOutput);
 const outputErrors = validateOutput(output);
 if (outputErrors.length > 0) {
-  console.error(JSON.stringify(outputErrors, null, 2));
+  safeErrorLog('Output validation errors:', outputErrors);
   process.exit(1);
 }
 
-console.log(JSON.stringify(output, null, 2));
+safeOutputLog(output);

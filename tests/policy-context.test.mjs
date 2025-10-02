@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import buildPolicyContext from '../orchestration/build-policy-context.js';
-import { PolicyContext } from '../orchestration/policy-gate.js';
+import buildPolicyContext from './orchestration/build-policy-context.js';
+import { PolicyContext } from './orchestration/policy-gate.js';
 
 const plan = {
   steps: [{ id: 's1', action: 'apply_patch' }],

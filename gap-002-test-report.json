@@ -1,0 +1,378 @@
+{
+  "timestamp": "2025-10-02T16:20:56.402Z",
+  "test_name": "GAP-002 Rate Limiting Test",
+  "results": [
+    {
+      "agent": "agents/context/agent.js",
+      "tests": [
+        {
+          "name": "Entrada válida única (1 concurrent)",
+          "concurrency": 1,
+          "analysis": {
+            "agent": "agents/context/agent.js",
+            "test": "Entrada válida única",
+            "total_requests": 1,
+            "successful": 0,
+            "failed": 1,
+            "success_rate": 0,
+            "avg_duration_ms": 37,
+            "rate_limiting_detected": true,
+            "issues": [
+              "Rate limiting detected: rate limit"
+            ]
+          },
+          "passed": true
+        },
+        {
+          "name": "Entrada válida única (5 concurrent)",
+          "concurrency": 5,
+          "analysis": {
+            "agent": "agents/context/agent.js",
+            "test": "Entrada válida única",
+            "total_requests": 5,
+            "successful": 0,
+            "failed": 5,
+            "success_rate": 0,
+            "avg_duration_ms": 108,
+            "rate_limiting_detected": true,
+            "issues": [
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit"
+            ]
+          },
+          "passed": true
+        },
+        {
+          "name": "Entrada válida única (10 concurrent)",
+          "concurrency": 10,
+          "analysis": {
+            "agent": "agents/context/agent.js",
+            "test": "Entrada válida única",
+            "total_requests": 10,
+            "successful": 0,
+            "failed": 10,
+            "success_rate": 0,
+            "avg_duration_ms": 210,
+            "rate_limiting_detected": true,
+            "issues": [
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit"
+            ]
+          },
+          "passed": true
+        },
+        {
+          "name": "Entrada válida única (20 concurrent)",
+          "concurrency": 20,
+          "analysis": {
+            "agent": "agents/context/agent.js",
+            "test": "Entrada válida única",
+            "total_requests": 20,
+            "successful": 0,
+            "failed": 20,
+            "success_rate": 0,
+            "avg_duration_ms": 392,
+            "rate_limiting_detected": true,
+            "issues": [
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit"
+            ]
+          },
+          "passed": true
+        }
+      ],
+      "overall": "pass",
+      "score": "4/4"
+    },
+    {
+      "agent": "agents/prompting/agent.js",
+      "tests": [
+        {
+          "name": "Entrada válida para prompting (1 concurrent)",
+          "concurrency": 1,
+          "analysis": {
+            "agent": "agents/prompting/agent.js",
+            "test": "Entrada válida para prompting",
+            "total_requests": 1,
+            "successful": 1,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 73,
+            "rate_limiting_detected": false,
+            "issues": []
+          },
+          "passed": true
+        },
+        {
+          "name": "Entrada válida para prompting (5 concurrent)",
+          "concurrency": 5,
+          "analysis": {
+            "agent": "agents/prompting/agent.js",
+            "test": "Entrada válida para prompting",
+            "total_requests": 5,
+            "successful": 5,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 707,
+            "rate_limiting_detected": false,
+            "issues": []
+          },
+          "passed": false
+        },
+        {
+          "name": "Entrada válida para prompting (10 concurrent)",
+          "concurrency": 10,
+          "analysis": {
+            "agent": "agents/prompting/agent.js",
+            "test": "Entrada válida para prompting",
+            "total_requests": 10,
+            "successful": 10,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 1985,
+            "rate_limiting_detected": false,
+            "issues": [
+              "No rate limiting detected - all requests succeeded"
+            ]
+          },
+          "passed": false
+        },
+        {
+          "name": "Entrada válida para prompting (20 concurrent)",
+          "concurrency": 20,
+          "analysis": {
+            "agent": "agents/prompting/agent.js",
+            "test": "Entrada válida para prompting",
+            "total_requests": 20,
+            "successful": 20,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 851,
+            "rate_limiting_detected": false,
+            "issues": [
+              "No rate limiting detected - all requests succeeded"
+            ]
+          },
+          "passed": false
+        }
+      ],
+      "overall": "fail",
+      "score": "1/4"
+    },
+    {
+      "agent": "agents/rules/agent.js",
+      "tests": [
+        {
+          "name": "Entrada válida para rules (1 concurrent)",
+          "concurrency": 1,
+          "analysis": {
+            "agent": "agents/rules/agent.js",
+            "test": "Entrada válida para rules",
+            "total_requests": 1,
+            "successful": 1,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 70,
+            "rate_limiting_detected": false,
+            "issues": []
+          },
+          "passed": true
+        },
+        {
+          "name": "Entrada válida para rules (5 concurrent)",
+          "concurrency": 5,
+          "analysis": {
+            "agent": "agents/rules/agent.js",
+            "test": "Entrada válida para rules",
+            "total_requests": 5,
+            "successful": 5,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 213,
+            "rate_limiting_detected": false,
+            "issues": []
+          },
+          "passed": false
+        },
+        {
+          "name": "Entrada válida para rules (10 concurrent)",
+          "concurrency": 10,
+          "analysis": {
+            "agent": "agents/rules/agent.js",
+            "test": "Entrada válida para rules",
+            "total_requests": 10,
+            "successful": 10,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 381,
+            "rate_limiting_detected": false,
+            "issues": [
+              "No rate limiting detected - all requests succeeded"
+            ]
+          },
+          "passed": false
+        },
+        {
+          "name": "Entrada válida para rules (20 concurrent)",
+          "concurrency": 20,
+          "analysis": {
+            "agent": "agents/rules/agent.js",
+            "test": "Entrada válida para rules",
+            "total_requests": 20,
+            "successful": 20,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 747,
+            "rate_limiting_detected": false,
+            "issues": [
+              "No rate limiting detected - all requests succeeded"
+            ]
+          },
+          "passed": false
+        }
+      ],
+      "overall": "fail",
+      "score": "1/4"
+    },
+    {
+      "agent": "agents/security/agent.js",
+      "tests": [
+        {
+          "name": "Entrada válida para security (1 concurrent)",
+          "concurrency": 1,
+          "analysis": {
+            "agent": "agents/security/agent.js",
+            "test": "Entrada válida para security",
+            "total_requests": 1,
+            "successful": 1,
+            "failed": 0,
+            "success_rate": 100,
+            "avg_duration_ms": 1250,
+            "rate_limiting_detected": false,
+            "issues": []
+          },
+          "passed": true
+        },
+        {
+          "name": "Entrada válida para security (5 concurrent)",
+          "concurrency": 5,
+          "analysis": {
+            "agent": "agents/security/agent.js",
+            "test": "Entrada válida para security",
+            "total_requests": 5,
+            "successful": 4,
+            "failed": 1,
+            "success_rate": 80,
+            "avg_duration_ms": 2479,
+            "rate_limiting_detected": true,
+            "issues": [
+              "Rate limiting detected: rate limit"
+            ]
+          },
+          "passed": true
+        },
+        {
+          "name": "Entrada válida para security (10 concurrent)",
+          "concurrency": 10,
+          "analysis": {
+            "agent": "agents/security/agent.js",
+            "test": "Entrada válida para security",
+            "total_requests": 10,
+            "successful": 0,
+            "failed": 10,
+            "success_rate": 0,
+            "avg_duration_ms": 520,
+            "rate_limiting_detected": true,
+            "issues": [
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit"
+            ]
+          },
+          "passed": true
+        },
+        {
+          "name": "Entrada válida para security (20 concurrent)",
+          "concurrency": 20,
+          "analysis": {
+            "agent": "agents/security/agent.js",
+            "test": "Entrada válida para security",
+            "total_requests": 20,
+            "successful": 0,
+            "failed": 20,
+            "success_rate": 0,
+            "avg_duration_ms": 1309,
+            "rate_limiting_detected": true,
+            "issues": [
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit",
+              "Rate limiting detected: rate limit"
+            ]
+          },
+          "passed": true
+        }
+      ],
+      "overall": "pass",
+      "score": "4/4"
+    }
+  ],
+  "overall_passed": false,
+  "summary": {
+    "total_agents": 4,
+    "total_tests": 16,
+    "passed_tests": 10
+  }
+}

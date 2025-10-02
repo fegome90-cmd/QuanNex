@@ -1,0 +1,26 @@
+{
+  "name": "Solución Completa del Contrato de Inicialización",
+  "description": "Workflow para generar la solución completa del problema del contrato",
+  "steps": [
+    {
+      "step_id": "analizar_contrato_completo",
+      "agent": "context",
+      "input": {
+        "sources": ["contracts/cursor-initialization-contract.json", "agents/initialization-enforcer/agent.js"],
+        "selectors": ["mandatory_actions", "validation", "acknowledgment_required", "enforceManualReading", "enforceContextReading"],
+        "max_tokens": 4000
+      }
+    },
+    {
+      "step_id": "generar_solucion_completa",
+      "agent": "prompting",
+      "depends_on": ["analizar_contrato_completo"],
+      "input": {
+        "goal": "Crear una solución completa que incluya: 1) Código corregido para el agente de inicialización, 2) Procedimiento para cumplir realmente con el contrato, 3) Comandos específicos para ejecutar la inicialización correcta",
+        "context": "{{analizar_contrato_completo.output.context_bundle}}",
+        "style": "technical",
+        "constraints": ["incluir código JavaScript completo", "usar readline para input", "validar acknowledgments exactos", "mostrar documentos completos", "proporcionar comandos específicos"]
+      }
+    }
+  ]
+}

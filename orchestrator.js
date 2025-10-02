@@ -3,6 +3,7 @@
  * orchestrator.js - Punto de entrada StartKit QuanNex
  * Selecciona la versión correcta basada en VERSION env var
  */
+import { existsSync } from "node:fs";
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'node:path';
 

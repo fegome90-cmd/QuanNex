@@ -1,0 +1,81 @@
+{
+  "name": "Context Updater - Actualización Automática de Contextos",
+  "description": "Workflow para actualizar automáticamente los contextos de ingeniero senior basado en el estado actual del proyecto",
+  "steps": [
+    {
+      "step_id": "analyze_project_state",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "package.json",
+          "orchestration/orchestrator.js",
+          "agents/",
+          "Makefile",
+          "data/taskdb.json",
+          "docs/audits/"
+        ],
+        "selectors": [
+          "version",
+          "dependencies",
+          "scripts",
+          "agents",
+          "status",
+          "lessons_learned",
+          "performance",
+          "gaps"
+        ],
+        "max_tokens": 3000
+      },
+      "pass_if": {
+        "exists": "context_bundle"
+      },
+      "max_retries": 2,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "generate_context_updates",
+      "agent": "prompting",
+      "depends_on": ["analyze_project_state"],
+      "input": {
+        "goal": "Generar actualizaciones para los contextos de ingeniero senior basado en el estado actual del proyecto. Incluir métricas actualizadas, estado de agentes, problemas resueltos recientemente, y comandos de troubleshooting actualizados.",
+        "style": "technical",
+        "context": "{{analyze_project_state.output.context_bundle}}",
+        "constraints": [
+          "Mantener formato markdown existente",
+          "Incluir solo información verificable",
+          "Actualizar métricas de performance",
+          "Incluir nuevos comandos o scripts",
+          "Actualizar estado de agentes y pruebas"
+        ]
+      },
+      "pass_if": {
+        "exists": "system_prompt"
+      },
+      "max_retries": 2,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "validate_context_updates",
+      "agent": "rules",
+      "depends_on": ["generate_context_updates"],
+      "input": {
+        "policy_refs": ["README.md", "MANUAL-COMPLETO-CURSOR.md"],
+        "tone": "technical",
+        "context": "{{generate_context_updates.output.system_prompt}}"
+      },
+      "pass_if": {
+        "exists": "rules_compiled"
+      },
+      "max_retries": 2,
+      "timeout_ms": 30000
+    }
+  ],
+  "context": {
+    "session_id": "context-updater-2025-10-02",
+    "run_label": "context-update",
+    "budget": {
+      "max_latency_ms": 120000,
+      "max_hops": 5
+    }
+  }
+}

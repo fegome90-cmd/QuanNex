@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { checkRateLimit } from '../../utils/file-rate-limiter.js';
+import { safeErrorLog, safeOutputLog } from '../../utils/log-sanitizer.js';
+import { validateAuthenticatedInput, prepareAuthenticatedOutput } from '../../utils/agent-auth-middleware.js';
 
-const baseDir = new URL('../../', import.meta.url);
+const baseDir = new URL('../', import.meta.url);
 const resolvePath = (relative) => new URL(relative, baseDir).pathname;
 
 const MAX_LIST_ITEMS = 50;
@@ -39,6 +42,10 @@ const validateInput = (data) => {
     }
     if (data.sources.some((item) => item.includes('..'))) {
       errors.push('sources must not contain parent directory traversal (..)');
+    }
+    // Sanitización de caracteres peligrosos
+    if (data.sources.some((item) => /[<>\"'&]/.test(item))) {
+      errors.push('sources must not contain dangerous characters (<, >, ", \', &)');
     }
   }
   ensureStringArray('selectors', data.selectors, errors);
@@ -106,11 +113,35 @@ const validateOutput = (data) => {
   return errors;
 };
 
+// Verificar rate limiting antes de procesar
+if (!checkRateLimit('context')) {
+  console.error(JSON.stringify({
+    schema_version: '1.0.0',
+    agent_version: '1.0.0',
+    error: ['Rate limit exceeded for context agent. Please retry in 1 minute.'],
+    rate_limit_info: {
+      agent: 'context',
+      retry_after_seconds: 60
+    }
+  }, null, 2));
+  process.exit(1);
+}
+
 const rawInput = readFileSync(0, 'utf8');
 const data = JSON.parse(rawInput);
+
+// Autenticar entrada
+try {
+  const authContext = validateAuthenticatedInput('context', data);
+  console.log(`🔐 [Auth] Context agent authenticated: ${authContext.sourceAgent} -> ${authContext.targetAgent}`);
+} catch (error) {
+  safeErrorLog('Authentication failed:', { error: error.message });
+  process.exit(1);
+}
+
 const inputErrors = validateInput(data);
 if (inputErrors.length > 0) {
-  console.error(JSON.stringify(inputErrors, null, 2));
+  safeErrorLog('Input validation errors:', inputErrors);
   process.exit(1);
 }
 
@@ -138,8 +169,10 @@ if (!rawOutput) {
 const output = JSON.parse(rawOutput);
 const outputErrors = validateOutput(output);
 if (outputErrors.length > 0) {
-  console.error(JSON.stringify(outputErrors, null, 2));
+  safeErrorLog('Output validation errors:', outputErrors);
   process.exit(1);
 }
 
-console.log(JSON.stringify(output, null, 2));
+// Preparar salida autenticada
+const authenticatedOutput = prepareAuthenticatedOutput('context', output);
+safeOutputLog(authenticatedOutput);

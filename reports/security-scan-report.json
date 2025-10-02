@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "agent_version": "2.0.0",
+  "scan_type": "full",
+  "target_path": ".",
+  "timestamp": "2025-10-02T16:27:16.283Z",
+  "results": {
+    "vulnerability_scan": {
+      "files_scanned": 0,
+      "vulnerabilities_found": 0,
+      "critical_issues": 0,
+      "high_issues": 0,
+      "medium_issues": 0,
+      "low_issues": 0,
+      "details": []
+    },
+    "dependency_audit": {
+      "vulnerabilities": {},
+      "details": []
+    },
+    "secret_scan": {
+      "files_scanned": 0,
+      "secrets_found": 0,
+      "details": []
+    },
+    "compliance_check": {
+      "frameworks_checked": [
+        "OWASP",
+        "NIST",
+        "CIS"
+      ],
+      "compliance_score": 85,
+      "issues_found": 0,
+      "details": []
+    }
+  }
+}

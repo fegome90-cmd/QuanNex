@@ -1,0 +1,392 @@
+# MÉTODO BMAD - METODOLOGÍA AGÉNTICA PARA DESARROLLO
+
+## CONCEPTO FUNDAMENTAL
+**BMAD** = Breakthrough Methodology for Agentic Development
+- 🎯 **Acrónimo palíndromo**: Conectar flujos agénticos
+- 🔄 **Evolución requerida**: Sistemas que se adapten a necesidades del usuario
+- ⚠️ **Más que prompts**: Solución a complejidad de estrategias existentes
+- ✅ **Solución**: Comprender filosofía para ajustar o construir flujos personalizados
+
+## MODELO MENTAL PRIMARIO
+
+### PROCESO DE TRES PASOS
+```
+┌─────────────────────────────────────────────────────────┐
+│              MODELO MENTAL BMAD                         │
+├─────────────────────────────────────────────────────────┤
+│  1. PLANIFICACIÓN  →  2. IMPLEMENTACIÓN               │
+│     (Planning)            (Implementation)              │
+│          ↓                        ↓                     │
+│          └─────────── 3. VALIDACIÓN ──────────────────┘
+│                        (Validation)                     │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Enfoque**: Planificación y transición a Implementación (no cubre Validación completa)
+
+---
+
+## I. INTRODUCCIÓN Y FILOSOFÍA BMAD
+
+### ORIGEN Y DESARROLLADORES
+**Creador**: Brian Madison (desarrollador original)
+**Practicantes**: Kevin Holland + Daniel
+- 👨‍💼 **Kevin**: Líder de producto, 15 años experiencia datos de salud
+- 🧠 **Pensamiento**: Sistemático y constructor
+- 👨‍💻 **Daniel**: 7 años producto, reciente transición a IA
+
+### JUSTIFICACIÓN DEL MÉTODO
+**Problema identificado**:
+- 📝 **Contexto perdido**: Se crea mucho contexto para un problema, luego se pierde
+- 🔄 **Interfaces actuales**: Contexto no persistente
+- 🎯 **Solución BMAD**: Metodología central para organizar datos y entrelazarlos con LLMs
+
+### DIFERENCIACIÓN DE OTROS FRAMEWORKS
+
+#### VS AUTOGEN/CREW AI
+- 🤖 **Otros frameworks**: Diseñados para pensamiento autónomo
+- 👥 **BMAD**: Permite **participación humana variable**
+- 🎛️ **Control granular**: Estrategia controlable por humanos
+- 🔄 **Human in the loop**: Diseño inherente para colaboración
+
+#### CONTEXT ENGINEERING
+- 🔧 **Innovación clave**: Desarrollo ingenierizado por contexto
+- 📊 **Importancia**: Tan importante como ingeniería de prompts
+- 🏆 **Liderazgo**: BMAD líder en creación de contexto óptimo
+- 🎯 **Objetivo**: Progresión de agentes en desarrollo de proyectos
+
+---
+
+## II. AGENTES CENTRALES DE BMAD
+
+### METODOLOGÍA COMPLETA
+**BMAD** = Framework multi-agente + Metodología + Flujo de proceso completo
+- 🎯 **Orientación**: Desarrollo de software + gestión de productos
+- 📚 **Continuum**: Documentación desde ideación hasta historias detalladas
+
+### AGENTES PRINCIPALES
+
+#### 1. ANALYST (ANALISTA)
+**Función**: Inicio del proceso
+- 💡 **Ideación**: Pregunta sobre idea del usuario
+- 🔍 **Investigación**: Mercado y análisis
+- 💬 **Diálogo**: Ida y vuelta con usuario
+
+#### 2. PM (GERENTE DE PRODUCTO - JOHN)
+**Función**: Mejora de ideas
+- 📋 **PRD**: Convierte idea inicial en Documento de Requisitos de Producto
+- 🎯 **Estrategia**: Planificación y priorización
+- 📊 **Mejora**: Optimización de conceptos iniciales
+
+#### 3. ARCHITECT (ARQUITECTO)
+**Función**: Documentación técnica
+- 🏗️ **Arquitectura**: Documentación completa
+- 📊 **Diagramas**: Especificaciones visuales
+- 🛠️ **Tech Stack**: Pila tecnológica definida
+
+#### 4. UX EXPERT (EXPERTO UX)
+**Función**: Especificación frontend
+- 🎨 **Interfaz**: Especificación de UI
+- 👥 **Usuario**: Experiencia de usuario
+- 📱 **Frontend**: Si proyecto incluye interfaz
+
+#### 5. SCRUM MASTER
+**Función**: Conversión a historias
+- 📋 **Épicas**: Toma documentación completa
+- 📝 **Historias**: Crea documentos hiperdetallados
+- 🎯 **Desarrollo**: Información para agente Dev "en los raíles"
+
+#### 6. DEVELOPER + QA
+**Función**: Implementación y validación
+- 💻 **Dev**: Implementación de código
+- ✅ **QA**: Control de calidad
+- 🤝 **Trabajo conjunto**: Colaboración para entrega
+
+---
+
+## III. FLUJO TÍPICO DE PROCESOS (THE CONTINUUM)
+
+### PROCESO ESTRUCTURADO
+```
+┌─────────────────────────────────────────────────────────┐
+│                    FLUJO BMAD                           │
+├─────────────────────────────────────────────────────────┤
+│  1. Exploración    →  2. Planificación                │
+│     (Analyst)           (PM)                           │
+│          ↓                   ↓                         │
+│  3. Validación     →  4. Historias                    │
+│     (Architect)         (Scrum Master)                 │
+│          ↓                   ↓                         │
+│          └─────── 5. Implementación ──────────────────┘
+│                      (Dev + QA)                        │
+└─────────────────────────────────────────────────────────┘
+```
+
+### ETAPAS DETALLADAS
+
+#### 1. EXPLORACIÓN DEL PROBLEMA
+- 🤖 **Agente**: Analyst
+- 💡 **Actividad**: Ideación y investigación
+- 🎯 **Resultado**: Comprensión del problema
+
+#### 2. PLANIFICACIÓN ESTRATÉGICA
+- 👨‍💼 **Agente**: PM (John)
+- 📋 **Actividad**: Creación PRD y priorización
+- 🎯 **Resultado**: Documento de requisitos
+
+#### 3. VALIDACIÓN TÉCNICA
+- 🏗️ **Agente**: Architect
+- 📊 **Actividad**: Arquitectura y tech stack
+- 🎯 **Resultado**: Especificaciones técnicas
+
+#### 4. HISTORIAS DETALLADAS
+- 📝 **Agente**: Scrum Master
+- 🔄 **Actividad**: Conversión de planes
+- 🎯 **Resultado**: Historias implementables
+
+#### 5. IMPLEMENTACIÓN
+- 💻 **Agentes**: Dev + QA
+- 🚀 **Actividad**: Desarrollo y validación
+- 🎯 **Resultado**: Código funcional
+
+### BENEFICIOS DEL FLUJO
+- ⚡ **Velocidad**: Documentación de alta calidad en minutos
+- 🎯 **Enfoque**: PMs se enfocan en áreas de alto apalancamiento
+- 📊 **Calidad**: Documentación comparable a equipos humanos
+- ⏱️ **Tiempo**: Horas/días/semanas → Minutos
+
+---
+
+## IV. APLICACIÓN PRÁCTICA BMAD
+
+### CONFIGURACIONES INICIALES
+
+#### WEB BUNDLES AGENT
+- 🌐 **Primer paso**: Suite de agentes Web Bundles
+- 🔗 **Integración**: Gemini Gem o Custom GPT
+- 💰 **Ventaja**: Documentos sin tokens en Claude Code
+
+#### ARCHIVO FULL STACK TEAM
+- 📄 **Proporcionado**: Brian Madison
+- 📊 **Tamaño**: ~10,000 líneas
+- 🎯 **Contenido**: Subconjunto de agentes para documentación inicial
+
+#### RECOMENDACIÓN DE LLM
+- 🤖 **Preferido**: Gemini (gran ventana de contexto)
+- 🔄 **Alternativa**: Cualquier LLM con soporte documentación
+- 📚 **Requisito**: Capacidad de utilizar conocimiento
+
+#### INSTALACIÓN RÁPIDA (WEB UI)
+- 📋 **Proceso**: Copiar/pegar archivo `BMAD full stack team`
+- 📁 **Ubicación**: Sección knowledge del LLM
+- ⚡ **Ventaja**: Inicio inmediato
+
+### ESTRUCTURA DE COMANDOS Y FLUJOS
+
+#### COMANDOS DISPONIBLES
+- 🔄 **`/agent`**: Cambiar entre agentes
+- 🎛️ **Orquestador**: Especializado en conmutación
+- ✅ **Tasks**: Tareas específicas por agente
+- 📋 **Checklists**: Listas de verificación
+
+#### WORKFLOWS DISPONIBLES
+**Tipos principales**:
+- 🏗️ **Brownfield**: Código existente
+- 🌱 **Greenfield**: Proyecto nuevo
+
+**Variantes por tipo**:
+- 📊 **Full Stack**: Pila completa
+- 🔗 **API-oriented**: Basados en servicios
+- 🎨 **UI/Frontend**: Enfocados en interfaz
+
+#### OPCIÓN YOLO
+- 🤖 **Función**: Trabajo sin interacción
+- 🎛️ **Control**: Baja participación humana
+- ⚡ **Comando**: `yolo`
+
+---
+
+## V. DEMOSTRACIÓN PRÁCTICA
+
+### AGENTE ANALYST (GREENFIELD FULL STACK)
+
+#### INICIO DEL FLUJO
+- 🤖 **Agente**: Mary (Analista de Negocios)
+- 🎯 **Opciones**: Lluvia de ideas, investigación profunda, borrador directo
+
+#### LLUVIA DE IDEAS
+**Proyecto sugerido**: "AI-driven resume analyzer"
+- ⏱️ **Plazo**: 6 meses
+- 🧠 **Técnicas**: First Principles Thinking + Método SCAMPER
+
+#### EJECUCIÓN DE PRIMEROS PRINCIPIOS
+**Cuestionamiento fundamental**:
+- 📄 **CV**: Documento de marketing personal para entrevista
+- 📋 **Descripción trabajo**: Atraer talento, repeler incorrecto, filtro
+- 🎯 **Evento esencial**: Patrón directo entre CV y descripción
+
+#### INVESTIGACIÓN
+**Opciones presentadas**:
+- 👥 **Investigación usuario**: Entrevistas y feedback
+- 📊 **Investigación cliente**: Necesidades del mercado
+- ⚠️ **Advertencia**: Usuario debe proporcionar investigación de primera mano
+
+#### OUTPUT - BORRADOR DEL PROYECTO
+**Plantillas prediseñadas** para estructura de alta calidad:
+- 📋 **Resumen Ejecutivo**
+- 🎯 **Declaración del Problema**
+- 💡 **Solución Propuesta**
+- 👥 **Segmentos de Usuario**
+- 📊 **Metas y Métricas de Éxito**
+- 🎯 **Objetivos de Negocio y KPIs**
+- 📈 **Alcance del MVP y Criterios de Éxito**
+- 🧪 **Stress Testing** con casos límite
+- 🚀 **Visión Post-MVP**
+- 🔧 **Consideraciones Técnicas**
+
+---
+
+## VI. DEMOSTRACIÓN EN IDE (CURSOR Y CLAUDE CODE)
+
+### INSTALACIÓN Y CONFIGURACIÓN
+
+#### INSTALACIÓN BMAD
+- 💻 **IDE**: Cursor (fork de VS Code)
+- 📦 **Comando**: `npx bmad-method install`
+- ✅ **Terminal**: Ejecutado dentro de Cursor
+
+#### SELECCIÓN DE PAQUETES
+**Opciones múltiples**:
+- 🎯 **Núcleo BMAD**: Funcionalidad base
+- 📊 **Paquetes personalizados Kevin**:
+  - 🏥 **Productos datos salud**
+  - ✍️ **Creador contenido/socio pensamiento**
+  - ✅ **Validación product market fit**
+  - 👨‍💼 **Asesoría liderazgo producto**
+
+#### FORKING Y EXTENSIBILIDAD
+- 🔄 **Fork repositorio**: Movimiento avanzado
+- 📦 **Paquetes expansión**: Basados en archivos YAML
+- 🎯 **Personalización**: Roles, tareas, lógica de flujo
+
+### CONFIGURACIÓN AVANZADA
+
+#### SHARDING Y CONFIGURACIÓN
+- ✂️ **Sharding**: Fragmentar PRD y arquitectura
+- ⚙️ **Configuración**: Cursor en Claude Code
+- 📁 **Estructura**: Archivos más pequeños en carpeta `docs`
+
+#### ESTRUCTURA DEL AGENTE
+**Definición interna** (ejemplo Mary):
+- 🎯 **Principios centrales**: Filosofía del agente
+- 💻 **Comandos**: Acciones disponibles
+- 📊 **Datos**: Información específica
+- ✅ **Tareas**: Responsabilidades
+- 📋 **Plantillas**: Formatos de salida
+
+#### MODIFICACIONES PERSONALIZADAS
+- 📝 **YAML Brownfield**: Modificado para producto Kevin
+- 📊 **Contexto ED**: Mantiene Expert Determination
+- 🏥 **Metodología datos**: Específica para salud
+
+### EJECUCIÓN PRÁCTICA
+
+#### FRAGMENTACIÓN DE DOCUMENTOS
+- 📝 **Comando**: `shard doc`
+- 🔧 **Herramienta**: `markdown tree` interno
+- 📁 **Resultado**: Archivos en carpeta `docs`
+
+#### CREACIÓN DE HISTORIAS
+- 🤔 **Comando**: `think SM`
+- ➡️ **Siguiente**: `create next story`
+- 🛠️ **Herramienta**: Tareas de Claude
+- 📋 **Resultado**: Documentos de historia generados
+
+#### PAQUETES DE EXPANSIÓN PERSONALIZADOS
+
+**Ejemplo: Escritor LinkedIn**
+- 🎯 **Rol específico**: Especialista en LinkedIn
+- 🎣 **Principio**: "Hook or die"
+- 📝 **Fórmula**: Publicación estructurada
+- 🎨 **Voz propia**: Filosofías de escritura personalizadas
+
+**Ejemplo: Liderazgo Producto**
+- 👨‍💼 **Función**: "Marty Cagan en una caja"
+- 📊 **Especialización**: Gestión de producto
+- 🎯 **Enfoque**: Liderazgo y estrategia
+
+#### RESULTADO FINAL
+- 🛠️ **Herramienta completa**: PM assessment tool
+- 🎨 **Interfaz**: Frontend funcional
+- 🗄️ **Backend**: Superbase integrado
+- ✅ **Estado**: Completamente funcional
+
+---
+
+## VII. Q&A Y EXTENSIBILIDAD
+
+### AGENTES DE REVISIÓN UX
+- 👁️ **UX Expert**: Comandos para listas verificación
+- 🎨 **Prompts frontend**: Generación automática
+- 🎭 **Playwright MCP**: "Claude necesita ojos"
+- 📍 **Evaluación espacial**: Colocación de botones
+
+### INSTALACIÓN EN REPOSITORIOS
+- ✅ **Existente**: `MPX bmad-method install`
+- 🔄 **Compatibilidad**: Repositorios actuales
+- 📦 **Integración**: Sin conflictos
+
+### VALOR PRINCIPAL
+- 🔄 **Ciclo SDLC**: Guiado y estructurado
+- 📋 **Plantillas**: Predesarrolladas por rol
+- 🤝 **Hand-off**: Comprensión de traspaso información
+- 🎯 **Centralización**: Flujo de trabajo estructurado
+
+### FUNCIÓN DEL ORQUESTADOR
+- 🔄 **Propagación**: Cambios fundamentales
+- 📝 **Ejemplo**: Brief actualizado → todos documentos
+- 🤖 **Responsabilidad**: Scrum master o orquestador
+- 🔗 **Sincronización**: Mantenimiento de coherencia
+
+### PAQUETES DE EXPANSIÓN
+**Flexibilidad completa**:
+- 🎯 **Equipos diferentes**: Marketing (PMM, editor, estratega)
+- 📦 **Personalización**: Definiciones propias de equipo
+- 🧠 **Conocimiento base**: Carga personalizada
+- 🔄 **Flujo**: Configuración específica
+- 🔗 **APIs REST**: Interacciones específicas
+
+### ESTRUCTURA DETERMINISTA
+**Valor central**:
+- 🎯 **Estructura**: Determinista en puntos no deterministas
+- 🎲 **LLMs**: Probabilísticos pero controlados
+- ✅ **Salida**: Expectativas claras en puntos específicos
+- 🔄 **Consistencia**: Resultados predecibles
+
+### ADVERTENCIAS IMPORTANTES
+- 📚 **Contexto**: Usuario debe saber qué falta
+- 👁️ **Revisión**: Calidad de salida verificable
+- 🏗️ **Código**: Revisión arquitecto/ingeniero crucial
+- 📊 **Diseño**: Kevin confía en salida de diseño/producto
+- 💻 **Implementación**: No confía en salida de código
+
+---
+
+## VIII. MÉTRICAS Y BENEFICIOS
+
+### INDICADORES DE EFICIENCIA
+- ⚡ **Velocidad**: Documentación en minutos vs horas/días
+- 📊 **Calidad**: Alta calidad comparable a equipos humanos
+- 🎯 **Enfoque**: PMs en áreas de alto apalancamiento
+- 🔄 **Consistencia**: Estructura determinista
+
+### BENEFICIOS CUANTIFICABLES
+- 🚀 **Productividad**: 10x+ multiplicador de eficiencia
+- 📋 **Documentación**: Completa y estructurada
+- 🤝 **Colaboración**: Human in the loop optimizado
+- 🔄 **Extensibilidad**: Paquetes personalizables
+- 🎯 **Flexibilidad**: Adaptable a diferentes equipos y proyectos
+
+---
+
+*Método BMAD - Metodología agéntica para desarrollo estructurado - Optimizado para procesamiento eficiente por LLMs*

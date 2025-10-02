@@ -117,15 +117,42 @@ check_dependencies() {
 audit_npm_dependencies() {
   log "Auditando dependencias npm..."
 
-  if [[ -f "${PROJECT_DIR}/package.json" ]]; then
-    cd "$PROJECT_DIR"
-
-    # Ejecutar npm audit
-    if npm audit --json >"${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" 2>/dev/null; then
+  # QNX-BUG-001: Usar script seguro para npm audit
+  local script_dir
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  
+  if [[ -f "$script_dir/secure-npm-audit.sh" ]]; then
+    log "Usando script seguro de npm audit..."
+    if bash "$script_dir/secure-npm-audit.sh" "$PROJECT_DIR" "${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" "${REPORT_DIR}/npm-audit-errors-${TIMESTAMP}.log"; then
       success "npm audit completado"
     else
       warning "npm audit encontró vulnerabilidades"
     fi
+  else
+    # Fallback al método anterior si el script seguro no está disponible
+    warning "Script seguro no encontrado, usando método fallback"
+    if [[ -f "${PROJECT_DIR}/package.json" ]]; then
+      cd "$PROJECT_DIR"
+
+      # QNX-SEC-002: Ejecutar npm audit sin suprimir errores
+      if npm audit --json >"${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" 2>"${REPORT_DIR}/npm-audit-errors-${TIMESTAMP}.log"; then
+        success "npm audit completado"
+        # Verificar si hay errores en el log
+        if [[ -s "${REPORT_DIR}/npm-audit-errors-${TIMESTAMP}.log" ]]; then
+          warning "npm audit generó advertencias (ver ${REPORT_DIR}/npm-audit-errors-${TIMESTAMP}.log)"
+        fi
+      else
+        warning "npm audit encontró vulnerabilidades"
+        # Mostrar errores para trazabilidad
+        if [[ -s "${REPORT_DIR}/npm-audit-errors-${TIMESTAMP}.log" ]]; then
+          error "Errores de npm audit:"
+          cat "${REPORT_DIR}/npm-audit-errors-${TIMESTAMP}.log" >&2
+        fi
+      fi
+    else
+      warning "package.json no encontrado en ${PROJECT_DIR}, saltando auditoría de dependencias npm"
+    fi
+  fi
 
     # Procesar resultados
     if [[ -f "${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" ]]; then

@@ -1,0 +1,71 @@
+{
+  "name": "GAP-001: Implementación de Sanitización Mejorada",
+  "description": "Workflow para implementar sanitización mejorada basada en resultados de tests reales",
+  "steps": [
+    {
+      "step_id": "analizar_fallos_test",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "gap-001-test-report.json",
+          "agents/context/agent.js",
+          "agents/prompting/agent.js",
+          "agents/rules/agent.js",
+          "agents/security/agent.js"
+        ],
+        "selectors": [
+          "FAIL",
+          "sanitiz",
+          "valid",
+          "escape",
+          "clean",
+          "filter",
+          "trim",
+          "path traversal",
+          "caracteres peligrosos",
+          "max_tokens negativo"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "generar_correcciones",
+      "agent": "prompting",
+      "depends_on": ["analizar_fallos_test"],
+      "input": {
+        "goal": "Generar código específico para corregir los fallos de sanitización identificados",
+        "context": "{{analizar_fallos_test.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Corregir fallos específicos identificados en tests reales",
+          "Implementar sanitización de caracteres peligrosos",
+          "Mejorar validación de path traversal",
+          "Validar max_tokens correctamente",
+          "Mantener compatibilidad con entradas válidas",
+          "Usar funciones de sanitización estándar"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_correcciones",
+      "agent": "rules",
+      "depends_on": ["generar_correcciones"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md",
+          "docs/security-policies.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_correcciones.output.system_prompt}}",
+        "rules": [
+          "Todas las entradas deben ser sanitizadas correctamente",
+          "Prevenir path traversal attacks",
+          "Escape de caracteres especiales HTML/JS",
+          "Validación estricta de tipos numéricos",
+          "Mantener funcionalidad existente",
+          "Pasar todos los tests de sanitización"
+        ]
+      }
+    }
+  ]
+}

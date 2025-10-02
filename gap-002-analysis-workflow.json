@@ -1,0 +1,89 @@
+{
+  "name": "GAP-002: Análisis de Rate Limiting en Endpoints",
+  "description": "Workflow para analizar el estado actual de rate limiting en endpoints de agentes",
+  "steps": [
+    {
+      "step_id": "analizar_endpoints_agentes",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "orchestration/orchestrator.js",
+          "agents/context/agent.js",
+          "agents/prompting/agent.js",
+          "agents/rules/agent.js",
+          "agents/security/agent.js",
+          "agents/metrics/agent.js",
+          "agents/optimization/agent.js",
+          "agents/docsync/agent.js",
+          "agents/lint/agent.js",
+          "agents/orchestrator/agent.js",
+          "agents/refactor/agent.js",
+          "agents/secscan/agent.js",
+          "agents/tests/agent.js"
+        ],
+        "selectors": [
+          "endpoint",
+          "route",
+          "request",
+          "response",
+          "rate",
+          "limit",
+          "throttle",
+          "frequency",
+          "dos",
+          "attack",
+          "spawnSync",
+          "process",
+          "stdin",
+          "stdout",
+          "stderr",
+          "timeout",
+          "concurrent",
+          "parallel"
+        ],
+        "max_tokens": 4000
+      }
+    },
+    {
+      "step_id": "generar_plan_rate_limiting",
+      "agent": "prompting",
+      "depends_on": ["analizar_endpoints_agentes"],
+      "input": {
+        "goal": "Crear plan detallado de implementación de rate limiting en endpoints de agentes",
+        "context": "{{analizar_endpoints_agentes.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Implementar rate limiting en TODOS los endpoints de agentes",
+          "Prevenir ataques DoS y abuso de recursos",
+          "Configurar límites por IP y por usuario",
+          "Implementar ventanas de tiempo deslizantes",
+          "Mantener funcionalidad existente",
+          "Usar algoritmos eficientes (Token Bucket, Sliding Window)",
+          "Logging de intentos bloqueados",
+          "Configuración flexible por agente"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_plan_rate_limiting",
+      "agent": "rules",
+      "depends_on": ["generar_plan_rate_limiting"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md",
+          "docs/security-policies.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_plan_rate_limiting.output.system_prompt}}",
+        "rules": [
+          "Todos los endpoints deben tener rate limiting",
+          "Prevenir ataques DoS efectivamente",
+          "Implementar límites configurables",
+          "Mantener logs de seguridad",
+          "No degradar performance significativamente",
+          "Usar algoritmos probados de rate limiting"
+        ]
+      }
+    }
+  ]
+}

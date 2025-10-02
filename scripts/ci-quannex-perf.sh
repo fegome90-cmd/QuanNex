@@ -36,7 +36,7 @@ handle_error() {
     ps aux > "$ARTIFACTS_DIR/processes.txt" 2>/dev/null || true
     df -h > "$ARTIFACTS_DIR/disk-usage.txt" 2>/dev/null || true
     
-    exit $2
+    exit "$2"
 }
 
 # Configurar trap para errores

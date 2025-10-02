@@ -1,0 +1,75 @@
+{
+  "name": "Limpieza de Seguridad QuanNex",
+  "description": "Limpieza sistemática y segura de vulnerabilidades identificadas",
+  "steps": [
+    {
+      "step_id": "backup_current_state",
+      "agent": "context",
+      "input": {
+        "sources": [
+          ".gitignore",
+          ".cursor/mcp.json",
+          ".mcp.json",
+          ".secretsallow"
+        ],
+        "selectors": [
+          "gitignore",
+          "config",
+          "patterns",
+          "current_state"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "analyze_impact_before_changes",
+      "agent": "context",
+      "depends_on": ["backup_current_state"],
+      "input": {
+        "sources": [
+          "agents/",
+          "orchestration/",
+          "core/",
+          "scripts/"
+        ],
+        "selectors": [
+          "dependencies",
+          "imports",
+          "references",
+          "functionality",
+          "critical_files"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "generate_safe_cleanup_plan",
+      "agent": "prompting",
+      "depends_on": ["analyze_impact_before_changes"],
+      "input": {
+        "goal": "Crear plan de limpieza de seguridad que NO comprometa la funcionalidad del proyecto. Incluir pasos seguros, validaciones, y rollback automático si algo falla.",
+        "style": "technical",
+        "context": "{{analyze_impact_before_changes.output.context_bundle}}",
+        "constraints": [
+          "Mantener funcionalidad del sistema QuanNex",
+          "Crear backups antes de cambios",
+          "Validar cada paso antes de continuar",
+          "Plan de rollback automático",
+          "No romper imports o dependencias",
+          "Preservar archivos críticos del sistema"
+        ]
+      }
+    },
+    {
+      "step_id": "validate_cleanup_safety",
+      "agent": "rules",
+      "depends_on": ["generate_safe_cleanup_plan"],
+      "input": {
+        "policy_refs": ["SECURITY.md", ".gitignore"],
+        "compliance_level": "strict",
+        "tone": "technical",
+        "context": "{{generate_safe_cleanup_plan.output.system_prompt}}"
+      }
+    }
+  ]
+}

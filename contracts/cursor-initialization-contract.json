@@ -1,0 +1,95 @@
+{
+  "contract_id": "cursor-initialization-contract",
+  "version": "1.0.0",
+  "name": "Contrato de Inicialización Automática de Cursor",
+  "description": "Contrato que obliga a Cursor a leer automáticamente el manual y contexto cuando inicia MCP por primera vez",
+  "enforcement_level": "mandatory",
+  "trigger_conditions": [
+    {
+      "condition": "mcp_first_start",
+      "description": "Cuando MCP QuanNex se inicia por primera vez en la sesión"
+    },
+    {
+      "condition": "cursor_session_start",
+      "description": "Cuando Cursor inicia una nueva sesión con el proyecto"
+    }
+  ],
+  "mandatory_actions": [
+    {
+      "action_id": "read_manual",
+      "description": "Leer completamente el manual del proyecto",
+      "target_file": "MANUAL-COMPLETO-CURSOR.md",
+      "validation": {
+        "must_acknowledge": true,
+        "acknowledgment_required": "He leído y entendido completamente el manual del proyecto QuanNex StartKit"
+      },
+      "timeout_seconds": 300
+    },
+    {
+      "action_id": "read_context",
+      "description": "Leer el contexto de ingeniero senior",
+      "target_file": "CONTEXTO-INGENIERO-SENIOR.md",
+      "validation": {
+        "must_acknowledge": true,
+        "acknowledgment_required": "He leído y entendido el contexto completo del proyecto QuanNex StartKit"
+      },
+      "timeout_seconds": 180
+    },
+    {
+      "action_id": "verify_system_state",
+      "description": "Verificar el estado actual del sistema",
+      "command": "./context-manager.sh status",
+      "validation": {
+        "must_succeed": true,
+        "expected_output_contains": ["MCP QuanNex funcionando", "Contextos disponibles"]
+      },
+      "timeout_seconds": 60
+    },
+    {
+      "action_id": "acknowledge_contract",
+      "description": "Confirmar que se ha completado la inicialización",
+      "validation": {
+        "must_acknowledge": true,
+        "acknowledgment_required": "Contrato de inicialización completado. Cursor está listo para trabajar en caliente con el proyecto QuanNex StartKit."
+      }
+    }
+  ],
+  "optional_actions": [
+    {
+      "action_id": "read_quick_context",
+      "description": "Leer contexto rápido como referencia",
+      "target_file": "CONTEXTO-RAPIDO.md",
+      "condition": "if_available"
+    },
+    {
+      "action_id": "check_project_health",
+      "description": "Verificar salud del proyecto",
+      "command": "node orchestration/orchestrator.js health",
+      "condition": "if_orchestrator_available"
+    }
+  ],
+  "failure_handling": {
+    "on_timeout": {
+      "action": "retry_with_extended_timeout",
+      "max_retries": 2,
+      "extended_timeout_multiplier": 1.5
+    },
+    "on_failure": {
+      "action": "fallback_to_manual_initialization",
+      "fallback_message": "Inicialización automática falló. Por favor, lee manualmente MANUAL-COMPLETO-CURSOR.md y CONTEXTO-INGENIERO-SENIOR.md antes de continuar."
+    }
+  },
+  "success_criteria": {
+    "all_mandatory_actions_completed": true,
+    "all_acknowledgments_received": true,
+    "system_verification_passed": true
+  },
+  "completion_message": "✅ Inicialización completada. Cursor está ahora en caliente y listo para trabajar con el proyecto QuanNex StartKit. Todos los contextos han sido cargados automáticamente.",
+  "metadata": {
+    "created_date": "2025-10-02",
+    "created_by": "QuanNex StartKit System",
+    "project_version": "2.1.0",
+    "contract_type": "initialization",
+    "enforcement_agent": "context-engineer"
+  }
+}

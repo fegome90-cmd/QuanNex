@@ -1,0 +1,66 @@
+{
+  "name": "Auditoría de Seguridad Pre-Commit",
+  "description": "Identificar y proteger información sensible antes de push público",
+  "steps": [
+    {
+      "step_id": "scan_sensitive_data",
+      "agent": "security",
+      "input": {
+        "target_path": ".",
+        "check_mode": "full",
+        "scan_depth": 3
+      }
+    },
+    {
+      "step_id": "analyze_gitignore",
+      "agent": "context",
+      "depends_on": ["scan_sensitive_data"],
+      "input": {
+        "sources": [
+          ".gitignore",
+          ".env*",
+          "*.key",
+          "*.pem",
+          "config/*",
+          "secrets/*"
+        ],
+        "selectors": [
+          "gitignore",
+          "patterns",
+          "secrets",
+          "keys",
+          "env",
+          "credentials"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "generate_security_recommendations",
+      "agent": "prompting",
+      "depends_on": ["analyze_gitignore"],
+      "input": {
+        "goal": "Generar recomendaciones específicas para proteger información sensible antes de push público al repo QuanNex. Incluir .gitignore mejorado y lista de archivos a revisar.",
+        "style": "technical",
+        "context": "{{analyze_gitignore.output.context_bundle}}",
+        "constraints": [
+          "Enfocarse en información que hackers podrían usar",
+          "Incluir patrones para claves API, tokens, credenciales",
+          "Proteger información personal y configuraciones sensibles",
+          "Revisar archivos de configuración y logs"
+        ]
+      }
+    },
+    {
+      "step_id": "validate_security_approach",
+      "agent": "rules",
+      "depends_on": ["generate_security_recommendations"],
+      "input": {
+        "policy_refs": ["SECURITY.md", "README.md"],
+        "compliance_level": "strict",
+        "tone": "technical",
+        "context": "{{generate_security_recommendations.output.system_prompt}}"
+      }
+    }
+  ]
+}

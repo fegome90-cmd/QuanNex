@@ -1,0 +1,55 @@
+{
+  "name": "Solucionar Bloqueadores Críticos",
+  "description": "Workflow para corregir rutas de import y módulos faltantes",
+  "steps": [
+    {
+      "step_id": "analyze_import_issues",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "versions/v3/consolidated-orchestrator.js",
+          "versions/v3/mcp-server-consolidated.js",
+          "shared/utils/task-runner.js",
+          "orchestration/mcp/consolidated-orchestrator.js"
+        ],
+        "selectors": [
+          "import",
+          "require",
+          "ERR_MODULE_NOT_FOUND",
+          "handshake.js",
+          "rate-limiter.js",
+          "router-v2.js",
+          "fsm-v2.js"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "generate_fix_strategy",
+      "agent": "prompting",
+      "depends_on": ["analyze_import_issues"],
+      "input": {
+        "goal": "Generar estrategia completa para corregir todos los bloqueadores identificados. Incluir corrección de rutas, restauración de módulos faltantes y validación del MCP server.",
+        "style": "technical",
+        "context": "{{analyze_import_issues.output.context_bundle}}",
+        "constraints": [
+          "Mantener compatibilidad con estructura existente",
+          "Usar rutas relativas correctas",
+          "Restaurar módulos desde backups si es necesario",
+          "Validar que MCP server funcione al final"
+        ]
+      }
+    },
+    {
+      "step_id": "validate_fix_approach",
+      "agent": "rules",
+      "depends_on": ["generate_fix_strategy"],
+      "input": {
+        "policy_refs": ["README.md", "SECURITY.md"],
+        "compliance_level": "basic",
+        "tone": "technical",
+        "context": "{{generate_fix_strategy.output.system_prompt}}"
+      }
+    }
+  ]
+}

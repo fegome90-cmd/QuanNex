@@ -1,0 +1,183 @@
+{
+  "workflows_codex": {
+    "version": "1.0.0",
+    "description": "Workflows predefinidos para Codex usando MCP QuanNex",
+    "workflows": {
+      "diagnostico_rapido": {
+        "name": "Diagnóstico Rápido de Problemas",
+        "description": "Analiza logs y reportes para identificar problemas",
+        "steps": [
+          {
+            "step_id": "analizar_logs",
+            "agent": "context",
+            "input": {
+              "sources": ["logs/", "docs/audits/", "reports/"],
+              "selectors": ["error", "problema", "fallo", "issue", "warning", "failed"],
+              "max_tokens": 3000
+            }
+          },
+          {
+            "step_id": "generar_diagnostico",
+            "agent": "prompting",
+            "depends_on": ["analizar_logs"],
+            "input": {
+              "goal": "Generar diagnóstico detallado de problemas encontrados con soluciones específicas",
+              "context": "{{analizar_logs.output.context_bundle}}",
+              "style": "technical",
+              "constraints": [
+                "usar paths absolutos",
+                "verificar dependencias",
+                "incluir comandos específicos",
+                "priorizar errores críticos"
+              ]
+            }
+          }
+        ]
+      },
+      "fix_pathing": {
+        "name": "Corrección de Errores de Pathing",
+        "description": "Identifica y corrige errores de importación y pathing",
+        "steps": [
+          {
+            "step_id": "identificar_paths",
+            "agent": "context",
+            "input": {
+              "sources": ["orchestration/", "agents/", "core/", "versions/"],
+              "selectors": ["import", "require", "path", "dirname", "fileURLToPath", "join"],
+              "max_tokens": 2000
+            }
+          },
+          {
+            "step_id": "generar_fix_paths",
+            "agent": "prompting",
+            "depends_on": ["identificar_paths"],
+            "input": {
+              "goal": "Generar correcciones específicas para errores de pathing e importación",
+              "context": "{{identificar_paths.output.context_bundle}}",
+              "style": "technical",
+              "constraints": [
+                "usar paths absolutos",
+                "verificar que los archivos existen",
+                "incluir imports correctos",
+                "usar fileURLToPath y dirname correctamente"
+              ]
+            }
+          }
+        ]
+      },
+      "verificar_agentes": {
+        "name": "Verificación de Agentes MCP",
+        "description": "Verifica que todos los agentes estén funcionando correctamente",
+        "steps": [
+          {
+            "step_id": "verificar_estructura",
+            "agent": "context",
+            "input": {
+              "sources": ["agents/", "orchestration/"],
+              "selectors": ["agent.js", "orchestrator.js", "mcp-server"],
+              "max_tokens": 1500
+            }
+          },
+          {
+            "step_id": "generar_verificacion",
+            "agent": "prompting",
+            "depends_on": ["verificar_estructura"],
+            "input": {
+              "goal": "Generar comandos de verificación para todos los agentes MCP",
+              "context": "{{verificar_estructura.output.context_bundle}}",
+              "style": "technical",
+              "constraints": [
+                "incluir comandos de verificación",
+                "verificar que los agentes respondan",
+                "incluir comandos de restauración si es necesario"
+              ]
+            }
+          }
+        ]
+      },
+      "analisis_documentacion": {
+        "name": "Análisis de Documentación",
+        "description": "Analiza la documentación del proyecto para entender su estado",
+        "steps": [
+          {
+            "step_id": "extraer_docs",
+            "agent": "context",
+            "input": {
+              "sources": ["README.md", "docs/", "MANUAL-COMPLETO-CURSOR.md"],
+              "selectors": ["descripción", "instalación", "uso", "problemas", "solución"],
+              "max_tokens": 3000
+            }
+          },
+          {
+            "step_id": "generar_resumen",
+            "agent": "prompting",
+            "depends_on": ["extraer_docs"],
+            "input": {
+              "goal": "Generar resumen ejecutivo del estado del proyecto y documentación",
+              "context": "{{extraer_docs.output.context_bundle}}",
+              "style": "executive",
+              "constraints": [
+                "identificar problemas documentados",
+                "resumir soluciones existentes",
+                "destacar información crítica"
+              ]
+            }
+          }
+        ]
+      },
+      "restaurar_sistema": {
+        "name": "Restauración del Sistema",
+        "description": "Restaura el sistema desde backups si hay problemas",
+        "steps": [
+          {
+            "step_id": "verificar_backups",
+            "agent": "context",
+            "input": {
+              "sources": ["backups/", "archived/"],
+              "selectors": ["consolidation", "corrections", "backup"],
+              "max_tokens": 1500
+            }
+          },
+          {
+            "step_id": "generar_restauracion",
+            "agent": "prompting",
+            "depends_on": ["verificar_backups"],
+            "input": {
+              "goal": "Generar comandos de restauración específicos desde backups",
+              "context": "{{verificar_backups.output.context_bundle}}",
+              "style": "technical",
+              "constraints": [
+                "usar paths absolutos",
+                "verificar que los backups existen",
+                "incluir comandos de copia seguros",
+                "verificar integridad después de restauración"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "comandos_rapidos": {
+      "verificar_sistema": "cd /Users/felipe/Developer/startkit-main && node orchestration/orchestrator.js health",
+      "listar_workflows": "cd /Users/felipe/Developer/startkit-main && node orchestration/orchestrator.js list",
+      "verificar_agentes": "ls -la agents/*/agent.js",
+      "verificar_orquestador": "ls -la orchestration/orchestrator.js",
+      "ver_backups": "ls -la backups/",
+      "ejecutar_diagnostico": "cd /Users/felipe/Developer/startkit-main && echo 'workflow_diagnostico' | node orchestration/orchestrator.js create"
+    },
+    "troubleshooting": {
+      "error_cannot_find_module": {
+        "descripcion": "Error de módulo no encontrado",
+        "solucion": "cd /Users/felipe/Developer/startkit-main && node orchestration/orchestrator.js health"
+      },
+      "error_agent_not_found": {
+        "descripcion": "Agente no encontrado",
+        "solucion": "ls agents/*/agent.js && cp backups/consolidation-20251001-160553/*.js orchestration/"
+      },
+      "error_workflow_failed": {
+        "descripcion": "Workflow falló",
+        "solucion": "node orchestration/orchestrator.js status <workflow_id> && ls .reports/"
+      }
+    }
+  }
+}

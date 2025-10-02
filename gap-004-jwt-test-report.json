@@ -1,0 +1,149 @@
+{
+  "timestamp": "2025-10-02T16:27:53.455Z",
+  "test_name": "GAP-004 JWT Authentication Test",
+  "results": [
+    {
+      "agent": "agents/context/agent.js",
+      "tests": [
+        {
+          "name": "Comunicación autenticada con token válido",
+          "expected": "authenticated",
+          "actual": "authenticated",
+          "security_risk": "low",
+          "authenticated": true,
+          "status": 0,
+          "output": "✅ [Rate Limiter] context: Request allowed (4/10)\n🔐 [Auth] Context agent authenticated: context -> system\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"context_bundle\": \"{\\\"extracted\\\":[{\\\"file\\\":\\\"README.md\\\",\\\"content\\\":\\\"Content from README.md\\\",\\\"relevance\\\":0.8}],\\\"metadata\\\":{\\",
+          "passed": true
+        },
+        {
+          "name": "Comunicación con datos sensibles autenticada",
+          "expected": "authenticated",
+          "actual": "authenticated",
+          "security_risk": "medium",
+          "authenticated": true,
+          "status": 0,
+          "output": "✅ [Rate Limiter] context: Request allowed (5/10)\n🔐 [Auth] Context agent authenticated: context -> system\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"context_bundle\": \"{\\\"extracted\\\":[{\\\"file\\\":\\\"README.md\\\",\\\"content\\\":\\\"Content from README.md\\\",\\\"relevance\\\":0.8}],\\\"metadata\\\":{\\",
+          "passed": true
+        },
+        {
+          "name": "Comunicación entre agentes autenticada",
+          "expected": "authenticated",
+          "actual": "failed",
+          "security_risk": "low",
+          "authenticated": false,
+          "status": 1,
+          "output": "✅ [Rate Limiter] context: Request allowed (6/10)\n🔐 [Auth] Context agent authenticated: context -> system\nInput validation errors: [ 'sources must be a non-empty array of strings' ]\n",
+          "passed": false
+        }
+      ],
+      "overall": "fail",
+      "jwt_tests": [
+        {
+          "test": "token_generation",
+          "passed": true,
+          "agentId": "context",
+          "permissions": [
+            null
+          ]
+        },
+        {
+          "test": "token_verification",
+          "passed": true,
+          "payload": {
+            "iss": "mcp-quannex",
+            "aud": "agents",
+            "sub": "context",
+            "iat": 1759422472,
+            "exp": 1759426072,
+            "permissions": [
+              null
+            ],
+            "roles": [
+              "read",
+              "write",
+              "scan"
+            ]
+          }
+        }
+      ],
+      "score": "2/3",
+      "jwt_score": "2/2"
+    },
+    {
+      "agent": "agents/security/agent.js",
+      "tests": [
+        {
+          "name": "Comunicación autenticada con token válido",
+          "expected": "authenticated",
+          "actual": "failed",
+          "security_risk": "low",
+          "authenticated": false,
+          "status": 1,
+          "output": "🚫 [Rate Limiter] security: Rate limit exceeded (5/5)\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"2.0.0\",\n  \"error\": [\n    \"Rate limit exceeded for security agent. Please retry in 1 minute.\"\n  ],\n  \"rate_limit_info\": {\n    \"agent\": \"security\",\n    \"retry_after_seconds\": 60\n  }\n}\n",
+          "passed": false
+        },
+        {
+          "name": "Comunicación con datos sensibles autenticada",
+          "expected": "authenticated",
+          "actual": "failed",
+          "security_risk": "medium",
+          "authenticated": false,
+          "status": 1,
+          "output": "🚫 [Rate Limiter] security: Rate limit exceeded (5/5)\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"2.0.0\",\n  \"error\": [\n    \"Rate limit exceeded for security agent. Please retry in 1 minute.\"\n  ],\n  \"rate_limit_info\": {\n    \"agent\": \"security\",\n    \"retry_after_seconds\": 60\n  }\n}\n",
+          "passed": false
+        },
+        {
+          "name": "Comunicación entre agentes autenticada",
+          "expected": "authenticated",
+          "actual": "failed",
+          "security_risk": "low",
+          "authenticated": false,
+          "status": 1,
+          "output": "🚫 [Rate Limiter] security: Rate limit exceeded (5/5)\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"2.0.0\",\n  \"error\": [\n    \"Rate limit exceeded for security agent. Please retry in 1 minute.\"\n  ],\n  \"rate_limit_info\": {\n    \"agent\": \"security\",\n    \"retry_after_seconds\": 60\n  }\n}\n",
+          "passed": false
+        }
+      ],
+      "overall": "fail",
+      "jwt_tests": [
+        {
+          "test": "token_generation",
+          "passed": true,
+          "agentId": "security",
+          "permissions": [
+            null
+          ]
+        },
+        {
+          "test": "token_verification",
+          "passed": true,
+          "payload": {
+            "iss": "mcp-quannex",
+            "aud": "agents",
+            "sub": "security",
+            "iat": 1759422473,
+            "exp": 1759426073,
+            "permissions": [
+              null
+            ],
+            "roles": [
+              "read",
+              "write",
+              "scan",
+              "audit"
+            ]
+          }
+        }
+      ],
+      "score": "0/3",
+      "jwt_score": "2/2"
+    }
+  ],
+  "overall_passed": false,
+  "summary": {
+    "total_agents": 2,
+    "total_tests": 6,
+    "passed_tests": 2,
+    "total_jwt_tests": 4,
+    "passed_jwt_tests": 4
+  }
+}

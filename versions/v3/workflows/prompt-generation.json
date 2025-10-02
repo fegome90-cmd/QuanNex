@@ -1,0 +1,51 @@
+{
+  "name": "Prompt Generation Workflow",
+  "description": "Complete workflow for generating prompts with context and rules validation",
+  "steps": [
+    {
+      "step_id": "extract_context",
+      "agent": "context",
+      "action": "extract",
+      "input": {
+        "sources": [],
+        "selectors": [],
+        "max_tokens": 2000
+      },
+      "depends_on": [],
+      "timeout": 30,
+      "max_retries": 3
+    },
+    {
+      "step_id": "generate_prompt",
+      "agent": "prompting",
+      "action": "generate",
+      "input": {
+        "goal": "",
+        "context": "{{extract_context.output.context_bundle}}",
+        "constraints": [],
+        "style": "default"
+      },
+      "depends_on": ["extract_context"],
+      "timeout": 60,
+      "max_retries": 3
+    },
+    {
+      "step_id": "validate_rules",
+      "agent": "rules",
+      "action": "validate",
+      "input": {
+        "policy_refs": ["README.md", "SECURITY.md"],
+        "tone": "neutral",
+        "domain": "general",
+        "compliance_level": "basic"
+      },
+      "depends_on": ["generate_prompt"],
+      "timeout": 30,
+      "max_retries": 2
+    }
+  ],
+  "context": {
+    "workflow_type": "prompt_generation",
+    "version": "1.0.0"
+  }
+}

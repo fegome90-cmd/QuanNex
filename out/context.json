@@ -1,19 +1,17 @@
+✅ [Rate Limiter] context: Request allowed (4/10)
 {
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
-  "context_bundle": "# Source: README.md\n- Testing setup con Playwright\n- **Design Validation**: Testing visual con Playwright\n- `/test-ui` - Testing visual con Playwright\n- **Playwright MCP**: Testing visual y automation\n- Testing y quality assurance automático\n## 🧪 **Testing**\n# Ejecutar tests del kit\n./scripts/test-claude-init.sh",
+  "context_bundle": "{\"extracted\":[{\"file\":\"gap-004-analysis-workflow.json\",\"content\":\"Content from gap-004-analysis-workflow.json\",\"relevance\":0.8},{\"file\":\"orchestration/orchestrator.js\",\"content\":\"Content from orchestration/orchestrator.js\",\"relevance\":0.8}],\"metadata\":{\"total_sources\":2,\"selectors_applied\":[\"error\",\"failed\",\"parse\",\"json\",\"emoji\",\"console\",\"log\"],\"max_tokens\":1000}}",
   "provenance": [
-    "loaded:README.md"
+    "gap-004-analysis-workflow.json",
+    "orchestration/orchestrator.js"
   ],
   "stats": {
-    "tokens_estimated": 256,
-    "chunks": 1,
-    "matched": 8,
+    "tokens_estimated": 1000,
+    "chunks": 2,
+    "matched": 2,
     "truncated": false,
-    "adjusted": true
-  },
-  "trace": [
-    "context.server:ok",
-    "context.server:adjusted_max_tokens"
-  ]
+    "adjusted": false
+  }
 }

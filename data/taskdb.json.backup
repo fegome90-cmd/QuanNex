@@ -1,6 +1,109 @@
 {
   "version": "1.0.0",
+  "lessons_learned": {
+    "versionado_v3_failure": {
+      "title": "Lecciones del Fallo del Versionado V3",
+      "date": "2025-10-02",
+      "impact": "critical",
+      "lessons": [
+        {
+          "id": "lesson_001",
+          "title": "Documentar funcionalidad detallada de cada agente",
+          "description": "Cada agente debe tener documentación completa de su funcionalidad, dependencias y configuraciones",
+          "priority": "critical",
+          "action_required": "Crear documentación detallada para todos los agentes existentes y futuros",
+          "prevention": "Mantener documentación actualizada antes de cualquier migración"
+        },
+        {
+          "id": "lesson_002", 
+          "title": "Crear backups estratégicos antes de migraciones",
+          "description": "Siempre crear backups de componentes críticos antes de cualquier migración",
+          "priority": "critical",
+          "action_required": "Implementar sistema de backups automáticos pre-migración",
+          "prevention": "Backups automáticos antes de cambios estructurales"
+        },
+        {
+          "id": "lesson_003",
+          "title": "Validar funcionalidad después de migraciones",
+          "description": "Ejecutar tests completos después de cada migración para asegurar funcionalidad",
+          "priority": "high",
+          "action_required": "Implementar pipeline de validación post-migración",
+          "prevention": "Validación automática después de cada cambio"
+        },
+        {
+          "id": "lesson_004",
+          "title": "Mapear dependencias entre componentes",
+          "description": "Documentar todas las dependencias entre componentes antes de migraciones",
+          "priority": "high",
+          "action_required": "Crear mapa de dependencias del sistema completo",
+          "prevention": "Mantener mapa de dependencias actualizado"
+        },
+        {
+          "id": "lesson_005",
+          "title": "Planificar rollback antes de migraciones",
+          "description": "Tener plan de rollback detallado antes de iniciar migraciones",
+          "priority": "high",
+          "action_required": "Crear procedimientos de rollback para cada tipo de migración",
+          "prevention": "Rollback automático en caso de fallos"
+        }
+      ]
+    },
+    "mcp_orchestrator_core_boost": {
+      "title": "MCP Orquestador Core como Acelerador",
+      "date": "2025-10-02", 
+      "impact": "high",
+      "lessons": [
+        {
+          "id": "lesson_006",
+          "title": "MCP orquestador core boostea significativamente la IA",
+          "description": "El sistema MCP orquestador core ya demostró boostear a la IA en un gran número",
+          "priority": "critical",
+          "action_required": "Asegurar funcionalidad completa del MCP orquestador y core",
+          "prevention": "Mantener sistema MCP como prioridad máxima"
+        },
+        {
+          "id": "lesson_007",
+          "title": "Usar MCP para acelerar procesos de reparación",
+          "description": "El MCP puede acelerar todo el proceso de reparación y consolidación",
+          "priority": "high",
+          "action_required": "Priorizar restauración del MCP para acelerar reparación",
+          "prevention": "Mantener MCP como herramienta principal de desarrollo"
+        }
+      ]
+    }
+  },
   "projects": [
+    {
+      "id": "reparacion-danos-completa-2025-10-02",
+      "title": "Reparación de Daños Completa - Post Versionado V3",
+      "description": "Plan completo de reparación después de la pérdida masiva de datos durante versionado V3",
+      "docs": [
+        "docs/audits/SUMARIO-COMPLETO-ESTADO-PROYECTO-2025-10-02.md",
+        "docs/audits/ANALISIS-CAUSA-RAIZ-PERDIDA-DATOS-2025-10-02.md",
+        "docs/audits/PLAN-REPARACION-DANOS-COMPLETA-2025-10-02.md"
+      ],
+      "features": [
+        "MCP Core",
+        "Agentes Avanzados",
+        "Documentación",
+        "Duplicados",
+        "Gaps Críticos"
+      ],
+      "data": {
+        "estado_actual": "critical",
+        "agentes_perdidos": 5,
+        "archivos_duplicados": 25,
+        "documentacion_no_revisada": 281,
+        "gaps_pendientes": 11,
+        "fases_reparacion": 4,
+        "tiempo_estimado": "4_semanas",
+        "probabilidad_exito": "85%"
+      },
+      "github_repo": "local",
+      "pinned": true,
+      "created_at": "2025-10-02T00:00:00.000Z",
+      "updated_at": "2025-10-02T00:00:00.000Z"
+    },
     {
       "id": "gaps-repair-2025-10-01",
       "title": "Reparación de Gaps Críticos - Auditoría 2025-09",
@@ -40,6 +143,129 @@
       "pinned": false,
       "created_at": "2025-10-01T15:00:35.462Z",
       "updated_at": "2025-10-01T15:00:35.465Z"
+    },
+    {
+      "id": "fase-2-orquestador-disciplinado",
+      "title": "FASE 2: Orquestador Disciplinado",
+      "description": "Implementación completa del orquestador disciplinado con FSM, handoffs, canary y auto-rollback",
+      "docs": [
+        "docs/versions/SEMANA-2-CONTEXT-HANDOFFS.md",
+        "orchestration/router.yaml",
+        "versions/v3/fsm.js",
+        "versions/v3/handoff-consolidated.js",
+        "versions/v3/router-consolidated.js"
+      ],
+      "features": [
+        "Router declarativo v2",
+        "FSM corto con checkpoints",
+        "Handoff() canary",
+        "Auto-rollback",
+        "Métricas de performance"
+      ],
+      "data": {
+        "phase": "FASE 2",
+        "status": "COMPLETED",
+        "components": {
+          "router": "router.yaml + router-consolidated.js",
+          "fsm": "fsm.js con estados PLAN→EXEC→CRITIC→POLICY→DONE",
+          "handoff": "handoff-consolidated.js + canary-manager.js",
+          "rollback": "Sistema automático con umbrales 15% perf, 1% error",
+          "checkpoints": ".quannex/checkpoints/ con estados completos"
+        },
+        "metrics": {
+          "canary_percentage": 10,
+          "rollback_thresholds": {
+            "p95": 15,
+            "error_rate": 1
+          },
+          "checkpoints_count": 9,
+          "feature_flags": [
+            "FEATURE_FSM_V2",
+            "FEATURE_HANDOFF",
+            "CANARY_PERCENTAGE"
+          ]
+        }
+      },
+      "github_repo": "local",
+      "pinned": true,
+      "created_at": "2025-10-01T19:20:16.369Z",
+      "updated_at": "2025-10-01T19:20:16.371Z"
+    },
+    {
+      "id": "consolidation-v3-2025-10-01",
+      "title": "Consolidación V3 - Restauración Post-Versionado",
+      "description": "Consolidación de versiones v1, v2, v3 y restauración de referencias rotas por versionado",
+      "docs": [
+        "MISSING-FILES-AUDIT.md",
+        "versions/consolidation-analysis.md",
+        "versions/consolidate-final.sh",
+        "versions/verify-consolidation.sh"
+      ],
+      "features": [
+        "Consolidación de archivos duplicados",
+        "Enlaces simbólicos para compatibilidad",
+        "Restauración de referencias rotas",
+        "Validación de orquestación 100%",
+        "Tests y gates funcionando"
+      ],
+      "data": {
+        "status": "COMPLETED",
+        "consolidation_type": "version_consolidation",
+        "files_consolidated": [
+          "server-consolidated.js",
+          "router-consolidated.js",
+          "handoff-consolidated.js",
+          "mcp-server-consolidated.js",
+          "consolidated-orchestrator.js"
+        ],
+        "symbolic_links_created": [
+          "agents/context/agent.js → ../../versions/v3/context-agent.js",
+          "agents/prompting/agent.js → ../../versions/v3/prompting-agent.js",
+          "agents/rules/agent.js → ../../versions/v3/rules-agent.js",
+          "orchestration/test-orchestration.js → ../versions/v3/test-orchestration.js",
+          "orchestration/mcp/server.js → ../../versions/v3/mcp-server-consolidated.js"
+        ],
+        "validation_results": {
+          "orchestration": "6/6 (100%)",
+          "agents": "3/3 (100%)",
+          "unit_tests": "12/12 (100%)",
+          "smoke_tests": "PASSED"
+        }
+      },
+      "github_repo": "local",
+      "pinned": true,
+      "created_at": "2025-10-01T19:20:32.321Z",
+      "updated_at": "2025-10-01T19:20:32.323Z"
+    },
+    {
+      "id": "gaps-pendientes-fase3",
+      "title": "Gaps Pendientes - Pre-FASE 3",
+      "description": "Resolución de gaps críticos pendientes antes de pasar a FASE 3 - Context Rico",
+      "docs": [
+        "docs/audits/2025-09-initial-gap.md",
+        "GAP-ANALYSIS-2025-10-01.md"
+      ],
+      "features": [
+        "Rate limiting en endpoints",
+        "Pruebas de seguridad automatizadas (DAST)",
+        "Documentación de API completa",
+        "Testing de performance bajo carga",
+        "Logs seguros completos",
+        "Troubleshooting documentation"
+      ],
+      "data": {
+        "phase": "Pre-FASE 3",
+        "status": "IN_PROGRESS",
+        "critical_gaps": 6,
+        "resolved_gaps": 14,
+        "total_gaps": 26,
+        "coverage_rate": "54%",
+        "priority": "HIGH"
+      },
+      "github_repo": "local",
+      "pinned": true,
+      "created_at": "2025-10-01T19:22:05.487Z",
+      "updated_at": "2025-10-01T19:22:05.488Z"
     }
   ],
   "tasks": [
@@ -169,6 +395,149 @@
       "archived_by": null,
       "created_at": "2025-10-01T15:00:35.468Z",
       "updated_at": "2025-10-01T15:02:30.815Z"
+    },
+    {
+      "id": "fase2-router-declarativo",
+      "project_id": "fase-2-orquestador-disciplinado",
+      "title": "Router declarativo v2 con router.yaml",
+      "description": "Implementar router declarativo con reglas de routing basadas en YAML",
+      "status": "done",
+      "priority": "high",
+      "feature": "Router declarativo v2",
+      "created_at": "2025-10-01T19:20:16.371Z",
+      "updated_at": "2025-10-01T19:20:16.371Z"
+    },
+    {
+      "id": "fase2-fsm-checkpoints",
+      "project_id": "fase-2-orquestador-disciplinado",
+      "title": "FSM corto con checkpoints (PLAN→EXEC→CRITIC→POLICY→DONE)",
+      "description": "Implementar FSM con estados y checkpoints para reproducibilidad",
+      "status": "done",
+      "priority": "high",
+      "feature": "FSM corto con checkpoints",
+      "created_at": "2025-10-01T19:20:16.371Z",
+      "updated_at": "2025-10-01T19:20:16.371Z"
+    },
+    {
+      "id": "fase2-handoff-canary",
+      "project_id": "fase-2-orquestador-disciplinado",
+      "title": "Handoff() canary con FEATURE_HANDOFF=1, 10%",
+      "description": "Implementar sistema de handoff con canary para transferencias entre agentes",
+      "status": "done",
+      "priority": "high",
+      "feature": "Handoff() canary",
+      "created_at": "2025-10-01T19:20:16.371Z",
+      "updated_at": "2025-10-01T19:20:16.371Z"
+    },
+    {
+      "id": "fase2-auto-rollback",
+      "project_id": "fase-2-orquestador-disciplinado",
+      "title": "Auto-rollback en fallos (perf > 15% o error > 1%)",
+      "description": "Implementar sistema de rollback automático basado en métricas de performance",
+      "status": "done",
+      "priority": "high",
+      "feature": "Auto-rollback",
+      "created_at": "2025-10-01T19:20:16.371Z",
+      "updated_at": "2025-10-01T19:20:16.371Z"
+    },
+    {
+      "id": "consolidation-audit-files",
+      "project_id": "consolidation-v3-2025-10-01",
+      "title": "Auditoría de archivos faltantes post-versionado",
+      "description": "Identificar todos los archivos que faltan después del versionado de carpetas",
+      "status": "done",
+      "priority": "critical",
+      "feature": "Consolidación de archivos duplicados",
+      "created_at": "2025-10-01T19:20:32.323Z",
+      "updated_at": "2025-10-01T19:20:32.323Z"
+    },
+    {
+      "id": "consolidation-symbolic-links",
+      "project_id": "consolidation-v3-2025-10-01",
+      "title": "Crear enlaces simbólicos para compatibilidad",
+      "description": "Crear enlaces simbólicos para mantener compatibilidad con scripts existentes",
+      "status": "done",
+      "priority": "high",
+      "feature": "Enlaces simbólicos para compatibilidad",
+      "created_at": "2025-10-01T19:20:32.323Z",
+      "updated_at": "2025-10-01T19:20:32.323Z"
+    },
+    {
+      "id": "consolidation-validation-100",
+      "project_id": "consolidation-v3-2025-10-01",
+      "title": "Validación 100% de orquestación y agentes",
+      "description": "Ejecutar todos los tests y gates para verificar que funcionan correctamente",
+      "status": "done",
+      "priority": "high",
+      "feature": "Tests y gates funcionando",
+      "created_at": "2025-10-01T19:20:32.323Z",
+      "updated_at": "2025-10-01T19:20:32.323Z"
+    },
+    {
+      "id": "gap-002-rate-limiting",
+      "project_id": "gaps-pendientes-fase3",
+      "title": "GAP-002: Implementar rate limiting en endpoints de agentes",
+      "description": "Implementar límites de frecuencia para llamadas a agentes para prevenir ataques DoS",
+      "status": "todo",
+      "priority": "critical",
+      "feature": "Rate limiting en endpoints",
+      "created_at": "2025-10-01T19:22:05.488Z",
+      "updated_at": "2025-10-01T19:22:05.488Z"
+    },
+    {
+      "id": "gap-013-dast-security",
+      "project_id": "gaps-pendientes-fase3",
+      "title": "GAP-013: Implementar pruebas de seguridad automatizadas (DAST)",
+      "description": "Configurar y hacer funcional el sistema DAST para validación automática de vulnerabilidades",
+      "status": "todo",
+      "priority": "critical",
+      "feature": "Pruebas de seguridad automatizadas (DAST)",
+      "created_at": "2025-10-01T19:22:05.488Z",
+      "updated_at": "2025-10-01T19:22:05.488Z"
+    },
+    {
+      "id": "gap-014-api-docs",
+      "project_id": "gaps-pendientes-fase3",
+      "title": "GAP-014: Completar documentación de API de agentes",
+      "description": "Documentar completamente todas las APIs de agentes para facilitar adopción",
+      "status": "todo",
+      "priority": "high",
+      "feature": "Documentación de API completa",
+      "created_at": "2025-10-01T19:22:05.488Z",
+      "updated_at": "2025-10-01T19:22:05.488Z"
+    },
+    {
+      "id": "gap-012-performance-testing",
+      "project_id": "gaps-pendientes-fase3",
+      "title": "GAP-012: Completar testing de performance bajo carga",
+      "description": "Implementar pruebas de estrés y carga para validar límites del sistema",
+      "status": "todo",
+      "priority": "high",
+      "feature": "Testing de performance bajo carga",
+      "created_at": "2025-10-01T19:22:05.488Z",
+      "updated_at": "2025-10-01T19:22:05.488Z"
+    },
+    {
+      "id": "gap-003-secure-logs",
+      "project_id": "gaps-pendientes-fase3",
+      "title": "GAP-003: Completar sanitización de logs sensibles",
+      "description": "Asegurar que todos los logs estén libres de información sensible",
+      "status": "todo",
+      "priority": "medium",
+      "feature": "Logs seguros completos",
+      "created_at": "2025-10-01T19:22:05.488Z",
+      "updated_at": "2025-10-01T19:22:05.488Z"
+    },
+    {
+      "id": "gap-016-troubleshooting-docs",
+      "project_id": "gaps-pendientes-fase3",
+      "title": "GAP-016: Completar documentación de troubleshooting",
+      "description": "Crear guía estructurada para resolución de problemas comunes",
+      "status": "todo",
+      "priority": "medium",
+      "feature": "Troubleshooting documentation",
+      "created_at": "2025-10-01T19:22:05.488Z",
+      "updated_at": "2025-10-01T19:22:05.488Z"
     }
   ]
 }

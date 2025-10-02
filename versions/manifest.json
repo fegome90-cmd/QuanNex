@@ -1,0 +1,63 @@
+{
+  "v1": {
+    "name": "Baseline",
+    "description": "Versión original estable",
+    "features": [
+      "basic-routing",
+      "simple-fsm"
+    ],
+    "status": "stable",
+    "deprecated": true,
+    "hash": "327d8d660945e4824f5a58440a7e88972006c52dd1a5dc22273eea5e45fbb93c",
+    "created": "2025-10-01T18:00:00Z"
+  },
+  "v2": {
+    "name": "Router + Handoffs",
+    "description": "Router declarativo + Handoffs estructurados",
+    "features": [
+      "router-v2",
+      "fsm-v2",
+      "handoffs",
+      "threadstate"
+    ],
+    "status": "stable",
+    "deprecated": true,
+    "hash": "8fd2953d277ad8c641c9a9340d77a6b5b69c752431e6a8ac553b449ab8efd96c",
+    "created": "2025-10-01T18:00:00Z"
+  },
+  "v3": {
+    "name": "Consolidated Production",
+    "description": "Versión consolidada definitiva con corrección de pathing y scripts",
+    "features": [
+      "consolidated-orchestrator",
+      "mcp-server-consolidated",
+      "fixed-pathing",
+      "timeout-management",
+      "graceful-shutdown",
+      "health-monitoring"
+    ],
+    "status": "production",
+    "deprecated": false,
+    "hash": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+    "created": "2025-10-01T18:00:00Z",
+    "consolidated": true,
+    "mcp_config": "quannex-v3",
+    "consolidated_files": [
+      "consolidated-orchestrator.js",
+      "mcp-server-consolidated.js",
+      "server-consolidated.js",
+      "router-consolidated.js",
+      "handoff-consolidated.js"
+    ],
+    "removed_duplicates": [
+      "server.js",
+      "server-improved.js",
+      "server-simple.js",
+      "router.js",
+      "router-v2.js",
+      "handoff.js",
+      "fsm-v2.js",
+      "orchestrator.js"
+    ]
+  }
+}

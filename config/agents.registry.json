@@ -1,0 +1,79 @@
+{
+  "orchestrator": {
+    "entryPoint": "orchestration/orchestrator.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Orquestador principal del sistema MCP QuanNex",
+    "dependencies": ["agents/context/agent.js", "agents/security/agent.js"]
+  },
+  "context": {
+    "entryPoint": "agents/context/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de gestión de contexto y memoria",
+    "dependencies": ["utils/log-sanitizer.js", "utils/file-rate-limiter.js"]
+  },
+  "rules": {
+    "entryPoint": "agents/rules/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de validación y aplicación de reglas",
+    "dependencies": ["utils/log-sanitizer.js"]
+  },
+  "prompting": {
+    "entryPoint": "agents/prompting/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de optimización de prompts",
+    "dependencies": ["utils/log-sanitizer.js"]
+  },
+  "security": {
+    "entryPoint": "agents/security/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de análisis y corrección de seguridad",
+    "dependencies": ["utils/log-sanitizer.js", "utils/file-rate-limiter.js", "utils/jwt-auth.js"]
+  },
+  "metrics": {
+    "entryPoint": "agents/metrics/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de recolección y análisis de métricas",
+    "dependencies": []
+  },
+  "optimization": {
+    "entryPoint": "agents/optimization/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de optimización de rendimiento",
+    "dependencies": []
+  },
+  "code-reviewer": {
+    "entryPoint": "agents/code-reviewer/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de revisión de código",
+    "dependencies": []
+  },
+  "integration": {
+    "entryPoint": "agents/integration/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de integración y deployment",
+    "dependencies": []
+  },
+  "server": {
+    "entryPoint": "agents/server/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente de servidor y API",
+    "dependencies": []
+  },
+  "base": {
+    "entryPoint": "agents/base/agent.js",
+    "version": "1.0.0",
+    "status": "active",
+    "description": "Agente base con funcionalidades comunes",
+    "dependencies": []
+  }
+}

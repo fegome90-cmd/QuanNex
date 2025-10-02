@@ -1,0 +1,133 @@
+# Filosofía Toyota: Solo lo esencial, nada más
+# Archivos que NO deben estar en el repositorio
+
+# Node.js
+node_modules/
+dist/
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Claude
+.claude/settings.local.json
+
+# Claude memory (exclude by default; keep placeholders)
+.claude/memory/*
+!.claude/memory/.gitkeep
+!.claude/memory/project_context.json
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.*
+
+# Secrets
+.secrets
+secrets.json
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+id_dsa*
+QUANNEX_SIGNING_KEY
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+tmp/
+
+# Metrics and reports (keep baselines)
+out/reports/
+out/metrics/
+!out/baselines/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Artefactos efímeros
+tmp/
+.reports/
+coverage/
+out/*.tmp.json
+out/*.stderr.txt
+out/*.stdout.txt
+!out/prompt.json
+!out/context.json
+!out/rules.json
+# Antigeneric archives (legacy)
+antigeneric-agents/
+antigeneric-agents*
+
+# Archived content (opcional)
+# archived/
+
+# External tools (si no se quieren versionar)
+# external/
+
+# Test files temporales
+archived/test-files/*.tmp
+
+# StartKit QuanNex - Organización
+versions/v4/
+versions/v5/
+versions/experimental/
+versions/*/node_modules/
+versions/*/dist/
+versions/*/build/
+
+# Archivos temporales
+*.tmp
+*.log
+*.swp
+.DS_Store
+
+# Cache y artifacts
+.cache/
+.quannex/cache/
+.quannex/artifacts/
+
+# Logs
+logs/
+*.log
+
+# QuanNex sensitive data
+.quannex/.env
+.quannex/secrets/
+.quannex/config/local.*
+.quannex/keys/
+
+# Personal information and system paths
+**/felipe/**
+**/Developer/**
+**/Users/*/Developer/**
+*.local
+config/local.*
+
+# Output files with sensitive paths
+out/real-test-runner-*.json
+out/detailed-reports-*.json
+out/retry-rollback-*.json
+out/repair-report-*.json
+out/smart-test-runner-*.json

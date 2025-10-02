@@ -269,18 +269,44 @@ audit_dependencies() {
     return 0
   fi
 
-  if [[ ! -f "package.json" ]]; then
-    warning "package.json no encontrado, saltando auditoría de dependencias"
-    return 0
-  fi
-
-  # Ejecutar npm audit
-  if npm audit --audit-level=moderate --json >npm-audit.json 2>/dev/null; then
-    success "Auditoría de dependencias completada"
-    return 0
+  # QNX-BUG-001: Usar script seguro para npm audit
+  local script_dir
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  
+  if [[ -f "$script_dir/secure-npm-audit.sh" ]]; then
+    log "Usando script seguro de npm audit..."
+    if bash "$script_dir/secure-npm-audit.sh" "." "npm-audit.json" "npm-audit-errors.log"; then
+      success "Auditoría de dependencias completada"
+      return 0
+    else
+      warning "Se encontraron vulnerabilidades en dependencias"
+      return 1
+    fi
   else
-    warning "Se encontraron vulnerabilidades en dependencias"
-    return 1
+    # Fallback al método anterior si el script seguro no está disponible
+    warning "Script seguro no encontrado, usando método fallback"
+    if [[ ! -f "package.json" ]]; then
+      warning "package.json no encontrado, saltando auditoría de dependencias"
+      return 0
+    fi
+
+    # QNX-SEC-002: Ejecutar npm audit sin suprimir errores
+    if npm audit --audit-level=moderate --json >npm-audit.json 2>npm-audit-errors.log; then
+      success "Auditoría de dependencias completada"
+      # Verificar si hay errores en el log
+      if [[ -s npm-audit-errors.log ]]; then
+        warning "npm audit generó advertencias (ver npm-audit-errors.log)"
+      fi
+      return 0
+    else
+      warning "Se encontraron vulnerabilidades en dependencias"
+      # Mostrar errores para trazabilidad
+      if [[ -s npm-audit-errors.log ]]; then
+        error "Errores de npm audit:"
+        cat npm-audit-errors.log >&2
+      fi
+      return 1
+    fi
   fi
 }
 

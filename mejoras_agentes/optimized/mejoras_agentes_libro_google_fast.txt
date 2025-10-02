@@ -1,0 +1,271 @@
+# RESUMEN: 20 PATRONES DE DISEÑO AGÉNTICO DEL LIBRO DE GOOGLE
+
+## INTRODUCCIÓN
+La codificación asistida por IA se guía por **20 patrones de diseño agéntico** que distinguen a profesionales de principiantes. Este resumen simplificado y práctico de las arquitecturas del libro de 400 páginas de un ingeniero de Google permite a herramientas como Claude Code o Cursor elegir el patrón adecuado para un problema.
+
+---
+
+## 1. ENCADENAMIENTO DE PROMPTS (Prompt Chaining)
+**TLDDR:** Divide tarea grande en pasos pequeños secuenciales. Cada paso valida la salida del anterior.
+
+**Flujo:** Entrada usuario → Subtareas con contratos de datos → Ejecutar Tarea 1 → Validar → Reintentar si falla → Fusionar resultados → Registrar artefactos.
+
+**Uso:** Procesos complejos multi-pasos, transformación de datos no estandarizados, pipelines IA + lógica.
+
+**Aplicaciones:** Procesamiento documentos, ETL datos, generación código, creación contenido.
+
+**Pros/Contras:** Modular, intercambiable. Contra: Explosión contexto, propagación errores, más lento.
+
+---
+
+## 2. ENRUTAMIENTO (Routing)
+**TLDDR:** Analiza solicitud y envía al agente especialista correcto. Pide clarificación si dudas.
+
+**Flujo:** Solicitud usuario → Analizar intención/contexto → Decidir ruta → Clarificación si confianza baja → Respuesta agente → Éxito/fallo.
+
+**Uso:** Sistemas multi-dominio, segregación herramientas, prevenir misfires.
+
+**Aplicaciones:** Servicio cliente, automatizaciones empresariales, triaje sanitario.
+
+**Pros/Contras:** Especialización, escalabilidad, eficiencia. Contra: Riesgo ruta incorrecta, propenso edge cases.
+
+---
+
+## 3. PARALELIZACIÓN (Parallelization)
+**TLDDR:** Divide tarea grande en partes independientes procesadas simultáneamente por múltiples agentes.
+
+**Flujo:** Entrada grande → Dividir en unidades independientes → Verificar recursos → Generar trabajadores paralelos → Ejecutar → Normalizar resultados → Fusionar → Registrar procedencia.
+
+**Uso:** Datos a gran escala, operaciones sensibles tiempo, automatización investigación, web scraping.
+
+**Aplicaciones:** Procesamiento documentos, enriquecimiento datos, testing frameworks.
+
+**Pros/Contras:** Especialización, escalable. Contra: Añade complejidad, unificación salidas difícil.
+
+---
+
+## 4. REFLEXIÓN (Reflection)
+**TLDDR:** Genera borrador, crítico revisa según estándares calidad, itera hasta alcanzar calidad requerida.
+
+**Flujo:** Solicitud inicial → Primer borrador → Agente crítico evalúa con rúbricas/pruebas → Feedback estructurado si falla → Repetir ciclo → Máximo intentos.
+
+**Uso:** Control calidad, razonamiento complejo, tareas creativas con resultados predecibles.
+
+**Aplicaciones:** Generación contenido, redacción legal/académica, descripciones productos.
+
+**Pros/Contras:** Enfocado calidad. Contra: Costo, riesgo API throttling.
+
+---
+
+## 5. USO DE HERRAMIENTAS (Tool Use)
+**TLDDR:** Descubre herramientas disponibles, verifica permisos, llama herramienta correcta.
+
+**Flujo:** Solicitud usuario → Analizar requisitos → Descubrir herramientas → Comprobación seguridad → Preparar/ejecutar llamada → Reintento si falla → Analizar/normalizar salida.
+
+**Uso:** Cualquier flujo multi-pasos.
+
+**Aplicaciones:** Investigación, análisis datos, servicio cliente, gestión contenido.
+
+**Pros/Contras:** Mejora calidad, reduce errores. Contra: Riesgo misfire propagado.
+
+---
+
+## 6. PLANIFICACIÓN (Planning)
+**TLDDR:** Crea plan paso a paso exhaustivo antes ejecución, como planificar viaje con checkpoints.
+
+**Flujo:** Entrada objetivo → Dividir hitos → Grafo dependencias → Revisar restricciones → Generar plan → Asignar agentes/herramientas → Ejecutar secuencialmente → Rastrear progreso.
+
+**Uso:** Flujos orientados objetivos ambiciosos, proyectos complejos.
+
+**Aplicaciones:** Gestión proyectos, desarrollo software, investigación.
+
+**Pros/Contras:** Estratégico, adaptable. Contra: Complejidad setup, coordinación agentes/fallbacks.
+
+---
+
+## 7. COLABORACIÓN MULTI-AGENTE (Multi-Agent Collaboration)
+**TLDDR:** Múltiples agentes especializados coordinados por gestor central, comparten memoria común.
+
+**Flujo:** Tarea compleja → Definir roles especializados → Agente operador elige agentes → Recursos compartidos → Orquestador asigna tareas → Protocolo coordinación → Prueba aceptación.
+
+**Uso:** Refinamiento iterativo, desarrollo productos multi-fases, tickets.
+
+**Aplicaciones:** Desarrollo software, análisis financiero, producción contenido, investigación.
+
+**Pros/Contras:** Especialización, procesamiento paralelo. Contra: Alta complejidad setup/pruebas, drift LLM.
+
+---
+
+## 8. GESTIÓN DE MEMORIA (Memory Management)
+**TLDDR:** Clasifica información como memoria corto plazo, eventos episódicos o conocimiento largo plazo, almacena con metadatos.
+
+**Flujo:** Interacción usuario → Decidir tipo memoria → Comprimir si contexto lleno → Indexar con metadatos → Recuperar con filtros → Redactar si privacidad → Actualizar memorias.
+
+**Uso:** Subconjunto otros patrones, fundamental continuidad conversacional.
+
+**Aplicaciones:** Servicio cliente, asistentes personales, plataformas educativas.
+
+**Pros/Contras:** Preserva contexto tiempo. Contra: Riesgo seguridad, over storing.
+
+---
+
+## 9. APRENDIZAJE Y ADAPTACIÓN (Learning and Adaptation)
+**TLDDR:** Recopila feedback, limpia datos, actualiza prompts/políticas/ejemplos.
+
+**Flujo:** Recopilar feedback → Verificación calidad → Decidir aprendizaje → Pruebas A/B → Monitorear rendimiento.
+
+**Uso:** Sistemas con feedback loop continuo.
+
+**Aplicaciones:** Servicios personalizados con feedback cliente/avatar.
+
+**Pros/Contras:** Mejora continua. Contra: Costos entrenamiento, riesgo aprender incorrecto.
+
+---
+
+## 10. ESTABLECIMIENTO Y MONITOREO DE OBJETIVOS (Goal Setting and Monitoring)
+**TLDDR:** Define metas SMART con plazos/presupuestos, monitorea métricas continuamente.
+
+**Flujo:** Definir objetivo → Metas SMART + restricciones → Definir KPIs → Quality gates → Monitoreo continuo → Analizar desviaciones → Ajustar recursos/plan.
+
+**Uso:** Proyectos complejos, operaciones autónomas, ejecución estratégica.
+
+**Aplicaciones:** Sales pipelines sofisticados, optimización sistemas, gestión costos.
+
+**Pros/Contras:** Ejecución eficiente recursos. Contra: Conflictos objetivos, rigidez.
+
+---
+
+## 11. MANEJO Y RECUPERACIÓN DE EXCEPCIONES (Exception Handling and Recovery)
+**TLDDR:** Atrapa errores en flujos agénticos.
+
+**Flujo:** Ejecutar acción + safety checks → Clasificar error → Reintento exponential backoff si temporal → Plan B si permanente → Respuesta crítica → Backup options → Recuperación.
+
+**Uso:** Todos patrones, esencial producción, QA, errores críticos.
+
+**Aplicaciones:** Enterprise AI deployments.
+
+**Pros/Contras:** Visibilidad rendimiento, confianza usuario por fallbacks. Contra: Infraestructura complejidad, false alarms.
+
+---
+
+## 12. HUMANO EN EL BUCLE (Human in the Loop)
+**TLDDR:** Involucra humano en puntos baja-alta criticidad o casos extremos.
+
+**Flujo:** Agente procesa hasta punto decisión → Cola revisión priorizada → Interfaz con contexto completo → Humano niega/edita/toma control/aprueba → Continuar flujo.
+
+**Uso:** Decisiones high-stake, compliance normativo, captura edge cases.
+
+**Aplicaciones:** Moderación contenido, diagnóstico médico.
+
+**Pros/Contras:** Aumenta confianza. Contra: Añade latency.
+
+---
+
+## 13. RECUPERACIÓN DE CONOCIMIENTO (RAG - Retrieval-Augmented Generation)
+**TLDDR:** Indexa documentos mediante chunking y embeddings buscables.
+
+**Flujo:** Ingerir documentos → Analizar/categorizar → Crear embeddings → Almacenar vector DB → Query rewriting → Recuperar top K → Reranking → Respuesta con citas.
+
+**Uso:** Conocimiento documental, cualquier escala.
+
+**Aplicaciones:** Búsqueda empresarial, soporte cliente, investigación, documentación.
+
+**Pros/Contras:** Precisión, escalabilidad. Contra: Costo infraestructura mantenimiento.
+
+---
+
+## 14. COMUNICACIÓN INTER-AGENTE (Inter-Agent Communication)
+**TLDDR:** Agentes comunican vía sistema mensajería estructurado con protocolos definidos.
+
+**Flujo:** Decidir estructura comunicación → Reglas comunicación → Mensajes con IDs/expiración → Verificar identidad → Evitar loops/stuck agents → Alertar humano si necesario.
+
+**Uso:** Prototipos, automatización empresa completa.
+
+**Aplicaciones:** Smart city systems.
+
+**Pros/Contras:** Fault isolation. Contra: Alta complejidad, debugging difícil, sobrecarga contexto.
+
+---
+
+## 15. OPTIMIZACIÓN CONSCIENTE DE RECURSOS (Resource-Aware Optimization)
+**TLDDR:** Analiza complejidad tarea, enruta a modelos apropiados. Simple: modelos baratos/rápidos; Complejo: potentes/caros.
+
+**Flujo:** Recibir tarea → Establecer presupuesto → Agente enrutador clasifica complejidad → Monitorear recursos → Optimización si excede límites.
+
+**Uso:** Operaciones sensibles costos, alto volumen, restricciones presupuestarias.
+
+**Aplicaciones:** Gestión costos.
+
+**Pros/Contras:** Reducción costos. Contra: Aumento complejidad, tuning challenges.
+
+---
+
+## 16. TÉCNICAS DE RAZONAMIENTO (Reasoning Techniques)
+**TLDDR:** Elige método razonamiento adecuado (Chain of Thought, Tree of Thought, etc.).
+
+**Flujo:** Problema complejo → Elegir métodos → Puntuar soluciones → Pruebas → Clasificar candidatos.
+
+**Uso:** Técnica avanzada, problemas muy complejos (matemático, planificación estratégica).
+
+**Aplicaciones:** Análisis legal, diagnóstico médico.
+
+**Pros/Contras:** Exhaustivo, robusto. Contra: Alto consumo tokens, complejidad, overthinking.
+
+---
+
+## 17. EVALUACIÓN Y MONITOREO (Evaluation and Monitoring)
+**TLDDR:** Establece quality gates y golden tests antes despliegue, monitorea drift/rendimiento en producción.
+
+**Flujo:** Despliegue → Definir criterios calidad → Métricas/pruebas específicas → Detectar drift/regresiones → Alertar si falla → Auditorías periódicas.
+
+**Uso:** Production grade systems, QA.
+
+**Aplicaciones:** SaaS empresarial, salud, finanzas, e-commerce.
+
+**Pros/Contras:** Mayor fiabilidad. Contra: Alert fatigue, impacto rendimiento.
+
+---
+
+## 18. BARANDALES Y PATRONES DE SEGURIDAD (Guardrails and Safety Patterns)
+**TLDDR:** Revisa entradas top of funnel para contenido dañino, PII, ataques inyección.
+
+**Flujo:** Sanitizar entrada → Detectar PII/inyecciones/contenido malicioso → Clasificar riesgo → Moderación salida → Restringir herramientas si riesgo alto.
+
+**Uso:** Public facing systems, reputación/compliance en juego.
+
+**Aplicaciones:** Sistemas gubernamentales.
+
+**Pros/Contras:** Mitigación riesgos, cumplimiento, protección marca. Contra: False positives, frustración usuario.
+
+---
+
+## 19. PRIORIZACIÓN (Prioritization)
+**TLDDR:** Puntúa tareas por valor/riesgo/esfuerzo/urgencia, construye grafo dependencias.
+
+**Flujo:** Recibir tarea → Construir grafo dependencias → Puntuar factores → Calcular priority score → Clasificar tareas → Recalcular prioridades post-ejecución.
+
+**Uso:** Entornos dinámicos donde plan inicial cambia rápidamente.
+
+**Aplicaciones:** Gestión tareas, servicio cliente, manufactura, DevOps.
+
+**Pros/Contras:** Adaptabilidad, transparencia. Contra: Context switching, dificultad determinismo en dinámicos.
+
+---
+
+## 20. EXPLORACIÓN Y DESCUBRIMIENTO (Exploration and Discovery)
+**TLDDR:** Explora espacio conocimiento ampliamente, identifica patrones, agrupa en temas.
+
+**Flujo:** Objetivo investigación → Explorar fuentes → Mapear espacio conocimiento → Clustering temas → Seleccionar por criterios → Extraer artefactos → Sintetizar insights → Generar hipótesis.
+
+**Uso:** Investigación profunda, como Perplexity.
+
+**Aplicaciones:** Proyectos investigación, I+D académico, análisis competitivo, drug discovery.
+
+**Pros/Contras:** Innovation enablement. Contra: Consume tiempo/recursos, intensivo IA generativa.
+
+---
+
+## CONCLUSIÓN
+El libro contiene 21 patrones (excluido MCP cubierto previamente). Trabajo de resumen/visualización disponible en repositorio público.
+
+*Resumen optimizado para procesamiento eficiente por LLMs - Estructura jerárquica, marcadores semánticos, y densidad de información optimizada*

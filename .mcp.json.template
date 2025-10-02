@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "quannex-v3": {
+      "command": "node",
+      "args": ["versions/v3/mcp-server-working.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_AUTONOMOUS_MODE": "true",
+        "MCP_NAME": "QuanNex-V3",
+        "PROJECT_ROOT": "${PROJECT_ROOT:-$(pwd)}"
+      }
+    }
+  }
+}

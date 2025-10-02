@@ -1,0 +1,60 @@
+{
+  "title": "Reporte de Atribuciones MCP",
+  "generated": "2025-10-02T16:37:18.223Z",
+  "totalAttributions": 8,
+  "attributions": [
+    {
+      "name": "mcp-agent Framework",
+      "repository": "https://docs.mcp-agent.com",
+      "license": "MIT License",
+      "attribution": "Este proyecto utiliza mcp-agent, un framework para construir agentes de IA compatibles con MCP."
+    },
+    {
+      "name": "GitHub MCP Server",
+      "repository": "https://github.com/kurdin/github-repos-manager-mcp",
+      "license": "MIT License",
+      "attribution": "GitHub MCP Server desarrollado por kurdin"
+    },
+    {
+      "name": "MCP-GitHub-Trending",
+      "repository": "https://github.com/hetaoBackend/mcp-github-trending",
+      "license": "MIT License",
+      "attribution": "MCP-GitHub-Trending desarrollado por hetaoBackend"
+    },
+    {
+      "name": "Remote MCP Functions - Azure Samples",
+      "repository": "https://github.com/Azure-Samples/remote-mcp-functions",
+      "license": "MIT License",
+      "attribution": "Remote MCP Functions - Azure Samples"
+    },
+    {
+      "name": "mcp-agent-connector",
+      "repository": "https://pypi.org/project/mcp-agent-connector",
+      "license": "MIT License",
+      "attribution": "mcp-agent-connector para auto-descubrimiento de servidores MCP"
+    },
+    {
+      "name": "Ref MCP Server",
+      "repository": "https://mcp.so/server/ref/ref-tools",
+      "license": "MIT License",
+      "attribution": "Ref MCP Server para documentación actualizada de LLMs y agentes"
+    },
+    {
+      "name": "Git MCP Server",
+      "repository": "https://mcpmarket.com/server/git-3",
+      "license": "MIT License",
+      "attribution": "Git MCP Server para operaciones Git completas"
+    },
+    {
+      "name": "MCP Bridge",
+      "repository": "https://arxiv.org/abs/2504.08999",
+      "license": "MIT License",
+      "attribution": "MCP Bridge - Proxy RESTful para servidores MCP"
+    }
+  ],
+  "summary": {
+    "mitLicenses": 8,
+    "githubRepos": 3,
+    "pypiRepos": 1
+  }
+}

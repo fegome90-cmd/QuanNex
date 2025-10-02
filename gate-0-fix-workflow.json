@@ -1,0 +1,70 @@
+{
+  "name": "Gate 0 Fix - Integridad & Layout",
+  "description": "Corregir imports relativos quebradizos y completar registry de agentes",
+  "version": "1.0.0",
+  "steps": [
+    {
+      "id": "analyze_imports",
+      "name": "Analizar imports problemáticos",
+      "agent": "context",
+      "action": "analyze",
+      "input": {
+        "target": "tools/test-rate-limiting.mjs",
+        "analysis_type": "import_dependencies",
+        "find_relative_imports": true
+      }
+    },
+    {
+      "id": "fix_imports",
+      "name": "Corregir imports relativos",
+      "agent": "security",
+      "action": "fix",
+      "input": {
+        "file": "tools/test-rate-limiting.mjs",
+        "fix_type": "import_canonical",
+        "replace_relative_with_absolute": true
+      }
+    },
+    {
+      "id": "analyze_registry",
+      "name": "Analizar registry de agentes",
+      "agent": "context",
+      "action": "analyze",
+      "input": {
+        "target": "config/agents.registry.json",
+        "analysis_type": "registry_structure",
+        "check_required_fields": ["entryPoint", "version", "status"]
+      }
+    },
+    {
+      "id": "fix_registry",
+      "name": "Completar registry de agentes",
+      "agent": "security",
+      "action": "fix",
+      "input": {
+        "file": "config/agents.registry.json",
+        "fix_type": "add_missing_fields",
+        "fields": {
+          "entryPoint": "agent.js",
+          "version": "1.0.0",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "id": "validate_gate_0",
+      "name": "Validar Gate 0",
+      "agent": "security",
+      "action": "validate",
+      "input": {
+        "gate": "gate_0_layout",
+        "run_tests": ["find-broken-imports.sh", "registry-sanity.js"]
+      }
+    }
+  ],
+  "metadata": {
+    "created_at": "2025-10-02T18:00:00Z",
+    "priority": "critical",
+    "gate": "gate_0_layout"
+  }
+}

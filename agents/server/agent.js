@@ -7,7 +7,7 @@ import ContextAgentV3 from './context-agent.js';
 import PromptingAgentV3 from './prompting-agent.js';
 import RulesAgentV3 from './rules-agent.js';
 import IntegrationTestAgent from './integration-test-agent.js';
-import { sanitizeObject, sanitizeLogObject } from '../../shared/utils/security.js';
+import { sanitizeObject, sanitizeLogObject } from '../shared/utils/security.js';
 
 class AgentServer {
   constructor() {

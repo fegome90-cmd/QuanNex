@@ -3,9 +3,9 @@
  * versions/v3/integration-test-agent.js
  * Agente de prueba integral que utiliza MCP y todas las herramientas
  */
-import { hello, isHello } from '../../shared/contracts/handshake.js';
-import { validateReq, ok, fail } from '../../shared/contracts/schema.js';
-import ToolManager from '../../tools/tool-manager.js';
+import { hello, isHello } from '../shared/contracts/handshake.js';
+import { validateReq, ok, fail } from '../shared/contracts/schema.js';
+import ToolManager from '../tools/tool-manager.js';
 
 class IntegrationTestAgent {
   constructor() {

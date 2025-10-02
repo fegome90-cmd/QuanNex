@@ -1,0 +1,34 @@
+# Router Configuration V3
+# Configuración simplificada para el router
+
+routing:
+  default: "engineer"
+  rules:
+    - topic: "code/refactor"
+      target: "engineer"
+      confidence: 0.8
+    - topic: "rag/search"
+      target: "context"
+      confidence: 0.5
+    - topic: "policy/validate"
+      target: "rules"
+      confidence: 0.9
+    - topic: "prompt/generate"
+      target: "prompting"
+      confidence: 0.9
+
+fallbacks:
+  - "engineer"
+  - "context"
+  - "prompting"
+  - "rules"
+
+timeouts:
+  default: 30000
+  context: 15000
+  prompting: 20000
+  rules: 10000
+
+retry:
+  max_attempts: 3
+  backoff_ms: 1000

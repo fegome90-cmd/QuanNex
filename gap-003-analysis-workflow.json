@@ -1,0 +1,102 @@
+{
+  "name": "GAP-003: Análisis de Logs Sensibles",
+  "description": "Workflow para analizar el estado actual de sanitización de logs con información sensible",
+  "steps": [
+    {
+      "step_id": "analizar_logs_sensibles",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "orchestration/orchestrator.js",
+          "agents/context/agent.js",
+          "agents/prompting/agent.js",
+          "agents/rules/agent.js",
+          "agents/security/agent.js",
+          "agents/metrics/agent.js",
+          "agents/optimization/agent.js",
+          "agents/docsync/agent.js",
+          "agents/lint/agent.js",
+          "agents/orchestrator/agent.js",
+          "agents/refactor/agent.js",
+          "agents/secscan/agent.js",
+          "agents/tests/agent.js",
+          "utils/file-rate-limiter.js",
+          "utils/simple-rate-limiter.js"
+        ],
+        "selectors": [
+          "console.log",
+          "console.error",
+          "console.warn",
+          "console.info",
+          "log",
+          "error",
+          "warn",
+          "info",
+          "debug",
+          "password",
+          "secret",
+          "token",
+          "key",
+          "credential",
+          "auth",
+          "sensitive",
+          "private",
+          "confidential",
+          "personal",
+          "data",
+          "input",
+          "output",
+          "request",
+          "response",
+          "payload",
+          "body",
+          "header",
+          "cookie",
+          "session"
+        ],
+        "max_tokens": 4000
+      }
+    },
+    {
+      "step_id": "generar_plan_sanitizacion_logs",
+      "agent": "prompting",
+      "depends_on": ["analizar_logs_sensibles"],
+      "input": {
+        "goal": "Crear plan detallado de sanitización de logs con información sensible",
+        "context": "{{analizar_logs_sensibles.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Identificar TODOS los logs que exponen información sensible",
+          "Implementar sanitización de passwords, tokens, keys, credentials",
+          "Sanitizar datos de entrada y salida en logs",
+          "Ocultar información personal y confidencial",
+          "Mantener funcionalidad de logging para debugging",
+          "Usar patrones de sanitización consistentes",
+          "Implementar niveles de logging apropiados",
+          "Crear función de sanitización centralizada"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_plan_sanitizacion_logs",
+      "agent": "rules",
+      "depends_on": ["generar_plan_sanitizacion_logs"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md",
+          "docs/security-policies.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_plan_sanitizacion_logs.output.system_prompt}}",
+        "rules": [
+          "Ningún log debe exponer información sensible",
+          "Sanitizar passwords, tokens y credenciales",
+          "Ocultar datos personales y confidenciales",
+          "Mantener logs útiles para debugging",
+          "Usar patrones consistentes de sanitización",
+          "Implementar niveles de logging apropiados"
+        ]
+      }
+    }
+  ]
+}

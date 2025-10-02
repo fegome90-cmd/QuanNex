@@ -1,10 +1,16 @@
 {
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
-  "system_prompt": "You are a helpful coding assistant. Style: formal.",
-  "user_prompt": "Goal: test",
-  "guardrails": [],
-  "trace": [
-    "prompting.server:ok"
-  ]
+  "system_prompt": "# Crear plan detallado de implementación de gestión segura de secretos\n\n## Context\nAnálisis directo del sistema: Necesitamos migrar secretos hardcodeados a variables de entorno y gestor de secretos seguro. El sistema actual tiene claves JWT, tokens de API, y credenciales que deben ser gestionadas de forma segura.\n\n## Constraints\nMigrar secretos hardcodeados a variables de entorno\n- Implementar gestor de secretos seguro\n- Crear sistema de rotación de secretos\n- Implementar cifrado de secretos en reposo\n- Asegurar que no hay secretos en código fuente\n- Implementar validación de secretos\n- Crear sistema de backup seguro de secretos\n- Implementar auditoría de acceso a secretos\n- Asegurar que los secretos se cargan de forma segura\n- Implementar sistema de revocación de secretos\n- Crear documentación de gestión de secretos\n\n## Style\ntechnical\n\nGenerated at: 2025-10-02T16:30:56.170Z",
+  "metadata": {
+    "goal": "Crear plan detallado de implementación de gestión segura de secretos",
+    "style": "technical",
+    "constraints_count": 11,
+    "timestamp": "2025-10-02T16:30:56.170Z"
+  },
+  "stats": {
+    "prompt_length": 888,
+    "constraints_applied": 11,
+    "context_length": 231
+  }
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { RateLimiter, checkRateLimit, getRateLimitStats } from '../orchestration/utils/rate-limiter.js';
+import { RateLimiter, checkRateLimit, getRateLimitStats } from './utils/rate-limiter.js';
 
 /**
  * Test para verificar que el rate limiting funciona correctamente
@@ -110,7 +110,7 @@ async function testRateLimiting() {
   console.log('🔧 Test 7: Integración con orquestador');
   try {
     // Simular llamada del orquestador
-    const orchestrator = await import('../orchestration/orchestrator.js');
+    const orchestrator = await import('./orchestrator.js');
     const stats = orchestrator.default.prototype.getRateLimitStats();
     
     console.log('   ✓ Método getRateLimitStats() disponible en orquestador');

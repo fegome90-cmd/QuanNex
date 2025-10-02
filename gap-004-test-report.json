@@ -1,0 +1,611 @@
+{
+  "timestamp": "2025-10-02T16:27:16.812Z",
+  "test_name": "GAP-004 Agent Authentication Test",
+  "results": [
+    {
+      "agent": "agents/context/agent.js",
+      "tests": [
+        {
+          "name": "Comunicación sin autenticación",
+          "expected": "unauthenticated",
+          "actual": "unauthenticated",
+          "security_risk": "high",
+          "authenticated": false,
+          "output": "✅ [Rate Limiter] context: Request allowed (5/10)\n🔑 JWT secret key generated\n🔑 JWT public key generated\n🔐 [Auth] Context agent authenticated: context -> system\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"context_bundle\": \"{\\\"extracted\\\":[{\\\"file\\\":\\\"README.md\\\",\\\"content\\\":\\\"Content from README.md\\\",\\\"relevance\\\":0.8}],\\\"metadata\\\":{\\\"total_sources\\\":1,\\\"selectors_applied\\\":[\\\"test\\\"],\\\"max_tokens\\\":1000}}\",\n  \"provenance\": [\n    \"README.md\"\n  ],\n  \"stats\": {\n    \"tokens_esti",
+          "passed": true
+        },
+        {
+          "name": "Comunicación con datos sensibles",
+          "expected": "authenticated",
+          "actual": "unauthenticated",
+          "security_risk": "critical",
+          "authenticated": false,
+          "output": "✅ [Rate Limiter] context: Request allowed (6/10)\n🔐 [Auth] Context agent authenticated: context -> system\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"context_bundle\": \"{\\\"extracted\\\":[{\\\"file\\\":\\\"README.md\\\",\\\"content\\\":\\\"Content from README.md\\\",\\\"relevance\\\":0.8}],\\\"metadata\\\":{\\\"total_sources\\\":1,\\\"selectors_applied\\\":[\\\"password\\\",\\\"token\\\",\\\"secret\\\"],\\\"max_tokens\\\":1000}}\",\n  \"provenance\": [\n    \"README.md\"\n  ],\n  \"stats\": {\n    \"tokens_estimated\": 1000,\n    \"chunks\": 1,\n",
+          "passed": false
+        },
+        {
+          "name": "Comunicación entre agentes",
+          "expected": "authenticated",
+          "actual": "unauthenticated",
+          "security_risk": "high",
+          "authenticated": false,
+          "output": "✅ [Rate Limiter] context: Request allowed (7/10)\n🔐 [Auth] Context agent authenticated: context -> system\nInput validation errors: [ 'sources must be a non-empty array of strings' ]\n",
+          "passed": false
+        }
+      ],
+      "overall": "fail",
+      "communication_patterns": [
+        {
+          "type": "spawn_sync",
+          "security_level": "medium",
+          "match": "spawnSync(",
+          "authenticated": false
+        },
+        {
+          "type": "json_parse",
+          "security_level": "medium",
+          "match": "JSON.parse",
+          "authenticated": false
+        },
+        {
+          "type": "json_parse",
+          "security_level": "medium",
+          "match": "JSON.parse",
+          "authenticated": false
+        },
+        {
+          "type": "json_stringify",
+          "security_level": "medium",
+          "match": "JSON.stringify",
+          "authenticated": false
+        },
+        {
+          "type": "json_stringify",
+          "security_level": "medium",
+          "match": "JSON.stringify",
+          "authenticated": false
+        }
+      ],
+      "auth_patterns": [
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        }
+      ],
+      "score": "1/3"
+    },
+    {
+      "agent": "agents/prompting/agent.js",
+      "tests": [
+        {
+          "name": "Comunicación sin autenticación",
+          "expected": "unauthenticated",
+          "actual": "unauthenticated",
+          "security_risk": "high",
+          "authenticated": false,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"system_prompt\": \"# Test goal\\n\\n## Context\\nTest context\\n\\n## Constraints\\ntest\\n\\n## Style\\ndefault\\n\\nGenerated at: 2025-10-02T16:27:13.845Z\",\n  \"metadata\": {\n    \"goal\": \"Test goal\",\n    \"style\": \"default\",\n    \"constraints_count\": 1,\n    \"timestamp\": \"2025-10-02T16:27:13.845Z\"\n  },\n  \"stats\": {\n    \"prompt_length\": 115,\n    \"constraints_applied\": 1,\n    \"context_length\": 12\n  }\n}\n",
+          "passed": true
+        },
+        {
+          "name": "Comunicación con datos sensibles",
+          "expected": "authenticated",
+          "actual": "unauthenticated",
+          "security_risk": "critical",
+          "authenticated": false,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"system_prompt\": \"# Test goal\\n\\n## Context\\nTest context\\n\\n## Constraints\\ntest\\n\\n## Style\\ndefault\\n\\nGenerated at: 2025-10-02T16:27:13.925Z\",\n  \"metadata\": {\n    \"goal\": \"Test goal\",\n    \"style\": \"default\",\n    \"constraints_count\": 1,\n    \"timestamp\": \"2025-10-02T16:27:13.925Z\"\n  },\n  \"stats\": {\n    \"prompt_length\": 115,\n    \"constraints_applied\": 1,\n    \"context_length\": 12\n  }\n}\n",
+          "passed": false
+        },
+        {
+          "name": "Comunicación entre agentes",
+          "expected": "authenticated",
+          "actual": "unauthenticated",
+          "security_risk": "high",
+          "authenticated": false,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"system_prompt\": \"# Test goal\\n\\n## Context\\nTest context\\n\\n## Constraints\\ntest\\n\\n## Style\\ndefault\\n\\nGenerated at: 2025-10-02T16:27:13.998Z\",\n  \"metadata\": {\n    \"goal\": \"Test goal\",\n    \"style\": \"default\",\n    \"constraints_count\": 1,\n    \"timestamp\": \"2025-10-02T16:27:13.998Z\"\n  },\n  \"stats\": {\n    \"prompt_length\": 115,\n    \"constraints_applied\": 1,\n    \"context_length\": 12\n  }\n}\n",
+          "passed": false
+        }
+      ],
+      "overall": "fail",
+      "communication_patterns": [
+        {
+          "type": "spawn_sync",
+          "security_level": "medium",
+          "match": "spawnSync(",
+          "authenticated": false
+        },
+        {
+          "type": "json_parse",
+          "security_level": "medium",
+          "match": "JSON.parse",
+          "authenticated": false
+        },
+        {
+          "type": "json_parse",
+          "security_level": "medium",
+          "match": "JSON.parse",
+          "authenticated": false
+        },
+        {
+          "type": "json_stringify",
+          "security_level": "medium",
+          "match": "JSON.stringify",
+          "authenticated": false
+        }
+      ],
+      "auth_patterns": [
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        }
+      ],
+      "score": "1/3"
+    },
+    {
+      "agent": "agents/rules/agent.js",
+      "tests": [
+        {
+          "name": "Comunicación sin autenticación",
+          "expected": "unauthenticated",
+          "actual": "unauthenticated",
+          "security_risk": "high",
+          "authenticated": false,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"rules_compiled\": [\n    \"[SECURITY.md] Policy loaded from SECURITY.md\"\n  ],\n  \"validation_result\": {\n    \"passed\": true,\n    \"violations\": [],\n    \"warnings\": [],\n    \"score\": 100\n  },\n  \"violations\": [],\n  \"advice\": [\n    \"tone:neutral\",\n    \"domain:general\",\n    \"Ensure primary policies are acknowledged.\"\n  ],\n  \"trace\": [\n    \"rules.server:ok\"\n  ],\n  \"metadata\": {\n    \"policy_refs\": [\n      \"[Max Depth Reached]\"\n    ],\n    \"tone\": \"",
+          "passed": true
+        },
+        {
+          "name": "Comunicación con datos sensibles",
+          "expected": "authenticated",
+          "actual": "unauthenticated",
+          "security_risk": "critical",
+          "authenticated": false,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"rules_compiled\": [\n    \"[SECURITY.md] Policy loaded from SECURITY.md\"\n  ],\n  \"validation_result\": {\n    \"passed\": true,\n    \"violations\": [],\n    \"warnings\": [],\n    \"score\": 100\n  },\n  \"violations\": [],\n  \"advice\": [\n    \"tone:neutral\",\n    \"domain:general\",\n    \"Ensure primary policies are acknowledged.\"\n  ],\n  \"trace\": [\n    \"rules.server:ok\"\n  ],\n  \"metadata\": {\n    \"policy_refs\": [\n      \"[Max Depth Reached]\"\n    ],\n    \"tone\": \"",
+          "passed": false
+        },
+        {
+          "name": "Comunicación entre agentes",
+          "expected": "authenticated",
+          "actual": "unauthenticated",
+          "security_risk": "high",
+          "authenticated": false,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"rules_compiled\": [\n    \"[SECURITY.md] Policy loaded from SECURITY.md\"\n  ],\n  \"validation_result\": {\n    \"passed\": true,\n    \"violations\": [],\n    \"warnings\": [],\n    \"score\": 100\n  },\n  \"violations\": [],\n  \"advice\": [\n    \"tone:neutral\",\n    \"domain:general\",\n    \"Ensure primary policies are acknowledged.\"\n  ],\n  \"trace\": [\n    \"rules.server:ok\"\n  ],\n  \"metadata\": {\n    \"policy_refs\": [\n      \"[Max Depth Reached]\"\n    ],\n    \"tone\": \"",
+          "passed": false
+        }
+      ],
+      "overall": "fail",
+      "communication_patterns": [
+        {
+          "type": "spawn_sync",
+          "security_level": "medium",
+          "match": "spawnSync(",
+          "authenticated": false
+        },
+        {
+          "type": "json_parse",
+          "security_level": "medium",
+          "match": "JSON.parse",
+          "authenticated": false
+        },
+        {
+          "type": "json_parse",
+          "security_level": "medium",
+          "match": "JSON.parse",
+          "authenticated": false
+        },
+        {
+          "type": "json_stringify",
+          "security_level": "medium",
+          "match": "JSON.stringify",
+          "authenticated": false
+        }
+      ],
+      "auth_patterns": [
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        }
+      ],
+      "score": "1/3"
+    },
+    {
+      "agent": "agents/security/agent.js",
+      "tests": [
+        {
+          "name": "Comunicación sin autenticación",
+          "expected": "unauthenticated",
+          "actual": "unauthenticated",
+          "security_risk": "high",
+          "authenticated": false,
+          "output": "✅ [Rate Limiter] security: Request allowed (1/5)\n🔐 [Auth] Security agent authenticated: security -> system\n🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditor",
+          "passed": true
+        },
+        {
+          "name": "Comunicación con datos sensibles",
+          "expected": "authenticated",
+          "actual": "unauthenticated",
+          "security_risk": "critical",
+          "authenticated": false,
+          "output": "✅ [Rate Limiter] security: Request allowed (2/5)\n🔐 [Auth] Security agent authenticated: security -> system\n🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditor",
+          "passed": false
+        },
+        {
+          "name": "Comunicación entre agentes",
+          "expected": "authenticated",
+          "actual": "unauthenticated",
+          "security_risk": "high",
+          "authenticated": false,
+          "output": "✅ [Rate Limiter] security: Request allowed (3/5)\n🔐 [Auth] Security agent authenticated: security -> system\n🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditor",
+          "passed": false
+        }
+      ],
+      "overall": "fail",
+      "communication_patterns": [
+        {
+          "type": "spawn_sync",
+          "security_level": "medium",
+          "match": "spawnSync(",
+          "authenticated": false
+        },
+        {
+          "type": "stdin",
+          "security_level": "medium",
+          "match": "process.stdin",
+          "authenticated": false
+        },
+        {
+          "type": "stdin",
+          "security_level": "medium",
+          "match": "process.stdin",
+          "authenticated": false
+        },
+        {
+          "type": "stdin",
+          "security_level": "medium",
+          "match": "process.stdin",
+          "authenticated": false
+        },
+        {
+          "type": "json_parse",
+          "security_level": "medium",
+          "match": "JSON.parse",
+          "authenticated": false
+        },
+        {
+          "type": "json_parse",
+          "security_level": "medium",
+          "match": "JSON.parse",
+          "authenticated": false
+        },
+        {
+          "type": "json_stringify",
+          "security_level": "medium",
+          "match": "JSON.stringify",
+          "authenticated": false
+        },
+        {
+          "type": "json_stringify",
+          "security_level": "medium",
+          "match": "JSON.stringify",
+          "authenticated": false
+        },
+        {
+          "type": "json_stringify",
+          "security_level": "medium",
+          "match": "JSON.stringify",
+          "authenticated": false
+        }
+      ],
+      "auth_patterns": [
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "token_reference",
+          "security_level": "high",
+          "match": "token",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "auth_reference",
+          "security_level": "high",
+          "match": "auth",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        },
+        {
+          "type": "validate",
+          "security_level": "medium",
+          "match": "validate",
+          "implemented": true
+        }
+      ],
+      "score": "1/3"
+    }
+  ],
+  "overall_passed": false,
+  "summary": {
+    "total_agents": 4,
+    "total_tests": 12,
+    "passed_tests": 4,
+    "total_communication_patterns": 22,
+    "total_auth_patterns": 52,
+    "unauthenticated_communications": 22
+  }
+}

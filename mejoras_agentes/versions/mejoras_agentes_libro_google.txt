@@ -1,0 +1,230 @@
+La codificación asistida por IA es guiada por **20 patrones de diseño agéntico** que distinguen a los profesionales de los principiantes. Un ingeniero de Google publicó un libro de 400 páginas sobre estos patrones. El objetivo de este material es ofrecer un resumen simplificado y práctico de estas arquitecturas. Al final, se espera que el usuario tenga una comprensión más profunda de las estructuras agénticas, y el contenido de esta transcripción puede ser alimentado a herramientas como Claude Code o Cursor para que elijan el patrón adecuado para un problema.
+
+A continuación, se resumen los 20 patrones de diseño agéntico:
+
+### 1. Encadenamiento de *Prompts* (Prompt Chaining)
+**TLDDR (Too Long; Didn't Read):** Se divide una tarea grande en pasos más pequeños que se ejecutan secuencialmente. Cada paso valida la salida del anterior, actuando como una línea de ensamblaje.
+
+**Flujo Táctico:** Inicia con una **entrada del usuario** (*user input*) que se descompone en **subtareas**. Se crean contratos de datos (data contracts) entre estas tareas. Se ejecuta la Tarea Uno, y la Tarea Dos primero **valida la salida** de la Tarea Uno antes de ejecutar su parte. Si falla, **reintenta** hasta que pase. El encadenamiento podría ser teóricamente infinito, pero hay rendimientos decrecientes; un número mágico es de **tres a cinco partes**. Finalmente, se **fusionan los resultados** (merge all the results), se ensambla la salida final y se **registran todos los artefactos** (log all the artifacts) para rastrear errores.
+
+**Uso:** Procesos complejos de múltiples pasos, transformación de datos no estandarizados (dirty data) y *pipelines* que combinan IA generativa con lógica Python o JavaScript.
+
+**Aplicaciones:** Procesamiento de documentos, ETL de datos, generación de código y creación de contenido.
+
+**Pros/Contras:** Es **modular**, permitiendo intercambiar partes de la cadena. El mayor *contra* es la **explosión de contexto** (context explosion), ya que arrastrar datos (como JSON) a través de la cadena es costoso en *tokens* y aumenta la alucinación. Si los *prompts* no están bien probados, puede ocurrir **propagación de errores** (error propagation), donde un error inicial es heredado por cada nodo. Es más **lento** debido a los múltiples puntos de inferencia (intervención del LLM).
+
+### 2. Enrutamiento (Routing)
+**TLDDR:** Una solicitud entrante es analizada y enviada al agente especialista correcto (como una recepcionista inteligente). Si hay dudas, pide clarificación.
+
+**Flujo Táctico:** Una **solicitud del usuario** es analizada por la IA para determinar la intención y el contexto. La IA decide a qué agente enrutar (soporte técnico, ventas, gestión de cuentas). Si la **confianza** es baja, solicita **clarificación** hasta que la confianza sea alta. Se puede usar un número generado por el LLM o algo estadístico/determinista para la evaluación de confianza. Tras recibir la respuesta del agente, el proceso finaliza en éxito o fracaso.
+
+**Uso:** Sistemas con **múltiples dominios** (diferentes departamentos o especializaciones). Ayuda a segregar herramientas para que solo se invoquen en el camino correcto y previene *misfires* (uso incorrecto de herramientas).
+
+**Aplicaciones:** Servicio al cliente, automatizaciones empresariales y triaje sanitario (healthcare triage), especialmente con agentes de voz.
+
+**Pros/Contras:** Especialización, escalabilidad y eficiencia. El *contra* es el riesgo de **enrutar al camino incorrecto**. Es **propenso a casos extremos** (edge cases), por lo que un sistema de confianza o un agente gerente (manager agent) que evalúe la decisión inicial pueden ser útiles.
+
+### 3. Paralelización (Parallelization)
+**TLDDR:** Dividir una tarea grande en **partes independientes** que múltiples trabajadores (agentes) procesan al mismo tiempo.
+
+**Flujo Táctico:** Una **entrada grande** es analizada para determinar cómo dividir la tarea en **unidades independientes** (subtasks). Se verifica la disponibilidad de recursos. El sistema genera **trabajadores paralelos** (parallel workers). Cada trabajador (agente empleado) opera hasta que su tarea específica tiene éxito. Una vez recolectados todos los resultados, se **normalizan** (se les da el mismo formato). Se fusionan, se simplifican a una salida única y se genera un resumen. Se registra la **procedencia** (providence) de cada parte para identificar el punto de fallo y ajustar el *prompt* del trabajador específico.
+
+**Uso:** Datos a gran escala, operaciones sensibles al tiempo y automatización de investigación, o procesos complejos como *web scraping* (crawling de múltiples páginas y análisis de elementos).
+
+**Aplicaciones:** Procesamiento de documentos, enriquecimiento de datos, automatización de investigación y *testing frameworks*.
+
+**Pros/Contras:** Ofrece **especialización** y es **escalable** (se pueden añadir más "empleados"). El *contra* es que añadir más agentes **añade complejidad y capas** (como si una empresa necesitara contratar RR.HH.), y la **unificación de las salidas** es difícil de estandarizar en la práctica.
+
+### 4. Reflexión (Reflection)
+**TLDDR:** Se genera un primer borrador, un crítico lo revisa según **estándares de calidad**, y se revisa hasta alcanzar la calidad requerida.
+
+**Flujo Táctico:** Se recibe una **solicitud inicial**. Se genera un **primer borrador**. Un **agente crítico** (critic agent) evalúa la salida. El crítico aplica **rúbricas de calidad** (quality rubrics), ejecuta **pruebas unitarias** (unit tests) y realiza comprobaciones de lógica/gramática. Si el borrador pasa, se acepta, se registran los patrones de éxito y se actualizan los *prompts* si es necesario. Si no pasa, se genera ***feedback* estructurado** que se envía de vuelta al agente original, repitiendo el ciclo. Es crucial tener un **conteo máximo** de intentos (max count).
+
+**Uso:** Control de calidad, tareas de razonamiento complejas o tareas creativas donde se desea usar la característica caótica del LLM, pero se necesita un resultado predecible.
+
+**Aplicaciones:** Generación de contenido, redacción legal/académica y descripciones de productos (e.g., para tiendas Amazon FBA).
+
+**Pros/Contras:** Enfocado en la **calidad**. Los *contras* son el **costo** y el riesgo de **limitación de API** (*API throttling*) al enviar solicitudes repetidamente.
+
+### 5. Uso de Herramientas (Tool Use)
+**TLDDR:** Cuando la IA necesita acciones o información externa, **descubre las herramientas disponibles**, comprueba permisos y llama a la herramienta correcta.
+
+**Flujo Táctico:** Un usuario hace una solicitud. El sistema analiza los requisitos y **descubre las herramientas** (web search, database query tool, calculator, file system access, otras APIs). Se selecciona la herramienta y se realiza una **comprobación de seguridad**. Se prepara y ejecuta la llamada a la herramienta. Si hay fallos, se puede añadir lógica de reintento. Se analiza la salida de la herramienta. El LLM puede **normalizar** la salida para interpretarla mejor. Si se selecciona una herramienta incorrecta, el sistema debería denegar el acceso con una razón que se registra.
+
+**Uso:** Cualquier flujo de múltiples pasos.
+
+**Aplicaciones:** Asistencia en investigación, análisis de datos, servicio al cliente y gestión de contenido.
+
+**Pros/Contras:** Mejora la calidad y reduce errores. El *contra* principal es el **riesgo de *misfire***: si un error pasa desapercibido en el uso inicial de la herramienta, se propaga por todo el flujo.
+
+### 6. Planificación (Planning)
+**TLDDR:** Crear un plan **paso a paso** a partir de un objetivo grande. El plan es exhaustivo antes de la ejecución, como planificar un viaje por carretera con *checkpoints*.
+
+**Flujo Táctico:** Se recibe la **entrada de objetivo** (goal input). Se divide en hitos (milestones). Se crea un **grafo de dependencias** (dependency graph). Se revisan las **restricciones** (constraints): disponibilidad de datos, autorización, presupuesto, plazos. Se genera un plan paso a paso y se **asignan agentes y herramientas**. Se ejecuta cada paso secuencialmente. Se **rastrea el progreso**. Si los objetivos se cumplen, se pasa a la aceptación. Si no, se analiza la causa, se evalúa si es un **caso extremo** (que podría requerir un humano en el bucle) o se escala el problema.
+
+**Uso:** Flujos de trabajo orientados a objetivos ambiciosos y proyectos complejos.
+
+**Aplicaciones:** Gestión de proyectos, desarrollo de *software* y proyectos de investigación.
+
+**Pros/Contras:** La ejecución es muy **estratégica** y el flujo es más **adaptable** a nuevas variables o entornos. El *contra* principal es la **complejidad de la configuración** (*setup*) y la coordinación de todos los agentes y sus mecanismos de reserva (*fallback*).
+
+### 7. Colaboración Multi-Agente (Multi-Agent Collaboration)
+**TLDDR:** Múltiples agentes especializados trabajando juntos, coordinados por un **gestor central** (central manager). Los agentes a menudo **comparten una memoria común** (common memory).
+
+**Flujo Táctico:** El sistema recibe una **tarea compleja**. Se definen **roles especializados**. Un agente operador decide qué otros agentes deben ser elegidos (investigación, análisis, etc.). La infraestructura debe tener **recursos compartidos** (almacenes de memoria, control de versiones). El **orquestador** (orchestrator) gestiona el flujo, asignando tareas a los agentes (como tickets en Jira). Los agentes cumplen un **protocolo de coordinación** con criterios de aceptación. Hay una prueba de aceptación general. Si falla, se puede correr una simulación o volver a donde falló la coordinación.
+
+**Uso:** Refinamiento iterativo, desarrollo de productos con múltiples fases y tickets.
+
+**Aplicaciones:** Desarrollo de *software*, análisis financiero, producción de contenido y proyectos de investigación.
+
+**Pros/Contras:** Especialización y procesamiento paralelo. El *contra* es la alta complejidad de la **configuración y las pruebas** continuas a medida que los LLM evolucionan y tienen *drift* (deriva).
+
+### 8. Gestión de Memoria (Memory Management)
+**TLDDR:** Clasificar la información entrante como **memoria a corto plazo** (conversación), **eventos episódicos** o **conocimiento a largo plazo**, y almacenarla con metadatos (relevancia y antigüedad).
+
+**Flujo Táctico:** Una interacción del usuario es capturada. El sistema decide el tipo de memoria. Si la ventana de contexto (*context window*) está llena, se **comprime** la información. Si se almacena a largo plazo, se debe **indexar**, añadir **metadatos** (puntuación de antigüedad, frecuencia, etiquetas de tema) para facilitar la recuperación (como una base de datos vectorial). En la recuperación, se consultan las memorias aplicando filtros (por regla, tiempo u tema). Si la **privacidad** es un problema, se **redacta** (redact) la memoria. Luego se actualizan las memorias y se continúa la interacción.
+
+**Uso:** Subconjunto de otros patrones agénticos, fundamental para la **continuidad conversacional**.
+
+**Aplicaciones:** Servicio al cliente, asistentes personales, plataformas de asistencia educativa (que ajustan el material basándose en debilidades pasadas).
+
+**Pros/Contras:** Preservación del contexto a lo largo del tiempo. Los *contras* son el riesgo de comprometer la seguridad o el **almacenamiento excesivo** (*over storing*), por lo que se necesita un sistema para eliminar memorias antiguas.
+
+### 9. Aprendizaje y Adaptación (Learning and Adaptation)
+**TLDDR:** Recolectar *feedback* (correcciones de usuario, calificaciones, resultados), limpiar los datos para eliminar el ruido y actualizar *prompts*, políticas o ejemplos.
+
+**Flujo Táctico:** El sistema recopila *feedback* de diversas fuentes (calificaciones de calidad, evaluaciones automatizadas, resultados de tareas). Se realiza una **verificación de calidad** para limpiar el ruido (e.g., descartar comentarios maliciosos). El sistema decide cómo "aprender": actualizar los *prompts*, las políticas, los ejemplos en *prompts* de múltiples intentos (*multi-shot prompt*), o el *fine-tuning* de un modelo (muy raro). Se realiza **pruebas A/B** y se monitorea el rendimiento después de la actualización.
+
+**Uso:** Sistemas que necesitan incorporar *feedback* y tener un *feedback loop* continuo para mejorar.
+
+**Aplicaciones:** Servicios personalizados donde se recibe *feedback* de un cliente o *avatar*.
+
+**Pros/Contras:** Mejora continua. El *contra* son los **costos de entrenamiento** (*training costs*), ya que esto puede convertirse en un problema de costo combinatorio. También existe el riesgo de **aprender algo incorrecto** (learn something wrong), por lo que se necesitan controles y equilibrios.
+
+### 10. Establecimiento y Monitoreo de Objetivos (Goal Setting and Monitoring)
+**TLDDR:** Definir metas **SMART** (específicas, medibles, alcanzables, realistas, basadas en tiempo) con plazos y presupuestos, y monitorear continuamente las métricas comparándolas con los objetivos.
+
+**Flujo Táctico:** Se define un **objetivo** (objective). Se crean las **metas SMART** y se establecen **restricciones** (tiempo, recurso, presupuesto). Se definen las métricas o KPIs (Key Performance Indicators). Se pasa por **compuertas de calidad** (quality gates). Durante la ejecución, se realiza un **monitoreo continuo** (continuous monitoring), creando *checkpoints* y eventos de estado. Si el sistema comienza a desviarse (*drift*) de los objetivos, se **analiza la causa** (analyze the cause) y se decide si se necesitan más recursos, ajustar el plan o modificar el alcance. Si tiene éxito, se genera un informe.
+
+**Uso:** Proyectos complejos, operaciones autónomas y ejecución estratégica.
+
+**Aplicaciones:** *Sales pipelines* sofisticados, optimización de sistemas y gestión de costos.
+
+**Pros/Contras:** Ejecución eficiente de recursos. El *contra* son los **conflictos de objetivos** (*goal conflicts*) o la **rigidez** del sistema que puede ser difícil de ajustar a la variabilidad de la entrada.
+
+### 11. Manejo y Recuperación de Excepciones (Exception Handling and Recovery)
+**TLDDR:** Es un patrón para **atrapar errores** (*catch errors*) en los flujos de trabajo agénticos.
+
+**Flujo Táctico:** Se ejecuta una acción y se añaden **comprobaciones de seguridad** (safety checks). Si ocurre un error, se **clasifica**. Si es un **error temporal** (temporary error), se reintenta después de esperar un tiempo (*exponential back off*), pero con un límite. Si es un **error permanente** (permanent error), se necesita un **plan B**. Una **respuesta crítica** implica una respuesta de emergencia: salvar el trabajo actual, alertar al equipo y determinar si es seguro continuar. Las opciones de **respaldo** (*backup*) pueden incluir usar un método más simple, datos guardados o involucrar a un humano. Luego se inicia el proceso de recuperación.
+
+**Uso:** Prácticamente en todos los patrones, pero esencialmente en sistemas en producción, garantía de calidad y donde se manejan errores críticos.
+
+**Aplicaciones:** Despliegues de IA empresariales (*enterprise AI deployments*).
+
+**Pros/Contras:** Mayor visibilidad del rendimiento y más confianza del usuario por los *fallbacks*. El *contra* es la **infraestructura y complejidad** necesarias. También puede haber **falsas alarmas** (*false alarms*), lo que lleva a la fatiga de alertas (*alert fatigue*).
+
+### 12. Humano en el Bucle (Human in the Loop)
+**TLDDR:** Involucrar a un humano en el proceso en **puntos de baja a alta criticidad** o para manejar casos extremos.
+
+**Flujo Táctico:** El agente procesa una tarea hasta un **punto de decisión**. Si se necesita intervención o una revisión, se crea una **cola de revisión** (review cue) que se prioriza por urgencia. El sistema presenta una interfaz de usuario con el **contexto completo** (full context), mostrando al humano dónde intervenir (e.g., para añadir credenciales de *login*). El humano puede negar, editar, tomar el control o aprobar. Si el humano aprueba, el flujo de trabajo continúa.
+
+**Uso:** Decisiones de alto riesgo (*high-stake decision*), cumplimiento normativo (regulatory compliance) y captura de casos extremos.
+
+**Aplicaciones:** Moderación de contenido y diagnóstico médico.
+
+**Pros/Contras:** Aumenta la **confianza** en el sistema. El *contra* es que añade **latencia** (latency) o tiempo de búfer, ya que el sistema debe esperar la intervención humana.
+
+### 13. Recuperación de Conocimiento (RAG - Retrieval-Augmented Generation)
+**TLDDR:** Indexar documentos mediante análisis, **segmentación** (*chunking*) y creación de ***embeddings* buscables** (searchable embeddings).
+
+**Flujo Táctico:** Se ingieren las fuentes (documents). Se analizan, categorizan y se convierten en **vectores** (*embeddings*). Hay varias **estrategias de segmentación** (*chunking strategies*) (tamaño fijo, límites semánticos). Los vectores se almacenan en una **base de datos vectorial**. Al recibir una consulta, se puede reescribir la consulta (*query rewriting*) para mejorar la coincidencia. Se recuperan las coincidencias principales (*top K*). Luego se realiza un **reordenamiento** (*reranking*) de los vectores para obtener respuestas más fundamentadas. Si RAG falla, se ajustan los parámetros; si pasa, se entrega la respuesta con **citas**.
+
+**Uso:** Cuando se necesita conocimiento documental, sin importar la escala.
+
+**Aplicaciones:** Búsqueda empresarial, soporte al cliente, asistencia en investigación y documentación.
+
+**Pros/Contras:** Aporta **precisión** y **escalabilidad** al sistema. El *contra* es el costo de construir y **mantener la infraestructura** (mantener los vectores acumulados).
+
+### 14. Comunicación Inter-Agente (Inter-Agent Communication)
+**TLDDR:** Agentes comunicándose a través de un **sistema de mensajería estructurado** con protocolos definidos (como un sistema de correo electrónico de oficina).
+
+**Flujo Táctico:** Se decide cómo deben comunicarse los agentes: con **un jefe** (un único vector de fallo) o en una **democracia pura** (todos iguales, lo cual es arriesgado por la alucinación). Se configuran **reglas de comunicación**. Los mensajes deben tener reglas (IDs, tiempo de expiración) para evitar almacenar conversaciones antiguas. Se puede designar qué agente puede hablar y **verificar su identidad**. Los riesgos incluyen **bucles infinitos** (endless loop) y **agentes atascados** (stuck agents), por lo que se necesita un mecanismo para detener o desatascar la conversación. Si los mensajes son demasiado largos, se eliminan del contexto. Finalmente, el sistema debe alertar a un humano (human in a loop).
+
+**Uso:** El presentador lo considera más apto para **prototipos** o sistemas de muy alto nivel, como la automatización de una empresa completa.
+
+**Aplicaciones:** Sistemas de ciudades inteligentes (*smart city systems*).
+
+**Pros/Contras:** **Aislamiento de fallas** (*fault isolation*), ya que se puede identificar al agente culpable de un problema. Los *contras* son la **alta complejidad**, la dificultad de **depuración** (*debugging*) y el riesgo de **sobrecarga de contexto**.
+
+### 15. Optimización Consciente de Recursos (Resource-Aware Optimization)
+**TLDDR:** Analizar la complejidad de una tarea y **enrutarla a los modelos apropiados**. Tareas simples usan modelos baratos/rápidos; tareas complejas usan modelos potentes/caros.
+
+**Flujo Táctico:** Se recibe una tarea. Se establece un **presupuesto** (límite de *tokens*, tiempo, costo de la API). Un **agente enrutador** clasifica la complejidad (simple, media, compleja). Las tareas simples van a un modelo pequeño, las complejas a un modelo de razonamiento. Se **monitorean los recursos** (conteo de *tokens*, tiempo de respuesta). Si se excede el límite, se necesita **optimización**: cortar contexto, usar ***prompt caching*** (cachear resultados para referencias repetidas) o cambiar a un modelo más barato.
+
+**Uso:** Operaciones sensibles a los costos, procesamiento de alto volumen y grandes sistemas con **restricciones presupuestarias**.
+
+**Aplicaciones:** Gestión de costos.
+
+**Pros/Contras:** **Reducción de costos**. Los *contras* son el **aumento de la complejidad** y los desafíos de ajuste (*tuning challenges*), ya que la rúbrica para clasificar la complejidad debe ser muy robusta.
+
+### 16. Técnicas de Razonamiento (Reasoning Techniques)
+**TLDDR:** Elegir el método de razonamiento (Chain of Thought, Tree of Thought, etc.) adecuado para un problema.
+
+**Flujo Táctico:** Se aborda un **problema complejo**. Se eligen los métodos de razonamiento:
+*   **Secuencial:** **Chain of Thought** (paso a paso).
+*   **Ramificación:** **Tree of Thought** (generar ramas de pensamiento, explorar caminos, evaluar y **podar** (*pruning*) las ramas no viables).
+*   **Adversarial:** **Método de Debate** (debate method) con un agente proponente y un oponente.
+Se **puntúan las soluciones** según una rúbrica. Se ejecutan pruebas y se **clasifican los candidatos** para seleccionar el mejor método o combinación.
+
+**Uso:** Técnica avanzada. Solo para problemas muy complejos, como razonamiento matemático o planificación estratégica a gran escala.
+
+**Aplicaciones:** Análisis legal y diagnóstico médico.
+
+**Pros/Contras:** El proceso es **exhaustivo y robusto**. Los *contras* son el alto consumo de *tokens*, la complejidad y el riesgo de que los LLM **piensen en exceso** (*overthinking*), lo que aumenta la latencia y el costo. Es altamente experimental.
+
+### 17. Evaluación y Monitoreo (Evaluation and Monitoring)
+**TLDDR:** Establecer **compuertas de calidad** (*quality gates*) y **pruebas doradas** (*golden tests*) antes del despliegue, y monitorear continuamente la **deriva** (*drift*), el rendimiento y la precisión en producción.
+
+**Flujo Táctico:** El sistema se despliega. Se definen los **criterios de calidad** (precisión, rendimiento, cumplimiento, UX). Para cada uno, se tienen métricas y pruebas específicas (pruebas unitarias, de contrato, de integración). El sistema analiza patrones para **detectar la deriva** (degradation en la respuesta del modelo) y **regresiones** (resultados anómalos o muy diferentes al promedio). Se establece un umbral de fallo. Si falla, se alerta a un equipo (human in the loop). Se deben realizar **auditorías periódicas**.
+
+**Uso:** Sistemas de grado de producción (*production grade systems*) y garantía de calidad.
+
+**Aplicaciones:** SaaS empresarial, salud, finanzas y comercio electrónico a gran escala.
+
+**Pros/Contras:** Mayor **fiabilidad**. Los *contras* son la **fatiga de alertas** y el **impacto en el rendimiento** por el escrutinio a gran escala.
+
+### 18. Barandales y Patrones de Seguridad (Guardrails and Safety Patterns)
+**TLDDR:** Revisar todas las entradas en la parte superior del flujo (*top offunnel*) para **contenido dañino**, **información personal** (PII) o **ataques de inyección**.
+
+**Flujo Táctico:** Se recibe y se **sanea la entrada**. Se detecta **PII** (información de identificación personal) y se **redacta** (redact) o se enmascara. Se detectan **inyecciones** (injection detection), como SQL injection, y **contenido malicioso**. Se clasifica el **nivel de riesgo** (bajo, medio, alto). El riesgo alto suele involucrar a un humano. En la **moderación de salida** (*output moderation*), se revisan políticas, ética y seguridad de marca. Si la puntuación de seguridad es alta, se restringen las herramientas o se usa un entorno *sandbox*.
+
+**Uso:** Sistemas de cara al público (*public facing*) y cuando la reputación (*PR*) o el cumplimiento están en juego.
+
+**Aplicaciones:** Sistemas gubernamentales.
+
+**Pros/Contras:** Mitigación de riesgos, mejor cumplimiento y protección de marca. Los *contras* son los **falsos positivos** (*false positives*) y la **frustración del usuario** por la fricción añadida.
+
+### 19. Priorización (Prioritization)
+**TLDDR:** Puntuar tareas basándose en **valor, riesgo, esfuerzo y urgencia**, y construir un **grafo de dependencias**. Analogía: un sistema de triaje en una sala de emergencias.
+
+**Flujo Táctico:** Se recibe una tarea y se construye el **grafo de dependencias**. Se puntúa cada tarea según factores como el conteo de dependencias, sensibilidad al tiempo, riesgo y valor de negocio. Se calcula una **puntuación de prioridad** (priority score) con una fórmula. Se clasifican las tareas y se establece una estrategia de programación. Después de ejecutar la tarea principal, el sistema debe **recalcular las prioridades** (recalculate the priorities) y evaluar si la siguiente acción natural ha cambiado debido a las nuevas variables.
+
+**Uso:** **Entornos dinámicos** donde el plan inicial puede cambiar rápidamente.
+
+**Aplicaciones:** Sistemas de gestión de tareas, servicio al cliente, manufactura y Devops.
+
+**Pros/Contras:** Adaptabilidad y transparencia. El *contra* es el **cambio de contexto** (*context switching*) y la dificultad de asegurar que la reevaluación de prioridades por los agentes de IA sea determinista y precisa en entornos dinámicos.
+
+### 20. Exploración y Descubrimiento (Exploration and Discovery)
+**TLDDR:** Explorar ampliamente el espacio de conocimiento (papers, datos, fuentes expertas), identificar patrones y **agruparlos en temas** (*clustering*).
+
+**Flujo Táctico:** Comienza con un **objetivo de investigación**. Se exploran las fuentes y se **compila la información**. Se **mapea el espacio de conocimiento** y se agrupan los temas (*clustering*) para identificar patrones. Se aplican criterios de selección (puntuación de novedad, impacto potencial, viabilidad) para **decidir qué investigar a fondo**. Se extraen artefactos (modelos conceptuales, contactos de expertos, *datasets*). Se sintetizan las *insights* y se generan **hipótesis**. El agente documenta los hallazgos y recomienda los siguientes pasos.
+
+**Uso:** Investigación profunda, similar a sistemas como Perplexity.
+
+**Aplicaciones:** Proyectos de investigación, I+D académico, análisis competitivo y descubrimiento de fármacos (*drug discovery*).
+
+**Pros/Contras:** Habilitación de la innovación (*innovation enablement*), ya que el agente decide qué ángulo perseguir. Los *contras* son que consume mucho **tiempo** y **recursos**, y es intensivo en el uso de IA generativa.
+
+### Conclusión
+El libro de diseño agéntico contiene 21 patrones, pero se excluyó el Patrón MCP (Microservice Component Platform) por haber sido cubierto previamente. El trabajo de resumen y visualización está disponible en un repositorio público.

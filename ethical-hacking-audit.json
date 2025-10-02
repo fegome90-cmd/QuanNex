@@ -1,0 +1,143 @@
+{
+  "name": "Auditoría de Hacking Ético - Security Audit Inc.",
+  "description": "Análisis completo de vulnerabilidades y fallas de seguridad en QuanNex",
+  "steps": [
+    {
+      "step_id": "deep_security_scan",
+      "agent": "security",
+      "input": {
+        "target_path": ".",
+        "check_mode": "full",
+        "scan_depth": 5
+      }
+    },
+    {
+      "step_id": "analyze_gitignore_gaps",
+      "agent": "context",
+      "depends_on": ["deep_security_scan"],
+      "input": {
+        "sources": [
+          ".gitignore",
+          "*.env*",
+          "*.key*",
+          "*.pem*",
+          "*.json",
+          "*.js",
+          "*.sh",
+          "*.md",
+          "config/",
+          "logs/",
+          "tmp/",
+          ".git/"
+        ],
+        "selectors": [
+          "gitignore",
+          "patterns",
+          "gaps",
+          "missing",
+          "secrets",
+          "keys",
+          "credentials",
+          "passwords",
+          "tokens",
+          "api_keys",
+          "database",
+          "config",
+          "logs",
+          "backups"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "find_hidden_vulnerabilities",
+      "agent": "context",
+      "depends_on": ["analyze_gitignore_gaps"],
+      "input": {
+        "sources": [
+          ".",
+          ".*",
+          "*.*"
+        ],
+        "selectors": [
+          "hidden_files",
+          "dot_files",
+          "backup_files",
+          "temp_files",
+          "cache_files",
+          "log_files",
+          "config_files",
+          "secret_files",
+          "key_files",
+          "database_files",
+          "backup_directories",
+          "temp_directories"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "analyze_code_vulnerabilities",
+      "agent": "context",
+      "depends_on": ["find_hidden_vulnerabilities"],
+      "input": {
+        "sources": [
+          "agents/",
+          "orchestration/",
+          "core/",
+          "scripts/",
+          "tools/",
+          "*.js",
+          "*.sh",
+          "*.json"
+        ],
+        "selectors": [
+          "hardcoded_secrets",
+          "api_keys",
+          "passwords",
+          "tokens",
+          "database_urls",
+          "connection_strings",
+          "debug_info",
+          "console_logs",
+          "error_messages",
+          "file_paths",
+          "system_paths",
+          "user_paths",
+          "sensitive_data",
+          "vulnerable_patterns"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "generate_security_report",
+      "agent": "prompting",
+      "depends_on": ["analyze_code_vulnerabilities"],
+      "input": {
+        "goal": "Generar reporte completo de hacking ético con TODAS las vulnerabilidades encontradas. Incluir: fallas de .gitignore, archivos expuestos, información sensible, patrones vulnerables, recomendaciones de mitigación. Formato: CRÍTICO, ALTO, MEDIO, BAJO con ejemplos específicos.",
+        "style": "technical",
+        "context": "{{analyze_code_vulnerabilities.output.context_bundle}}",
+        "constraints": [
+          "Enfoque en vulnerabilidades reales que hackers podrían explotar",
+          "Incluir archivos específicos y líneas de código",
+          "Clasificar por severidad (CRÍTICO, ALTO, MEDIO, BAJO)",
+          "Proporcionar evidencia concreta de cada falla",
+          "Sugerir mitigaciones específicas",
+          "Identificar patrones de ataque potenciales"
+        ]
+      }
+    },
+    {
+      "step_id": "validate_security_findings",
+      "agent": "rules",
+      "depends_on": ["generate_security_report"],
+      "input": {
+        "policy_refs": ["SECURITY.md", ".gitignore"],
+        "compliance_level": "strict",
+        "tone": "technical",
+        "context": "{{generate_security_report.output.system_prompt}}"
+      }
+    }
+  ]
+}

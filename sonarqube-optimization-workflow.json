@@ -1,0 +1,94 @@
+{
+  "name": "Optimización para SonarQube Free",
+  "description": "Identificar y limpiar archivos innecesarios para optimizar análisis con SonarQube",
+  "steps": [
+    {
+      "step_id": "analyze_repo_structure",
+      "agent": "context",
+      "input": {
+        "sources": [
+          ".",
+          "node_modules/",
+          "logs/",
+          "out/",
+          "tmp/",
+          "backups/",
+          "archived/",
+          "coverage/",
+          ".cache/",
+          "experiments/"
+        ],
+        "selectors": [
+          "file_types",
+          "directory_structure",
+          "file_sizes",
+          "duplicates",
+          "unnecessary_files",
+          "build_artifacts",
+          "test_outputs",
+          "documentation_temp"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "identify_sonarqube_issues",
+      "agent": "context",
+      "depends_on": ["analyze_repo_structure"],
+      "input": {
+        "sources": [
+          "node_modules/",
+          "*.log",
+          "*.tmp",
+          "*.cache",
+          "coverage/",
+          "out/",
+          "logs/",
+          "backups/",
+          "archived/"
+        ],
+        "selectors": [
+          "large_files",
+          "duplicate_code",
+          "test_files",
+          "documentation_files",
+          "build_outputs",
+          "temporary_files",
+          "backup_files",
+          "experimental_code"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "generate_cleanup_plan",
+      "agent": "prompting",
+      "depends_on": ["identify_sonarqube_issues"],
+      "input": {
+        "goal": "Crear plan de limpieza para optimizar repositorio para SonarQube Free. Incluir: archivos a eliminar, directorios a limpiar, configuración de .gitignore, y estimación de reducción de tamaño. Enfocarse en mantener solo código fuente esencial.",
+        "style": "technical",
+        "context": "{{identify_sonarqube_issues.output.context_bundle}}",
+        "constraints": [
+          "Mantener solo código fuente esencial",
+          "Eliminar archivos de build y temporales",
+          "Limpiar documentación redundante",
+          "Remover archivos de test output",
+          "Optimizar para límites de SonarQube Free",
+          "Preservar funcionalidad del sistema QuanNex",
+          "No eliminar archivos críticos del sistema"
+        ]
+      }
+    },
+    {
+      "step_id": "validate_cleanup_safety",
+      "agent": "rules",
+      "depends_on": ["generate_cleanup_plan"],
+      "input": {
+        "policy_refs": ["package.json", "README.md"],
+        "compliance_level": "strict",
+        "tone": "technical",
+        "context": "{{generate_cleanup_plan.output.system_prompt}}"
+      }
+    }
+  ]
+}

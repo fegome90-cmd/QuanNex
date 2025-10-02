@@ -1,0 +1,65 @@
+{
+  "name": "Corrección de Problemas de Seguridad - QNX-SEC",
+  "description": "Workflow para corregir hallazgos críticos de seguridad identificados en el reporte",
+  "steps": [
+    {
+      "step_id": "analizar_reportes",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "ethical-hacking-report.md",
+          "ethical-hacking-audit.json",
+          "tools/scripts/auto-correction-engine.mjs",
+          "tools/scripts/base-correction-tool.mjs"
+        ],
+        "selectors": [
+          "QNX-SEC-001",
+          "QNX-SEC-002", 
+          "QNX-SEC-003",
+          "QNX-BUG-001",
+          "exec",
+          "spawn",
+          "denylist",
+          "allowlist"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "generar_plan_correccion",
+      "agent": "prompting",
+      "depends_on": ["analizar_reportes"],
+      "input": {
+        "goal": "Crear plan detallado de corrección de problemas de seguridad",
+        "context": "{{analizar_reportes.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Priorizar P0 y P1",
+          "Implementar allowlist en lugar de denylist",
+          "Migrar de exec a spawn",
+          "Corregir rutas de npm audit",
+          "Eliminar supresiones de errores"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_plan",
+      "agent": "rules",
+      "depends_on": ["generar_plan_correccion"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md",
+          "docs/security-policies.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_plan_correccion.output.system_prompt}}",
+        "rules": [
+          "No usar exec con comandos externos",
+          "Implementar validación estricta de comandos",
+          "Usar spawn con allowlist",
+          "Eliminar denylist frágil"
+        ]
+      }
+    }
+  ]
+}

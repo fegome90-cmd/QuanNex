@@ -1,0 +1,67 @@
+{
+  "name": "MCP Repair Workflow - GAP-004",
+  "description": "Workflow para reparar y identificar fallas usando MCP QuanNex",
+  "steps": [
+    {
+      "step_id": "identificar_fallas_workflow",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "gap-004-analysis-workflow.json",
+          "orchestration/orchestrator.js"
+        ],
+        "selectors": [
+          "error",
+          "failed",
+          "parse",
+          "json",
+          "emoji",
+          "console",
+          "log"
+        ],
+        "max_tokens": 1000,
+        "exclude_patterns": [
+          "console.log",
+          "console.error"
+        ]
+      }
+    },
+    {
+      "step_id": "generar_solucion_workflow",
+      "agent": "prompting",
+      "depends_on": ["identificar_fallas_workflow"],
+      "input": {
+        "goal": "Generar solución para fallas de workflow MCP",
+        "context": "{{identificar_fallas_workflow.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Identificar por qué fallan los workflows MCP",
+          "Proponer solución para evitar errores de parsing JSON",
+          "Mantener funcionalidad del MCP QuanNex",
+          "Asegurar que los workflows puedan ejecutarse correctamente",
+          "Implementar manejo robusto de errores",
+          "Crear workflows que funcionen con el sistema actual"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_solucion_workflow",
+      "agent": "rules",
+      "depends_on": ["generar_solucion_workflow"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_solucion_workflow.output.system_prompt}}",
+        "rules": [
+          "Los workflows deben ejecutarse sin errores",
+          "El parsing JSON debe ser robusto",
+          "Los logs no deben interferir con la ejecución",
+          "El MCP debe funcionar correctamente",
+          "Los agentes deben comunicarse sin problemas"
+        ]
+      }
+    }
+  ]
+}

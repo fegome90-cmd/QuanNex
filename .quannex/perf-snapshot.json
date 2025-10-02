@@ -1,16 +1,22 @@
 {
-  "ts": "2025-10-01T18:12:05.614Z",
-  "raw_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "source": "mcp_workflow_wf_1759340219615_dcf2dd",
-  "mcp_verified": true,
-  "total": 100,
-  "p50_ms": 45.2,
-  "p95_ms": 78.5,
-  "p99_ms": 95.1,
-  "error_rate_pct": 0.8,
-  "avg_latency_ms": 52.3,
-  "throughput_per_sec": 16.2,
-  "tokens_in_total": 15420,
-  "tokens_out_total": 8930,
-  "time_span_sec": 6.17
+  "timestamp": "2025-10-02T13:55:40.139Z",
+  "version": "1.0.0",
+  "environment": {
+    "node_version": "v24.9.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "performance": {
+    "orchestrator_health_ms": 150,
+    "context_agent_ms": 138,
+    "prompting_agent_ms": 230,
+    "rules_agent_ms": 180,
+    "workflow_complete_ms": 580
+  },
+  "system": {
+    "memory_usage_mb": 5,
+    "uptime_seconds": 0
+  },
+  "snapshot_id": "snap_1759413340152_1f849a6f93fcc5df",
+  "hash": "1f849a6f93fcc5df"
 }

@@ -8,13 +8,13 @@ import {
 } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { join, dirname } from 'node:path';
-import { hello, isHello } from '../../shared/contracts/handshake.js';
-import { validateReq, ok, fail } from '../../shared/contracts/schema.js';
+import { hello, isHello } from '../shared/contracts/handshake.js';
+import { validateReq, ok, fail } from '../shared/contracts/schema.js';
 import { fileURLToPath } from 'node:url';
 import crypto from 'node:crypto';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import TaskRunner from '../../shared/utils/task-runner.js';
+import TaskRunner from '../shared/utils/task-runner.js';
 import RouterV2 from './router-v2.js';
 import FSMV2 from './fsm-v2.js';
 import CanaryManager from './canary-manager.js';

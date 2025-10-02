@@ -2,8 +2,14 @@
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
   "rules_compiled": [
-    "[README.md] # 🚀 Claude Project Init Kit  ## 📋 **Resumen**  El **Claude Project Init Kit** es un sistema avanzado de inicialización de proyectos que integra Claude Code con herramientas especializadas para crear proyectos de alta calidad de forma sistemática y eficiente."
+    "[SECURITY.md] Policy loaded from SECURITY.md"
   ],
+  "validation_result": {
+    "passed": true,
+    "violations": [],
+    "warnings": [],
+    "score": 100
+  },
   "violations": [],
   "advice": [
     "tone:neutral",
@@ -12,5 +18,20 @@
   ],
   "trace": [
     "rules.server:ok"
-  ]
+  ],
+  "metadata": {
+    "policy_refs": [
+      "[Max Depth Reached]"
+    ],
+    "tone": "neutral",
+    "domain": "general",
+    "compliance_level": "strict",
+    "timestamp": "2025-10-02T16:30:56.498Z"
+  },
+  "stats": {
+    "policies_checked": 1,
+    "violations_found": 0,
+    "warnings_found": 0,
+    "compliance_score": 100
+  }
 }

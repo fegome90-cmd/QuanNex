@@ -5,7 +5,7 @@
  * PR-I: Tarea 2 - Implementar aplicación automática de correcciones
  */
 
-import { spawn, exec } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
@@ -15,6 +15,50 @@ import { hideBin } from 'yargs/helpers';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PROJECT_ROOT = join(__dirname, '..');
+
+// QNX-SEC-001: Allowlist de comandos permitidos (reemplaza denylist frágil)
+const ALLOWLIST = new Map([
+  // comando -> args permitidos (regex)
+  ['npm', [/^(install|run|test|audit|ci|lint|fix)$/]],
+  ['node', [/^[\w\-/.]+$/]],
+  ['git', [/^(add|commit|push|pull|status|diff|log)$/]],
+  ['eslint', [/^[\w\-/.]+$/]],
+  ['prettier', [/^(--write|--check)$/]],
+  ['mkdir', [/^[\w\-/.]+$/]],
+  ['cp', [/^[\w\-/.]+$/]],
+  ['mv', [/^[\w\-/.]+$/]],
+  ['rm', [/^[\w\-/.]+$/]],
+]);
+
+/**
+ * Validar comando contra allowlist
+ * @param {string} cmd - Comando a validar
+ * @param {string[]} args - Argumentos del comando
+ * @throws {Error} Si el comando no está permitido
+ */
+function validateCommand(cmd, args) {
+  if (!ALLOWLIST.has(cmd)) {
+    throw new Error(`Command not allowed: ${cmd}`);
+  }
+  
+  const rules = ALLOWLIST.get(cmd);
+  if (!Array.isArray(args)) {
+    throw new Error('Args must be an array');
+  }
+  
+  for (const [i, arg] of args.entries()) {
+    const isValid = rules.some((rule) => {
+      if (rule instanceof RegExp) {
+        return rule.test(arg);
+      }
+      return rule === arg;
+    });
+    
+    if (!isValid) {
+      throw new Error(`Arg not allowed at position ${i}: ${arg}`);
+    }
+  }
+}
 
 // Configuración CLI
 const argv = yargs(hideBin(process.argv))
@@ -155,7 +199,7 @@ class AutoCorrectionEngine {
       child.on('close', code => {
         if (code === 0) {
           try {
-            const jsonRegex = new RegExp('\\{[\\s\\S]*\\}');
+            const jsonRegex = /\{[\s\S]*\}/;
             const jsonMatch = jsonRegex.exec(stdout);
             if (!jsonMatch) {
               throw new Error('No se encontró JSON válido en la salida');
@@ -329,7 +373,8 @@ class AutoCorrectionEngine {
   }
 
   /**
-   * Ejecutar comando de corrección
+   * Ejecutar comando de corrección con validación estricta
+   * QNX-SEC-001: Migrado de exec a spawn con allowlist
    */
   async executeCommand(command) {
     return new Promise((resolve, reject) => {
@@ -340,19 +385,49 @@ class AutoCorrectionEngine {
         return;
       }
 
-      exec(command, { cwd: PROJECT_ROOT }, (error, stdout, stderr) => {
-        if (error) {
-          reject(new Error(`Comando falló: ${error.message}`));
-        } else {
-          if (this.verbose && stdout) {
-            console.log(`📝 Output: ${stdout}`);
+      try {
+        // QNX-SEC-001: Validación estricta previa a ejecución
+        const [cmd, ...rawArgs] = command.trim().split(/\s+/);
+        validateCommand(cmd, rawArgs);
+
+        // Usar spawn en lugar de exec para mayor seguridad
+        const child = spawn(cmd, rawArgs, {
+          cwd: PROJECT_ROOT,
+          stdio: ['ignore', 'pipe', 'pipe']
+        });
+
+        let stdout = '';
+        let stderr = '';
+
+        child.stdout.on('data', (data) => {
+          stdout += data.toString();
+        });
+
+        child.stderr.on('data', (data) => {
+          stderr += data.toString();
+        });
+
+        child.on('close', (code) => {
+          if (code === 0) {
+            if (this.verbose && stdout) {
+              console.log(`📝 Output: ${stdout}`);
+            }
+            if (this.verbose && stderr) {
+              console.log(`⚠️ Stderr: ${stderr}`);
+            }
+            resolve();
+          } else {
+            reject(new Error(`Command failed with exit code ${code}: ${stderr}`));
           }
-          if (this.verbose && stderr) {
-            console.log(`⚠️ Stderr: ${stderr}`);
-          }
-          resolve();
-        }
-      });
+        });
+
+        child.on('error', (error) => {
+          reject(new Error(`Command execution failed: ${error.message}`));
+        });
+
+      } catch (validationError) {
+        reject(new Error(`Command validation failed: ${validationError.message}`));
+      }
     });
   }
 

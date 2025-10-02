@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@quannex/orchestrator": ["core/orchestrator/index"],
+      "@quannex/context": ["agents/context/agent"],
+      "@quannex/rules": ["agents/rules/agent"],
+      "@quannex/prompting": ["agents/prompting/agent"],
+      "@quannex/security": ["agents/security/agent"],
+      "@quannex/code-reviewer": ["agents/code-reviewer/agent"],
+      "@quannex/integration": ["agents/integration/agent"],
+      "@quannex/server": ["agents/server/agent"],
+      "@quannex/base": ["agents/base/agent"]
+    },
+    "outDir": "./dist"
+  },
+  "include": [
+    "core/**/*",
+    "agents/**/*",
+    "orchestration/**/*",
+    "scripts/**/*",
+    "tools/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "archived",
+    "backups",
+    "versions"
+  ]
+}

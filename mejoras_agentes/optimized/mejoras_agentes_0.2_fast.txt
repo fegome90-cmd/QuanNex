@@ -1,0 +1,156 @@
+# FRAMEWORK DE INGENIERÍA DE CONTEXTO PARA IA
+
+## CONCEPTO PRINCIPAL
+**Context Engineering** = Nueva tendencia en codificación con IA
+- **Objetivo**: Proporcionar contexto extenso ANTES de la codificación
+- **Diferencia clave**: Separar resultados reales vs "vibe coding"
+- **Beneficio**: Multiplicador 10x del proceso de construcción
+- **Problema actual**: Vibe coding falla al escalar, carece de validación
+
+## MARCO PRP (PRODUCT REQUIREMENT PROMPT)
+
+### DEFINICIÓN
+**PRP** = PRD + Inteligencia de Base de Código + Runbook del Agente
+
+### OBJETIVO
+- **Paquete viable mínimo** para código listo para producción
+- **Primera pasada exitosa** sin iteraciones
+- **Contexto máximo** para ejecución autónoma
+
+### PRINCIPIOS FUNDAMENTALES
+
+#### 1. CONTEXTO ES REY
+**Componentes esenciales**:
+- ✅ Información, ejemplos, mejores prácticas
+- ✅ Fragmentos de documentación y APIs
+- ✅ Referencias de base de código (rutas, modelos, tablas)
+- ✅ Lógica de negocio (por qué, qué, problema, usuarios)
+- ⚠️ **Preferir**: Copiar/pegar vs URLs
+
+#### 2. BUCLE DE VALIDACIÓN
+**Validation Gates**:
+- 🔍 **Type checking** y linters
+- 🧪 **Pruebas unitarias** (comandos curl, scripts)
+- 🎭 **Pruebas E2E** (Playwright MCP)
+- 🐳 **Validación de entornos** (Docker MCP)
+
+#### 3. IMPLEMENTACIÓN AUTÓNOMA
+**Objetivo**: Ejecución prolongada sin intervención humana
+- 🚀 Multiplica capacidad del desarrollador
+- ⏰ Permite trabajo en paralelo
+
+### CONFIABILIDAD Y RENDIMIENTO
+
+#### ESTADÍSTICAS DE ÉXITO
+- **Claude 4**: Mejora drástica vs Claude 3.7
+- **Prompts grandes**: 500 líneas confiables, 1500 líneas experimental
+- **Tasa de éxito**: 90-99% de objetivos logrados
+- **Primera pasada**: 30% éxito completo
+- **Seguimiento**: 70% requiere prompts adicionales
+
+#### MEJORES PRÁCTICAS
+- ✅ **Bases de código existentes**: Patrones replicables
+- ✅ **Feedback de usuarios**: Validación continua
+- ✅ **Contexto estructurado**: Información organizada
+
+## SEPARACIÓN DE CONTEXTO
+
+### ARCHIVOS DE REGLAS GLOBALES
+**`claw.md`** (Reglas constantes):
+- 📋 Principios fundamentales
+- 🏷️ Estándares de nomenclatura
+- 🔧 Funciones base (estables)
+- 📁 Ubicación: Carpetas específicas por módulo
+
+### CONTEXTO ESPECÍFICO
+**Base PRP** (Trabajo en curso):
+- 🎯 Contexto específico por tarea
+- 🔄 Mini PRP por característica
+- 📝 Implementación variable
+
+## FLUJO DE TRABAJO PRP (3 PASOS)
+
+### PASO 1: CREAR `initial.mmd`
+**Contenido requerido**:
+- 📋 Plan detallado del proyecto
+- 🛠️ Características/herramientas deseadas
+- 📚 Ejemplos y documentación
+- ⚠️ Consideraciones importantes y "gotchas"
+- 🔐 Variables de entorno y secretos
+
+### PASO 2: GENERAR Y VALIDAR PRP
+**Comando**: `slash PRP MCP create <ruta_initial.mmd>`
+
+**Proceso automático**:
+- 🔍 IA investiga contexto adicional
+- 📦 Reúne información necesaria
+- 📝 Genera PRP estructurado
+
+**Validación crítica**:
+- ✅ Lista de herramientas correcta
+- ✅ Objetivo del proyecto claro
+- ✅ Estructura de código deseada
+- ✅ Referencias de documentación válidas
+- 🚫 **Eliminar**: Edición directa de secretos
+- 🚫 **Prevenir**: Entrelazado de PRPs paralelos
+
+### PASO 3: EJECUTAR PRP
+**Preparación**:
+- 🧹 **Borrar/salir** del contexto actual
+- 🎯 Usar SOLO contexto del PRP
+
+**Comando**: `PRP MCP execute`
+
+**Proceso autónomo**:
+- 📊 Análisis completo del PRP
+- 📋 Lista exhaustiva de tareas
+- ✅ Implementación de validation gates
+- ⏱️ **Tiempo**: 10-15min generación + 25min ejecución
+
+**Post-ejecución**:
+- 🔍 Revisión de código autónoma
+- 🧪 Comprobación de sanidad
+- 📤 Preparación para pull request
+
+## PLANTILLAS Y HERRAMIENTAS
+
+### PLANTILLA MCP CLOUDFLARE
+**Creadores**: Cole Medin + Raasmus
+- 🏗️ **Servidores MCP** listos para producción
+- ☁️ **Stack**: Cloudflare + TypeScript
+- 🎯 **Enfoque**: Scaffold con MCP base existente
+- ⚡ **Ventaja**: IA solo añade herramientas personalizadas
+- 📈 **Beneficio**: Punto de partida masivo, reduce trabajo manual
+
+### COMPATIBILIDAD MULTI-HERRAMIENTA
+**Agnóstico a herramienta**:
+- 🤖 **Claude Code**: Demostración principal
+- 🔧 **Gemini CLI**: Slash commands como prompts regulares
+- 💻 **Cursor**: Implementación directa
+- 🌊 **Windsurf**: Compatibilidad completa
+- 📝 **Formato**: Prompts markdown
+
+### ESTRATEGIA DE MODELOS
+**Flexibilidad en selección**:
+- 🧠 **Planificación**: Modelos potentes (Opus)
+- 💰 **Implementación**: Modelos económicos (Sonnet, Kim 2)
+- ⚖️ **Optimización**: Costo vs rendimiento
+
+## REPOSITORIO DE PLANTILLAS PRP
+
+### PROYECTO DINAMIS
+**Objetivo**: Repositorio masivo de plantillas PRP hiper-optimizadas
+- 🌐 **Lenguajes**: Múltiples soportados
+- 🏗️ **Tipos**: Diversas aplicaciones
+- 📊 **Estado**: Proyecto activo en comunidad
+
+### REPOSITORIO PÚBLICO
+**GitHub**: `PRPIC` (Raasmus)
+- 📚 **Contenido**: Comandos y plantillas
+- 🔄 **Actualización**: Diaria/semanal
+- 🎯 **Ejemplo exitoso**: PRP Taskmaster MCP
+  - ✅ **18 herramientas** funcionales
+  - 🎯 **Two-shot** (1 iteración de corrección)
+  - 🚀 **Servidor no trivial** completado
+
+*Documento optimizado para procesamiento eficiente por LLMs - Estructura jerárquica, marcadores semánticos, y densidad de información optimizada*

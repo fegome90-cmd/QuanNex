@@ -1,0 +1,137 @@
+{
+  "timestamp": "2025-10-02T16:24:39.931Z",
+  "test_name": "GAP-003 Log Sanitization Test",
+  "results": [
+    {
+      "agent": "agents/context/agent.js",
+      "tests": [
+        {
+          "name": "Entrada con password",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "✅ [Rate Limiter] context: Request allowed (1/10)\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"context_bundle\": \"{\\\"extracted\\\":[{\\\"file\\\":\\\"README.md\\\",\\\"content\\\":\\\"Content from README.md\\\",\\\"relevance\\\":0.8}],\\\"metadata\\\":{\\\"total_sources\\\":1,\\\"selectors_applied\\\":[\\\"password\\\"],\\\"max_tokens\\\":1000}}\",\n  \"provenance\": [\n    \"README.md\"\n  ],\n  \"stats\": {\n    \"tokens_estimated\": 1000,\n    \"chunks\": 1,\n    \"matched\": 1,\n    \"truncated\": false,\n    \"adjusted\": false\n  }\n}\n"
+        },
+        {
+          "name": "Entrada con datos personales",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "✅ [Rate Limiter] context: Request allowed (2/10)\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"context_bundle\": \"{\\\"extracted\\\":[{\\\"file\\\":\\\"README.md\\\",\\\"content\\\":\\\"Content from README.md\\\",\\\"relevance\\\":0.8}],\\\"metadata\\\":{\\\"total_sources\\\":1,\\\"selectors_applied\\\":[\\\"email\\\"],\\\"max_tokens\\\":1000}}\",\n  \"provenance\": [\n    \"README.md\"\n  ],\n  \"stats\": {\n    \"tokens_estimated\": 1000,\n    \"chunks\": 1,\n    \"matched\": 1,\n    \"truncated\": false,\n    \"adjusted\": false\n  }\n}\n"
+        },
+        {
+          "name": "Entrada con datos completos",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "✅ [Rate Limiter] context: Request allowed (3/10)\n{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"context_bundle\": \"{\\\"extracted\\\":[{\\\"file\\\":\\\"README.md\\\",\\\"content\\\":\\\"Content from README.md\\\",\\\"relevance\\\":0.8}],\\\"metadata\\\":{\\\"total_sources\\\":1,\\\"selectors_applied\\\":[\\\"data\\\"],\\\"max_tokens\\\":1000}}\",\n  \"provenance\": [\n    \"README.md\"\n  ],\n  \"stats\": {\n    \"tokens_estimated\": 1000,\n    \"chunks\": 1,\n    \"matched\": 1,\n    \"truncated\": false,\n    \"adjusted\": false\n  }\n}\n"
+        }
+      ],
+      "overall": "pass",
+      "score": "3/3"
+    },
+    {
+      "agent": "agents/prompting/agent.js",
+      "tests": [
+        {
+          "name": "Entrada con password",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"system_prompt\": \"# Test goal\\n\\n## Context\\nTest context\\n\\n## Constraints\\ntest\\n\\n## Style\\ndefault\\n\\nGenerated at: 2025-10-02T16:24:35.287Z\",\n  \"metadata\": {\n    \"goal\": \"Test goal\",\n    \"style\": \"default\",\n    \"constraints_count\": 1,\n    \"timestamp\": \"2025-10-02T16:24:35.287Z\"\n  },\n  \"stats\": {\n    \"prompt_length\": 115,\n    \"constraints_applied\": 1,\n    \"context_length\": 12\n  }\n}\n"
+        },
+        {
+          "name": "Entrada con datos personales",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"system_prompt\": \"# Test goal\\n\\n## Context\\nTest context\\n\\n## Constraints\\ntest\\n\\n## Style\\ndefault\\n\\nGenerated at: 2025-10-02T16:24:35.364Z\",\n  \"metadata\": {\n    \"goal\": \"Test goal\",\n    \"style\": \"default\",\n    \"constraints_count\": 1,\n    \"timestamp\": \"2025-10-02T16:24:35.364Z\"\n  },\n  \"stats\": {\n    \"prompt_length\": 115,\n    \"constraints_applied\": 1,\n    \"context_length\": 12\n  }\n}\n"
+        },
+        {
+          "name": "Entrada con datos completos",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"system_prompt\": \"# Test goal\\n\\n## Context\\nTest context\\n\\n## Constraints\\ntest\\n\\n## Style\\ndefault\\n\\nGenerated at: 2025-10-02T16:24:35.432Z\",\n  \"metadata\": {\n    \"goal\": \"Test goal\",\n    \"style\": \"default\",\n    \"constraints_count\": 1,\n    \"timestamp\": \"2025-10-02T16:24:35.432Z\"\n  },\n  \"stats\": {\n    \"prompt_length\": 115,\n    \"constraints_applied\": 1,\n    \"context_length\": 12\n  }\n}\n"
+        }
+      ],
+      "overall": "pass",
+      "score": "3/3"
+    },
+    {
+      "agent": "agents/rules/agent.js",
+      "tests": [
+        {
+          "name": "Entrada con password",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"rules_compiled\": [\n    \"[SECURITY.md] Policy loaded from SECURITY.md\"\n  ],\n  \"validation_result\": {\n    \"passed\": true,\n    \"violations\": [],\n    \"warnings\": [],\n    \"score\": 100\n  },\n  \"violations\": [],\n  \"advice\": [\n    \"tone:neutral\",\n    \"domain:general\",\n    \"Ensure primary policies are acknowledged.\"\n  ],\n  \"trace\": [\n    \"rules.server:ok\"\n  ],\n  \"metadata\": {\n    \"policy_refs\": [\n      \"[Max Depth Reached]\"\n    ],\n    \"tone\": \""
+        },
+        {
+          "name": "Entrada con datos personales",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"rules_compiled\": [\n    \"[SECURITY.md] Policy loaded from SECURITY.md\"\n  ],\n  \"validation_result\": {\n    \"passed\": true,\n    \"violations\": [],\n    \"warnings\": [],\n    \"score\": 100\n  },\n  \"violations\": [],\n  \"advice\": [\n    \"tone:neutral\",\n    \"domain:general\",\n    \"Ensure primary policies are acknowledged.\"\n  ],\n  \"trace\": [\n    \"rules.server:ok\"\n  ],\n  \"metadata\": {\n    \"policy_refs\": [\n      \"[Max Depth Reached]\"\n    ],\n    \"tone\": \""
+        },
+        {
+          "name": "Entrada con datos completos",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "{\n  \"schema_version\": \"1.0.0\",\n  \"agent_version\": \"1.0.0\",\n  \"rules_compiled\": [\n    \"[SECURITY.md] Policy loaded from SECURITY.md\"\n  ],\n  \"validation_result\": {\n    \"passed\": true,\n    \"violations\": [],\n    \"warnings\": [],\n    \"score\": 100\n  },\n  \"violations\": [],\n  \"advice\": [\n    \"tone:neutral\",\n    \"domain:general\",\n    \"Ensure primary policies are acknowledged.\"\n  ],\n  \"trace\": [\n    \"rules.server:ok\"\n  ],\n  \"metadata\": {\n    \"policy_refs\": [\n      \"[Max Depth Reached]\"\n    ],\n    \"tone\": \""
+        }
+      ],
+      "overall": "pass",
+      "score": "3/3"
+    },
+    {
+      "agent": "agents/security/agent.js",
+      "tests": [
+        {
+          "name": "Entrada con password",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "✅ [Rate Limiter] security: Request allowed (1/5)\n🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditoría de dependencias completada\n🔐 [Security Scan] Escaneando"
+        },
+        {
+          "name": "Entrada con datos personales",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "✅ [Rate Limiter] security: Request allowed (2/5)\n🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditoría de dependencias completada\n🔐 [Security Scan] Escaneando"
+        },
+        {
+          "name": "Entrada con datos completos",
+          "expected": "sanitized",
+          "actual": "sanitized",
+          "findings": [],
+          "passed": true,
+          "output": "✅ [Rate Limiter] security: Request allowed (3/5)\n🔒 [Security Scan] Iniciando escaneo de seguridad...\n🔒 [Security Scan] Verificando dependencias...\n✅ [SUCCESS] Dependencias verificadas\n🔍 [Security Scan] Escaneando vulnerabilidades...\n🔍 [Security Scan] Archivos escaneados: 0\n🔍 [Security Scan] Archivos con vulnerabilidades: 0\n✅ [SUCCESS] No se encontraron vulnerabilidades\n📦 [Security Scan] Auditando dependencias...\n✅ [SUCCESS] Auditoría de dependencias completada\n🔐 [Security Scan] Escaneando"
+        }
+      ],
+      "overall": "pass",
+      "score": "3/3"
+    }
+  ],
+  "overall_passed": true,
+  "summary": {
+    "total_agents": 4,
+    "total_tests": 12,
+    "passed_tests": 12,
+    "sensitive_findings": 0
+  }
+}

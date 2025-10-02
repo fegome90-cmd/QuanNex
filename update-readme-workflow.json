@@ -1,0 +1,63 @@
+{
+  "name": "Actualización de README QuanNex",
+  "description": "Crear README actualizado que refleje el sistema QuanNex actual",
+  "steps": [
+    {
+      "step_id": "analyze_current_project",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "package.json",
+          "MANUAL-COMPLETO-CURSOR.md",
+          "agents/",
+          "orchestration/",
+          "core/",
+          "tests/",
+          "Makefile"
+        ],
+        "selectors": [
+          "project_description",
+          "features",
+          "architecture",
+          "agents",
+          "orchestration",
+          "testing",
+          "functionality",
+          "capabilities"
+        ],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "generate_new_readme",
+      "agent": "prompting",
+      "depends_on": ["analyze_current_project"],
+      "input": {
+        "goal": "Generar un README completo y profesional para el proyecto QuanNex que refleje la realidad actual del sistema. Incluir: descripción actual, características principales, arquitectura MCP, agentes disponibles, sistema de orquestación, pruebas, instalación, uso, y beneficios. El README debe ser atractivo, informativo y reflejar el valor real del sistema QuanNex.",
+        "style": "professional",
+        "context": "{{analyze_current_project.output.context_bundle}}",
+        "constraints": [
+          "Reflejar la realidad actual del proyecto QuanNex",
+          "Destacar el sistema MCP de orquestación",
+          "Incluir todos los agentes disponibles",
+          "Mostrar las capacidades de testing (41/41 pruebas)",
+          "Explicar los beneficios del sistema",
+          "Incluir ejemplos de uso prácticos",
+          "Mantener formato profesional y atractivo",
+          "Incluir badges de estado y métricas"
+        ]
+      }
+    },
+    {
+      "step_id": "validate_readme_content",
+      "agent": "rules",
+      "depends_on": ["generate_new_readme"],
+      "input": {
+        "policy_refs": ["README.md", "package.json"],
+        "compliance_level": "strict",
+        "tone": "professional",
+        "context": "{{generate_new_readme.output.system_prompt}}"
+      }
+    }
+  ]
+}

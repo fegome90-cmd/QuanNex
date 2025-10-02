@@ -1,0 +1,273 @@
+# SISTEMAS EVOLUTIVOS PARA CODIFICACIÓN ASISTIDA POR IA
+
+## CONCEPTO FUNDAMENTAL
+**Codificación Asistida por IA** = Sistemas y flujos de trabajo evolutivos que se adaptan a necesidades del usuario
+- 🎯 **Más que prompts**: Requiere estructura y evolución
+- 🏗️ **Construcción sustancial**: Necesita arquitectura robusta
+- ⚠️ **Problema actual**: Múltiples estrategias (PRP, BMAD) causan confusión
+- ✅ **Solución**: Entender filosofía detrás de marcos para personalización
+
+## MODELO MENTAL PRIMARIO
+
+### PROCESO DE TRES PASOS
+```
+┌─────────────────────────────────────────────────────────┐
+│              FLUJO DE TRABAJO PRINCIPAL                 │
+├─────────────────────────────────────────────────────────┤
+│  1. PLANIFICACIÓN    →    2. IMPLEMENTACIÓN            │
+│     (Planning)              (Implementation)            │
+│          ↓                        ↓                     │
+│          └─────────── 3. VALIDACIÓN ──────────────────┘
+│                        (Validation)                     │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## I. FASE DE PLANIFICACIÓN (PLANNING PHASE)
+
+### IMPORTANCIA CRÍTICA
+- 🎯 **Fase más importante**: Contexto mal curado = fallo del asistente
+- 📋 **Fundación sólida**: Base para implementación exitosa
+- 🔍 **Investigación exhaustiva**: Análisis completo de requisitos
+
+### 1. PLANIFICACIÓN POR "INTUICIÓN" (VIBE PLANNING)
+
+#### CARACTERÍSTICAS
+- 🆓 **Sin estructura**: Exploración libre de ideas
+- 🤖 **Compañero de investigación**: IA como colaborador
+- 🏗️ **Arquitectura**: Conceptos de diseño y tech stack
+
+#### APLICACIÓN POR TIPO DE PROYECTO
+
+**🆕 Proyectos Nuevos**:
+- 🌐 **Investigación online**: Recursos externos
+- 📁 **Carpeta de ejemplos**: Proyectos anteriores como referencia
+- 🎯 **Exploración**: Tecnologías y patrones disponibles
+
+**🔄 Proyectos Existentes**:
+- 🔍 **Análisis de código base**: Determinar integración
+- 📍 **Puntos de integración**: Archivos a modificar
+- 🏗️ **Arquitectura existente**: Patrones a seguir
+
+### 2. CREACIÓN DEL INITIAL MD
+
+#### PROPÓSITO
+- 📋 **PRD simplificado**: Documento de requisitos de producto
+- 👥 **Nivel humano**: Similar a instrucciones para desarrollador
+- 🎯 **Alto nivel**: Descripción clara de características
+
+#### CONTENIDO REQUERIDO
+- ✅ **Solicitud detallada**: Características específicas
+- 🔗 **Puntos de integración**: Archivos a referenciar
+- 📊 **Objetivos claros**: Resultados esperados
+
+### 3. CONTEXT ENGINEERING Y PLAN COMPLETO
+
+#### TRANSFORMACIÓN
+- 📝 **PRD → Prompt completo**: Implementación detallada
+- 📋 **Segundo documento MD**: Plan estructurado
+- 🎯 **Marco PRP**: Product Requirement Prompt
+
+#### COMPONENTES CLAVE INTEGRADOS
+
+**🔍 RAG (Retrieval-Augmented Generation)**:
+- 📚 **Documentación externa**: Herramientas como Archon
+- 🌐 **Búsquedas web**: Cloud Code integrations
+- 📖 **Conocimiento contextual**: Información relevante
+
+**🧠 Memoria**:
+- 💬 **Historial de conversación**: Contexto previo
+- 🔄 **Continuidad**: Información persistente
+
+**📋 Gestión de Tareas**:
+- ✅ **Lista de tareas**: Acciones específicas
+- 🏗️ **Estructura de código**: Organización deseada
+- 🎯 **Criterios de éxito**: Métricas de validación
+
+#### EJECUCIÓN DE PLANIFICACIÓN
+
+**🆕 Conversación Nueva**:
+- 🧹 **Contexto fresco**: Sin contaminación previa
+- ⚡ **Slash command**: `create plan.md`
+
+**🤖 Automatización**:
+1. 📖 **Leer requisitos**: Comprender documento inicial
+2. 🔍 **Herramientas de investigación**: Web search, RAG con Archon
+3. 🤖 **Sub-agente**: Codebase Analyst para investigación exhaustiva
+
+**🎯 Ventajas de Sub-agentes**:
+- 🔒 **Ventana de contexto aislada**: Sin contaminar conversación principal
+- 📊 **Investigación exhaustiva**: Análisis profundo
+- 📋 **Resumen limpio**: Información procesada
+
+---
+
+## II. FASE DE IMPLEMENTACIÓN (IMPLEMENTATION PHASE)
+
+### GESTIÓN DE TAREAS CRÍTICA
+- 📋 **Tareas granulares**: Una por una para evitar alucinaciones
+- 🎯 **Enfoque específico**: Evitar sobrecarga cognitiva
+- ⚡ **Proceso sistemático**: Metodología estructurada
+
+### FLUJO DE EJECUCIÓN
+
+#### SLASH COMMAND
+**`execute plan`**: Define flujo de trabajo de ejecución
+
+#### PROCESO PASO A PASO
+1. 📖 **Leer plan**: Comprender estructura completa
+2. 🏗️ **Configurar proyecto**: Setup inicial
+3. 📋 **Crear tareas**: Archon, Cloud Taskmaster, herramientas internas
+4. 🔄 **Ciclo de ejecución**:
+   - 📝 **Marcar**: "to-do" → "doing"
+   - ⚡ **Ejecutar**: Implementar tarea
+   - 👁️ **Revisar**: Mover a "review"
+   - ➡️ **Siguiente**: Continuar hasta completar
+
+### REGLA DE ORO: SUB-AGENTES EN IMPLEMENTACIÓN
+
+#### ❌ NO USAR SUB-AGENTES PARA CÓDIGO
+**Razones críticas**:
+- 🚫 **Sin memoria compartida**: Cambios conflictivos
+- 🔄 **Superposición**: Modificaciones duplicadas
+- 🗑️ **Desorden**: Implementación caótica
+
+#### ✅ VENTANA DE CONTEXTO PRINCIPAL
+- 🎯 **Contexto único**: Memoria compartida
+- 🔄 **Coherencia**: Cambios coordinados
+- 📋 **Control**: Gestión centralizada
+
+---
+
+## III. FASE DE VALIDACIÓN (VALIDATION PHASE)
+
+### OBJETIVO: CÓDIGO "SÓLIDO COMO UNA ROCA"
+- 🧪 **Validación exhaustiva**: Múltiples niveles
+- 🤖 **IA + Humano**: Combinación de enfoques
+- ✅ **Calidad garantizada**: Estándares altos
+
+### 1. VALIDACIÓN POR IA
+
+#### SUB-AGENTE VALIDADOR ESPECIALIZADO
+**Ventajas**:
+- 🔒 **Contexto aislado**: Sin saturar conversación principal
+- 🧪 **Pruebas especializadas**: Unit tests, verificaciones
+- 📊 **Análisis objetivo**: Evaluación imparcial
+
+**Proceso**:
+- 📋 **Plan de validación**: Criterios predefinidos
+- 🔍 **Ejecución de pruebas**: Automatización
+- 📊 **Reporte de resultados**: Feedback estructurado
+
+### 2. REVISIÓN HUMANA Y MANUAL
+
+#### ROL DEL HUMANO: GESTOR DE PROYECTOS
+- 👁️ **Revisión de código**: Análisis crítico
+- 🧪 **Pruebas manuales**: Interacción real
+- 🎯 **Validación final**: Aprobación de calidad
+
+#### HERRAMIENTAS DE REVISIÓN
+
+**🤖 Code Rabbit**:
+- 🔍 **Revisión automática**: PRs analizados por IA
+- 💡 **Sugerencias**: Mejoras automáticas
+- 🆓 **Gratuito**: Proyectos open source
+- 💻 **CLI**: Revisión local
+
+**🔄 Flujo de Integración**:
+1. 📝 **Sugerencias generadas**: Code Rabbit analiza
+2. 🤖 **Pasar a IA**: Implementar cambios sugeridos
+3. ✅ **Validación final**: Revisión humana
+
+---
+
+## IV. COMPONENTES CLAVE DEL FLUJO DE TRABAJO
+
+### SLASH COMMANDS
+**Definición**: Prompts transformados en flujos de trabajo reutilizables
+
+**Características**:
+- 📝 **Archivos markdown**: Formato estructurado
+- 🔄 **Reutilizables**: Templates para diferentes proyectos
+- ⚡ **Automatización**: Procesos estandarizados
+
+**Aplicación por Fase**:
+- 📋 **Planificación**: `create plan.md`
+- ⚡ **Implementación**: `execute plan`
+- ✅ **Validación**: `validate code`
+
+### SUB-AGENTES
+
+#### VENTANAS DE CONTEXTO AISLADAS
+**Uso Específico**:
+- 🔍 **Investigación preliminar**: Planificación
+- ✅ **Validación especializada**: Testing
+- 🚫 **NO implementación**: Regla crítica
+
+**Ventajas**:
+- 🔒 **Contexto limpio**: Sin contaminación
+- 📊 **Análisis profundo**: Investigación exhaustiva
+- 🎯 **Especialización**: Enfoque específico
+
+### REGLAS GLOBALES (GLOBAL RULES)
+
+#### DEFINICIÓN
+**Instrucciones clave** que el asistente debe seguir siempre
+
+**Características**:
+- 📋 **Independientes de tarea**: Aplicables universalmente
+- 🏗️ **Definidas en planificación**: Establecidas temprano
+- 📁 **Almacenadas**: Archivos como `claw.md`
+
+**Contenido Típico**:
+- 🏷️ **Estándares de nomenclatura**: Convenciones
+- 🔧 **Patrones de código**: Estilos
+- 📊 **Métricas de calidad**: Criterios
+
+---
+
+## SISTEMA REUTILIZABLE FINAL
+
+### COMPONENTES INTEGRADOS
+```
+┌─────────────────────────────────────────────────────────┐
+│              SISTEMA EVOLUTIVO COMPLETO                 │
+├─────────────────────────────────────────────────────────┤
+│  📋 Reglas Globales  →  🤖 Sub-agentes                 │
+│  ⚡ Slash Commands   →  🔄 Modelo 3 Fases              │
+│  🎯 PRP Framework    →  📊 GitHub Spec Kit             │
+└─────────────────────────────────────────────────────────┘
+```
+
+### BENEFICIOS DEL SISTEMA
+- 🔄 **Reutilizable**: Templates y procesos estandarizados
+- 📈 **Escalable**: Adaptable a diferentes tamaños de proyecto
+- 🎯 **Personalizable**: Ajustable a necesidades específicas
+- 🚀 **Evolutivo**: Capacidad de mejora continua
+
+### INTEGRACIÓN CON MARCOS EXISTENTES
+- 📋 **PRP**: Product Requirement Prompt
+- 🐙 **GitHub Spec Kit**: Especificaciones estructuradas
+- 🔧 **Herramientas MCP**: Servidores especializados
+- 🤖 **Sub-agentes**: Especialización por dominio
+
+---
+
+## MÉTRICAS DE ÉXITO
+
+### INDICADORES DE CALIDAD
+- ✅ **Tasa de éxito**: 90%+ implementaciones exitosas
+- ⚡ **Tiempo de desarrollo**: Reducción 50%+ vs desarrollo tradicional
+- 🔄 **Iteraciones**: Menos de 3 rondas de refinamiento
+- 🧪 **Cobertura de pruebas**: 80%+ código cubierto
+
+### BENEFICIOS CUANTIFICABLES
+- 🚀 **Productividad**: 10x multiplicador de eficiencia
+- 🎯 **Calidad**: Código listo para producción
+- 🔄 **Mantenibilidad**: Estructura clara y documentada
+- 📈 **Escalabilidad**: Procesos replicables
+
+---
+
+*Sistema evolutivo para codificación asistida por IA - Estructura optimizada para procesamiento eficiente por LLMs*

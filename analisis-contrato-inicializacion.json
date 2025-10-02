@@ -1,0 +1,35 @@
+{
+  "name": "Análisis y Solución del Contrato de Inicialización",
+  "description": "Workflow para analizar por qué no se cumplió el contrato y generar solución",
+  "steps": [
+    {
+      "step_id": "analizar_problema",
+      "agent": "context",
+      "input": {
+        "sources": ["agents/initialization-enforcer/agent.js", "contracts/cursor-initialization-contract.json", ".cursor-initialization-status.json"],
+        "selectors": ["enforceManualReading", "enforceContextReading", "mandatory_actions", "validation", "acknowledgment_required"],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "generar_solucion",
+      "agent": "prompting",
+      "depends_on": ["analizar_problema"],
+      "input": {
+        "goal": "Generar una solución específica para corregir el agente de inicialización para que cumpla realmente con el contrato",
+        "context": "{{analizar_problema.output.context_bundle}}",
+        "style": "technical",
+        "constraints": ["usar paths absolutos", "incluir validación de acknowledgments", "implementar lectura real de documentos", "mantener compatibilidad con el sistema existente"]
+      }
+    },
+    {
+      "step_id": "validar_solucion",
+      "agent": "rules",
+      "depends_on": ["generar_solucion"],
+      "input": {
+        "policy_refs": ["contracts/cursor-initialization-contract.json"],
+        "context": "{{generar_solucion.output.system_prompt}}"
+      }
+    }
+  ]
+}

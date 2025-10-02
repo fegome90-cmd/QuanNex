@@ -1,0 +1,62 @@
+{
+  "name": "Correcciones Restantes de Seguridad - QNX-SEC-002 y QNX-BUG-001",
+  "description": "Workflow para corregir sanitización de rutas y corrección de npm audit",
+  "steps": [
+    {
+      "step_id": "analizar_scripts_seguridad",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "scripts/security-check.sh",
+          "scripts/verify-dependencies.sh",
+          "scripts/integration-test.sh"
+        ],
+        "selectors": [
+          "npm audit",
+          "which",
+          "2>/dev/null",
+          "sanitización",
+          "rutas",
+          "QNX-SEC-002",
+          "QNX-BUG-001"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "generar_plan_sanitizacion",
+      "agent": "prompting",
+      "depends_on": ["analizar_scripts_seguridad"],
+      "input": {
+        "goal": "Crear plan de sanitización de rutas y corrección de npm audit",
+        "context": "{{analizar_scripts_seguridad.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Sanitizar rutas en comandos which",
+          "Corregir ruta mal calculada de npm audit",
+          "Eliminar supresiones 2>/dev/null",
+          "Mantener funcionalidad de scripts"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_plan_sanitizacion",
+      "agent": "rules",
+      "depends_on": ["generar_plan_sanitizacion"],
+      "input": {
+        "policy_refs": [
+          "SECURITY.md",
+          "docs/security-policies.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_plan_sanitizacion.output.system_prompt}}",
+        "rules": [
+          "Sanitizar todas las entradas de usuario",
+          "Validar rutas antes de usar",
+          "No suprimir errores de seguridad",
+          "Mantener trazabilidad de errores"
+        ]
+      }
+    }
+  ]
+}

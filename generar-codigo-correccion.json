@@ -1,0 +1,26 @@
+{
+  "name": "Generar Código de Corrección para Agente de Inicialización",
+  "description": "Workflow para generar código específico que corrija el agente de inicialización",
+  "steps": [
+    {
+      "step_id": "analizar_codigo_actual",
+      "agent": "context",
+      "input": {
+        "sources": ["agents/initialization-enforcer/agent.js"],
+        "selectors": ["enforceManualReading", "enforceContextReading", "simulate", "acknowledgment"],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "generar_codigo_corregido",
+      "agent": "prompting",
+      "depends_on": ["analizar_codigo_actual"],
+      "input": {
+        "goal": "Generar código JavaScript específico que reemplace las funciones enforceManualReading y enforceContextReading para que realmente soliciten acknowledgments del usuario en lugar de simular",
+        "context": "{{analizar_codigo_actual.output.context_bundle}}",
+        "style": "technical",
+        "constraints": ["usar readline para input del usuario", "validar acknowledgments exactos del contrato", "mostrar contenido completo de documentos", "mantener estructura existente del agente"]
+      }
+    }
+  ]
+}
