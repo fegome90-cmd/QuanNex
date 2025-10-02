@@ -393,59 +393,6 @@ function levenshteinDistance(str1, str2) {
   return matrix[str2.length][str1.length];
 }
 
-async function scanDuplication() {
-  const files = await glob(GLOB_CODE, { gitignore: true });
-  const duplicates = [];
-
-  log('🔍 Escaneando duplicación de código...');
-
-  for (let i = 0; i < files.length; i++) {
-    for (let j = i + 1; j < files.length; j++) {
-      try {
-        const content1 = fs.readFileSync(files[i], 'utf8');
-        const content2 = fs.readFileSync(files[j], 'utf8');
-
-        const lines1 = content1.split('\n');
-        const lines2 = content2.split('\n');
-
-        // Solo comparar archivos con suficientes líneas
-        if (lines1.length < DUPLICATION_THRESHOLD || lines2.length < DUPLICATION_THRESHOLD) {
-          continue;
-        }
-
-        const normalized1 = normalizeCode(content1);
-        const normalized2 = normalizeCode(content2);
-
-        const similarity = calculateSimilarity(normalized1, normalized2);
-
-        if (similarity >= DUPLICATION_SIMILARITY) {
-          duplicates.push({
-            file1: files[i],
-            file2: files[j],
-            similarity: Math.round(similarity * 100),
-            lines1: lines1.length,
-            lines2: lines2.length,
-          });
-        }
-      } catch (error) {
-        log(`Warning: No se pudo comparar ${files[i]} con ${files[j]}: ${error.message}`);
-      }
-    }
-  }
-
-  if (duplicates.length > 0) {
-    const list = duplicates
-      .map(
-        d =>
-          ` - ${d.file1} ↔ ${d.file2} (${d.similarity}% similar, ${d.lines1}/${d.lines2} líneas)`
-      )
-      .join('\n');
-    fail(`Se detectó duplicación de código:\n${list}`);
-  } else {
-    log('✅ Verificación de duplicación OK.');
-  }
-}
-
 // Utilidades
 function log(msg) {
   console.log(`[QUALITY] ${msg}`);
