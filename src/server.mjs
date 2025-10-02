@@ -50,7 +50,7 @@ app.get('/agent/ping', (req, res) => {
 // Middleware de logging de métricas
 app.use((req, res, next) => {
   const responseTime = Date.now() - req.startTime;
-  console.log(`${req.method} ${req.path} - ${res.statusCode} - ${responseTime}ms`);
+  console.warn(`${req.method} ${req.path} - ${res.statusCode} - ${responseTime}ms`);
   next();
 });
 
@@ -63,9 +63,9 @@ app.use((err, req, res, next) => {
 // Iniciar servidor
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
-    console.log(`🚀 QuanNex Metrics Server running on port ${PORT}`);
-    console.log(`📊 Metrics available at http://localhost:${PORT}/metrics`);
-    console.log(`❤️  Health check at http://localhost:${PORT}/health`);
+    console.warn(`🚀 QuanNex Metrics Server running on port ${PORT}`);
+    console.warn(`📊 Metrics available at http://localhost:${PORT}/metrics`);
+    console.warn(`❤️  Health check at http://localhost:${PORT}/health`);
   });
 }
 
