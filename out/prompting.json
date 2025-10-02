@@ -1,16 +1,16 @@
 {
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
-  "system_prompt": "# test\n\n## Context\n\n\n## Constraints\n\n\n## Style\nformal\n\nGenerated at: 2025-10-02T18:52:28.598Z",
+  "system_prompt": "# Crear plan de remediación detallado con pasos específicos y cronograma\n\n## Context\n{{fault_synthesis.output.consolidated_report}}\n\n## Constraints\nPriorizar por severidad y impacto\n- Incluir estimaciones de tiempo y recursos\n- Proporcionar comandos específicos para remediación\n- Considerar dependencias entre tareas\n\n## Style\naction_plan\n\nGenerated at: 2025-10-02T21:58:39.868Z",
   "metadata": {
-    "goal": "test",
-    "style": "formal",
-    "constraints_count": 0,
-    "timestamp": "2025-10-02T18:52:28.598Z"
+    "goal": "Crear plan de remediación detallado con pasos específicos y cronograma",
+    "style": "action_plan",
+    "constraints_count": 4,
+    "timestamp": "2025-10-02T21:58:39.868Z"
   },
   "stats": {
-    "prompt_length": 93,
-    "constraints_applied": 0,
-    "context_length": 0
+    "prompt_length": 379,
+    "constraints_applied": 4,
+    "context_length": 46
   }
 }

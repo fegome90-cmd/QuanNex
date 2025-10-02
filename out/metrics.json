@@ -1,8 +1,58 @@
 {
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
-  "error": "metrics.agent:error:target_path es requerido",
-  "trace": [
-    "metrics.agent:error"
-  ]
+  "analysis_type": "comprehensive",
+  "time_range": "last_24h",
+  "timestamp": "2025-10-02T21:58:39.508Z",
+  "metrics": {
+    "performance": {
+      "response_time_avg": "245ms",
+      "throughput": "120 req/min",
+      "error_rate": 0.8,
+      "uptime_percentage": 99.2
+    },
+    "quality": {
+      "defect_rate": 3.2,
+      "rework_percentage": 8.5,
+      "test_coverage": 78,
+      "code_quality_score": 85
+    },
+    "security": {
+      "status": "ok"
+    },
+    "reliability": {
+      "status": "ok"
+    },
+    "maintainability": {
+      "status": "ok"
+    }
+  },
+  "trends": {
+    "trend_direction": "improving",
+    "trend_strength": "moderate",
+    "key_insights": [
+      "Productividad aumentó 15% en la última semana",
+      "Calidad del código mejoró con nueva cobertura de tests",
+      "Performance estable con latencia dentro de objetivos"
+    ],
+    "recommendations": [
+      "Continuar con automatización de tareas repetitivas",
+      "Implementar más tests unitarios para mejorar cobertura",
+      "Monitorear métricas de performance en producción"
+    ]
+  },
+  "health_score": 57,
+  "alerts": [
+    {
+      "level": "warning",
+      "message": "Health score por debajo del objetivo",
+      "recommendation": "Revisar métricas críticas"
+    }
+  ],
+  "dashboard": {
+    "overall_health": "green",
+    "productivity_score": 0,
+    "quality_score": 78,
+    "performance_score": 92
+  }
 }

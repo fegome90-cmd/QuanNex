@@ -23,6 +23,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Security Audit
+        run: npm audit --omit=dev --audit-level=high
+        timeout-minutes: 2
+
       - name: Typecheck
         run: npm run typecheck
 
@@ -37,6 +41,21 @@ jobs:
 
       - name: Quality Gate
         run: npm run quality:gate
+
+      - name: Policy Gate
+        run: node scripts/policy-check.mjs
+
+      - name: Start Metrics Server
+        run: |
+          npm run dev &
+          sleep 5
+        background: true
+
+      - name: Metrics Sanity Check
+        run: |
+          curl -sf http://localhost:3000/metrics | grep -q "qn_http_requests_total" || (echo "No metrics exported" && exit 1)
+          curl -sf http://localhost:3000/metrics | grep -q "qn_agent_executions_total" || (echo "Agent metrics missing" && exit 1)
+          echo "✅ Metrics exported correctly"
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4

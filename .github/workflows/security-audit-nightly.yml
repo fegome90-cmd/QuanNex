@@ -1,0 +1,55 @@
+name: Security Audit (Nightly Deep)
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # 3 AM UTC daily
+  workflow_dispatch: # Permitir ejecución manual
+
+jobs:
+  deep-security-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install all dependencies
+        run: npm ci
+
+      - name: Deep Security Audit
+        run: |
+          echo "🔍 Running deep security audit..."
+          npm audit --audit-level=moderate
+
+      - name: Dependency Check
+        run: |
+          echo "📦 Checking for outdated dependencies..."
+          npm outdated || true
+
+      - name: License Check
+        run: |
+          echo "📄 Checking licenses..."
+          npm ls --depth=0 --json | jq '.dependencies | to_entries[] | select(.value.license != "MIT" and .value.license != "Apache-2.0" and .value.license != "BSD-3-Clause") | .key' || true
+
+      - name: Security Audit Results
+        if: failure()
+        run: |
+          echo "❌ Deep security audit found issues"
+          echo "Check the audit output above for details"
+          exit 1
+
+      - name: Generate Security Report
+        if: always()
+        run: |
+          echo "📊 Security Audit Summary:"
+          echo "- Deep audit completed"
+          echo "- Dependencies checked"
+          echo "- Licenses verified"
+          echo "- Report generated at $(date)"

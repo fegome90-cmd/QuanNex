@@ -6,9 +6,23 @@
 
 import fs from 'fs-extra';
 import { glob } from 'glob';
+import crypto from 'crypto';
 
 // UMBRALES de calidad (ajustados para proyecto con muchos archivos legacy)
 const COV_MIN = { lines: 20, functions: 15, statements: 20, branches: 10 };
+
+// COBERTURA MÍNIMA POR DIRECTORIO CRÍTICO
+const MIN_DIR = [
+  { path: 'src/agents', lines: 85 },
+  { path: 'src/tools', lines: 85 },
+  { path: 'agents', lines: 85 },
+  { path: 'tools', lines: 85 },
+  { path: 'orchestration', lines: 80 },
+];
+
+// DETECCIÓN DE DUPLICACIÓN DE CÓDIGO
+const DUPLICATION_THRESHOLD = 10; // líneas mínimas para considerar duplicación
+const DUPLICATION_SIMILARITY = 0.8; // 80% de similitud
 
 // PATRONES que NO deben aparecer en código (indicadores de "a medias")
 const BAD_PATTERNS = [
@@ -59,6 +73,75 @@ function checkCoverage() {
   } catch (error) {
     fail(`Error leyendo coverage: ${error.message}`);
   }
+}
+
+// 1b) Verifica cobertura por directorio crítico
+function checkDirectoryCoverage() {
+  const lcovPath = 'coverage/lcov.info';
+  if (!fs.existsSync(lcovPath)) {
+    log('⚠️ No se puede verificar cobertura por directorio (lcov.info no existe)');
+    return;
+  }
+
+  const lcovContent = fs.readFileSync(lcovPath, 'utf8');
+  const lines = lcovContent.split('\n');
+
+  for (const dir of MIN_DIR) {
+    const dirFiles = [];
+    let totalLines = 0;
+    let coveredLines = 0;
+
+    // Buscar archivos del directorio en lcov
+    for (const line of lines) {
+      if (line.startsWith('SF:') && line.includes(dir.path)) {
+        dirFiles.push(line.replace('SF:', ''));
+      }
+      if (line.startsWith('LF:') && dirFiles.length > 0) {
+        totalLines += parseInt(line.replace('LF:', ''));
+      }
+      if (line.startsWith('LH:') && dirFiles.length > 0) {
+        coveredLines += parseInt(line.replace('LH:', ''));
+      }
+    }
+
+    if (dirFiles.length > 0) {
+      const coverage = totalLines > 0 ? (coveredLines / totalLines) * 100 : 0;
+      if (coverage < dir.lines) {
+        fail(`Directorio ${dir.path}: cobertura ${coverage.toFixed(1)}% < ${dir.lines}% requerido`);
+      }
+      log(`✅ ${dir.path}: ${coverage.toFixed(1)}% cobertura (${dirFiles.length} archivos)`);
+    } else {
+      log(`⚠️ ${dir.path}: No se encontraron archivos en cobertura`);
+    }
+  }
+}
+
+// 1c) Detección de duplicación rápida (hash de bloques)
+async function scanDuplication() {
+  log('🔍 Escaneando duplicación de código...');
+
+  const files = await glob(GLOB_CODE, { gitignore: true });
+  const map = new Map();
+
+  for (const file of files) {
+    try {
+      const text = fs
+        .readFileSync(file, 'utf8')
+        .replace(/\/\/.*$|\/\*[\s\S]*?\*\//gm, '') // Sin comentarios
+        .replace(/\s+/g, ' '); // Normalizar espacios
+
+      const hash = crypto.createHash('sha1').update(text).digest('hex');
+
+      if (map.has(hash)) {
+        fail(`Duplicación detectada entre:\n - ${map.get(hash)}\n - ${file}`);
+      }
+      map.set(hash, file);
+    } catch (error) {
+      log(`⚠️ Error procesando ${file}: ${error.message}`);
+    }
+  }
+
+  log(`✅ Duplicación: OK (${files.length} archivos escaneados)`);
 }
 
 // Parse LCOV format to get coverage percentages
@@ -262,6 +345,107 @@ async function checkImports() {
   }
 }
 
+// 6) Detección de duplicación de código
+function normalizeCode(content) {
+  return content
+    .replace(/\s+/g, ' ') // Normalizar espacios
+    .replace(/\/\*[\s\S]*?\*\//g, '') // Remover comentarios de bloque
+    .replace(/\/\/.*$/gm, '') // Remover comentarios de línea
+    .replace(/\s+/g, ' ') // Normalizar espacios nuevamente
+    .trim();
+}
+
+function calculateSimilarity(str1, str2) {
+  const longer = str1.length > str2.length ? str1 : str2;
+  const shorter = str1.length > str2.length ? str2 : str1;
+
+  if (longer.length === 0) return 1.0;
+
+  const editDistance = levenshteinDistance(longer, shorter);
+  return (longer.length - editDistance) / longer.length;
+}
+
+function levenshteinDistance(str1, str2) {
+  const matrix = [];
+
+  for (let i = 0; i <= str2.length; i++) {
+    matrix[i] = [i];
+  }
+
+  for (let j = 0; j <= str1.length; j++) {
+    matrix[0][j] = j;
+  }
+
+  for (let i = 1; i <= str2.length; i++) {
+    for (let j = 1; j <= str1.length; j++) {
+      if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+
+  return matrix[str2.length][str1.length];
+}
+
+async function scanDuplication() {
+  const files = await glob(GLOB_CODE, { gitignore: true });
+  const duplicates = [];
+
+  log('🔍 Escaneando duplicación de código...');
+
+  for (let i = 0; i < files.length; i++) {
+    for (let j = i + 1; j < files.length; j++) {
+      try {
+        const content1 = fs.readFileSync(files[i], 'utf8');
+        const content2 = fs.readFileSync(files[j], 'utf8');
+
+        const lines1 = content1.split('\n');
+        const lines2 = content2.split('\n');
+
+        // Solo comparar archivos con suficientes líneas
+        if (lines1.length < DUPLICATION_THRESHOLD || lines2.length < DUPLICATION_THRESHOLD) {
+          continue;
+        }
+
+        const normalized1 = normalizeCode(content1);
+        const normalized2 = normalizeCode(content2);
+
+        const similarity = calculateSimilarity(normalized1, normalized2);
+
+        if (similarity >= DUPLICATION_SIMILARITY) {
+          duplicates.push({
+            file1: files[i],
+            file2: files[j],
+            similarity: Math.round(similarity * 100),
+            lines1: lines1.length,
+            lines2: lines2.length,
+          });
+        }
+      } catch (error) {
+        log(`Warning: No se pudo comparar ${files[i]} con ${files[j]}: ${error.message}`);
+      }
+    }
+  }
+
+  if (duplicates.length > 0) {
+    const list = duplicates
+      .map(
+        d =>
+          ` - ${d.file1} ↔ ${d.file2} (${d.similarity}% similar, ${d.lines1}/${d.lines2} líneas)`
+      )
+      .join('\n');
+    fail(`Se detectó duplicación de código:\n${list}`);
+  } else {
+    log('✅ Verificación de duplicación OK.');
+  }
+}
+
 // Utilidades
 function log(msg) {
   console.log(`[QUALITY] ${msg}`);
@@ -282,6 +466,8 @@ function fail(msg) {
     await checkTestCoverage();
     await checkImports();
     checkCoverage();
+    checkDirectoryCoverage();
+    await scanDuplication();
 
     log('✅ Quality Gate: PASSED');
     console.log('\n🎉 ¡Código listo para producción!');

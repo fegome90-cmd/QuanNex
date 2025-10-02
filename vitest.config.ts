@@ -12,7 +12,7 @@ export default defineConfig({
       'agents/**/*.test.{ts,js}',
     ],
     coverage: {
-      provider: 'v8',
+      provider: 'istanbul',
       reportsDirectory: './coverage',
       reporter: ['text', 'lcov', 'html'],
       thresholds: {

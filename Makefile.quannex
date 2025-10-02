@@ -1,7 +1,7 @@
 # Quannex Context Agent - Makefile para Laboratorio Docker
 # Laboratorio de experimentos para calibración máxima de rendimiento
 
-.PHONY: help context-build context-up context-down context-bench context-analyze context-tune-lite context-tune-aggr context-tune-prod context-logs context-health context-clean
+.PHONY: help context-build context-up context-down context-bench context-analyze context-tune-lite context-tune-aggr context-tune-prod context-logs context-health context-clean quannex-lab-workflow quannex-consistency-analysis
 
 # Variables por defecto
 DOCKER_COMPOSE_FILE = docker/context/compose.yml
@@ -25,6 +25,10 @@ help: ## Mostrar ayuda del laboratorio Quannex
 	@echo "  context-down      Detener servicio Context Agent"
 	@echo "  context-bench     Ejecutar benchmark de carga"
 	@echo "  context-analyze   Analizar métricas del benchmark"
+	@echo ""
+	@echo "$(GREEN)🔍 COMANDOS DE ANÁLISIS:$(NC)"
+	@echo "  quannex-lab-workflow        Ejecutar análisis completo de fallas del sistema"
+	@echo "  quannex-consistency-analysis Ejecutar análisis de consistencia (3 ejecuciones)"
 	@echo ""
 	@echo "$(GREEN)⚙️  COMANDOS DE TUNING:$(NC)"
 	@echo "  context-tune-lite    Configuración ligera (RPS bajo)"
@@ -214,6 +218,28 @@ context-info: ## Mostrar información del laboratorio
 	@echo "$(GREEN)🐳 Docker Compose:$(NC)"
 	@echo "  Archivo: $(DOCKER_COMPOSE_FILE)"
 	@echo "  Imagen: $(CONTEXT_IMAGE)"
+
+# Análisis completo de fallas del sistema
+quannex-lab-workflow: ## Ejecutar análisis completo de fallas del sistema QuanNex
+	@echo "$(BLUE)🔍 QUANNEX LAB WORKFLOW - ANÁLISIS DE FALLAS$(NC)"
+	@echo ""
+	@echo "$(YELLOW)🚀 Iniciando análisis completo del sistema...$(NC)"
+	@echo ""
+	@./scripts/run-quannex-lab-workflow.sh
+	@echo ""
+	@echo "$(GREEN)✅ Análisis completado$(NC)"
+	@echo "$(BLUE)📚 Ver documentación: docs/workflow-quannex-lab-results.md$(NC)"
+
+# Análisis de consistencia del workflow
+quannex-consistency-analysis: ## Ejecutar análisis de consistencia del workflow (3 ejecuciones)
+	@echo "$(BLUE)🔄 ANÁLISIS DE CONSISTENCIA - WORKFLOW QUANNEX LAB$(NC)"
+	@echo ""
+	@echo "$(YELLOW)📊 Ejecutando análisis de consistencia (3 ejecuciones)...$(NC)"
+	@echo ""
+	@./scripts/analyze-workflow-consistency.sh
+	@echo ""
+	@echo "$(GREEN)✅ Análisis de consistencia completado$(NC)"
+	@echo "$(BLUE)📚 Ver documentación: docs/workflow-consistency-analysis.md$(NC)"
 	@echo ""
 	@echo "$(GREEN)📁 Archivos de salida:$(NC)"
 	@echo "  Benchmark: $(BENCH_OUTPUT)"

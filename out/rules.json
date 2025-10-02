@@ -2,7 +2,10 @@
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
   "rules_compiled": [
-    "[README.md] Policy loaded from README.md"
+    "[docs/SECURITY.md] Policy loaded from docs/SECURITY.md",
+    "[docs/INTEGRATION_GUIDE_AGENTS.md] Policy loaded from docs/INTEGRATION_GUIDE_AGENTS.md",
+    "[Makefile.quannex] Policy loaded from Makefile.quannex",
+    "[package.json] Policy loaded from package.json"
   ],
   "validation_result": {
     "passed": true,
@@ -21,15 +24,18 @@
   ],
   "metadata": {
     "policy_refs": [
+      "[Max Depth Reached]",
+      "[Max Depth Reached]",
+      "[Max Depth Reached]",
       "[Max Depth Reached]"
     ],
     "tone": "neutral",
     "domain": "general",
-    "compliance_level": "basic",
-    "timestamp": "2025-10-02T18:52:28.599Z"
+    "compliance_level": "strict",
+    "timestamp": "2025-10-02T21:58:39.695Z"
   },
   "stats": {
-    "policies_checked": 1,
+    "policies_checked": 4,
     "violations_found": 0,
     "warnings_found": 0,
     "compliance_score": 100

@@ -1,0 +1,63 @@
+{
+  "name": "workflow-quannex-lab",
+  "description": "Workflow completo de análisis QuanNex Lab",
+  "steps": [
+    {
+      "step_id": "context_analysis",
+      "agent": "context",
+      "input": {
+        "sources": ["README.md", "package.json", "SECURITY.md"],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "security_audit",
+      "agent": "security",
+      "input": {
+        "target_path": ".",
+        "scan_type": "full"
+      },
+      "depends_on": ["context_analysis"]
+    },
+    {
+      "step_id": "metrics_analysis",
+      "agent": "metrics",
+      "input": {
+        "metric_types": ["productivity", "quality", "performance"],
+        "time_range": "7d",
+        "analysis_depth": "basic"
+      },
+      "depends_on": ["context_analysis"]
+    },
+    {
+      "step_id": "rules_compliance",
+      "agent": "rules",
+      "input": {
+        "policy_refs": ["security", "quality", "performance"],
+        "tone": "formal",
+        "domain": "software_development",
+        "compliance_level": "strict"
+      },
+      "depends_on": ["security_audit", "metrics_analysis"]
+    },
+    {
+      "step_id": "fault_synthesis",
+      "agent": "context",
+      "input": {
+        "sources": ["SECURITY.md", "package.json"],
+        "max_tokens": 1500
+      },
+      "depends_on": ["security_audit", "metrics_analysis"]
+    },
+    {
+      "step_id": "remediation_plan",
+      "agent": "optimization",
+      "input": {
+        "analysis_type": "remediation",
+        "target_areas": ["security", "performance", "quality"],
+        "priority": "high"
+      },
+      "depends_on": ["fault_synthesis", "rules_compliance"]
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "name": "Workflow Quannex - Verificación de Errores del Sistema",
+  "description": "Workflow para verificar errores en el sistema Quannex, empezando por el orquestador y solicitando verificación a los 3 core",
+  "steps": [
+    {
+      "step_id": "verificar_orquestador",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "orchestrator.js",
+          "orchestration/orchestrator.js",
+          "orchestration/mcp/consolidated-orchestrator.js",
+          "versions/v3/consolidated-orchestrator.js"
+        ],
+        "selectors": [
+          "imports",
+          "exports",
+          "class_definitions",
+          "error_handling",
+          "dependencies"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "verificar_core_rules_enforcer",
+      "agent": "rules",
+      "depends_on": ["verificar_orquestador"],
+      "input": {
+        "policy_refs": [
+          "core/rules-enforcer.js",
+          "core/rules-protection-system.js",
+          "core/taskdb-protection.js"
+        ],
+        "compliance_level": "strict",
+        "code": "{{verificar_orquestador.output.context_bundle}}",
+        "rules": [
+          "Verificar integridad del rules-enforcer",
+          "Validar sistema de protección de rules",
+          "Comprobar integración con TaskDB",
+          "Detectar errores de importación o exportación",
+          "Verificar manejo de errores y excepciones"
+        ]
+      }
+    },
+    {
+      "step_id": "verificar_core_centralized_logger",
+      "agent": "context",
+      "depends_on": ["verificar_core_rules_enforcer"],
+      "input": {
+        "sources": [
+          "core/centralized-logger.js",
+          ".reports/centralized-system.log",
+          ".reports/system-metrics.json",
+          ".reports/activity-tracker.json"
+        ],
+        "selectors": [
+          "logging_methods",
+          "file_operations",
+          "error_handling",
+          "metrics_tracking",
+          "system_integrity"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "verificar_core_integrity_validator",
+      "agent": "rules",
+      "depends_on": ["verificar_core_centralized_logger"],
+      "input": {
+        "policy_refs": [
+          "core/integrity-validator.js",
+          "data/taskdb.json",
+          ".reports/rules-protection-config.json",
+          ".reports/rules-throttle.json"
+        ],
+        "compliance_level": "strict",
+        "code": "{{verificar_core_centralized_logger.output.context_bundle}}",
+        "rules": [
+          "Validar integridad del integrity-validator",
+          "Verificar validación de TaskDB",
+          "Comprobar validación de configuración de protección",
+          "Detectar inconsistencias en métricas de performance",
+          "Verificar logs de actividad y su integridad"
+        ]
+      }
+    },
+    {
+      "step_id": "ejecutar_verificacion_sistema",
+      "agent": "prompting",
+      "depends_on": ["verificar_core_integrity_validator"],
+      "input": {
+        "goal": "Ejecutar comandos de verificación del sistema completo",
+        "context": "{{verificar_core_integrity_validator.output.system_prompt}}",
+        "style": "technical",
+        "constraints": [
+          "Ejecutar orquestador para verificar estado inicial",
+          "Ejecutar rules-enforcer para verificar cumplimiento",
+          "Ejecutar centralized-logger para verificar métricas",
+          "Ejecutar integrity-validator para verificar integridad",
+          "Capturar todos los errores y advertencias",
+          "Documentar estado de cada componente"
+        ]
+      }
+    },
+    {
+      "step_id": "analizar_errores_encontrados",
+      "agent": "context",
+      "depends_on": ["ejecutar_verificacion_sistema"],
+      "input": {
+        "sources": [
+          ".reports/rules-enforcement.log",
+          ".reports/centralized-system.log",
+          ".reports/system-metrics.json",
+          ".reports/activity-tracker.json",
+          ".reports/rules-performance.json",
+          ".reports/rules-throttle.json"
+        ],
+        "selectors": [
+          "errors",
+          "warnings",
+          "violations",
+          "performance_issues",
+          "integrity_problems",
+          "system_status"
+        ],
+        "max_tokens": 2500
+      }
+    },
+    {
+      "step_id": "generar_reporte_errores",
+      "agent": "prompting",
+      "depends_on": ["analizar_errores_encontrados"],
+      "input": {
+        "goal": "Generar reporte completo de errores y estado del sistema Quannex",
+        "context": "{{analizar_errores_encontrados.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Incluir resumen ejecutivo del estado del sistema",
+          "Listar todos los errores encontrados por componente",
+          "Categorizar errores por severidad (CRÍTICO, ALTO, MEDIO, BAJO)",
+          "Proporcionar recomendaciones específicas para cada error",
+          "Incluir comandos para reproducir y solucionar errores",
+          "Crear checklist de verificación post-corrección",
+          "Documentar métricas de rendimiento actuales",
+          "Incluir timeline de actividades del sistema"
+        ]
+      }
+    }
+  ]
+}

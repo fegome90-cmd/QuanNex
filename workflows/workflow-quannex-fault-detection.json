@@ -1,0 +1,286 @@
+{
+  "name": "Workflow QuanNex - Detección Avanzada de Fallas Multi-Agente",
+  "description": "Workflow avanzado que utiliza múltiples agentes especializados para detectar fallas, analizar seguridad, métricas y optimización del sistema QuanNex",
+  "version": "1.0.0",
+  "metadata": {
+    "created_by": "QuanNex Fault Detection System",
+    "created_at": "2025-01-02",
+    "agents_used": ["context", "security", "metrics", "optimization", "rules", "prompting"],
+    "fault_detection_enabled": true,
+    "parallel_execution": true
+  },
+  "steps": [
+    {
+      "step_id": "context_analysis",
+      "agent": "context",
+      "description": "Análisis contextual completo del sistema QuanNex",
+      "input": {
+        "sources": [
+          "package.json",
+          "orchestrator.js",
+          "agents/**/*.js",
+          "orchestration/**/*.js",
+          "scripts/**/*.sh",
+          "Makefile.quannex",
+          "docs/**/*.md"
+        ],
+        "selectors": [
+          "dependencies",
+          "configuration",
+          "agent_definitions",
+          "orchestration_logic",
+          "scripts",
+          "documentation"
+        ],
+        "max_tokens": 2000,
+        "include_metadata": true
+      },
+      "fault_detection": {
+        "enabled": true,
+        "checks": [
+          "missing_dependencies",
+          "configuration_errors",
+          "agent_connectivity",
+          "orchestration_integrity"
+        ]
+      }
+    },
+    {
+      "step_id": "security_audit",
+      "agent": "security",
+      "description": "Auditoría de seguridad completa del sistema",
+      "depends_on": ["context_analysis"],
+      "input": {
+        "audit_type": "comprehensive",
+        "targets": [
+          "package.json",
+          "agents/**/*.js",
+          "orchestration/**/*.js",
+          "scripts/**/*.sh",
+          "config/**/*.json"
+        ],
+        "security_checks": [
+          "dependency_vulnerabilities",
+          "code_injection_risks",
+          "authentication_bypasses",
+          "configuration_exposures",
+          "file_permissions"
+        ],
+        "severity_threshold": "medium",
+        "context": "{{context_analysis.output.context_bundle}}"
+      },
+      "fault_detection": {
+        "enabled": true,
+        "checks": [
+          "vulnerability_detection",
+          "security_misconfigurations",
+          "authentication_failures",
+          "authorization_bypasses"
+        ],
+        "alert_threshold": "high"
+      }
+    },
+    {
+      "step_id": "metrics_analysis",
+      "agent": "metrics",
+      "description": "Análisis de métricas de rendimiento y calidad",
+      "depends_on": ["context_analysis"],
+      "input": {
+        "metric_types": [
+          "performance",
+          "quality",
+          "security",
+          "reliability",
+          "maintainability"
+        ],
+        "time_range": "last_24h",
+        "analysis_depth": "comprehensive",
+        "include_trends": true,
+        "context": "{{context_analysis.output.context_bundle}}"
+      },
+      "fault_detection": {
+        "enabled": true,
+        "checks": [
+          "performance_degradation",
+          "quality_regression",
+          "reliability_issues",
+          "maintainability_concerns"
+        ],
+        "thresholds": {
+          "performance": 0.8,
+          "quality": 0.9,
+          "reliability": 0.95
+        }
+      }
+    },
+    {
+      "step_id": "optimization_check",
+      "agent": "optimization",
+      "description": "Verificación de optimizaciones y mejoras del sistema",
+      "depends_on": ["context_analysis", "metrics_analysis"],
+      "input": {
+        "optimization_targets": [
+          "code_quality",
+          "performance",
+          "security",
+          "maintainability",
+          "scalability"
+        ],
+        "analysis_level": "deep",
+        "include_recommendations": true,
+        "context": "{{context_analysis.output.context_bundle}}",
+        "metrics": "{{metrics_analysis.output.metrics_summary}}"
+      },
+      "fault_detection": {
+        "enabled": true,
+        "checks": [
+          "optimization_opportunities",
+          "performance_bottlenecks",
+          "code_smells",
+          "architectural_issues"
+        ]
+      }
+    },
+    {
+      "step_id": "rules_compliance",
+      "agent": "rules",
+      "description": "Verificación de cumplimiento de reglas y políticas",
+      "depends_on": ["security_audit", "optimization_check"],
+      "input": {
+        "policy_refs": [
+          "docs/SECURITY.md",
+          "docs/INTEGRATION_GUIDE_AGENTS.md",
+          "Makefile.quannex",
+          "package.json"
+        ],
+        "compliance_level": "strict",
+        "rules": [
+          "security_standards",
+          "code_quality",
+          "documentation_requirements",
+          "testing_coverage",
+          "performance_benchmarks"
+        ],
+        "security_context": "{{security_audit.output.security_report}}",
+        "optimization_context": "{{optimization_check.output.optimization_report}}"
+      },
+      "fault_detection": {
+        "enabled": true,
+        "checks": [
+          "policy_violations",
+          "compliance_gaps",
+          "rule_conflicts",
+          "enforcement_failures"
+        ],
+        "severity_mapping": {
+          "critical": "security_violations",
+          "high": "compliance_gaps",
+          "medium": "rule_conflicts",
+          "low": "enforcement_failures"
+        }
+      }
+    },
+    {
+      "step_id": "fault_synthesis",
+      "agent": "prompting",
+      "description": "Síntesis y análisis de todas las fallas detectadas",
+      "depends_on": ["security_audit", "metrics_analysis", "optimization_check", "rules_compliance"],
+      "input": {
+        "goal": "Generar reporte consolidado de fallas detectadas con priorización y recomendaciones",
+        "context": "{{context_analysis.output.context_bundle}}",
+        "style": "technical_report",
+        "constraints": [
+          "Priorizar fallas críticas y de alta severidad",
+          "Proporcionar recomendaciones específicas y accionables",
+          "Incluir métricas de impacto y riesgo",
+          "Generar plan de remediación estructurado"
+        ],
+        "security_findings": "{{security_audit.output.security_report}}",
+        "metrics_findings": "{{metrics_analysis.output.metrics_summary}}",
+        "optimization_findings": "{{optimization_check.output.optimization_report}}",
+        "compliance_findings": "{{rules_compliance.output.compliance_report}}"
+      },
+      "fault_detection": {
+        "enabled": true,
+        "consolidation": true,
+        "output_format": "structured_report"
+      }
+    },
+    {
+      "step_id": "remediation_plan",
+      "agent": "prompting",
+      "description": "Generación de plan de remediación automatizado",
+      "depends_on": ["fault_synthesis"],
+      "input": {
+        "goal": "Crear plan de remediación detallado con pasos específicos y cronograma",
+        "context": "{{fault_synthesis.output.consolidated_report}}",
+        "style": "action_plan",
+        "constraints": [
+          "Priorizar por severidad y impacto",
+          "Incluir estimaciones de tiempo y recursos",
+          "Proporcionar comandos específicos para remediación",
+          "Considerar dependencias entre tareas"
+        ]
+      },
+      "fault_detection": {
+        "enabled": true,
+        "output_format": "remediation_plan"
+      }
+    }
+  ],
+  "fault_detection_config": {
+    "global_enabled": true,
+    "parallel_execution": true,
+    "timeout_seconds": 300,
+    "retry_attempts": 3,
+    "alert_thresholds": {
+      "critical": 1,
+      "high": 3,
+      "medium": 5,
+      "low": 10
+    },
+    "notification_channels": [
+      "console",
+      "log_file",
+      "structured_output"
+    ],
+    "fault_categories": {
+      "security": {
+        "weight": 1.0,
+        "critical_threshold": 0.9
+      },
+      "performance": {
+        "weight": 0.8,
+        "critical_threshold": 0.7
+      },
+      "reliability": {
+        "weight": 0.9,
+        "critical_threshold": 0.8
+      },
+      "compliance": {
+        "weight": 0.7,
+        "critical_threshold": 0.6
+      }
+    }
+  },
+  "output_format": {
+    "fault_report": {
+      "format": "json",
+      "include_metadata": true,
+      "severity_levels": ["critical", "high", "medium", "low"],
+      "sections": [
+        "executive_summary",
+        "detailed_findings",
+        "risk_assessment",
+        "remediation_plan",
+        "recommendations"
+      ]
+    },
+    "remediation_plan": {
+      "format": "markdown",
+      "include_timeline": true,
+      "include_resources": true,
+      "include_commands": true
+    }
+  }
+}

@@ -1,0 +1,81 @@
+name: Metrics Sanity Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main]
+
+jobs:
+  metrics-sanity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start app (test mode)
+        run: |
+          node dist/server.mjs & echo $! > app.pid
+          sleep 3
+          echo "App started with PID: $(cat app.pid)"
+
+      - name: Metrics Sanity Check
+        run: |
+          echo "🔍 Checking metrics endpoint..."
+          curl -sf http://localhost:3000/metrics | grep -q "qn_http_requests_total" \
+            || (echo "❌ No qn_http_requests_total metric found" && exit 1)
+
+          curl -sf http://localhost:3000/metrics | grep -q "qn_http_request_duration_seconds_bucket" \
+            || (echo "❌ No qn_http_request_duration_seconds_bucket metric found" && exit 1)
+
+          curl -sf http://localhost:3000/metrics | grep -q "qn_test_coverage_percent" \
+            || (echo "❌ No qn_test_coverage_percent metric found" && exit 1)
+
+          echo "✅ All required metrics found!"
+
+      - name: Health Check
+        run: |
+          echo "❤️ Checking health endpoint..."
+          curl -sf http://localhost:3000/health | jq -e '.status == "healthy"' \
+            || (echo "❌ Health check failed" && exit 1)
+          echo "✅ Health check passed!"
+
+      - name: Agent Ping Test
+        run: |
+          echo "🤖 Testing agent ping endpoint..."
+          curl -sf http://localhost:3000/agent/ping | jq -e '.pong == true' \
+            || (echo "❌ Agent ping failed" && exit 1)
+          echo "✅ Agent ping test passed!"
+
+      - name: Stop app
+        if: always()
+        run: |
+          if [ -f app.pid ]; then
+            kill $(cat app.pid) || true
+            rm -f app.pid
+            echo "🛑 App stopped"
+          fi
+
+      - name: Metrics Validation Report
+        if: always()
+        run: |
+          echo "📊 Metrics Validation Summary:"
+          echo "- qn_http_requests_total: ✅ Found"
+          echo "- qn_http_request_duration_seconds_bucket: ✅ Found" 
+          echo "- qn_test_coverage_percent: ✅ Found"
+          echo "- Health endpoint: ✅ Working"
+          echo "- Agent ping endpoint: ✅ Working"

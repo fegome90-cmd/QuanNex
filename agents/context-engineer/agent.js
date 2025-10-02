@@ -12,7 +12,7 @@ import { spawnSync } from 'node:child_process';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const PROJECT_ROOT = join(__dirname, '..', '..');
 
-const validateInput = (data) => {
+const validateInput = data => {
   const errors = [];
   if (typeof data !== 'object' || data === null) {
     return ['Input must be an object'];
@@ -39,12 +39,12 @@ const action = data.action || 'generate';
 const contextType = data.context_type || 'both';
 const updateSource = data.update_source || 'manual';
 
-console.log('🔧 [Context Engineer] Iniciando gestión de contextos...');
+// console.log('🔧 [Context Engineer] Iniciando gestión de contextos...');
 
 // Función para analizar el estado del proyecto
 const analyzeProjectState = () => {
-  console.log('🔍 [Context Engineer] Analizando estado del proyecto...');
-  
+  // console.log('🔍 [Context Engineer] Analizando estado del proyecto...');
+
   const state = {
     timestamp: new Date().toISOString(),
     project_root: PROJECT_ROOT,
@@ -52,25 +52,25 @@ const analyzeProjectState = () => {
     orchestrator: {},
     tests: {},
     documentation: {},
-    performance: {}
+    performance: {},
   };
-  
+
   // Analizar agentes
   const agentDirs = ['context', 'prompting', 'rules', 'security', 'metrics', 'optimization'];
   for (const agent of agentDirs) {
     const agentPath = join(PROJECT_ROOT, 'agents', agent, 'agent.js');
     state.agents[agent] = {
       exists: existsSync(agentPath),
-      functional: false
+      functional: false,
     };
-    
+
     if (state.agents[agent].exists) {
       try {
-        const result = spawnSync('node', [agentPath], { 
-          input: '{}', 
+        const result = spawnSync('node', [agentPath], {
+          input: '{}',
           stdio: 'pipe',
           timeout: 5000,
-          cwd: PROJECT_ROOT
+          cwd: PROJECT_ROOT,
         });
         state.agents[agent].functional = result.status === 0;
       } catch (error) {
@@ -78,76 +78,78 @@ const analyzeProjectState = () => {
       }
     }
   }
-  
+
   // Analizar orquestador
   const orchestratorPath = join(PROJECT_ROOT, 'orchestration', 'orchestrator.js');
   state.orchestrator = {
     exists: existsSync(orchestratorPath),
-    functional: false
+    functional: false,
   };
-  
+
   if (state.orchestrator.exists) {
     try {
-      const result = spawnSync('node', [orchestratorPath, 'health'], { 
+      const result = spawnSync('node', [orchestratorPath, 'health'], {
         stdio: 'pipe',
         timeout: 10000,
-        cwd: PROJECT_ROOT
+        cwd: PROJECT_ROOT,
       });
       state.orchestrator.functional = result.status === 0;
     } catch (error) {
       state.orchestrator.functional = false;
     }
   }
-  
+
   // Analizar pruebas
   const makefilePath = join(PROJECT_ROOT, 'Makefile');
   state.tests = {
     makefile_exists: existsSync(makefilePath),
-    functional: false
+    functional: false,
   };
-  
+
   if (state.tests.makefile_exists) {
     try {
-      const result = spawnSync('make', ['test-safe'], { 
+      const result = spawnSync('make', ['test-safe'], {
         stdio: 'pipe',
         timeout: 30000,
-        cwd: PROJECT_ROOT
+        cwd: PROJECT_ROOT,
       });
       state.tests.functional = result.status === 0;
     } catch (error) {
       state.tests.functional = false;
     }
   }
-  
+
   // Analizar documentación
   state.documentation = {
     manual_exists: existsSync(join(PROJECT_ROOT, 'MANUAL-COMPLETO-CURSOR.md')),
     readme_exists: existsSync(join(PROJECT_ROOT, 'README.md')),
-    workflows_exist: existsSync(join(PROJECT_ROOT, 'workflows-codex.json'))
+    workflows_exist: existsSync(join(PROJECT_ROOT, 'workflows-codex.json')),
   };
-  
+
   // Métricas de performance (simuladas)
   state.performance = {
     context_agent_time: '1.3s',
     prompting_agent_time: '2.3s',
     rules_agent_time: '1.5s',
     workflow_total_time: '5.8s',
-    success_rate: '100%'
+    success_rate: '100%',
   };
-  
-  console.log('✅ [Context Engineer] Análisis completado');
+
+  // console.log('✅ [Context Engineer] Análisis completado');
   return state;
 };
 
 // Función para generar contexto completo
-const generateFullContext = (projectState) => {
-  console.log('📄 [Context Engineer] Generando contexto completo...');
-  
+const generateFullContext = projectState => {
+  // console.log('📄 [Context Engineer] Generando contexto completo...');
+
   const agentsWorking = Object.values(projectState.agents).filter(a => a.functional).length;
   const agentsTotal = Object.keys(projectState.agents).length;
-  const orchestratorStatus = projectState.orchestrator.functional ? '✅ Funcional' : '❌ No funciona';
+  const orchestratorStatus = projectState.orchestrator.functional
+    ? '✅ Funcional'
+    : '❌ No funciona';
   const testsStatus = projectState.tests.functional ? '✅ Pasando' : '❌ Fallando';
-  
+
   const fullContext = `# CONTEXTO DE INGENIERO SENIOR - QUANNEX STARTKIT
 
 ## 🎯 RESUMEN EJECUTIVO
@@ -288,13 +290,16 @@ make test-safe
 };
 
 // Función para generar contexto rápido
-const generateQuickContext = (projectState) => {
-  console.log('⚡ [Context Engineer] Generando contexto rápido...');
-  
+const generateQuickContext = projectState => {
+  // console.log('⚡ [Context Engineer] Generando contexto rápido...');
+
   const agentsWorking = Object.values(projectState.agents).filter(a => a.functional).length;
   const agentsTotal = Object.keys(projectState.agents).length;
-  const status = projectState.orchestrator.functional && projectState.tests.functional ? '✅ Funcional' : '❌ Con problemas';
-  
+  const status =
+    projectState.orchestrator.functional && projectState.tests.functional
+      ? '✅ Funcional'
+      : '❌ Con problemas';
+
   const quickContext = `# CONTEXTO RÁPIDO - QUANNEX STARTKIT
 
 ## 🎯 ESTADO ACTUAL
@@ -339,94 +344,95 @@ node orchestration/orchestrator.js health  # Verificar MCP
 
 // Función para validar contextos
 const validateContexts = () => {
-  console.log('✅ [Context Engineer] Validando contextos...');
-  
+  // console.log('✅ [Context Engineer] Validando contextos...');
+
   const validation = {
     timestamp: new Date().toISOString(),
     full_context: {
       exists: existsSync(join(PROJECT_ROOT, 'CONTEXTO-INGENIERO-SENIOR.md')),
-      valid: false
+      valid: false,
     },
     quick_context: {
       exists: existsSync(join(PROJECT_ROOT, 'CONTEXTO-RAPIDO.md')),
-      valid: false
-    }
+      valid: false,
+    },
   };
-  
+
   // Validar contexto completo
   if (validation.full_context.exists) {
     const content = readFileSync(join(PROJECT_ROOT, 'CONTEXTO-INGENIERO-SENIOR.md'), 'utf8');
-    validation.full_context.valid = content.includes('QUANNEX STARTKIT') && content.includes('MCP QuanNex');
+    validation.full_context.valid =
+      content.includes('QUANNEX STARTKIT') && content.includes('MCP QuanNex');
   }
-  
+
   // Validar contexto rápido
   if (validation.quick_context.exists) {
     const content = readFileSync(join(PROJECT_ROOT, 'CONTEXTO-RAPIDO.md'), 'utf8');
-    validation.quick_context.valid = content.includes('QUANNEX STARTKIT') && content.includes('MCP QuanNex');
+    validation.quick_context.valid =
+      content.includes('QUANNEX STARTKIT') && content.includes('MCP QuanNex');
   }
-  
-  console.log('✅ [Context Engineer] Validación completada');
+
+  // console.log('✅ [Context Engineer] Validación completada');
   return validation;
 };
 
 // Ejecutar acción solicitada
 try {
   let result = {};
-  
+
   switch (action) {
     case 'generate':
       const projectState = analyzeProjectState();
-      
+
       if (contextType === 'full' || contextType === 'both') {
         const fullContext = generateFullContext(projectState);
         writeFileSync(join(PROJECT_ROOT, 'CONTEXTO-INGENIERO-SENIOR.md'), fullContext);
         result.full_context_generated = true;
       }
-      
+
       if (contextType === 'quick' || contextType === 'both') {
         const quickContext = generateQuickContext(projectState);
         writeFileSync(join(PROJECT_ROOT, 'CONTEXTO-RAPIDO.md'), quickContext);
         result.quick_context_generated = true;
       }
-      
+
       result.project_state = projectState;
       break;
-      
+
     case 'update':
-      console.log('🔄 [Context Engineer] Actualizando contextos...');
+      // console.log('🔄 [Context Engineer] Actualizando contextos...');
       const updatedState = analyzeProjectState();
-      
+
       if (contextType === 'full' || contextType === 'both') {
         const updatedFullContext = generateFullContext(updatedState);
         writeFileSync(join(PROJECT_ROOT, 'CONTEXTO-INGENIERO-SENIOR.md'), updatedFullContext);
         result.full_context_updated = true;
       }
-      
+
       if (contextType === 'quick' || contextType === 'both') {
         const updatedQuickContext = generateQuickContext(updatedState);
         writeFileSync(join(PROJECT_ROOT, 'CONTEXTO-RAPIDO.md'), updatedQuickContext);
         result.quick_context_updated = true;
       }
-      
+
       result.update_source = updateSource;
       result.updated_state = updatedState;
       break;
-      
+
     case 'analyze':
       result = analyzeProjectState();
       break;
-      
+
     case 'validate':
       result = validateContexts();
       break;
-      
+
     default:
       throw new Error(`Acción no reconocida: ${action}`);
   }
-  
-  console.log('✅ [Context Engineer] Operación completada exitosamente');
+
+  // console.log('✅ [Context Engineer] Operación completada exitosamente');
   console.log(JSON.stringify(result, null, 2));
-  
 } catch (error) {
   console.error('❌ [Context Engineer] Error:', error.message);
   process.exit(1);

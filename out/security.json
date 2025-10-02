@@ -1,28 +1,12 @@
-🔒 [Security Scan] Iniciando escaneo de seguridad...
-🔒 [Security Scan] Verificando dependencias...
-✅ [SUCCESS] Dependencias verificadas
-🔍 [Security Scan] Escaneando vulnerabilidades...
-🔍 [Security Scan] Archivos escaneados: 0
-🔍 [Security Scan] Archivos con vulnerabilidades: 0
-✅ [SUCCESS] No se encontraron vulnerabilidades
-📦 [Security Scan] Auditando dependencias...
-✅ [SUCCESS] Auditoría de dependencias completada
-🔐 [Security Scan] Escaneando secretos...
-🔐 [Security Scan] Archivos escaneados: 0
-🔐 [Security Scan] Archivos con secretos: 0
-✅ [SUCCESS] No se encontraron secretos
-📋 [Security Scan] Verificando compliance...
-✅ [SUCCESS] Verificación de compliance completada
-✅ [SUCCESS] ✅ Escaneo de seguridad completado exitosamente
 {
   "schema_version": "1.0.0",
   "agent_version": "2.0.0",
   "scan_type": "full",
   "target_path": ".",
-  "timestamp": "2025-10-02T12:44:04.787Z",
+  "timestamp": "2025-10-02T21:58:39.514Z",
   "results": {
     "vulnerability_scan": {
-      "files_scanned": 0,
+      "files_scanned": 462,
       "vulnerabilities_found": 0,
       "critical_issues": 0,
       "high_issues": 0,
@@ -32,7 +16,13 @@
     },
     "dependency_audit": {
       "vulnerabilities": {},
-      "details": []
+      "details": [
+        {
+          "type": "dependency_check",
+          "message": "Checked 25 dependencies",
+          "severity": "info"
+        }
+      ]
     },
     "secret_scan": {
       "files_scanned": 0,
@@ -43,11 +33,19 @@
       "frameworks_checked": [
         "OWASP",
         "NIST",
-        "CIS"
+        "ISO27001"
       ],
       "compliance_score": 85,
-      "issues_found": 0,
-      "details": []
+      "violations": []
     }
-  }
+  },
+  "summary": {
+    "total_issues": 462,
+    "critical_count": 0,
+    "high_count": 0,
+    "medium_count": 0,
+    "low_count": 0,
+    "risk_score": 0
+  },
+  "recommendations": []
 }

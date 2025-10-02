@@ -1,0 +1,32 @@
+{
+  "forbiddenApis": [
+    "child_process.execSync",
+    "fs.rmSync",
+    "eval(",
+    "Function(",
+    "setTimeout(",
+    "setInterval("
+  ],
+  "maxEnvAccess": [
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "GITHUB_TOKEN",
+    "NPM_TOKEN"
+  ],
+  "noPlainSecrets": true,
+  "requiredImports": {
+    "src/**/*.{ts,tsx}": [
+      "import { describe, it, expect } from 'vitest'"
+    ]
+  },
+  "forbiddenPatterns": [
+    "process.env\\.",
+    "localStorage\\.",
+    "sessionStorage\\.",
+    "document\\.",
+    "window\\."
+  ],
+  "maxFileSize": 1000,
+  "maxFunctionComplexity": 10,
+  "maxLinesPerFunction": 80
+}
