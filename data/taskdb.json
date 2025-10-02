@@ -98,7 +98,110 @@
         "Expansión de capacidades de detección",
         "Integración con sistemas externos",
         "Optimización de performance"
-      ]
+      ],
+      "nivel_2_plan": {
+        "title": "Nivel 2 - Consolidación: De 'Ya no se rompe' → 'Ya da confianza real'",
+        "status": "in_progress",
+        "start_date": "2025-10-02",
+        "duration_weeks": 4,
+        "objectives": [
+          "Métricas accionables visibles y gates que fallen cuando algo no cuadra",
+          "Auditoría de seguridad y compliance mínimas que bloqueen código inseguro",
+          "Tests reforzados (unit + e2e) con cobertura aceptable en módulos críticos",
+          "Documentación viva que enseñe a levantar y mantener QuanNex paso a paso"
+        ],
+        "weekly_milestones": {
+          "semana_1_metricas": {
+            "title": "Métricas accionables",
+            "status": "completed",
+            "deliverable": "Pipeline que reporta métricas reales y nunca más 'unknown_metric_type'",
+            "tasks_completed": [
+              "Servidor Prometheus funcionando",
+              "Agente de métricas conectado",
+              "Metrics Gate implementado",
+              "Workflow validado"
+            ]
+          },
+          "semana_2_seguridad": {
+            "title": "Security & Compliance",
+            "status": "in_progress",
+            "deliverable": "Pipeline que nunca pasa con 0 archivos escaneados y bloquea código inseguro",
+            "tasks_completed": [
+              "Configuración de escaneo validada",
+              "Agente de seguridad conectado",
+              "Scan Gate implementado",
+              "Security Audit configurado"
+            ],
+            "tasks_pending": [
+              "Policy Gate (APIs prohibidas, secretos)",
+              "Integración de gitleaks"
+            ]
+          },
+          "semana_3_testing": {
+            "title": "Testing reforzado",
+            "status": "pending",
+            "deliverable": "Gates que bloquean si falta test en tools/agents o si cobertura <85%",
+            "tasks_pending": [
+              "Tests unitarios para tools (≥85% cobertura)",
+              "Tests unitarios para agentes (≥85% cobertura)",
+              "Tests e2e en Docker",
+              "Quality Gate reforzado"
+            ]
+          },
+          "semana_4_documentacion": {
+            "title": "Documentación viva",
+            "status": "pending",
+            "deliverable": "Repo con documentación autoexplicativa que cualquier dev puede levantar y mantener",
+            "tasks_pending": [
+              "README.md actualizado con quick start",
+              "Tutorial paso a paso completo",
+              "Documentación técnica",
+              "Ejemplos prácticos"
+            ]
+          }
+        },
+        "exit_gates": {
+          "metricas": {
+            "status": "completed",
+            "gates": [
+              "Metrics Gate: no más unknown_metric_type ✅",
+              "Métricas exportadas: p50/p95/p99, RPS, error-rate ✅",
+              "Consistencia: Metrics Gate pasa en 100% de ejecuciones ✅"
+            ]
+          },
+          "seguridad": {
+            "status": "in_progress",
+            "gates": [
+              "Scan Gate: nunca más files_scanned=0 ✅",
+              "Policy Gate: bloquea APIs/secretos inseguros 🟡",
+              "Security Audit: PR-fast + nightly funcionando ✅"
+            ]
+          },
+          "testing": {
+            "status": "pending",
+            "gates": [
+              "Coverage por carpeta: ≥85% en agents/tools 🔴",
+              "Tests unitarios: happy path + error para cada tool/agente 🔴",
+              "Tests e2e: workflow completo en Docker 🔴"
+            ]
+          },
+          "documentacion": {
+            "status": "pending",
+            "gates": [
+              "README: actualizado con quick start 🔴",
+              "Tutorial: paso a paso completo 🔴",
+              "Ejemplos: capturas y JSON reales 🔴"
+            ]
+          }
+        },
+        "progress_metrics": {
+          "overall_progress": "40%",
+          "semana_1": "100% completado",
+          "semana_2": "80% completado",
+          "semana_3": "0% completado",
+          "semana_4": "0% completado"
+        }
+      }
     }
   },
   "lessons_learned": {
