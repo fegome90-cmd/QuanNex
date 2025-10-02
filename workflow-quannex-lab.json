@@ -1,0 +1,64 @@
+{
+  "name": "Quannex Laboratorio Docker - Documentación de Palancas",
+  "description": "Workflow para documentar palancas de rendimiento del laboratorio Quannex",
+  "steps": [
+    {
+      "step_id": "analizar_context_agent",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "agents/context/server.js",
+          "agents/context/server-http.mjs",
+          "docker/context/Dockerfile",
+          "docker/context/compose.yml"
+        ],
+        "selectors": [
+          "CONTEXT_SUMMARY_MAX",
+          "CONTEXT_LRU_SIZE", 
+          "CONTEXT_DISABLE_RAG",
+          "CONTEXT_PRUNE_SCORE",
+          "CONTEXT_PARALLEL_IO",
+          "UV_THREADPOOL_SIZE",
+          "NODE_OPTIONS"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "generar_documentacion_palancas",
+      "agent": "prompting",
+      "depends_on": ["analizar_context_agent"],
+      "input": {
+        "goal": "Crear documentación completa de palancas de rendimiento para el laboratorio Quannex Docker",
+        "context": "{{analizar_context_agent.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Incluir tabla de palancas con valores por defecto",
+          "Explicar efecto de cada palanca en rendimiento",
+          "Proporcionar presets de configuración",
+          "Incluir comandos de uso del Makefile",
+          "Documentar criterios de optimización"
+        ]
+      }
+    },
+    {
+      "step_id": "validar_documentacion",
+      "agent": "rules",
+      "depends_on": ["generar_documentacion_palancas"],
+      "input": {
+        "policy_refs": [
+          "docs/",
+          "MANUAL-COMPLETO-CURSOR.md"
+        ],
+        "compliance_level": "strict",
+        "code": "{{generar_documentacion_palancas.output.system_prompt}}",
+        "rules": [
+          "Documentación debe ser clara y técnica",
+          "Incluir ejemplos prácticos",
+          "Validar que todas las palancas estén documentadas",
+          "Asegurar compatibilidad con Docker"
+        ]
+      }
+    }
+  ]
+}

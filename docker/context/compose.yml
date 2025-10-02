@@ -1,0 +1,88 @@
+# Quannex Context Agent - Docker Compose para Laboratorio
+version: '3.9'
+
+services:
+  context:
+    build:
+      context: ../..
+      dockerfile: ./docker/context/Dockerfile
+    image: quannex/context:latest
+    container_name: quannex-context-lab
+    environment:
+      # Palancas de rendimiento por defecto
+      CONTEXT_SUMMARY_MAX: '700'
+      CONTEXT_LRU_SIZE: '512'
+      CONTEXT_RECALL_STRATEGY: 'hybrid'
+      CONTEXT_DISABLE_RAG: '1'
+      CONTEXT_PRUNE_SCORE: '0.35'
+      CONTEXT_PARALLEL_IO: '4'
+      UV_THREADPOOL_SIZE: '8'
+      NODE_ENV: 'production'
+      NODE_OPTIONS: '--max-old-space-size=512'
+    ports:
+      - '8601:8601'
+    # Endurecimiento para Vast
+    read_only: true
+    tmpfs:
+      - /tmp:noexec,nosuid,size=100m
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: '1g'
+        reservations:
+          cpus: '0.5'
+          memory: '256m'
+    healthcheck:
+      test: ['CMD', 'node', 'agents/context/healthcheck.mjs']
+      interval: 10s
+      timeout: 2s
+      retries: 6
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - quannex-lab
+
+  bench:
+    image: node:22-alpine
+    container_name: quannex-bench-lab
+    working_dir: /wrk
+    volumes:
+      - ../../:/wrk
+    command: ['node', 'tools/context-bench.mjs']
+    environment:
+      TARGET_URL: 'http://context:8601'
+      RPS: '50'
+      DURATION_SEC: '60'
+      CONCURRENCY: '24'
+      OUT_FILE: 'logs/context-bench.jsonl'
+    depends_on:
+      context:
+        condition: service_healthy
+    networks:
+      - quannex-lab
+
+  analyzer:
+    image: node:22-alpine
+    container_name: quannex-analyzer-lab
+    working_dir: /wrk
+    volumes:
+      - ../../:/wrk
+    command: ['node', 'tools/context-analyze.mjs', 'logs/context-bench.jsonl']
+    environment:
+      BENCH_FILE: 'logs/context-bench.jsonl'
+    networks:
+      - quannex-lab
+
+networks:
+  quannex-lab:
+    driver: bridge
+    name: quannex-lab-network

@@ -1,27 +1,236 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://startkit.local/schemas/agents/context.output.schema.json",
-  "version": "1.0.0",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Context Agent Output Schema",
+  "description": "Esquema de salida para el Context Agent de Quannex",
   "type": "object",
+  "version": "1.0.0",
+  "required": [
+    "schema_version",
+    "agent_version",
+    "context_bundle",
+    "provenance",
+    "stats"
+  ],
   "properties": {
-    "schema_version": { "type": "string", "const": "1.0.0" },
-    "agent_version": { "type": "string" },
-    "context_bundle": { "type": "string" },
-    "provenance": { "type": "array", "items": { "type": "string" } },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Versión del esquema de salida"
+    },
+    "agent_version": {
+      "type": "string",
+      "description": "Versión del agente que procesó la solicitud",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "examples": ["1.0.0", "1.2.3"]
+    },
+    "context_bundle": {
+      "type": "string",
+      "description": "Bundle de contexto procesado y serializado",
+      "minLength": 1,
+      "maxLength": 50000
+    },
+    "provenance": {
+      "type": "array",
+      "description": "Lista de fuentes utilizadas en el procesamiento",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 500
+      },
+      "examples": [
+        ["docs/README.md", "src/main.js"],
+        ["config/settings.json"]
+      ]
+    },
     "stats": {
       "type": "object",
+      "description": "Estadísticas del procesamiento",
+      "required": [
+        "tokens_estimated",
+        "chunks",
+        "matched",
+        "truncated",
+        "adjusted"
+      ],
       "properties": {
-        "tokens_estimated": { "type": "integer" },
-        "chunks": { "type": "integer" },
-        "matched": { "type": "integer" },
-        "truncated": { "type": "boolean" },
-        "adjusted": { "type": "boolean" }
+        "tokens_estimated": {
+          "type": "integer",
+          "description": "Número estimado de tokens en la respuesta",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "chunks": {
+          "type": "integer",
+          "description": "Número de chunks procesados",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "matched": {
+          "type": "integer",
+          "description": "Número de fuentes que coincidieron con los selectores",
+          "minimum": 0,
+          "maximum": 50
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "Indica si el contenido fue truncado por límites de tokens"
+        },
+        "adjusted": {
+          "type": "boolean",
+          "description": "Indica si los parámetros fueron ajustados automáticamente"
+        },
+        "processing_time_ms": {
+          "type": "number",
+          "description": "Tiempo de procesamiento en milisegundos",
+          "minimum": 0
+        },
+        "cache_hit": {
+          "type": "boolean",
+          "description": "Indica si la respuesta vino del cache"
+        },
+        "rag_enabled": {
+          "type": "boolean",
+          "description": "Indica si RAG fue utilizado en el procesamiento"
+        }
       },
-      "required": ["tokens_estimated", "chunks", "matched", "truncated", "adjusted"],
       "additionalProperties": false
     },
-    "trace": { "type": "array", "items": { "type": "string" } }
+    "metrics": {
+      "type": "object",
+      "description": "Métricas de rendimiento detalladas",
+      "properties": {
+        "tokens_in": {
+          "type": "integer",
+          "description": "Tokens de entrada procesados",
+          "minimum": 0
+        },
+        "tokens_out": {
+          "type": "integer",
+          "description": "Tokens de salida generados",
+          "minimum": 0
+        },
+        "latency_ms": {
+          "type": "number",
+          "description": "Latencia total en milisegundos",
+          "minimum": 0
+        },
+        "cached": {
+          "type": "boolean",
+          "description": "Indica si la respuesta fue servida desde cache"
+        },
+        "cache_size": {
+          "type": "integer",
+          "description": "Tamaño actual del cache",
+          "minimum": 0
+        },
+        "memory_usage_mb": {
+          "type": "number",
+          "description": "Uso de memoria en MB",
+          "minimum": 0
+        },
+        "cpu_usage_percent": {
+          "type": "number",
+          "description": "Uso de CPU en porcentaje",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    },
+    "trace": {
+      "type": "array",
+      "description": "Traza de operaciones realizadas (opcional)",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000
+      },
+      "maxItems": 100,
+      "examples": [
+        [
+          "Cache miss - processing sources",
+          "Applied selectors: main, core",
+          "Truncated to max_tokens limit"
+        ]
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "description": "Advertencias generadas durante el procesamiento",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 500
+      },
+      "maxItems": 10,
+      "examples": [
+        [
+          "max_tokens adjusted from 256 to 512",
+          "Some sources could not be processed"
+        ]
+      ]
+    },
+    "error": {
+      "type": "array",
+      "description": "Errores encontrados durante el procesamiento",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 500
+      },
+      "maxItems": 10
+    },
+    "rate_limit_info": {
+      "type": "object",
+      "description": "Información de rate limiting (solo si aplica)",
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "context"
+        },
+        "retry_after_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "current_requests": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    }
   },
-  "required": ["schema_version", "agent_version", "context_bundle", "provenance", "stats"],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "examples": [
+    {
+      "schema_version": "1.0.0",
+      "agent_version": "1.0.0",
+      "context_bundle": "{\"extracted\":[{\"file\":\"docs/README.md\",\"content\":\"# Project Documentation\",\"relevance\":0.9}],\"metadata\":{\"total_sources\":1,\"selectors_applied\":[\"main\"],\"max_tokens\":1000}}",
+      "provenance": ["docs/README.md"],
+      "stats": {
+        "tokens_estimated": 150,
+        "chunks": 1,
+        "matched": 1,
+        "truncated": false,
+        "adjusted": false,
+        "processing_time_ms": 45.2,
+        "cache_hit": false,
+        "rag_enabled": true
+      },
+      "metrics": {
+        "tokens_in": 1,
+        "tokens_out": 150,
+        "latency_ms": 45.2,
+        "cached": false,
+        "cache_size": 0,
+        "memory_usage_mb": 12.5,
+        "cpu_usage_percent": 15.3
+      }
+    }
+  ]
 }

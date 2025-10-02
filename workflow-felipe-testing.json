@@ -1,0 +1,37 @@
+{
+  "name": "Workflow Felipe - Testing de Análisis de Seguridad y Validación",
+  "description": "Workflow para analizar archivos de seguridad, generar soluciones de hardening y validar compliance",
+  "steps": [
+    {
+      "step_id": "analizar_seguridad",
+      "agent": "context",
+      "input": {
+        "sources": ["SECURITY.md", "package.json"],
+        "selectors": ["vulnerabilidades", "dependencias", "configuraciones"],
+        "max_tokens": 1500
+      }
+    },
+    {
+      "step_id": "generar_hardening",
+      "agent": "prompting", 
+      "depends_on": ["analizar_seguridad"],
+      "input": {
+        "goal": "Generar estrategia de hardening de seguridad para el proyecto",
+        "context": "{{analizar_seguridad.output.context_bundle}}",
+        "style": "security-focused",
+        "constraints": ["mejores prácticas OWASP", "validación de dependencias", "configuración segura"]
+      }
+    },
+    {
+      "step_id": "validar_compliance",
+      "agent": "rules",
+      "depends_on": ["generar_hardening"],
+      "input": {
+        "policy_refs": ["SECURITY.md", "package.json"],
+        "compliance_level": "strict",
+        "code": "{{generar_hardening.output.system_prompt}}",
+        "rules": ["security_standards", "dependency_validation", "configuration_review"]
+      }
+    }
+  ]
+}

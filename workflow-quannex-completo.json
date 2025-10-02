@@ -1,0 +1,97 @@
+{
+  "name": "Workflow Quannex Completo - Laboratorio de Rendimiento",
+  "description": "Workflow completo para probar el laboratorio Quannex desde construcción hasta análisis final",
+  "steps": [
+    {
+      "step_id": "verificar_dependencias",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "package.json",
+          "docker/context/Dockerfile",
+          "docker/context/compose.yml",
+          "Makefile.quannex"
+        ],
+        "selectors": [
+          "dependencies",
+          "docker",
+          "scripts",
+          "makefile"
+        ],
+        "max_tokens": 1500
+      }
+    },
+    {
+      "step_id": "construir_laboratorio",
+      "agent": "prompting",
+      "depends_on": ["verificar_dependencias"],
+      "input": {
+        "goal": "Crear comandos para construir el laboratorio Quannex completo",
+        "context": "{{verificar_dependencias.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Incluir comandos de construcción Docker",
+          "Verificar que todos los archivos necesarios existen",
+          "Crear script de validación de dependencias",
+          "Documentar pasos de construcción"
+        ]
+      }
+    },
+    {
+      "step_id": "ejecutar_benchmark",
+      "agent": "rules",
+      "depends_on": ["construir_laboratorio"],
+      "input": {
+        "policy_refs": [
+          "docs/quannex-performance-knobs.md",
+          "scripts/demo-quannex-lab.sh"
+        ],
+        "compliance_level": "strict",
+        "code": "{{construir_laboratorio.output.system_prompt}}",
+        "rules": [
+          "Validar que el benchmark se ejecute correctamente",
+          "Verificar métricas de rendimiento",
+          "Asegurar que Gate 14 anti-simulación funcione",
+          "Documentar resultados del benchmark"
+        ]
+      }
+    },
+    {
+      "step_id": "analizar_resultados",
+      "agent": "context",
+      "depends_on": ["ejecutar_benchmark"],
+      "input": {
+        "sources": [
+          "logs/context-bench.jsonl",
+          "logs/context-bench-analysis.json",
+          "tools/context-analyze.mjs",
+          "tools/context-bench.mjs"
+        ],
+        "selectors": [
+          "metrics",
+          "performance",
+          "gate14",
+          "analysis"
+        ],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "generar_reporte_final",
+      "agent": "prompting",
+      "depends_on": ["analizar_resultados"],
+      "input": {
+        "goal": "Generar reporte completo del workflow Quannex con resultados y recomendaciones",
+        "context": "{{analizar_resultados.output.context_bundle}}",
+        "style": "technical",
+        "constraints": [
+          "Incluir métricas de rendimiento obtenidas",
+          "Documentar problemas encontrados",
+          "Proporcionar recomendaciones de optimización",
+          "Crear checklist de validación",
+          "Incluir comandos para reproducir resultados"
+        ]
+      }
+    }
+  ]
+}

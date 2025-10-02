@@ -1,0 +1,91 @@
+{
+  "id": "thread-005-testing-strategy",
+  "title": "Estrategia de Testing con Jest",
+  "description": "Thread sobre implementación de testing con Jest, incluyendo unit tests, integration tests y mocking",
+  "turns": [
+    {
+      "turn": 1,
+      "role": "user",
+      "content": "Necesito implementar testing en mi proyecto Node.js. ¿Qué framework recomiendas?",
+      "timestamp": "2025-10-02T14:00:00Z"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "content": "Para Node.js recomiendo **Jest** como framework principal:\n\n**Ventajas de Jest:**\n- Testing, mocking y coverage integrado\n- Sintaxis simple y clara\n- Snapshot testing\n- Async/await support\n\n**Instalación:**\n```bash\nnpm install -D jest\nnpm install -D @types/jest\n```\n\n¿Quieres que configuremos el setup básico?",
+      "timestamp": "2025-10-02T14:01:00Z"
+    },
+    {
+      "turn": 3,
+      "role": "user",
+      "content": "Sí, pero también necesito testing de APIs. ¿Cómo lo hago?",
+      "timestamp": "2025-10-02T14:02:00Z"
+    },
+    {
+      "turn": 4,
+      "role": "assistant",
+      "content": "Para testing de APIs necesitas **Supertest**:\n\n```bash\nnpm install -D supertest\nnpm install -D @types/supertest\n```\n\n**Ejemplo de test de API:**\n```javascript\nconst request = require('supertest');\nconst app = require('../app');\n\ndescribe('GET /api/users', () => {\n  test('should return users list', async () => {\n    const response = await request(app)\n      .get('/api/users')\n      .expect(200);\n    \n    expect(response.body).toHaveProperty('users');\n  });\n});\n```",
+      "timestamp": "2025-10-02T14:03:00Z"
+    },
+    {
+      "turn": 5,
+      "role": "user",
+      "content": "Perfecto. ¿Cómo configuro el coverage y los scripts de test?",
+      "timestamp": "2025-10-02T14:05:00Z"
+    }
+  ],
+  "expected_context": {
+    "critical_entities": [
+      "Jest",
+      "Supertest",
+      "@types/jest",
+      "@types/supertest",
+      "unit tests",
+      "integration tests",
+      "API testing",
+      "coverage",
+      "mocking",
+      "snapshot testing",
+      "async/await"
+    ],
+    "decisions": [
+      "Usar Jest como framework principal",
+      "Supertest para testing de APIs",
+      "Configurar coverage reports",
+      "Separar unit tests de integration tests"
+    ],
+    "file_paths": [
+      "package.json",
+      "jest.config.js",
+      "tests/",
+      "tests/unit/",
+      "tests/integration/"
+    ],
+    "commands": [
+      "npm install -D jest @types/jest",
+      "npm install -D supertest @types/supertest",
+      "npm test",
+      "npm run test:coverage"
+    ]
+  },
+  "golden_snapshot": {
+    "summary": "Estrategia de testing completa con Jest y Supertest. Jest para unit tests con coverage integrado. Supertest para testing de APIs. Estructura de tests organizada en unit e integration.",
+    "key_decisions": [
+      "Usar Jest como framework principal de testing",
+      "Supertest para testing de APIs REST",
+      "Configurar coverage reports automáticos",
+      "Separar unit tests de integration tests"
+    ],
+    "file_context": {
+      "testing_frameworks": ["Jest", "Supertest"],
+      "test_types": ["unit", "integration", "API"],
+      "coverage_enabled": true,
+      "typescript_support": true
+    },
+    "next_steps": [
+      "Configurar scripts de test en package.json",
+      "Crear jest.config.js",
+      "Implementar primeros unit tests"
+    ]
+  }
+}

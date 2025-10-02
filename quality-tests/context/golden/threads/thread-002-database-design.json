@@ -1,0 +1,85 @@
+{
+  "id": "thread-002-database-design",
+  "title": "Diseño de Base de Datos para E-commerce",
+  "description": "Thread sobre diseño de esquema de base de datos para plataforma de e-commerce con usuarios, productos y órdenes",
+  "turns": [
+    {
+      "turn": 1,
+      "role": "user",
+      "content": "Necesito diseñar una base de datos para una plataforma de e-commerce. ¿Qué tablas principales necesito?",
+      "timestamp": "2025-10-02T11:00:00Z"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "content": "Para un e-commerce necesitas estas tablas principales:\n\n1. **users** - información de usuarios\n2. **products** - catálogo de productos\n3. **orders** - órdenes de compra\n4. **order_items** - items dentro de cada orden\n5. **categories** - categorías de productos\n6. **cart** - carrito de compras\n\n¿Quieres que detalle el esquema de alguna tabla específica?",
+      "timestamp": "2025-10-02T11:01:00Z"
+    },
+    {
+      "turn": 3,
+      "role": "user",
+      "content": "Sí, detalla la tabla de usuarios y productos por favor.",
+      "timestamp": "2025-10-02T11:02:00Z"
+    },
+    {
+      "turn": 4,
+      "role": "assistant",
+      "content": "Perfecto. Aquí están los esquemas:\n\n**Tabla users:**\n```sql\nCREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  email VARCHAR(255) UNIQUE NOT NULL,\n  password_hash VARCHAR(255) NOT NULL,\n  first_name VARCHAR(100),\n  last_name VARCHAR(100),\n  created_at TIMESTAMP DEFAULT NOW()\n);\n```\n\n**Tabla products:**\n```sql\nCREATE TABLE products (\n  id SERIAL PRIMARY KEY,\n  name VARCHAR(255) NOT NULL,\n  description TEXT,\n  price DECIMAL(10,2) NOT NULL,\n  stock_quantity INTEGER DEFAULT 0,\n  category_id INTEGER REFERENCES categories(id),\n  created_at TIMESTAMP DEFAULT NOW()\n);\n```",
+      "timestamp": "2025-10-02T11:03:00Z"
+    },
+    {
+      "turn": 5,
+      "role": "user",
+      "content": "Excelente. Ahora necesito agregar la tabla de órdenes. ¿Cómo la estructuro?",
+      "timestamp": "2025-10-02T11:05:00Z"
+    }
+  ],
+  "expected_context": {
+    "critical_entities": [
+      "e-commerce",
+      "users",
+      "products", 
+      "orders",
+      "order_items",
+      "categories",
+      "cart",
+      "PostgreSQL",
+      "SERIAL PRIMARY KEY",
+      "VARCHAR",
+      "DECIMAL",
+      "TIMESTAMP"
+    ],
+    "decisions": [
+      "Usar PostgreSQL como base de datos",
+      "Estructura normalizada con tablas separadas",
+      "Relaciones con FOREIGN KEY"
+    ],
+    "file_paths": [
+      "schema.sql",
+      "migrations/"
+    ],
+    "commands": [
+      "CREATE TABLE users",
+      "CREATE TABLE products",
+      "CREATE TABLE orders"
+    ]
+  },
+  "golden_snapshot": {
+    "summary": "Diseño de base de datos e-commerce con PostgreSQL. Tablas principales: users, products, orders, order_items, categories, cart. Esquemas definidos para users y products con campos clave.",
+    "key_decisions": [
+      "Usar PostgreSQL como SGBD",
+      "Estructura normalizada con 6 tablas principales",
+      "Relaciones con FOREIGN KEY entre tablas"
+    ],
+    "file_context": {
+      "database_type": "PostgreSQL",
+      "tables_defined": ["users", "products"],
+      "pending_tables": ["orders", "order_items", "categories", "cart"]
+    },
+    "next_steps": [
+      "Definir esquema de tabla orders",
+      "Crear tabla order_items",
+      "Configurar relaciones entre tablas"
+    ]
+  }
+}

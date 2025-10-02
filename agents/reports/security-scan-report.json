@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "agent_version": "2.0.0",
+  "scan_type": "dependency",
+  "target_path": ".",
+  "timestamp": "2025-10-02T20:00:08.965Z",
+  "results": {
+    "dependency_audit": {
+      "vulnerabilities": {},
+      "details": []
+    }
+  }
+}

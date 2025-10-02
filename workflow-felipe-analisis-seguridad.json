@@ -1,0 +1,37 @@
+{
+  "name": "Workflow Felipe - Análisis de Seguridad en Archivos de Configuración",
+  "description": "Workflow para identificar vulnerabilidades de seguridad en archivos de configuración y generar soluciones automáticas",
+  "steps": [
+    {
+      "step_id": "analizar_configuraciones",
+      "agent": "context",
+      "input": {
+        "sources": ["package.json", "config/prod.env", "config/prod-tight.env"],
+        "selectors": ["security", "secrets", "vulnerabilities", "dependencies"],
+        "max_tokens": 1500
+      }
+    },
+    {
+      "step_id": "generar_solucion_seguridad",
+      "agent": "prompting", 
+      "depends_on": ["analizar_configuraciones"],
+      "input": {
+        "goal": "Generar soluciones automáticas para vulnerabilidades de seguridad encontradas en archivos de configuración",
+        "context": "{{analizar_configuraciones.output.context_bundle}}",
+        "style": "security-focused",
+        "constraints": ["eliminar-secrets-hardcodeados", "validar-dependencias", "aplicar-best-practices", "generar-codigo-seguro"]
+      }
+    },
+    {
+      "step_id": "validar_compliance_seguridad",
+      "agent": "rules",
+      "depends_on": ["generar_solucion_seguridad"],
+      "input": {
+        "policy_refs": ["SECURITY.md", "package.json", "config/prod.env"],
+        "compliance_level": "strict",
+        "code": "{{generar_solucion_seguridad.output.system_prompt}}",
+        "rules": ["no-hardcoded-secrets", "secure-dependencies", "env-validation", "access-control"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,232 @@
+# Quannex Context Agent - Makefile para Laboratorio Docker
+# Laboratorio de experimentos para calibración máxima de rendimiento
+
+.PHONY: help context-build context-up context-down context-bench context-analyze context-tune-lite context-tune-aggr context-tune-prod context-logs context-health context-clean
+
+# Variables por defecto
+DOCKER_COMPOSE_FILE = docker/context/compose.yml
+CONTEXT_IMAGE = quannex/context:latest
+BENCH_OUTPUT = logs/context-bench.jsonl
+ANALYSIS_OUTPUT = logs/context-bench-analysis.json
+
+# Colores para output
+GREEN = \033[0;32m
+BLUE = \033[0;34m
+YELLOW = \033[1;33m
+RED = \033[0;31m
+NC = \033[0m
+
+help: ## Mostrar ayuda del laboratorio Quannex
+	@echo "$(BLUE)🚀 QUANNEX CONTEXT AGENT - LABORATORIO DOCKER$(NC)"
+	@echo ""
+	@echo "$(GREEN)📋 COMANDOS PRINCIPALES:$(NC)"
+	@echo "  context-build     Construir imagen Docker del Context Agent"
+	@echo "  context-up        Levantar servicio Context Agent"
+	@echo "  context-down      Detener servicio Context Agent"
+	@echo "  context-bench     Ejecutar benchmark de carga"
+	@echo "  context-analyze   Analizar métricas del benchmark"
+	@echo ""
+	@echo "$(GREEN)⚙️  COMANDOS DE TUNING:$(NC)"
+	@echo "  context-tune-lite    Configuración ligera (RPS bajo)"
+	@echo "  context-tune-aggr     Configuración agresiva (RPS alto)"
+	@echo "  context-tune-prod     Configuración producción optimizada"
+	@echo "  context-tune-tight    Configuración producción tight (P95≤100ms, P99≤200ms)"
+	@echo ""
+	@echo "$(GREEN)🔍 COMANDOS DE MONITOREO:$(NC)"
+	@echo "  context-logs      Ver logs del Context Agent"
+	@echo "  context-health    Verificar salud del servicio"
+	@echo "  context-clean     Limpiar artefactos del laboratorio"
+	@echo ""
+	@echo "$(GREEN)🎯 COMANDOS DE CALIDAD:$(NC)"
+	@echo "  context-quality              Ejecutar suite completa de tests de calidad"
+	@echo "  context-quality-consistency  Ejecutar test de consistencia"
+	@echo "  context-quality-replay       Ejecutar test de replay"
+	@echo ""
+	@echo "$(GREEN)🚀 COMANDOS DE RATE LIMITING:$(NC)"
+	@echo "  context-rate-limit-test      Ejecutar stress test de rate limiting"
+	@echo "  context-apply-tight-config  Aplicar configuración tight con admission control"
+	@echo ""
+	@echo "$(GREEN)🎯 FLUJO RECOMENDADO:$(NC)"
+	@echo "  1. make context-build"
+	@echo "  2. make context-up"
+	@echo "  3. make context-bench"
+	@echo "  4. make context-analyze"
+	@echo "  5. make context-tune-aggr"
+	@echo "  6. make context-bench"
+	@echo "  7. make context-analyze"
+
+context-build: ## Construir imagen Docker del Context Agent
+	@echo "$(BLUE)🔨 Construyendo imagen Docker del Context Agent...$(NC)"
+	docker compose -f $(DOCKER_COMPOSE_FILE) build context
+	@echo "$(GREEN)✅ Imagen construida: $(CONTEXT_IMAGE)$(NC)"
+
+context-up: ## Levantar servicio Context Agent
+	@echo "$(BLUE)🚀 Levantando servicio Context Agent...$(NC)"
+	docker compose -f $(DOCKER_COMPOSE_FILE) up -d context
+	@echo "$(GREEN)✅ Servicio levantado en puerto 8601$(NC)"
+	@echo "$(YELLOW)📊 Health check: http://localhost:8601/health$(NC)"
+
+context-down: ## Detener servicio Context Agent
+	@echo "$(BLUE)🛑 Deteniendo servicio Context Agent...$(NC)"
+	docker compose -f $(DOCKER_COMPOSE_FILE) down
+	@echo "$(GREEN)✅ Servicio detenido$(NC)"
+
+context-bench: ## Ejecutar benchmark de carga
+	@echo "$(BLUE)📊 Ejecutando benchmark de carga...$(NC)"
+	@mkdir -p logs
+	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm bench
+	@echo "$(GREEN)✅ Benchmark completado: $(BENCH_OUTPUT)$(NC)"
+
+context-analyze: ## Analizar métricas del benchmark
+	@echo "$(BLUE)📈 Analizando métricas del benchmark...$(NC)"
+	@if [ ! -f $(BENCH_OUTPUT) ]; then \
+		echo "$(RED)❌ Archivo de benchmark no encontrado: $(BENCH_OUTPUT)$(NC)"; \
+		echo "$(YELLOW)💡 Ejecuta 'make context-bench' primero$(NC)"; \
+		exit 1; \
+	fi
+	node tools/context-analyze.mjs $(BENCH_OUTPUT)
+	@echo "$(GREEN)✅ Análisis completado$(NC)"
+
+context-tune-lite: ## Configuración ligera (RPS bajo)
+	@echo "$(BLUE)⚙️  Aplicando configuración ligera...$(NC)"
+	CONTEXT_SUMMARY_MAX=1000 \
+	CONTEXT_LRU_SIZE=256 \
+	CONTEXT_DISABLE_RAG=1 \
+	CONTEXT_PARALLEL_IO=2 \
+	UV_THREADPOOL_SIZE=4 \
+	docker compose -f $(DOCKER_COMPOSE_FILE) up -d --build context
+	@echo "$(GREEN)✅ Configuración ligera aplicada$(NC)"
+
+context-tune-aggr: ## Configuración agresiva (RPS alto)
+	@echo "$(BLUE)⚙️  Aplicando configuración agresiva...$(NC)"
+	CONTEXT_SUMMARY_MAX=500 \
+	CONTEXT_LRU_SIZE=1024 \
+	CONTEXT_DISABLE_RAG=1 \
+	CONTEXT_PRUNE_SCORE=0.28 \
+	CONTEXT_PARALLEL_IO=8 \
+	UV_THREADPOOL_SIZE=16 \
+	docker compose -f $(DOCKER_COMPOSE_FILE) up -d --build context
+	@echo "$(GREEN)✅ Configuración agresiva aplicada$(NC)"
+
+context-tune-prod: ## Configuración producción optimizada
+	@echo "$(BLUE)🏭 Aplicando preset de producción optimizado...$(NC)"
+	@echo "$(YELLOW)📊 Objetivos: P95 ≤ 100ms, tokens ≤ 600, memoria estable$(NC)"
+	@echo "$(YELLOW)🔧 Valores validados con benchmark real$(NC)"
+	CONTEXT_SUMMARY_MAX=500 \
+	CONTEXT_LRU_SIZE=1024 \
+	CONTEXT_RECALL_STRATEGY=hybrid \
+	CONTEXT_DISABLE_RAG=1 \
+	CONTEXT_PRUNE_SCORE=0.30 \
+	CONTEXT_PARALLEL_IO=6 \
+	UV_THREADPOOL_SIZE=12 \
+	NODE_OPTIONS="--max-old-space-size=1024" \
+	NODE_ENV=production \
+	docker compose -f $(DOCKER_COMPOSE_FILE) up -d --build context
+	@echo "$(GREEN)✅ Preset de producción aplicado$(NC)"
+	@echo "$(YELLOW)📈 Métricas esperadas: P95=75ms, P99=108ms, Tokens=499$(NC)"
+
+context-tune-tight: ## Configuración producción tight (P95≤100ms, P99≤200ms)
+	@echo "$(BLUE)🎯 Aplicando preset de producción tight...$(NC)"
+	@echo "$(YELLOW)📊 Objetivos: P95 ≤ 100ms, P99 ≤ 200ms, optimizaciones quirúrgicas$(NC)"
+	@echo "$(YELLOW)🔧 Keep-alive + logging async + warm-up + micro-timeouts$(NC)"
+	CONTEXT_SUMMARY_MAX=400 \
+	CONTEXT_LRU_SIZE=2048 \
+	CONTEXT_RECALL_STRATEGY=hybrid \
+	CONTEXT_DISABLE_RAG=1 \
+	CONTEXT_PRUNE_SCORE=0.25 \
+	CONTEXT_PARALLEL_IO=4 \
+	UV_THREADPOOL_SIZE=8 \
+	NODE_OPTIONS="--max-old-space-size=1024 --max-semi-space-size=32 --initial-old-space-size=256" \
+	INTERNAL_STEP_DEADLINE_MS=80 \
+	NODE_ENV=production \
+	docker compose -f $(DOCKER_COMPOSE_FILE) up -d --build context
+	@echo "$(GREEN)✅ Preset de producción tight aplicado$(NC)"
+	@echo "$(YELLOW)📈 Métricas esperadas: P95≤100ms, P99≤200ms, Tokens≤500$(NC)"
+	@echo "$(YELLOW)🚀 Optimizaciones: Keep-alive, async logging, warm-up, micro-timeouts$(NC)"
+
+context-logs: ## Ver logs del Context Agent
+	@echo "$(BLUE)📋 Mostrando logs del Context Agent...$(NC)"
+	docker compose -f $(DOCKER_COMPOSE_FILE) logs -f context
+
+context-health: ## Verificar salud del servicio
+	@echo "$(BLUE)🏥 Verificando salud del Context Agent...$(NC)"
+	@curl -s http://localhost:8601/health | jq . || echo "$(RED)❌ Servicio no disponible$(NC)"
+
+context-clean: ## Limpiar artefactos del laboratorio
+	@echo "$(BLUE)🧹 Limpiando artefactos del laboratorio...$(NC)"
+	docker compose -f $(DOCKER_COMPOSE_FILE) down --volumes --remove-orphans
+	docker rmi $(CONTEXT_IMAGE) 2>/dev/null || true
+	rm -f $(BENCH_OUTPUT) $(BENCH_OUTPUT).hash $(ANALYSIS_OUTPUT) 2>/dev/null || true
+	@echo "$(GREEN)✅ Limpieza completada$(NC)"
+
+# Comandos de flujo completo
+context-full-test: context-build context-up context-bench context-analyze ## Ejecutar flujo completo de testing
+	@echo "$(GREEN)🎯 Flujo completo de testing completado$(NC)"
+
+context-performance-test: context-build context-up context-bench context-analyze context-tune-aggr context-bench context-analyze ## Ejecutar test de rendimiento completo
+	@echo "$(GREEN)🏆 Test de rendimiento completado$(NC)"
+
+context-quality: ## Ejecutar tests de calidad del contexto
+	@echo "$(BLUE)🎯 Ejecutando tests de calidad del contexto...$(NC)"
+	@mkdir -p quality-tests/context/reports
+	node quality-tests/context/context-quality.mjs
+	@echo "$(GREEN)✅ Tests de calidad completados$(NC)"
+
+context-quality-consistency: ## Ejecutar test de consistencia
+	@echo "$(BLUE)🔍 Ejecutando test de consistencia...$(NC)"
+	node quality-tests/context/check-consistency.mjs
+	@echo "$(GREEN)✅ Test de consistencia completado$(NC)"
+
+context-quality-replay: ## Ejecutar test de replay
+	@echo "$(BLUE)🔄 Ejecutando test de replay...$(NC)"
+	node quality-tests/context/replay-test.mjs
+	@echo "$(GREEN)✅ Test de replay completado$(NC)"
+
+context-rate-limit-test: ## Ejecutar stress test de rate limiting
+	@echo "$(BLUE)🚀 Ejecutando stress test de rate limiting...$(NC)"
+	node tests/load/rate-limit-stress-test.mjs
+	@echo "$(GREEN)✅ Stress test completado$(NC)"
+
+context-apply-tight-config: ## Aplicar configuración tight con admission control
+	@echo "$(BLUE)🎯 Aplicando configuración tight con admission control...$(NC)"
+	@echo "$(YELLOW)📊 Configuración: Token bucket, circuit breaker, degradación progresiva$(NC)"
+	@if [ -f config/prod-tight.env ]; then \
+		set -a && \
+		. config/prod-tight.env && \
+		set +a && \
+		docker compose -f $(DOCKER_COMPOSE_FILE) up -d --build context; \
+	else \
+		echo "$(RED)❌ Error: config/prod-tight.env no encontrado$(NC)"; \
+		exit 1; \
+	fi
+	@echo "$(GREEN)✅ Configuración tight aplicada$(NC)"
+	@echo "$(YELLOW)📈 Métricas esperadas: Resistente a rate limits, degradación progresiva$(NC)"
+
+# Comandos de desarrollo
+context-dev: context-build context-up context-logs ## Modo desarrollo con logs
+
+context-restart: context-down context-up ## Reiniciar servicio
+
+# Información del sistema
+context-info: ## Mostrar información del laboratorio
+	@echo "$(BLUE)📊 INFORMACIÓN DEL LABORATORIO QUANNEX$(NC)"
+	@echo ""
+	@echo "$(GREEN)🐳 Docker Compose:$(NC)"
+	@echo "  Archivo: $(DOCKER_COMPOSE_FILE)"
+	@echo "  Imagen: $(CONTEXT_IMAGE)"
+	@echo ""
+	@echo "$(GREEN)📁 Archivos de salida:$(NC)"
+	@echo "  Benchmark: $(BENCH_OUTPUT)"
+	@echo "  Análisis: $(ANALYSIS_OUTPUT)"
+	@echo ""
+	@echo "$(GREEN)🌐 Endpoints:$(NC)"
+	@echo "  Health: http://localhost:8601/health"
+	@echo "  Context: http://localhost:8601/context/get"
+	@echo ""
+	@echo "$(GREEN)⚙️  Palancas de rendimiento disponibles:$(NC)"
+	@echo "  CONTEXT_SUMMARY_MAX (256-10000)"
+	@echo "  CONTEXT_LRU_SIZE (64-2048)"
+	@echo "  CONTEXT_DISABLE_RAG (0|1)"
+	@echo "  CONTEXT_PRUNE_SCORE (0.0-1.0)"
+	@echo "  CONTEXT_PARALLEL_IO (1-16)"
+	@echo "  UV_THREADPOOL_SIZE (1-32)"

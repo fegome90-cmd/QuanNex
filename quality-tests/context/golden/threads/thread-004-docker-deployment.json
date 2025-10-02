@@ -1,0 +1,90 @@
+{
+  "id": "thread-004-docker-deployment",
+  "title": "Containerización con Docker",
+  "description": "Thread sobre containerización de aplicación Node.js con Docker, incluyendo Dockerfile multi-stage y docker-compose",
+  "turns": [
+    {
+      "turn": 1,
+      "role": "user",
+      "content": "Necesito containerizar mi aplicación Node.js. ¿Cómo creo un Dockerfile eficiente?",
+      "timestamp": "2025-10-02T13:00:00Z"
+    },
+    {
+      "turn": 2,
+      "role": "assistant",
+      "content": "Para una aplicación Node.js eficiente, usa un Dockerfile multi-stage:\n\n```dockerfile\n# Stage 1: Build\nFROM node:18-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\n\n# Stage 2: Runtime\nFROM node:18-alpine AS runtime\nWORKDIR /app\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY . .\nEXPOSE 3000\nCMD [\"npm\", \"start\"]\n```\n\n¿Quieres que agregue optimizaciones de seguridad?",
+      "timestamp": "2025-10-02T13:01:00Z"
+    },
+    {
+      "turn": 3,
+      "role": "user",
+      "content": "Sí, y también necesito un docker-compose para desarrollo local.",
+      "timestamp": "2025-10-02T13:02:00Z"
+    },
+    {
+      "turn": 4,
+      "role": "assistant",
+      "content": "Perfecto. Aquí tienes el docker-compose.yml:\n\n```yaml\nversion: '3.8'\nservices:\n  app:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      - NODE_ENV=development\n    volumes:\n      - .:/app\n      - /app/node_modules\n    depends_on:\n      - db\n  \n  db:\n    image: postgres:15-alpine\n    environment:\n      POSTGRES_DB: mi_app\n      POSTGRES_USER: usuario\n      POSTGRES_PASSWORD: password\n    ports:\n      - \"5432:5432\"\n```",
+      "timestamp": "2025-10-02T13:03:00Z"
+    },
+    {
+      "turn": 5,
+      "role": "user",
+      "content": "Excelente. ¿Cómo optimizo el Dockerfile para producción?",
+      "timestamp": "2025-10-02T13:05:00Z"
+    }
+  ],
+  "expected_context": {
+    "critical_entities": [
+      "Docker",
+      "Dockerfile",
+      "multi-stage",
+      "node:18-alpine",
+      "docker-compose.yml",
+      "PostgreSQL",
+      "postgres:15-alpine",
+      "NODE_ENV=development",
+      "POSTGRES_DB",
+      "POSTGRES_USER",
+      "POSTGRES_PASSWORD",
+      "volumes",
+      "depends_on"
+    ],
+    "decisions": [
+      "Usar Dockerfile multi-stage para eficiencia",
+      "Alpine Linux para imágenes ligeras",
+      "PostgreSQL como base de datos",
+      "Volumes para desarrollo local"
+    ],
+    "file_paths": [
+      "Dockerfile",
+      "docker-compose.yml",
+      ".dockerignore"
+    ],
+    "commands": [
+      "docker build -t mi-app .",
+      "docker-compose up -d",
+      "docker-compose down"
+    ]
+  },
+  "golden_snapshot": {
+    "summary": "Containerización completa con Docker multi-stage y docker-compose. Dockerfile optimizado con Alpine Linux. Compose incluye app Node.js y PostgreSQL. Configuración lista para desarrollo local.",
+    "key_decisions": [
+      "Usar Dockerfile multi-stage para eficiencia",
+      "Alpine Linux para imágenes ligeras",
+      "PostgreSQL como base de datos en compose",
+      "Volumes para desarrollo local con hot-reload"
+    ],
+    "file_context": {
+      "dockerfile_type": "multi-stage",
+      "base_image": "node:18-alpine",
+      "database": "postgres:15-alpine",
+      "ports": ["3000:3000", "5432:5432"]
+    },
+    "next_steps": [
+      "Optimizar Dockerfile para producción",
+      "Agregar seguridad (non-root user)",
+      "Configurar health checks"
+    ]
+  }
+}

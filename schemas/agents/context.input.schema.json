@@ -1,22 +1,142 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://startkit.local/schemas/agents/context.input.schema.json",
-  "version": "1.0.0",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Context Agent Input Schema",
+  "description": "Esquema de entrada para el Context Agent de Quannex",
   "type": "object",
+  "version": "1.0.0",
+  "required": ["sources"],
   "properties": {
     "sources": {
       "type": "array",
-      "items": { "type": "string", "minLength": 1 },
+      "description": "Lista de fuentes de contexto a procesar",
       "minItems": 1,
-      "maxItems": 50
+      "maxItems": 50,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 500,
+        "pattern": "^[^<>\"'&]*$"
+      },
+      "examples": [
+        ["docs/README.md", "src/main.js"],
+        ["config/settings.json"]
+      ]
     },
     "selectors": {
       "type": "array",
-      "items": { "type": "string", "minLength": 1 },
-      "maxItems": 50
+      "description": "Selectores para filtrar contenido relevante",
+      "maxItems": 50,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "examples": [
+        ["main", "core", "primary"],
+        ["api", "endpoints"],
+        ["config", "settings"]
+      ]
     },
-    "max_tokens": { "type": "integer", "minimum": 1 }
+    "max_tokens": {
+      "type": "integer",
+      "description": "Número máximo de tokens en la respuesta",
+      "minimum": 256,
+      "maximum": 10000,
+      "default": 1000,
+      "examples": [512, 1000, 2048]
+    },
+    "threadId": {
+      "type": "string",
+      "description": "Identificador único del hilo de contexto",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[a-zA-Z0-9_-]+$",
+      "examples": ["t1", "session_123", "user_context"]
+    },
+    "window": {
+      "type": "integer",
+      "description": "Ventana de contexto para procesamiento",
+      "minimum": 1,
+      "maximum": 20,
+      "default": 5,
+      "examples": [3, 5, 10]
+    },
+    "strategy": {
+      "type": "string",
+      "description": "Estrategia de procesamiento de contexto",
+      "enum": ["hybrid", "recent", "semantic", "full"],
+      "default": "hybrid",
+      "examples": ["hybrid", "recent"]
+    },
+    "prune_score": {
+      "type": "number",
+      "description": "Umbral de puntuación para poda de contexto",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "default": 0.35,
+      "examples": [0.25, 0.35, 0.5]
+    },
+    "disable_rag": {
+      "type": "boolean",
+      "description": "Deshabilitar RAG para reducir latencia",
+      "default": false,
+      "examples": [true, false]
+    },
+    "parallel_io": {
+      "type": "integer",
+      "description": "Número de operaciones I/O paralelas",
+      "minimum": 1,
+      "maximum": 16,
+      "default": 4,
+      "examples": [2, 4, 8]
+    },
+    "cache_ttl": {
+      "type": "integer",
+      "description": "Time-to-live del cache en segundos",
+      "minimum": 0,
+      "maximum": 3600,
+      "default": 300,
+      "examples": [60, 300, 600]
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Metadatos adicionales para el procesamiento",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "session_id": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "request_id": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "normal", "high", "critical"],
+          "default": "normal"
+        }
+      },
+      "additionalProperties": false
+    }
   },
-  "required": ["sources"],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "examples": [
+    {
+      "sources": ["docs/README.md", "src/main.js"],
+      "selectors": ["main", "core"],
+      "max_tokens": 1000,
+      "threadId": "t1",
+      "window": 5
+    },
+    {
+      "sources": ["config/settings.json"],
+      "max_tokens": 512,
+      "strategy": "recent",
+      "disable_rag": true
+    }
+  ]
 }

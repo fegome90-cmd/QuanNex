@@ -1,0 +1,82 @@
+{
+  "id": "thread-001-react-setup",
+  "title": "Configuración de React con TypeScript",
+  "description": "Thread sobre configuración inicial de proyecto React con TypeScript, ESLint y Prettier",
+  "turns": [
+    {
+      "turn": 1,
+      "role": "user",
+      "content": "Necesito configurar un proyecto React con TypeScript desde cero. ¿Qué pasos debo seguir?",
+      "timestamp": "2025-10-02T10:00:00Z"
+    },
+    {
+      "turn": 2,
+      "role": "assistant", 
+      "content": "Te ayudo a configurar React con TypeScript. Los pasos principales son:\n\n1. Crear proyecto con Vite\n2. Configurar TypeScript\n3. Instalar ESLint y Prettier\n4. Configurar scripts de desarrollo\n\n¿Quieres que empecemos con el comando de creación?",
+      "timestamp": "2025-10-02T10:01:00Z"
+    },
+    {
+      "turn": 3,
+      "role": "user",
+      "content": "Sí, empecemos. ¿Cuál es el comando para crear el proyecto?",
+      "timestamp": "2025-10-02T10:02:00Z"
+    },
+    {
+      "turn": 4,
+      "role": "assistant",
+      "content": "Perfecto. Usa este comando:\n\n```bash\nnpm create vite@latest mi-proyecto-react -- --template react-ts\ncd mi-proyecto-react\nnpm install\n```\n\nEsto creará un proyecto React con TypeScript usando Vite como bundler.",
+      "timestamp": "2025-10-02T10:03:00Z"
+    },
+    {
+      "turn": 5,
+      "role": "user",
+      "content": "Listo, ya tengo el proyecto creado. Ahora necesito configurar ESLint y Prettier.",
+      "timestamp": "2025-10-02T10:05:00Z"
+    }
+  ],
+  "expected_context": {
+    "critical_entities": [
+      "React",
+      "TypeScript", 
+      "Vite",
+      "ESLint",
+      "Prettier",
+      "npm create vite@latest",
+      "react-ts template",
+      "mi-proyecto-react"
+    ],
+    "decisions": [
+      "Usar Vite como bundler",
+      "Template react-ts para TypeScript",
+      "Configurar ESLint y Prettier"
+    ],
+    "file_paths": [
+      "mi-proyecto-react/",
+      "package.json",
+      "tsconfig.json"
+    ],
+    "commands": [
+      "npm create vite@latest mi-proyecto-react -- --template react-ts",
+      "cd mi-proyecto-react",
+      "npm install"
+    ]
+  },
+  "golden_snapshot": {
+    "summary": "Configuración de proyecto React con TypeScript usando Vite. Proyecto creado con template react-ts. Próximo paso: configurar ESLint y Prettier.",
+    "key_decisions": [
+      "Usar Vite como bundler para React + TypeScript",
+      "Template react-ts para configuración inicial",
+      "Configurar ESLint y Prettier como siguiente paso"
+    ],
+    "file_context": {
+      "project_name": "mi-proyecto-react",
+      "template": "react-ts",
+      "bundler": "Vite"
+    },
+    "next_steps": [
+      "Configurar ESLint",
+      "Configurar Prettier", 
+      "Ajustar configuración de TypeScript"
+    ]
+  }
+}

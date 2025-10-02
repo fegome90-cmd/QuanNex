@@ -1,0 +1,145 @@
+{
+  "timestamp": "2025-10-02T19:15:32.943Z",
+  "gate8_status": "PASSED",
+  "average_score": 915,
+  "threads_processed": 5,
+  "results": [
+    {
+      "thread_id": "thread-001-react-setup",
+      "thread_title": "Configuración de React con TypeScript",
+      "metrics": {
+        "coverage": {
+          "technologies": 100,
+          "filePaths": 100,
+          "commands": 0,
+          "variables": 100,
+          "decisions": 40,
+          "overall": 85
+        },
+        "coherence": {
+          "contradictions": [],
+          "missing_elements": [
+            "npm create vite@latest",
+            "react-ts template"
+          ],
+          "extra_elements": [],
+          "score": 75
+        },
+        "precision": 773,
+        "noise_to_signal": "3.73",
+        "overall_score": 311
+      }
+    },
+    {
+      "thread_id": "thread-002-database-design",
+      "thread_title": "Diseño de Base de Datos para E-commerce",
+      "metrics": {
+        "coverage": {
+          "technologies": 100,
+          "filePaths": 100,
+          "commands": 0,
+          "variables": 100,
+          "decisions": 100,
+          "overall": 100
+        },
+        "coherence": {
+          "contradictions": [],
+          "missing_elements": [
+            "SERIAL PRIMARY KEY",
+            "VARCHAR",
+            "DECIMAL",
+            "TIMESTAMP"
+          ],
+          "extra_elements": [],
+          "score": 67
+        },
+        "precision": 10000,
+        "noise_to_signal": "47.00",
+        "overall_score": 3389
+      }
+    },
+    {
+      "thread_id": "thread-003-api-development",
+      "thread_title": "Desarrollo de API REST con Node.js",
+      "metrics": {
+        "coverage": {
+          "technologies": 100,
+          "filePaths": 100,
+          "commands": 0,
+          "variables": 67,
+          "decisions": 50,
+          "overall": 79
+        },
+        "coherence": {
+          "contradictions": [],
+          "missing_elements": [],
+          "extra_elements": [],
+          "score": 100
+        },
+        "precision": 720,
+        "noise_to_signal": "4.73",
+        "overall_score": 300
+      }
+    },
+    {
+      "thread_id": "thread-004-docker-deployment",
+      "thread_title": "Containerización con Docker",
+      "metrics": {
+        "coverage": {
+          "technologies": 67,
+          "filePaths": 25,
+          "commands": 100,
+          "variables": 0,
+          "decisions": 100,
+          "overall": 73
+        },
+        "coherence": {
+          "contradictions": [],
+          "missing_elements": [
+            "docker-compose.yml",
+            "NODE_ENV=development",
+            "POSTGRES_DB",
+            "POSTGRES_USER",
+            "POSTGRES_PASSWORD",
+            "depends_on"
+          ],
+          "extra_elements": [],
+          "score": 54
+        },
+        "precision": 913,
+        "noise_to_signal": "6.25",
+        "overall_score": 347
+      }
+    },
+    {
+      "thread_id": "thread-005-testing-strategy",
+      "thread_title": "Estrategia de Testing con Jest",
+      "metrics": {
+        "coverage": {
+          "technologies": 50,
+          "filePaths": 0,
+          "commands": 0,
+          "variables": 100,
+          "decisions": 100,
+          "overall": 83
+        },
+        "coherence": {
+          "contradictions": [],
+          "missing_elements": [
+            "@types/jest",
+            "@types/supertest",
+            "API testing",
+            "mocking",
+            "snapshot testing",
+            "async/await"
+          ],
+          "extra_elements": [],
+          "score": 45
+        },
+        "precision": 555,
+        "noise_to_signal": "4.67",
+        "overall_score": 228
+      }
+    }
+  ]
+}

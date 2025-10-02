@@ -1,0 +1,25 @@
+{
+  "name": "Fix Pathing Errors",
+  "steps": [
+    {
+      "step_id": "identificar_paths",
+      "agent": "context",
+      "input": {
+        "sources": ["orchestration/", "agents/", "core/", "versions/"],
+        "selectors": ["import", "require", "path", "dirname", "fileURLToPath"],
+        "max_tokens": 2000
+      }
+    },
+    {
+      "step_id": "generar_fix",
+      "agent": "prompting",
+      "depends_on": ["identificar_paths"],
+      "input": {
+        "goal": "Generar correcciones específicas para errores de pathing",
+        "context": "{{identificar_paths.output.context_bundle}}",
+        "style": "technical",
+        "constraints": ["usar paths absolutos", "verificar que archivos existen"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Diagnóstico Rápido",
+  "steps": [
+    {
+      "step_id": "analizar_problemas",
+      "agent": "context",
+      "input": {
+        "sources": ["logs/", "docs/audits/", "reports/"],
+        "selectors": ["error", "problema", "fallo", "issue", "warning"],
+        "max_tokens": 3000
+      }
+    },
+    {
+      "step_id": "generar_solucion",
+      "agent": "prompting",
+      "depends_on": ["analizar_problemas"],
+      "input": {
+        "goal": "Generar soluciones específicas para problemas encontrados",
+        "context": "{{analizar_problemas.output.context_bundle}}",
+        "style": "technical",
+        "constraints": ["usar paths absolutos", "incluir comandos específicos"]
+      }
+    }
+  ]
+}

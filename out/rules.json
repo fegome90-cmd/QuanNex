@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
   "rules_compiled": [
-    "[SECURITY.md] Policy loaded from SECURITY.md"
+    "[README.md] Policy loaded from README.md"
   ],
   "validation_result": {
     "passed": true,
@@ -25,8 +25,8 @@
     ],
     "tone": "neutral",
     "domain": "general",
-    "compliance_level": "strict",
-    "timestamp": "2025-10-02T16:30:56.498Z"
+    "compliance_level": "basic",
+    "timestamp": "2025-10-02T18:52:28.599Z"
   },
   "stats": {
     "policies_checked": 1,

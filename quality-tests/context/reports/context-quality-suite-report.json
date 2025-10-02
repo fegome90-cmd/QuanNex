@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-10-02T19:15:33.013Z",
+  "test_suite": "Context Quality Tests",
+  "version": "1.0.0",
+  "tests_executed": 3,
+  "results": [
+    {
+      "name": "Consistency Checker",
+      "success": true
+    },
+    {
+      "name": "Replay Test",
+      "success": true
+    },
+    {
+      "name": "ROUGE Metrics",
+      "success": true,
+      "metrics": {
+        "rouge1": 100,
+        "rougeL": 100
+      }
+    }
+  ],
+  "gate8_status": "PASSED",
+  "overall_score": 100
+}

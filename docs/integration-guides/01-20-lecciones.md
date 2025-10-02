@@ -5,6 +5,7 @@ Conjunto de 20 lecciones prácticas para construcción de agentes IA, desde fund
 
 **Archivo Fuente**: [`mejoras_agentes/mejoras_agentes_0.1_optimized.txt`](mejoras_agentes/mejoras_agentes_0.1_optimized.txt)
 
+
 ## Componentes relevantes del proyecto:
 - `agents/base/agent.js` - Arquitectura base de agentes
 - `orchestration/orchestrator.js` - Orquestación multi-agente

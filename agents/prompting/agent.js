@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { safeErrorLog, safeOutputLog } from '../utils/log-sanitizer.js';
+import { safeErrorLog, safeOutputLog } from '../../utils/log-sanitizer.js';
 
-const baseDir = new URL('../', import.meta.url);
-const resolvePath = (relative) => new URL(relative, baseDir).pathname;
+const baseDir = new URL('../../', import.meta.url);
+const resolvePath = relative => new URL(relative, baseDir).pathname;
 
-const validateInput = (data) => {
+const validateInput = data => {
   const errors = [];
   if (typeof data !== 'object' || data === null) {
     return ['Input must be an object'];
@@ -17,7 +17,7 @@ const validateInput = (data) => {
   return errors;
 };
 
-const validateOutput = (data) => {
+const validateOutput = data => {
   const errors = [];
   if (typeof data !== 'object' || data === null) {
     return ['Output must be an object'];
@@ -46,11 +46,14 @@ const payload = {
   goal: data.goal,
   context: data.context || '',
   constraints: Array.isArray(data.constraints) ? data.constraints : [],
-  style: data.style || 'default'
+  style: data.style || 'default',
 };
 
 const serverPath = resolvePath('agents/prompting/server.js');
-const result = spawnSync('node', [serverPath], { input: JSON.stringify(payload), encoding: 'utf8' });
+const result = spawnSync('node', [serverPath], {
+  input: JSON.stringify(payload),
+  encoding: 'utf8',
+});
 if (result.status !== 0) {
   console.error(result.stderr || 'prompting.agent: server execution failed');
   process.exit(1);

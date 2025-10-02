@@ -3,10 +3,13 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { checkRateLimit } from '../../utils/file-rate-limiter.js';
 import { safeErrorLog, safeOutputLog } from '../../utils/log-sanitizer.js';
-import { validateAuthenticatedInput, prepareAuthenticatedOutput } from '../../utils/agent-auth-middleware.js';
+import {
+  validateAuthenticatedInput,
+  prepareAuthenticatedOutput,
+} from '../../utils/agent-auth-middleware.js';
 
-const baseDir = new URL('../', import.meta.url);
-const resolvePath = (relative) => new URL(relative, baseDir).pathname;
+const baseDir = new URL('../../', import.meta.url);
+const resolvePath = relative => new URL(relative, baseDir).pathname;
 
 const MAX_LIST_ITEMS = 50;
 
@@ -21,12 +24,12 @@ const ensureStringArray = (field, value, errors, { allowEmpty = false } = {}) =>
   if (value.length > MAX_LIST_ITEMS) {
     errors.push(`${field} must not exceed ${MAX_LIST_ITEMS} entries`);
   }
-  if (!value.every((item) => typeof item === 'string' && (allowEmpty || item.trim() !== ''))) {
+  if (!value.every(item => typeof item === 'string' && (allowEmpty || item.trim() !== ''))) {
     errors.push(`${field} items must be non-empty strings`);
   }
 };
 
-const validateInput = (data) => {
+const validateInput = data => {
   const errors = [];
   if (!data || typeof data !== 'object') {
     return ['Input must be an object'];
@@ -37,14 +40,14 @@ const validateInput = (data) => {
     if (data.sources.length > MAX_LIST_ITEMS) {
       errors.push(`sources must not exceed ${MAX_LIST_ITEMS} entries`);
     }
-    if (!data.sources.every((item) => typeof item === 'string' && item.trim() !== '')) {
+    if (!data.sources.every(item => typeof item === 'string' && item.trim() !== '')) {
       errors.push('sources items must be non-empty strings');
     }
-    if (data.sources.some((item) => item.includes('..'))) {
+    if (data.sources.some(item => item.includes('..'))) {
       errors.push('sources must not contain parent directory traversal (..)');
     }
     // Sanitización de caracteres peligrosos
-    if (data.sources.some((item) => /[<>\"'&]/.test(item))) {
+    if (data.sources.some(item => /[<>\"'&]/.test(item))) {
       errors.push('sources must not contain dangerous characters (<, >, ", \', &)');
     }
   }
@@ -70,7 +73,7 @@ const validateStats = (stats, errors) => {
     { field: 'chunks', type: 'number' },
     { field: 'matched', type: 'number' },
     { field: 'truncated', type: 'boolean' },
-    { field: 'adjusted', type: 'boolean' }
+    { field: 'adjusted', type: 'boolean' },
   ];
 
   statValidations.forEach(({ field, type }) => {
@@ -80,7 +83,7 @@ const validateStats = (stats, errors) => {
   });
 };
 
-const validateOutput = (data) => {
+const validateOutput = data => {
   const errors = [];
   if (typeof data !== 'object' || data === null) {
     return ['Output must be an object'];
@@ -96,7 +99,7 @@ const validateOutput = (data) => {
   if (typeof data.context_bundle !== 'string') {
     errors.push('context_bundle must be a string');
   }
-  if (!Array.isArray(data.provenance) || !data.provenance.every((item) => typeof item === 'string')) {
+  if (!Array.isArray(data.provenance) || !data.provenance.every(item => typeof item === 'string')) {
     errors.push('provenance must be an array of strings');
   }
 
@@ -105,7 +108,7 @@ const validateOutput = (data) => {
 
   // Validate optional trace field
   if (data.trace !== undefined) {
-    if (!Array.isArray(data.trace) || !data.trace.every((item) => typeof item === 'string')) {
+    if (!Array.isArray(data.trace) || !data.trace.every(item => typeof item === 'string')) {
       errors.push('trace must be an array of strings when provided');
     }
   }
@@ -115,15 +118,21 @@ const validateOutput = (data) => {
 
 // Verificar rate limiting antes de procesar
 if (!checkRateLimit('context')) {
-  console.error(JSON.stringify({
-    schema_version: '1.0.0',
-    agent_version: '1.0.0',
-    error: ['Rate limit exceeded for context agent. Please retry in 1 minute.'],
-    rate_limit_info: {
-      agent: 'context',
-      retry_after_seconds: 60
-    }
-  }, null, 2));
+  console.error(
+    JSON.stringify(
+      {
+        schema_version: '1.0.0',
+        agent_version: '1.0.0',
+        error: ['Rate limit exceeded for context agent. Please retry in 1 minute.'],
+        rate_limit_info: {
+          agent: 'context',
+          retry_after_seconds: 60,
+        },
+      },
+      null,
+      2
+    )
+  );
   process.exit(1);
 }
 
@@ -133,7 +142,7 @@ const data = JSON.parse(rawInput);
 // Autenticar entrada
 try {
   const authContext = validateAuthenticatedInput('context', data);
-  console.log(`🔐 [Auth] Context agent authenticated: ${authContext.sourceAgent} -> ${authContext.targetAgent}`);
+  // console.log(`🔐 [Auth] Context agent authenticated: ${authContext.sourceAgent} -> ${authContext.targetAgent}`);
 } catch (error) {
   safeErrorLog('Authentication failed:', { error: error.message });
   process.exit(1);
@@ -147,14 +156,17 @@ if (inputErrors.length > 0) {
 
 const payload = {
   sources: data.sources,
-  selectors: Array.isArray(data.selectors) ? data.selectors : []
+  selectors: Array.isArray(data.selectors) ? data.selectors : [],
 };
 if (typeof data.max_tokens === 'number') {
   payload.max_tokens = data.max_tokens;
 }
 
-const serverPath = resolvePath('agents/context/server.js');
-const result = spawnSync('node', [serverPath], { input: JSON.stringify(payload), encoding: 'utf8' });
+const serverPath = resolvePath('agents/context/server-docker.js');
+const result = spawnSync('node', [serverPath], {
+  input: JSON.stringify(payload),
+  encoding: 'utf8',
+});
 if (result.status !== 0) {
   console.error(result.stderr || 'context.agent: server execution failed');
   process.exit(result.status ?? 1);

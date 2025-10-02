@@ -16,20 +16,20 @@ if (!existsSync(RATE_LIMIT_DIR)) {
   mkdirSync(RATE_LIMIT_DIR, { recursive: true });
 }
 
-// Límites por agente (requests por minuto)
+// Límites por agente (requests por minuto) - Aumentados para aplicación web
 const AGENT_LIMITS = {
-  'context': 10,
-  'prompting': 15,
-  'rules': 20,
-  'security': 5,
-  'metrics': 30,
-  'optimization': 10,
-  'docsync': 25,
-  'lint': 20,
-  'orchestrator': 50,
-  'refactor': 10,
-  'secscan': 5,
-  'tests': 30
+  context: 100, // Aumentado de 10 a 100
+  prompting: 150, // Aumentado de 15 a 150
+  rules: 200, // Aumentado de 20 a 200
+  security: 50, // Aumentado de 5 a 50
+  metrics: 300, // Aumentado de 30 a 300
+  optimization: 100, // Aumentado de 10 a 100
+  docsync: 250, // Aumentado de 25 a 250
+  lint: 200, // Aumentado de 20 a 200
+  orchestrator: 500, // Aumentado de 50 a 500
+  refactor: 100, // Aumentado de 10 a 100
+  secscan: 50, // Aumentado de 5 a 50
+  tests: 300, // Aumentado de 30 a 300
 };
 
 /**
@@ -48,21 +48,21 @@ function getRateLimitFilePath(agentName) {
  */
 function readRateLimitState(agentName) {
   const filePath = getRateLimitFilePath(agentName);
-  
+
   if (!existsSync(filePath)) {
     return {
       count: 0,
-      resetTime: Date.now() + 60000 // Reset en 1 minuto
+      resetTime: Date.now() + 60000, // Reset en 1 minuto
     };
   }
-  
+
   try {
     const data = readFileSync(filePath, 'utf8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch (_error) {
     return {
       count: 0,
-      resetTime: Date.now() + 60000
+      resetTime: Date.now() + 60000,
     };
   }
 }
@@ -74,7 +74,7 @@ function readRateLimitState(agentName) {
  */
 function writeRateLimitState(agentName, state) {
   const filePath = getRateLimitFilePath(agentName);
-  
+
   try {
     writeFileSync(filePath, JSON.stringify(state, null, 2));
   } catch (error) {
@@ -88,31 +88,36 @@ function writeRateLimitState(agentName, state) {
  * @returns {boolean} true si se puede procesar, false si está limitado
  */
 export function checkRateLimit(agentName) {
+  // Verificar si el rate limiting está deshabilitado por variable de entorno
+  if (process.env.DISABLE_RATE_LIMITING === 'true') {
+    return true;
+  }
+
   const now = Date.now();
   const limit = AGENT_LIMITS[agentName] || AGENT_LIMITS['context'];
-  
+
   // Leer estado actual
   let state = readRateLimitState(agentName);
-  
+
   // Reset si ha pasado el tiempo
   if (now >= state.resetTime) {
     state = {
       count: 0,
-      resetTime: now + 60000 // Reset en 1 minuto
+      resetTime: now + 60000, // Reset en 1 minuto
     };
   }
-  
+
   // Verificar límite
   if (state.count >= limit) {
     console.log(`🚫 [Rate Limiter] ${agentName}: Rate limit exceeded (${state.count}/${limit})`);
     return false;
   }
-  
+
   // Incrementar contador y escribir estado
   state.count++;
   writeRateLimitState(agentName, state);
-  
-  console.log(`✅ [Rate Limiter] ${agentName}: Request allowed (${state.count}/${limit})`);
+
+  // console.log(`✅ [Rate Limiter] ${agentName}: Request allowed (${state.count}/${limit})`);
   return true;
 }
 
@@ -123,22 +128,22 @@ export function checkRateLimit(agentName) {
 export function getRateLimitStats() {
   const stats = {
     agents: {},
-    total_requests: 0
+    total_requests: 0,
   };
-  
+
   for (const agentName of Object.keys(AGENT_LIMITS)) {
     const state = readRateLimitState(agentName);
     const limit = AGENT_LIMITS[agentName];
-    
+
     stats.agents[agentName] = {
       requests: state.count,
       limit: limit,
       remaining: Math.max(0, limit - state.count),
-      reset_in_seconds: Math.max(0, Math.ceil((state.resetTime - Date.now()) / 1000))
+      reset_in_seconds: Math.max(0, Math.ceil((state.resetTime - Date.now()) / 1000)),
     };
     stats.total_requests += state.count;
   }
-  
+
   return stats;
 }
 
@@ -147,17 +152,24 @@ export function getRateLimitStats() {
  */
 export function cleanupExpiredRateLimits() {
   const now = Date.now();
-  
+
   for (const agentName of Object.keys(AGENT_LIMITS)) {
     const state = readRateLimitState(agentName);
-    
+
     if (now >= state.resetTime) {
       const filePath = getRateLimitFilePath(agentName);
       try {
-        writeFileSync(filePath, JSON.stringify({
-          count: 0,
-          resetTime: now + 60000
-        }, null, 2));
+        writeFileSync(
+          filePath,
+          JSON.stringify(
+            {
+              count: 0,
+              resetTime: now + 60000,
+            },
+            null,
+            2
+          )
+        );
       } catch (error) {
         console.error(`Error cleaning up rate limit for ${agentName}:`, error.message);
       }
@@ -169,5 +181,5 @@ export default {
   checkRateLimit,
   getRateLimitStats,
   cleanupExpiredRateLimits,
-  AGENT_LIMITS
+  AGENT_LIMITS,
 };
