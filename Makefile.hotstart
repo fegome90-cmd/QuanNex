@@ -1,0 +1,41 @@
+# Makefile para Hot Start Endurecido - QuanNex
+.PHONY: hotstart preflight rehydrate status validate-git
+
+validate-git:
+	ALLOWED_BRANCHES="main,fix/background-agent" REQUIRED_BRANCH="main" ./scripts/validate-git.sh
+
+preflight: validate-git
+	./scripts/check-ports.sh 8051 8052 3000
+	./scripts/taskdb-health.sh
+
+status:
+	./context-manager.sh status
+
+rehydrate:
+	./context-manager.sh rehydrate-robust --if-exists
+
+hotstart: preflight
+	@result=$$(. scripts/idempotency.sh skip?); \
+	if [ "$$result" = "skip" ]; then \
+	  echo "↪️ Skip lecturas largas (idempotencia)"; \
+	else \
+	  echo "📖 Leyendo manual/contexto..."; \
+	  # aquí tus lecturas + acknowledgments
+	  . scripts/idempotency.sh mark; \
+	fi
+	$(MAKE) status
+	$(MAKE) rehydrate
+
+# Comandos adicionales útiles
+clean-cache:
+	rm -rf .cache/hotstart_init.json
+	rm -rf .cache/init.log
+
+reset-idempotency:
+	rm -f .cache/hotstart_init.json
+
+check-all:
+	$(MAKE) validate-git
+	$(MAKE) preflight
+	$(MAKE) status
+	$(MAKE) rehydrate

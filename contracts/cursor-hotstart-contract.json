@@ -1,0 +1,140 @@
+{
+  "contract_id": "cursor-hotstart-contract",
+  "version": "1.2.0",
+  "name": "Contrato de Hot Start para Cursor/MCP",
+  "description": "Inicializa Cursor en caliente, valida git/entorno, carga contexto y verifica salud del sistema QuanNex.",
+  "enforcement_level": "mandatory",
+  "trigger_conditions": [
+    { "condition": "mcp_first_start" },
+    { "condition": "cursor_session_start" }
+  ],
+  "git_enforcement": {
+    "allowed_branches": ["main", "fix/background-agent"],
+    "required_branch": "main",
+    "allowed_commits": [],
+    "detached_head_policy": "allow_if_commit_in_allowed_branches_or_whitelist",
+    "optional_commit_pin": "",
+    "fail_message": "La rama/commit actual no cumple la política de hot start."
+  },
+  "idempotency": {
+    "state_file": ".cache/hotstart_init_done",
+    "skip_long_reads_if_present": true
+  },
+  "preflight_checks": [
+    {
+      "check_id": "workspace_root",
+      "description": "Validar que estamos en la raíz del repo",
+      "command": "test -f package.json && test -d orchestration && test -d .cursor"
+    },
+    {
+      "check_id": "node_runtime",
+      "description": "Node >= 20 y pnpm disponible",
+      "command": "node -v && pnpm -v"
+    },
+    {
+      "check_id": "git_state",
+      "description": "Rama/commit compatibles",
+      "command": "git rev-parse --abbrev-ref HEAD && git rev-parse HEAD"
+    },
+    {
+      "check_id": "ports_free",
+      "description": "Puertos críticos libres",
+      "command": "./scripts/check-ports.sh 8051 8052 3000"
+    },
+    {
+      "check_id": "taskdb_ready",
+      "description": "TaskDB operativo",
+      "command": "./scripts/taskdb-health.sh"
+    }
+  ],
+  "mandatory_actions": [
+    {
+      "action_id": "read_manual",
+      "description": "Leer manual",
+      "target_file": "MANUAL-COMPLETO-CURSOR.md",
+      "validation": {
+        "must_acknowledge": true,
+        "acknowledgment_required": "He leído y entendido completamente el manual del proyecto QuanNex StartKit"
+      },
+      "timeout_seconds": 180
+    },
+    {
+      "action_id": "read_context",
+      "description": "Leer contexto senior",
+      "target_file": "CONTEXTO-INGENIERO-SENIOR.md",
+      "validation": {
+        "must_acknowledge": true,
+        "acknowledgment_required": "He leído y entendido el contexto completo del proyecto QuanNex StartKit"
+      },
+      "timeout_seconds": 120
+    },
+    {
+      "action_id": "verify_system_state",
+      "description": "Verificar estado de orquestador/TaskDB",
+      "command": "./context-manager.sh status",
+      "validation": {
+        "must_succeed": true,
+        "expected_output_contains": ["MCP QuanNex funcionando", "Contextos disponibles", "TaskDB: OK"]
+      },
+      "timeout_seconds": 60
+    },
+    {
+      "action_id": "snapshot_rehydrate",
+      "description": "Rehidratar contexto si hay snapshot previa",
+      "command": "./context-manager.sh rehydrate --if-exists",
+      "validation": { "must_succeed": true },
+      "timeout_seconds": 45
+    },
+    {
+      "action_id": "acknowledge_contract",
+      "description": "Confirmar inicialización",
+      "validation": {
+        "must_acknowledge": true,
+        "acknowledgment_required": "Contrato de inicialización completado. Cursor está listo para hot start QuanNex."
+      }
+    }
+  ],
+  "optional_actions": [
+    {
+      "action_id": "warm_caches",
+      "description": "Precargar caches de RAG/lint/embeddings si aplica",
+      "command": "./scripts/warm-caches.sh",
+      "condition": "if_available"
+    },
+    {
+      "action_id": "check_project_health",
+      "description": "Health extendido del orquestador",
+      "command": "node orchestration/orchestrator.js health",
+      "condition": "if_orchestrator_available"
+    }
+  ],
+  "artifacts": {
+    "log_file": ".cache/init.log",
+    "result_json": ".cache/init-result.json"
+  },
+  "failure_handling": {
+    "on_timeout": {
+      "action": "retry_with_extended_timeout",
+      "max_retries": 2,
+      "extended_timeout_multiplier": 1.5
+    },
+    "on_failure": {
+      "action": "fallback_to_manual_initialization",
+      "fallback_message": "Inicialización automática falló. Ejecuta manualmente: ./context-manager.sh status && ./context-manager.sh rehydrate --if-exists"
+    }
+  },
+  "success_criteria": {
+    "all_preflight_checks_passed": true,
+    "all_mandatory_actions_completed": true,
+    "all_acknowledgments_received": true,
+    "system_verification_passed": true
+  },
+  "completion_message": "✅ Hot start completado. Cursor está operativo en la rama/commit autorizados y el estado del sistema es saludable.",
+  "metadata": {
+    "created_date": "2025-10-02",
+    "created_by": "QuanNex StartKit System",
+    "project_version": "2.1.0",
+    "contract_type": "initialization",
+    "enforcement_agent": "context-engineer"
+  }
+}
