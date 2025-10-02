@@ -39,7 +39,11 @@ security: ## Ejecutar Security Gate Pack completo
 	@echo "🛡️ Ejecutando Security Gate Pack (GAP-001...005)..."
 	bash ops/security-gate.sh
 
-ci-quannex-gate1: contracts e2e ## CI Gate 1: contracts + e2e (sin init-mcp problemático)
+integrity: ## Ejecutar Gate 13 - Test Integrity
+	@echo "🚦 Ejecutando Gate 13 - Test Integrity..."
+	node tools/test-integrity.mjs
+
+ci-quannex-gate1: contracts e2e security integrity ## CI Gate 1: contracts + e2e + security + integrity
 	@echo "✅ CI QuanNex Gate 1 completado"
 
 init-mcp: ## Inicializar MCP QuanNex

@@ -125,6 +125,8 @@
     "test:resilience": "node --test tests/resilience/*.mjs",
     "test:perf": "node --test tests/perf/*.mjs",
     "test:security": "node --test tests/security/*.mjs",
+    "test:integrity": "node tools/test-integrity.mjs",
+    "test:baseline": "node tools/gen-test-baseline.mjs",
     "quannex:smoke": "npm run test:e2e",
     "ci-quannex-gate1": "npm run test:contracts && ./scripts/mcp-autonomous-init.sh && npm run test:e2e",
     "ci-quannex-perf": "node tools/verify-perf.js && node tools/snapshot-perf.js && node --test tests/perf"

@@ -1,0 +1,19 @@
+{
+  "test_glob": "tests/**/*.{mjs,js,ts}",
+  "min_count": 29,
+  "min_loc": 4388,
+  "coverage": {
+    "lines": 78,
+    "branches": 70,
+    "functions": 75
+  },
+  "snapshots_hash": "sha256:0",
+  "include_patterns": [
+    "tests/"
+  ],
+  "exclude_patterns": [
+    "tests/helpers/",
+    "tests/fixtures/",
+    "tests/mocks/"
+  ]
+}
