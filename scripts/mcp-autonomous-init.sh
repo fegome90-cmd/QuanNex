@@ -15,10 +15,10 @@ fi
 # Verificar que los archivos del sistema MCP interno existan
 REQUIRED_FILES=(
     "orchestration/mcp/server.js"
-    "orchestration/orchestrator.js"
-    "agents/context/agent.js"
-    "agents/prompting/agent.js"
-    "agents/rules/agent.js"
+    "orchestrator.js"
+    "versions/v3/context-agent.js"
+    "versions/v3/prompting-agent.js"
+    "versions/v3/rules-agent.js"
     ".cursor/mcp.json"
     ".mcp.json"
 )
@@ -37,7 +37,7 @@ mkdir -p .reports
 
 # Probar el health check del orquestador
 echo "🔍 Probando health check del orquestador..."
-if node orchestration/orchestrator.js health > .reports/mcp-health.json 2>&1; then
+if VERSION=${VERSION:-latest} node orchestrator.js health > .reports/mcp-health.json 2>&1; then
     echo "✅ Health check del orquestador exitoso"
     cat .reports/mcp-health.json
 else
@@ -51,7 +51,7 @@ echo "🔍 Probando agentes individuales..."
 
 # Test context agent
 echo "  🧠 Probando agente context..."
-if echo '{"requestId":"health-context","agent":"context","capability":"context.resolve","payload":{"sources":["README.md"],"selectors":["test"]},"ts":"'"$(date -Iseconds)"'"}' | node agents/context/agent.js > .reports/context-test.json 2>&1; then
+if echo '{"requestId":"health-context","agent":"context","capability":"context.resolve","payload":{"sources":["README.md"],"selectors":["test"]},"ts":"'"$(date -Iseconds)"'"}' | node versions/v3/context-agent.js > .reports/context-test.json 2>&1; then
     echo "    ✅ Agente context operativo"
 else
     echo "    ⚠️ Agente context falló"
@@ -59,7 +59,7 @@ fi
 
 # Test prompting agent
 echo "  💬 Probando agente prompting..."
-if echo '{"requestId":"health-prompting","agent":"prompting","capability":"prompting.generate","payload":{"goal":"test","style":"formal"},"ts":"'"$(date -Iseconds)"'"}' | node agents/prompting/agent.js > .reports/prompting-test.json 2>&1; then
+if echo '{"requestId":"health-prompting","agent":"prompting","capability":"prompting.buildPrompt","payload":{"goal":"test","style":"formal"},"ts":"'"$(date -Iseconds)"'"}' | node versions/v3/prompting-agent.js > .reports/prompting-test.json 2>&1; then
     echo "    ✅ Agente prompting operativo"
 else
     echo "    ⚠️ Agente prompting falló"
@@ -67,7 +67,7 @@ fi
 
 # Test rules agent
 echo "  📋 Probando agente rules..."
-if echo '{"requestId":"health-rules","agent":"rules","capability":"rules.enforce","payload":{"policy_refs":["README.md"],"compliance_level":"basic"},"ts":"'"$(date -Iseconds)"'"}' | node agents/rules/agent.js > .reports/rules-test.json 2>&1; then
+if echo '{"requestId":"health-rules","agent":"rules","capability":"rules.enforce","payload":{"policy_refs":["README.md"],"compliance_level":"basic"},"ts":"'"$(date -Iseconds)"'"}' | node versions/v3/rules-agent.js > .reports/rules-test.json 2>&1; then
     echo "    ✅ Agente rules operativo"
 else
     echo "    ⚠️ Agente rules falló"

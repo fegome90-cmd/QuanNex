@@ -1,0 +1,69 @@
+{
+  "name": "Security Gap Analysis - GAP-013",
+  "description": "Análisis y resolución de GAP-013: Pruebas de seguridad automatizadas",
+  "context": {
+    "session_id": "security-gap-analysis-2025-10-01",
+    "run_label": "security-analysis"
+  },
+  "steps": [
+    {
+      "step_id": "analyze_gap",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "docs/audits/2025-09-initial-gap.md",
+          "docs/audits/GAPS-PENDIENTES-ANALISIS-2025-10-01.md"
+        ],
+        "selectors": [
+          "GAP-013",
+          "pruebas de seguridad automatizadas",
+          "DAST",
+          "SAST"
+        ],
+        "max_tokens": 1000
+      },
+      "pass_if": {
+        "exists": "context_bundle"
+      },
+      "max_retries": 1,
+      "timeout_ms": 15000
+    },
+    {
+      "step_id": "generate_solution",
+      "agent": "prompting",
+      "depends_on": [
+        "analyze_gap"
+      ],
+      "input": {
+        "goal": "Implementar pruebas de seguridad automatizadas (SAST/DAST) para resolver GAP-013",
+        "style": "technical",
+        "context": "{{analyze_gap.output.context_bundle}}"
+      },
+      "pass_if": {
+        "exists": "system_prompt"
+      },
+      "max_retries": 1,
+      "timeout_ms": 15000
+    },
+    {
+      "step_id": "validate_approach",
+      "agent": "rules",
+      "depends_on": [
+        "generate_solution"
+      ],
+      "input": {
+        "policy_refs": [
+          "README.md",
+          "SECURITY.md"
+        ],
+        "tone": "technical",
+        "context": "{{generate_solution.output.system_prompt}}"
+      },
+      "pass_if": {
+        "exists": "rules_compiled"
+      },
+      "max_retries": 1,
+      "timeout_ms": 15000
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "name": "Comprehensive Post-Versioning Audit",
+  "description": "Auditoría completa para encontrar todos los errores post-versionado usando MCP",
+  "steps": [
+    {
+      "step_id": "analyze_versioning_impact",
+      "agent": "context",
+      "action": "extract",
+      "input": {
+        "sources": [
+          "versions/",
+          "orchestration/",
+          "agents/",
+          "shared/",
+          "core/",
+          "scripts/"
+        ],
+        "selectors": [
+          "import",
+          "require",
+          "from",
+          "path",
+          "version",
+          "error",
+          "broken",
+          "missing"
+        ],
+        "max_tokens": 5000
+      },
+      "depends_on": [],
+      "timeout": 60,
+      "max_retries": 3
+    },
+    {
+      "step_id": "validate_security_impact",
+      "agent": "rules",
+      "action": "validate",
+      "input": {
+        "policy_refs": [
+          "SECURITY.md",
+          "docs/audits/2025-09-initial-gap.md",
+          "GAP-ANALYSIS-2025-10-01.md"
+        ],
+        "tone": "strict",
+        "domain": "security,pathing,imports",
+        "compliance_level": "strict"
+      },
+      "depends_on": ["analyze_versioning_impact"],
+      "timeout": 45,
+      "max_retries": 2
+    },
+    {
+      "step_id": "generate_audit_report",
+      "agent": "prompting",
+      "action": "generate",
+      "input": {
+        "goal": "Generate comprehensive audit report identifying all post-versioning errors, broken imports, missing files, and pathing issues",
+        "context": "{{analyze_versioning_impact.output.context_bundle}}",
+        "constraints": [
+          "Include specific file paths and line numbers",
+          "Categorize errors by severity (critical, high, medium, low)",
+          "Provide specific fix recommendations",
+          "Include before/after examples",
+          "Focus on Node.js ES modules and import paths"
+        ],
+        "style": "technical"
+      },
+      "depends_on": ["validate_security_impact"],
+      "timeout": 120,
+      "max_retries": 3
+    },
+    {
+      "step_id": "validate_audit_report",
+      "agent": "rules",
+      "action": "validate",
+      "input": {
+        "policy_refs": [
+          "README.md",
+          "SECURITY.md",
+          "docs/audits/2025-09-initial-gap.md"
+        ],
+        "tone": "technical",
+        "domain": "audit,reporting,quality",
+        "compliance_level": "strict"
+      },
+      "depends_on": ["generate_audit_report"],
+      "timeout": 60,
+      "max_retries": 2
+    }
+  ],
+  "context": {
+    "workflow_type": "comprehensive_audit",
+    "version": "1.0.0",
+    "focus": "post_versioning_errors",
+    "scope": "entire_codebase"
+  }
+}

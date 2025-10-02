@@ -1,0 +1,90 @@
+{
+  "name": "Specific Error Search Post-Versioning",
+  "description": "Búsqueda específica de errores post-versionado con análisis detallado",
+  "steps": [
+    {
+      "step_id": "search_broken_imports",
+      "agent": "context",
+      "action": "extract",
+      "input": {
+        "sources": [
+          "versions/v1/",
+          "versions/v2/",
+          "versions/v3/",
+          "orchestration/",
+          "agents/",
+          "shared/",
+          "core/",
+          "scripts/"
+        ],
+        "selectors": [
+          "import.*from.*\\.\\./",
+          "require.*\\.\\./",
+          "Cannot find module",
+          "MODULE_NOT_FOUND",
+          "Error.*not found",
+          "missing.*file",
+          "broken.*path"
+        ],
+        "max_tokens": 8000
+      },
+      "depends_on": [],
+      "timeout": 90,
+      "max_retries": 3
+    },
+    {
+      "step_id": "analyze_path_issues",
+      "agent": "context",
+      "action": "extract",
+      "input": {
+        "sources": [
+          "versions/",
+          "orchestration/",
+          "agents/",
+          "shared/",
+          "core/",
+          "scripts/"
+        ],
+        "selectors": [
+          "new URL.*import.meta.url",
+          "fileURLToPath",
+          "dirname.*__filename",
+          "resolve.*path",
+          "join.*path",
+          "relative.*path",
+          "absolute.*path"
+        ],
+        "max_tokens": 6000
+      },
+      "depends_on": ["search_broken_imports"],
+      "timeout": 90,
+      "max_retries": 3
+    },
+    {
+      "step_id": "generate_detailed_report",
+      "agent": "prompting",
+      "action": "generate",
+      "input": {
+        "goal": "Generate detailed technical report of all post-versioning errors found, including specific file locations, error types, and step-by-step fixes",
+        "context": "{{search_broken_imports.output.context_bundle}} {{analyze_path_issues.output.context_bundle}}",
+        "constraints": [
+          "List every broken import with exact file path and line number",
+          "Categorize by error type: MODULE_NOT_FOUND, path issues, missing files",
+          "Provide specific fix commands for each error",
+          "Include severity assessment for each issue",
+          "Create priority order for fixes"
+        ],
+        "style": "technical"
+      },
+      "depends_on": ["analyze_path_issues"],
+      "timeout": 180,
+      "max_retries": 3
+    }
+  ],
+  "context": {
+    "workflow_type": "specific_error_search",
+    "version": "1.0.0",
+    "focus": "broken_imports_and_paths",
+    "scope": "post_versioning_errors"
+  }
+}

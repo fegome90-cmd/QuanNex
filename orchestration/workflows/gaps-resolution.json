@@ -1,0 +1,74 @@
+{
+  "name": "Gaps Resolution Workflow",
+  "description": "Comprehensive workflow for resolving critical gaps using multiple agents",
+  "steps": [
+    {
+      "step_id": "analyze_gaps_context",
+      "agent": "context",
+      "action": "extract",
+      "input": {
+        "sources": [
+          "docs/audits/2025-09-initial-gap.md",
+          "GAP-ANALYSIS-2025-10-01.md"
+        ],
+        "selectors": ["GAP-002", "GAP-013", "GAP-014", "GAP-012"],
+        "max_tokens": 3000
+      },
+      "depends_on": [],
+      "timeout": 45,
+      "max_retries": 3
+    },
+    {
+      "step_id": "validate_security_rules",
+      "agent": "rules",
+      "action": "validate",
+      "input": {
+        "policy_refs": ["SECURITY.md", "docs/audits/2025-09-initial-gap.md"],
+        "tone": "technical",
+        "domain": "security",
+        "compliance_level": "strict"
+      },
+      "depends_on": ["analyze_gaps_context"],
+      "timeout": 30,
+      "max_retries": 2
+    },
+    {
+      "step_id": "generate_solutions",
+      "agent": "prompting",
+      "action": "generate",
+      "input": {
+        "goal": "Generate technical solutions for critical gaps: rate limiting, DAST, API documentation, performance testing",
+        "context": "{{analyze_gaps_context.output.context_bundle}}",
+        "constraints": [
+          "Include specific code implementations",
+          "Provide step-by-step instructions",
+          "Focus on Node.js and MCP architecture",
+          "Ensure security best practices"
+        ],
+        "style": "technical"
+      },
+      "depends_on": ["validate_security_rules"],
+      "timeout": 90,
+      "max_retries": 3
+    },
+    {
+      "step_id": "validate_solutions",
+      "agent": "rules",
+      "action": "validate",
+      "input": {
+        "policy_refs": ["README.md", "SECURITY.md", "docs/audits/2025-09-initial-gap.md"],
+        "tone": "technical",
+        "domain": "implementation",
+        "compliance_level": "strict"
+      },
+      "depends_on": ["generate_solutions"],
+      "timeout": 45,
+      "max_retries": 2
+    }
+  ],
+  "context": {
+    "workflow_type": "gaps_resolution",
+    "version": "1.0.0",
+    "target_gaps": ["GAP-002", "GAP-013", "GAP-014", "GAP-012"]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "name": "GAP-013 Security Analysis",
+  "description": "Análisis y resolución de GAP-013: Pruebas de seguridad automatizadas (SAST/DAST)",
+  "context": {
+    "session_id": "gap-013-analysis-2025-10-02",
+    "run_label": "security-gap-analysis",
+    "budget": {
+      "max_latency_ms": 120000,
+      "max_hops": 5
+    }
+  },
+  "steps": [
+    {
+      "step_id": "analyze_gap_context",
+      "agent": "context",
+      "input": {
+        "sources": [
+          "docs/audits/2025-09-initial-gap.md",
+          "docs/audits/GAPS-PENDIENTES-ANALISIS-2025-10-01.md"
+        ],
+        "selectors": [
+          "GAP-013",
+          "pruebas de seguridad automatizadas",
+          "DAST",
+          "SAST",
+          "vulnerabilidades",
+          "security testing"
+        ],
+        "max_tokens": 2000
+      },
+      "pass_if": {
+        "exists": "context_bundle"
+      },
+      "max_retries": 2,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "generate_security_solution",
+      "agent": "prompting",
+      "depends_on": [
+        "analyze_gap_context"
+      ],
+      "input": {
+        "goal": "Crear un plan completo para implementar pruebas de seguridad automatizadas (SAST/DAST) que resuelva GAP-013. Incluir herramientas específicas, configuración, y pasos de implementación.",
+        "style": "technical",
+        "context": "{{analyze_gap_context.output.context_bundle}}"
+      },
+      "pass_if": {
+        "exists": "system_prompt"
+      },
+      "max_retries": 2,
+      "timeout_ms": 30000
+    },
+    {
+      "step_id": "validate_security_approach",
+      "agent": "rules",
+      "depends_on": [
+        "generate_security_solution"
+      ],
+      "input": {
+        "policy_refs": [
+          "README.md",
+          "SECURITY.md"
+        ],
+        "tone": "technical",
+        "context": "{{generate_security_solution.output.system_prompt}}"
+      },
+      "pass_if": {
+        "exists": "rules_compiled"
+      },
+      "max_retries": 2,
+      "timeout_ms": 30000
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-10-01T18:42:00Z",
+  "tools": {
+    "structure": {
+      "validate-structure": {
+        "path": "tools/validate-structure.sh",
+        "description": "Valida que la estructura del proyecto se mantenga limpia",
+        "usage": "./tools/validate-structure.sh",
+        "output": "exit_code_0_if_valid",
+        "dependencies": ["bash", "jq"],
+        "category": "validation"
+      },
+      "auto-organize": {
+        "path": "tools/auto-organize.sh",
+        "description": "Auto-organiza archivos según las reglas estructurales",
+        "usage": "./tools/auto-organize.sh",
+        "output": "moves_files_to_correct_locations",
+        "dependencies": ["bash"],
+        "category": "organization"
+      },
+      "organize-project": {
+        "path": "tools/organize-project.sh",
+        "description": "Organiza el proyecto StartKit QuanNex de forma limpia y escalable",
+        "usage": "./tools/organize-project.sh",
+        "output": "creates_versioned_structure",
+        "dependencies": ["bash", "jq"],
+        "category": "organization"
+      }
+    },
+    "pathing": {
+      "quick-path-fixer": {
+        "path": "tools/quick-path-fixer.sh",
+        "description": "Arregla imports rotos automáticamente",
+        "usage": "./tools/quick-path-fixer.sh",
+        "output": "fixes_broken_imports",
+        "dependencies": ["bash"],
+        "category": "maintenance"
+      },
+      "robust-path-fixer": {
+        "path": "tools/robust-path-fixer.sh",
+        "description": "Detecta y arregla problemas de pathing de forma robusta",
+        "usage": "./tools/robust-path-fixer.sh [validate|fix|help]",
+        "output": "json_status_or_fixes",
+        "dependencies": ["bash"],
+        "category": "maintenance"
+      }
+    },
+    "testing": {
+      "test-version": {
+        "path": "tools/test-version.sh",
+        "description": "Ejecuta tests para una versión específica",
+        "usage": "./tools/test-version.sh <version> <test_type>",
+        "output": "test_results",
+        "dependencies": ["bash", "npm"],
+        "category": "testing"
+      }
+    },
+    "cleanup": {
+      "clean-project": {
+        "path": "tools/clean-project.sh",
+        "description": "Limpia el proyecto StartKit QuanNex",
+        "usage": "./tools/clean-project.sh [CLEAN_NODE_MODULES=true]",
+        "output": "cleaned_project",
+        "dependencies": ["bash"],
+        "category": "maintenance"
+      }
+    },
+    "system": {
+      "start-quannex": {
+        "path": "versions/v3/start-quannex.sh",
+        "description": "Inicia el sistema StartKit QuanNex v3 completo",
+        "usage": "./versions/v3/start-quannex.sh",
+        "output": "system_status",
+        "dependencies": ["bash", "node"],
+        "category": "system"
+      },
+      "stop-quannex": {
+        "path": "versions/v3/stop-quannex.sh",
+        "description": "Detiene el sistema StartKit QuanNex v3",
+        "usage": "./versions/v3/stop-quannex.sh",
+        "output": "system_stopped",
+        "dependencies": ["bash"],
+        "category": "system"
+      }
+    },
+    "monitoring": {
+      "health-monitor": {
+        "path": "versions/v3/health-monitor.js",
+        "description": "Sistema de monitoreo de salud de agentes",
+        "usage": "node versions/v3/health-monitor.js",
+        "output": "agent_health_status",
+        "dependencies": ["node"],
+        "category": "monitoring"
+      },
+      "agent-server": {
+        "path": "versions/v3/agent-server.js",
+        "description": "Servidor de agentes para la nueva estructura",
+        "usage": "node versions/v3/agent-server.js",
+        "output": "agent_responses",
+        "dependencies": ["node"],
+        "category": "system"
+      }
+    },
+    "mcp": {
+      "mcp-server-v2": {
+        "path": "orchestration/mcp/server-v2.js",
+        "description": "Servidor MCP v2 para QuanNex",
+        "usage": "node orchestration/mcp/server-v2.js",
+        "output": "mcp_server_responses",
+        "dependencies": ["node", "@modelcontextprotocol/sdk"],
+        "category": "mcp"
+      }
+    }
+  },
+  "categories": {
+    "validation": "Herramientas para validar la integridad del proyecto",
+    "organization": "Herramientas para organizar y estructurar el proyecto",
+    "maintenance": "Herramientas para mantenimiento y reparación",
+    "testing": "Herramientas para testing y validación",
+    "system": "Herramientas para gestión del sistema",
+    "monitoring": "Herramientas para monitoreo y observabilidad",
+    "mcp": "Herramientas relacionadas con MCP"
+  },
+  "workflows": {
+    "daily_maintenance": [
+      "validate-structure",
+      "clean-project",
+      "health-monitor"
+    ],
+    "project_reorganization": [
+      "organize-project",
+      "quick-path-fixer",
+      "validate-structure"
+    ],
+    "system_startup": [
+      "start-quannex"
+    ],
+    "system_shutdown": [
+      "stop-quannex"
+    ],
+    "testing_cycle": [
+      "test-version"
+    ]
+  }
+}

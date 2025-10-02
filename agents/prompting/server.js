@@ -1,67 +1,58 @@
 #!/usr/bin/env node
+/**
+ * Prompting Agent Server - Generación de prompts
+ */
+
 import { readFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'url';
 
-const SCHEMA_VERSION = '1.0.0';
-const AGENT_VERSION = '1.0.0';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const readStdin = () => {
-  if (process.stdin.isTTY) {
-    const filePath = process.argv[2];
-    if (!filePath) {
-      console.error('Usage: server.js <input.json>');
-      process.exit(1);
-    }
-    return readFileSync(filePath, 'utf8');
-  }
-  return readFileSync(0, 'utf8');
+// Leer input desde stdin
+const rawInput = readFileSync(0, 'utf8');
+const data = JSON.parse(rawInput);
+
+// Procesar prompt
+const prompt = {
+  goal: data.goal || 'Generate content',
+  context: data.context || '',
+  constraints: data.constraints || [],
+  style: data.style || 'default',
+  timestamp: new Date().toISOString()
 };
 
-try {
-  const raw = readStdin();
-  const input = JSON.parse(raw);
-  if (typeof input.goal !== 'string' || input.goal.trim() === '') {
-    throw new Error('Missing required field: goal');
+// Generar prompt
+const systemPrompt = `# ${prompt.goal}
+
+## Context
+${prompt.context}
+
+## Constraints
+${prompt.constraints.join('\n- ')}
+
+## Style
+${prompt.style}
+
+Generated at: ${prompt.timestamp}`;
+
+// Output del agente según schema esperado
+const output = {
+  schema_version: '1.0.0',
+  agent_version: '1.0.0',
+  system_prompt: systemPrompt,
+  metadata: {
+    goal: prompt.goal,
+    style: prompt.style,
+    constraints_count: prompt.constraints.length,
+    timestamp: prompt.timestamp
+  },
+  stats: {
+    prompt_length: systemPrompt.length,
+    constraints_applied: prompt.constraints.length,
+    context_length: prompt.context.length
   }
+};
 
-  const style =
-    typeof input.style === 'string' && input.style.trim() !== ''
-      ? input.style
-      : 'default';
-  const constraints = Array.isArray(input.constraints)
-    ? input.constraints.join('; ')
-    : '';
-  const rules = Array.isArray(input.ruleset_refs)
-    ? input.ruleset_refs.join(', ')
-    : '';
-  const contextRefs = Array.isArray(input.context_refs)
-    ? input.context_refs.join(', ')
-    : '';
-
-  const systemPrompt = [
-    'You are a helpful coding assistant.',
-    `Style: ${style}.`,
-    constraints ? `Constraints: ${constraints}.` : '',
-    rules ? `Rules: ${rules}.` : '',
-    contextRefs ? `Context references: ${contextRefs}.` : ''
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  const userPrompt = `Goal: ${input.goal.trim()}`;
-  const guardrails = Array.isArray(input.constraints) ? input.constraints : [];
-  const trace = ['prompting.server:ok'];
-
-  const output = {
-    schema_version: SCHEMA_VERSION,
-    agent_version: AGENT_VERSION,
-    system_prompt: systemPrompt,
-    user_prompt: userPrompt,
-    guardrails,
-    trace
-  };
-
-  process.stdout.write(`${JSON.stringify(output, null, 2)}\n`);
-} catch (error) {
-  process.stderr.write(`prompting.server:error:${error.message}\n`);
-  process.exit(1);
-}
+console.log(JSON.stringify(output, null, 2));

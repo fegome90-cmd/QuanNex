@@ -28,12 +28,18 @@ venv/
 .env
 .env.local
 .env.*.local
+.env.*
 
 # Secrets
 .secrets
 secrets.json
 *.key
 *.pem
+*.p12
+*.pfx
+id_rsa*
+id_dsa*
+QUANNEX_SIGNING_KEY
 
 # Logs
 *.log
@@ -82,3 +88,46 @@ antigeneric-agents*
 
 # Test files temporales
 archived/test-files/*.tmp
+
+# StartKit QuanNex - Organización
+versions/v4/
+versions/v5/
+versions/experimental/
+versions/*/node_modules/
+versions/*/dist/
+versions/*/build/
+
+# Archivos temporales
+*.tmp
+*.log
+*.swp
+.DS_Store
+
+# Cache y artifacts
+.cache/
+.quannex/cache/
+.quannex/artifacts/
+
+# Logs
+logs/
+*.log
+
+# QuanNex sensitive data
+.quannex/.env
+.quannex/secrets/
+.quannex/config/local.*
+.quannex/keys/
+
+# Personal information and system paths
+**/felipe/**
+**/Developer/**
+**/Users/*/Developer/**
+*.local
+config/local.*
+
+# Output files with sensitive paths
+out/real-test-runner-*.json
+out/detailed-reports-*.json
+out/retry-rollback-*.json
+out/repair-report-*.json
+out/smart-test-runner-*.json
