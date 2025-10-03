@@ -40,6 +40,7 @@ export default [
       'quality-tests/**', // Excluir directorio quality-tests
       'orchestrator.js', // Excluir archivo orchestrator.js
       'test-server.mjs', // Excluir archivo test-server.mjs
+      '.eslintrc.test.js', // Excluir archivo .eslintrc.test.js
       '*.min.js',
       '*.bundle.js',
     ],
