@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import path from 'path';
 import { detectProfile } from '../src/workflow/detect.mjs';
 
@@ -23,9 +23,9 @@ describe('Profile Collision Detection', () => {
     detectProfile(fx('mixed'));
 
     // Verificar que se loggeó la decisión (si hubo empate)
-    const loggedMessages = consoleSpy.mock.calls.map(call => call[0]);
+    const loggedMessages = consoleSpy.mock.calls.map((call: any) => call[0]);
     const hasDecisionLog = loggedMessages.some(
-      msg => typeof msg === 'string' && msg.includes('[PROFILE-DETECT]')
+      (msg: any) => typeof msg === 'string' && msg.includes('[PROFILE-DETECT]')
     );
 
     consoleSpy.mockRestore();
@@ -33,7 +33,9 @@ describe('Profile Collision Detection', () => {
     // Si hay empate, debería loggearse la decisión
     if (hasDecisionLog) {
       expect(
-        loggedMessages.some(msg => typeof msg === 'string' && msg.includes('Empate detectado'))
+        loggedMessages.some(
+          (msg: any) => typeof msg === 'string' && msg.includes('Empate detectado')
+        )
       ).toBe(true);
     }
   });

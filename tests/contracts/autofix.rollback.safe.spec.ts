@@ -125,7 +125,7 @@ describe('AutoFix Rollback Safety', () => {
     try {
       execSync(`node scripts/autofix-safe.mjs '${autofixPayload}'`, { stdio: 'pipe' });
       expect.fail('AutoFix should have failed due to unclean tree');
-    } catch (error) {
+    } catch (error: any) {
       // Expected to fail
       expect(error.message).toContain('Árbol de trabajo no está limpio');
     }

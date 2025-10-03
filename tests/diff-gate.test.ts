@@ -31,7 +31,7 @@ describe('Diff Gate', () => {
 
     // Mock process.exit para evitar que termine el proceso
     const originalExit = process.exit;
-    const mockExit = vi.fn();
+    const mockExit = vi.fn() as any;
     process.exit = mockExit;
 
     try {

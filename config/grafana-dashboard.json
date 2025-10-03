@@ -1,18 +1,19 @@
 {
   "dashboard": {
     "id": null,
-    "title": "QuanNex Metrics Integrity Gate - Golden Dashboard",
-    "tags": ["quannex", "metrics", "blindaje"],
+    "title": "QuanNex System Dashboard",
+    "tags": ["quannex", "autofix", "workflow"],
+    "style": "dark",
     "timezone": "browser",
     "panels": [
       {
         "id": 1,
-        "title": "Live vs Snapshot Ratio (%)",
+        "title": "AutoFix Success Rate",
         "type": "stat",
         "targets": [
           {
-            "expr": "100 * (1 - rate(quannex_metrics_snapshot_total[5m]) / rate(quannex_metrics_total[5m]))",
-            "legendFormat": "Live Ratio %"
+            "expr": "rate(qn_autofix_success_total[5m]) / (rate(qn_autofix_success_total[5m]) + rate(qn_autofix_failure_total[5m])) * 100",
+            "legendFormat": "Success Rate %"
           }
         ],
         "fieldConfig": {
@@ -23,68 +24,214 @@
             "thresholds": {
               "steps": [
                 {"color": "red", "value": 0},
-                {"color": "yellow", "value": 95},
-                {"color": "green", "value": 99}
+                {"color": "yellow", "value": 70},
+                {"color": "green", "value": 80}
               ]
             }
           }
         },
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0}
       },
       {
         "id": 2,
-        "title": "Fallback Count Rate (15m)",
-        "type": "graph",
+        "title": "Playbook Match Rate",
+        "type": "stat",
         "targets": [
           {
-            "expr": "rate(quannex_metrics_fallback_total[15m])",
-            "legendFormat": "Fallback Rate"
+            "expr": "rate(qn_playbook_match_total[15m]) / (rate(qn_playbook_match_total[15m]) + rate(qn_playbook_mismatch_total[15m])) * 100",
+            "legendFormat": "Match Rate %"
           }
         ],
-        "yAxes": [
-          {
-            "label": "Fallbacks/sec",
-            "min": 0
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "yellow", "value": 90},
+                {"color": "green", "value": 95}
+              ]
+            }
           }
-        ],
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 6, "y": 0}
       },
       {
         "id": 3,
-        "title": "p95 Latency /metrics",
-        "type": "graph",
+        "title": "Verify Duration p95",
+        "type": "stat",
         "targets": [
           {
-            "expr": "histogram_quantile(0.95, rate(qn_http_request_duration_seconds_bucket[5m]))",
-            "legendFormat": "p95 Latency"
+            "expr": "histogram_quantile(0.95, rate(qn_verify_duration_seconds_bucket[30m]))",
+            "legendFormat": "Duration p95"
           }
         ],
-        "yAxes": [
-          {
-            "label": "seconds",
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
             "min": 0,
-            "max": 1
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 30},
+                {"color": "red", "value": 60}
+              ]
+            }
           }
-        ],
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 12, "y": 0}
       },
       {
         "id": 4,
-        "title": "E2E Last Pass Age (minutes)",
-        "type": "graph",
+        "title": "AutoFix Operations",
+        "type": "stat",
         "targets": [
           {
-            "expr": "(time() - quannex_e2e_last_pass_timestamp) / 60",
-            "legendFormat": "Minutes since last E2E PASS"
+            "expr": "sum(rate(qn_autofix_success_total[1h]) + rate(qn_autofix_failure_total[1h]))",
+            "legendFormat": "Ops/hour"
           }
         ],
-        "yAxes": [
-          {
-            "label": "minutes",
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
             "min": 0
           }
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0}
+      },
+      {
+        "id": 5,
+        "title": "AutoFix Success Rate Over Time",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rate(qn_autofix_success_total[5m]) / (rate(qn_autofix_success_total[5m]) + rate(qn_autofix_failure_total[5m])) * 100",
+            "legendFormat": "Success Rate %"
+          }
         ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      },
+      {
+        "id": 6,
+        "title": "Verify Duration Distribution",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(qn_verify_duration_seconds_bucket[5m]))",
+            "legendFormat": "p50"
+          },
+          {
+            "expr": "histogram_quantile(0.90, rate(qn_verify_duration_seconds_bucket[5m]))",
+            "legendFormat": "p90"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(qn_verify_duration_seconds_bucket[5m]))",
+            "legendFormat": "p95"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(qn_verify_duration_seconds_bucket[5m]))",
+            "legendFormat": "p99"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "min": 0
+          }
+        },
         "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+      },
+      {
+        "id": 7,
+        "title": "AutoFix Actions by Type",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "sum by (action_type) (rate(qn_autofix_success_total[1h]))",
+            "legendFormat": "{{action_type}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 16}
+      },
+      {
+        "id": 8,
+        "title": "Playbook Profile Distribution",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "sum by (profile) (rate(qn_playbook_match_total[1h]) + rate(qn_playbook_mismatch_total[1h]))",
+            "legendFormat": "{{profile}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 16}
+      },
+      {
+        "id": 9,
+        "title": "Workflow Duration by Profile",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum by (profile, le) (rate(qn_workflow_duration_seconds_bucket[5m])))",
+            "legendFormat": "{{profile}} p95"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "min": 0
+          }
+        },
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 16}
+      },
+      {
+        "id": 10,
+        "title": "AutoFix Risk Distribution",
+        "type": "histogram",
+        "targets": [
+          {
+            "expr": "sum by (le) (rate(qn_autofix_risk_hist_bucket[1h]))",
+            "legendFormat": "Risk Level"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24}
+      },
+      {
+        "id": 11,
+        "title": "System Health",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "up{job=\"quannex-dashboard\"}",
+            "legendFormat": "Dashboard"
+          },
+          {
+            "expr": "up{job=\"quannex-metrics\"}",
+            "legendFormat": "Metrics"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "min": 0,
+            "max": 1,
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "green", "value": 1}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24}
       }
     ],
     "time": {
@@ -92,24 +239,21 @@
       "to": "now"
     },
     "refresh": "30s",
-    "annotations": {
-      "list": [
-        {
-          "name": "Circuit Breaker Active",
-          "datasource": "Prometheus",
-          "expr": "quannex_circuit_breaker_active == 1",
-          "iconColor": "red"
-        },
-        {
-          "name": "High Fallback Rate",
-          "datasource": "Prometheus", 
-          "expr": "rate(quannex_metrics_fallback_total[15m]) > 0.1",
-          "iconColor": "yellow"
-        }
-      ]
-    },
-    "templating": {
-      "list": []
-    }
+    "schemaVersion": 30,
+    "version": 1,
+    "links": [
+      {
+        "title": "QuanNex Documentation",
+        "url": "https://github.com/your-org/quannex/blob/main/USAGE.md"
+      },
+      {
+        "title": "Troubleshooting Guide",
+        "url": "https://github.com/your-org/quannex/blob/main/TROUBLESHOOTING.md"
+      },
+      {
+        "title": "Canary Success Criteria",
+        "url": "https://github.com/your-org/quannex/blob/main/docs/CANARY-SUCCESS-CRITERIA.md"
+      }
+    ]
   }
 }

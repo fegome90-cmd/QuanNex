@@ -4,13 +4,62 @@
  * Interfaz para que los agentes accedan a las herramientas del proyecto
  */
 import { readFileSync, existsSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'url';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PROJECT_ROOT = join(__dirname, '..');
+const MAX_DEPENDENCY_LENGTH = 64;
+const SAFE_DEPENDENCY_REGEX = /^[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?$/;
+
+function isSafeBinaryName(name) {
+  if (typeof name !== 'string') {
+    return false;
+  }
+
+  if (name.length === 0 || name.length > MAX_DEPENDENCY_LENGTH) {
+    return false;
+  }
+
+  if (!SAFE_DEPENDENCY_REGEX.test(name)) {
+    return false;
+  }
+
+  if (name.includes('/') || name.includes('\\')) {
+    return false;
+  }
+
+  if (name.includes('..')) {
+    return false;
+  }
+
+  return name === basename(name);
+}
+
+function safeWhich(binName, { platform = process.platform } = {}) {
+  if (!isSafeBinaryName(binName)) {
+    return { found: false, reason: 'invalid_name' };
+  }
+
+  const isWindows = platform === 'win32';
+  const command = isWindows ? 'where' : 'command';
+  const args = isWindows ? [binName] : ['-v', binName];
+
+  const result = spawnSync(command, args, {
+    cwd: PROJECT_ROOT,
+    env: { PATH: process.env.PATH },
+    stdio: 'pipe',
+    shell: false,
+    timeout: 5000,
+  });
+
+  return {
+    found: result.status === 0,
+    reason: result.status === 0 ? 'ok' : 'not_found',
+  };
+}
 
 class ToolManager {
   constructor() {
@@ -32,40 +81,40 @@ class ToolManager {
   // Listar todas las herramientas disponibles
   listTools(category = null) {
     const tools = this.registry.tools;
-    
+
     if (category) {
       return Object.entries(tools)
         .filter(([_, tool]) => tool.category === category)
         .reduce((acc, [name, tool]) => ({ ...acc, [name]: tool }), {});
     }
-    
+
     return tools;
   }
 
   // Obtener información de una herramienta específica
   getTool(toolName) {
     const tools = this.registry.tools;
-    
+
     // Buscar en todas las categorías
     for (const category of Object.values(tools)) {
       if (category[toolName]) {
         return category[toolName];
       }
     }
-    
+
     return null;
   }
 
   // Ejecutar una herramienta
   async executeTool(toolName, args = []) {
     const tool = this.getTool(toolName);
-    
+
     if (!tool) {
       throw new Error(`Tool '${toolName}' not found`);
     }
 
     const toolPath = join(this.projectRoot, tool.path);
-    
+
     if (!existsSync(toolPath)) {
       throw new Error(`Tool path does not exist: ${toolPath}`);
     }
@@ -74,38 +123,38 @@ class ToolManager {
       const isScript = tool.path.endsWith('.sh');
       const command = isScript ? 'bash' : 'node';
       const commandArgs = isScript ? [toolPath, ...args] : [toolPath, ...args];
-      
+
       const process = spawn(command, commandArgs, {
         cwd: this.projectRoot,
-        stdio: ['pipe', 'pipe', 'pipe']
+        stdio: ['pipe', 'pipe', 'pipe'],
       });
 
       let stdout = '';
       let stderr = '';
 
-      process.stdout.on('data', (data) => {
+      process.stdout.on('data', data => {
         stdout += data.toString();
       });
 
-      process.stderr.on('data', (data) => {
+      process.stderr.on('data', data => {
         stderr += data.toString();
       });
 
-      process.on('close', (code) => {
+      process.on('close', code => {
         resolve({
           tool: toolName,
           exitCode: code,
           stdout: stdout.trim(),
           stderr: stderr.trim(),
-          success: code === 0
+          success: code === 0,
         });
       });
 
-      process.on('error', (error) => {
+      process.on('error', error => {
         reject({
           tool: toolName,
           error: error.message,
-          success: false
+          success: false,
         });
       });
     });
@@ -114,18 +163,18 @@ class ToolManager {
   // Ejecutar un workflow completo
   async executeWorkflow(workflowName) {
     const workflow = this.registry.workflows[workflowName];
-    
+
     if (!workflow) {
       throw new Error(`Workflow '${workflowName}' not found`);
     }
 
     const results = [];
-    
+
     for (const toolName of workflow) {
       try {
         const result = await this.executeTool(toolName);
         results.push(result);
-        
+
         if (!result.success) {
           console.error(`Tool ${toolName} failed:`, result.stderr);
           break;
@@ -136,11 +185,11 @@ class ToolManager {
         break;
       }
     }
-    
+
     return {
       workflow: workflowName,
       results: results,
-      success: results.every(r => r.success)
+      success: results.every(r => r.success),
     };
   }
 
@@ -148,16 +197,18 @@ class ToolManager {
   searchTools(query) {
     const tools = this.registry.tools;
     const results = [];
-    
+
     for (const category of Object.values(tools)) {
       for (const [name, tool] of Object.entries(category)) {
-        if (tool.description.toLowerCase().includes(query.toLowerCase()) ||
-            name.toLowerCase().includes(query.toLowerCase())) {
+        if (
+          tool.description.toLowerCase().includes(query.toLowerCase()) ||
+          name.toLowerCase().includes(query.toLowerCase())
+        ) {
           results.push({ name, ...tool });
         }
       }
     }
-    
+
     return results;
   }
 
@@ -179,27 +230,32 @@ class ToolManager {
   // Verificar dependencias de una herramienta
   checkDependencies(toolName) {
     const tool = this.getTool(toolName);
-    
+
     if (!tool) {
       return { tool: toolName, available: false, error: 'Tool not found' };
     }
 
     const missing = [];
-    
+    const invalid = [];
+
     for (const dep of tool.dependencies || []) {
-      try {
-        const { execSync } = require('child_process');
-        execSync(`which ${dep}`, { stdio: 'ignore' });
-      } catch (error) {
+      const { found, reason } = safeWhich(dep);
+
+      if (!found) {
         missing.push(dep);
+
+        if (reason === 'invalid_name') {
+          invalid.push(dep);
+        }
       }
     }
-    
+
     return {
       tool: toolName,
       available: missing.length === 0,
-      missing: missing,
-      dependencies: tool.dependencies || []
+      missing,
+      invalid,
+      dependencies: tool.dependencies || [],
     };
   }
 }
@@ -208,57 +264,59 @@ class ToolManager {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const toolManager = new ToolManager();
   const command = process.argv[2];
-  
+
   switch (command) {
     case 'list':
       const category = process.argv[3];
       const tools = toolManager.listTools(category);
       console.log(JSON.stringify(tools, null, 2));
       break;
-      
+
     case 'get':
       const toolName = process.argv[3];
       const tool = toolManager.getTool(toolName);
       console.log(JSON.stringify(tool, null, 2));
       break;
-      
+
     case 'execute':
       const execToolName = process.argv[3];
       const args = process.argv.slice(4);
-      toolManager.executeTool(execToolName, args)
+      toolManager
+        .executeTool(execToolName, args)
         .then(result => console.log(JSON.stringify(result, null, 2)))
         .catch(error => console.error(JSON.stringify(error, null, 2)));
       break;
-      
+
     case 'workflow':
       const workflowName = process.argv[3];
-      toolManager.executeWorkflow(workflowName)
+      toolManager
+        .executeWorkflow(workflowName)
         .then(result => console.log(JSON.stringify(result, null, 2)))
         .catch(error => console.error(JSON.stringify(error, null, 2)));
       break;
-      
+
     case 'search':
       const query = process.argv[3];
       const results = toolManager.searchTools(query);
       console.log(JSON.stringify(results, null, 2));
       break;
-      
+
     case 'categories':
       const categories = toolManager.getCategories();
       console.log(JSON.stringify(categories, null, 2));
       break;
-      
+
     case 'workflows':
       const workflows = toolManager.getWorkflows();
       console.log(JSON.stringify(workflows, null, 2));
       break;
-      
+
     case 'deps':
       const depToolName = process.argv[3];
       const deps = toolManager.checkDependencies(depToolName);
       console.log(JSON.stringify(deps, null, 2));
       break;
-      
+
     default:
       console.log(`
 Tool Manager - StartKit QuanNex
@@ -288,3 +346,4 @@ Examples:
 }
 
 export default ToolManager;
+export { isSafeBinaryName, safeWhich };

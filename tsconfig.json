@@ -35,9 +35,10 @@
     "tools/**/*",
     "tests/**/*",
     "scripts/**/*",
+    "types/**/*",
     "*.ts",
     "*.js",
     "*.mjs"
   ],
-  "exclude": ["node_modules", "dist", "coverage", "build"]
+  "exclude": ["node_modules", "dist", "coverage", "build", "tests/fixtures/**/*.tsx"]
 }

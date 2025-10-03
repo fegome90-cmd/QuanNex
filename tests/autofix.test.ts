@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import fs from 'fs';
 import { autoFix } from '../scripts/autofix.mjs';
+import type { AutofixAction } from '../types/autofix';
 
 // Mock fs para tests
 vi.mock('fs');
@@ -16,7 +17,7 @@ describe('AutoFix', () => {
   });
 
   it('valida política de acciones permitidas', async () => {
-    const mockActions = [
+    const mockActions: AutofixAction[] = [
       { type: 'install_missing_dep', name: 'vitest', dev: true },
       { type: 'add_npm_script', key: 'test:new', value: 'vitest' },
     ];
@@ -30,7 +31,7 @@ describe('AutoFix', () => {
       })
     );
 
-    const result = await autoFix({ actions: mockActions, dryRun: true });
+    const result = await (autoFix as any)({ actions: mockActions, dryRun: true });
 
     expect(result.ok).toBe(true);
     expect(result.dryRun).toBe(true);
@@ -49,13 +50,13 @@ describe('AutoFix', () => {
       })
     );
 
-    await expect(autoFix({ actions: mockActions, dryRun: true })).rejects.toThrow(
+    await expect((autoFix as any)({ actions: mockActions, dryRun: true })).rejects.toThrow(
       'Fix no permitido: dangerous_action'
     );
   });
 
   it('rechaza acciones con riesgo excesivo', async () => {
-    const mockActions = [
+    const mockActions: AutofixAction[] = [
       { type: 'install_missing_dep', name: 'dep1' },
       { type: 'install_missing_dep', name: 'dep2' },
       { type: 'install_missing_dep', name: 'dep3' },
@@ -70,11 +71,15 @@ describe('AutoFix', () => {
       })
     );
 
-    await expect(autoFix({ actions: mockActions, dryRun: true })).rejects.toThrow('Riesgo 4 > max');
+    await expect((autoFix as any)({ actions: mockActions, dryRun: true })).rejects.toThrow(
+      'Riesgo 4 > max'
+    );
   });
 
   it('ejecuta dry-run sin crear rama', async () => {
-    const mockActions = [{ type: 'add_npm_script', key: 'test:dry', value: 'echo test' }];
+    const mockActions: AutofixAction[] = [
+      { type: 'add_npm_script', key: 'test:dry', value: 'echo test' },
+    ];
 
     vi.mocked(fs.readFileSync).mockReturnValue(
       JSON.stringify({
@@ -84,7 +89,7 @@ describe('AutoFix', () => {
       })
     );
 
-    const result = await autoFix({ actions: mockActions, dryRun: true });
+    const result = await (autoFix as any)({ actions: mockActions, dryRun: true });
 
     expect(result.ok).toBe(true);
     expect(result.dryRun).toBe(true);
