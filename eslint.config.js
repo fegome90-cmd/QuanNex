@@ -43,6 +43,7 @@ export default [
       '.eslintrc.test.js', // Excluir archivo .eslintrc.test.js
       '*.min.js',
       '*.bundle.js',
+      '**/*.ts', // Excluir todos los archivos TypeScript
     ],
   },
 
