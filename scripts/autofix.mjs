@@ -86,7 +86,13 @@ export async function autoFix({ actions = [], dryRun = true, branch = 'autofix/q
       }
     }
 
-    return { ok: true, dryRun, risk: risk(actions), log, duration: Date.now() - startTime };
+    const duration = Date.now() - startTime;
+    const secs = duration / 1000;
+
+    // Log JSON de éxito + duración
+    console.log(JSON.stringify({ autofix_success: true, duration_s: secs }, null, 2));
+
+    return { ok: true, dryRun, risk: risk(actions), log, duration };
   } catch (error) {
     // Record failure metrics
     for (const action of actions) {

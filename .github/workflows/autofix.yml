@@ -1,0 +1,39 @@
+name: Autofix CI
+
+on:
+  push:
+    branches: ['autofix/**']
+  pull_request:
+    branches: ['autofix/**']
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify post-apply
+        run: npm run verify
+
+      - name: Gates de seguridad
+        run: |
+          npm run gate:policy
+          npm run gate:diff
+          npm run gate:dirty
+
+      - name: AutoFix Success
+        run: |
+          echo "✅ AutoFix validation completed successfully"
+          echo "🎯 All gates passed for autofix branch"
