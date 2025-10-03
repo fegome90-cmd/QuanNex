@@ -7,6 +7,14 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { createHash } from 'crypto';
+import {
+  autofixSuccessTotal,
+  autofixFailureTotal,
+  playbookMatchTotal,
+  playbookMismatchTotal,
+  verifyDurationSeconds,
+  workflowDurationSeconds,
+} from '../metrics/autofix-metrics.mjs';
 
 const router = express.Router();
 
@@ -160,6 +168,69 @@ quannex_e2e_last_pass_timestamp ${e2eLastPassTimestamp}
 quannex_build_info{commit="${process.env.GIT_COMMIT || 'unknown'}",version="${process.env.APP_VERSION || '1.0.0'}"} 1
 `;
 
+  // Métricas de AutoFix
+  const autofixMetrics = `
+# HELP qn_autofix_success_total Total successful AutoFix applications
+# TYPE qn_autofix_success_total counter
+${autofixSuccessTotal
+  .get()
+  .values.map(
+    v =>
+      `qn_autofix_success_total{action_type="${v.labels.action_type}",risk_level="${v.labels.risk_level}"} ${v.value}`
+  )
+  .join('\n')}
+
+# HELP qn_autofix_failure_total Total failed AutoFix applications  
+# TYPE qn_autofix_failure_total counter
+${autofixFailureTotal
+  .get()
+  .values.map(
+    v =>
+      `qn_autofix_failure_total{action_type="${v.labels.action_type}",error_type="${v.labels.error_type}"} ${v.value}`
+  )
+  .join('\n')}
+
+# HELP qn_playbook_match_total Total correct playbook matches
+# TYPE qn_playbook_match_total counter
+${playbookMatchTotal
+  .get()
+  .values.map(
+    v =>
+      `qn_playbook_match_total{profile="${v.labels.profile}",expected_profile="${v.labels.expected_profile}"} ${v.value}`
+  )
+  .join('\n')}
+
+# HELP qn_playbook_mismatch_total Total incorrect playbook matches
+# TYPE qn_playbook_mismatch_total counter
+${playbookMismatchTotal
+  .get()
+  .values.map(
+    v =>
+      `qn_playbook_mismatch_total{profile="${v.labels.profile}",expected_profile="${v.labels.expected_profile}"} ${v.value}`
+  )
+  .join('\n')}
+
+# HELP qn_verify_duration_seconds Duration of verify command execution
+# TYPE qn_verify_duration_seconds histogram
+${verifyDurationSeconds
+  .get()
+  .values.map(
+    v =>
+      `qn_verify_duration_seconds_bucket{status="${v.labels.status}",autofix_applied="${v.labels.autofix_applied}",le="${v.labels.le}"} ${v.value}`
+  )
+  .join('\n')}
+
+# HELP qn_workflow_duration_seconds Duration of adaptive workflow execution
+# TYPE qn_workflow_duration_seconds histogram
+${workflowDurationSeconds
+  .get()
+  .values.map(
+    v =>
+      `qn_workflow_duration_seconds_bucket{profile="${v.labels.profile}",status="${v.labels.status}",le="${v.labels.le}"} ${v.value}`
+  )
+  .join('\n')}
+`;
+
   const fullMetrics =
     systemMetrics +
     '\n' +
@@ -169,7 +240,9 @@ quannex_build_info{commit="${process.env.GIT_COMMIT || 'unknown'}",version="${pr
     '\n' +
     agentMetrics +
     '\n' +
-    observabilityMetrics;
+    observabilityMetrics +
+    '\n' +
+    autofixMetrics;
 
   // Agregar hash SHA256 para integridad
   const hash = createHash('sha256').update(fullMetrics).digest('hex');

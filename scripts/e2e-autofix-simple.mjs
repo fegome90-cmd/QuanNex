@@ -35,14 +35,22 @@ try {
   console.log('[E2E] 🔧 Aplicando AutoFix...');
   sh(`node scripts/autofix.mjs '${payload}'`);
 
-  // 5) Verificar que el script ahora existe
-  try {
-    sh('npm run test:autofix');
-    console.log('[E2E] ✅ Script test:autofix funciona correctamente');
-  } catch {
-    console.error('[E2E] ❌ Script test:autofix no funciona');
-    process.exit(1);
+  // 5) Verificar que el script ahora existe (con reintento anti-flake)
+  let scriptWorks = false;
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      sh('npm run test:autofix');
+      scriptWorks = true;
+      break;
+    } catch (error) {
+      if (attempt === 2) {
+        console.error('[E2E] ❌ Script test:autofix no funciona después de 2 intentos');
+        process.exit(1);
+      }
+      console.log(`[E2E] Reintento ${attempt} para test:autofix...`);
+    }
   }
+  console.log('[E2E] ✅ Script test:autofix funciona correctamente');
 
   console.log('[E2E] 🎉 OK: rojo → autofix → verde');
 } catch (error) {

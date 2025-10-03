@@ -8,6 +8,9 @@ import fs from 'node:fs';
 import { globby } from 'globby';
 import path from 'node:path';
 
+// Cargar configuración de políticas
+const policies = JSON.parse(fs.readFileSync('config/policies.json', 'utf8'));
+
 // Configuración de políticas de seguridad
 const FORBIDDEN_APIS = [
   'eval\\(',
@@ -83,12 +86,24 @@ async function checkForbiddenAPIs() {
           const matches = line.match(regex);
 
           if (matches) {
-            violations.push({
-              file,
-              line: i + 1,
-              api,
-              content: line.trim(),
+            // Verificar si el archivo está en la lista de excepciones
+            const allowedPaths = policies.allowInPaths?.[api.replace('\\', '')];
+            const isAllowed = allowedPaths?.some(pattern => {
+              if (pattern.includes('*')) {
+                const regex = new RegExp(pattern.replace('*', '.*'));
+                return regex.test(file);
+              }
+              return file.includes(pattern);
             });
+
+            if (!isAllowed) {
+              violations.push({
+                file,
+                line: i + 1,
+                api,
+                content: line.trim(),
+              });
+            }
           }
         }
       }

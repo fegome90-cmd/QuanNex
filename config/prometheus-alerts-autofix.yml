@@ -1,0 +1,56 @@
+# Prometheus Alerting Rules for QuanNex AutoFix
+groups:
+  - name: quannex.autofix
+    rules:
+      - alert: AutoFixSuccessRateLow
+        expr: |
+          (
+            sum(rate(qn_autofix_success_total[5m])) /
+            (sum(rate(qn_autofix_success_total[5m])) + sum(rate(qn_autofix_failure_total[5m])))
+          ) < 0.5
+        for: 30m
+        labels:
+          severity: warning
+          component: autofix
+        annotations:
+          summary: 'AutoFix success rate below 50%'
+          description: 'AutoFix success rate has been below 50% for 30 minutes. Current rate: {{ $value | humanizePercentage }}'
+          runbook_url: 'https://github.com/fegome90-cmd/QuanNex/blob/main/docs/RUNBOOK.md#autofix-success-rate-low'
+
+      - alert: VerifyDurationHigh
+        expr: |
+          histogram_quantile(0.95, 
+            sum(rate(qn_verify_duration_seconds_bucket[5m])) by (le)
+          ) > 30
+        for: 10m
+        labels:
+          severity: warning
+          component: verify
+        annotations:
+          summary: 'Verify duration p95 above 30s'
+          description: 'Verify command p95 duration has been above 30s for 10 minutes. Current p95: {{ $value }}s'
+          runbook_url: 'https://github.com/fegome90-cmd/QuanNex/blob/main/docs/RUNBOOK.md#verify-duration-high'
+
+      - alert: PlaybookMismatchRateHigh
+        expr: |
+          sum(rate(qn_playbook_mismatch_total[15m])) > 0.2
+        for: 15m
+        labels:
+          severity: warning
+          component: workflow
+        annotations:
+          summary: 'Playbook mismatch rate above 0.2/min'
+          description: 'Playbook mismatch rate has been above 0.2/min for 15 minutes. Current rate: {{ $value }} mismatches/min'
+          runbook_url: 'https://github.com/fegome90-cmd/QuanNex/blob/main/docs/RUNBOOK.md#playbook-mismatch-rate-high'
+
+      - alert: AutoFixFailureSpike
+        expr: |
+          sum(rate(qn_autofix_failure_total[5m])) > 0.1
+        for: 5m
+        labels:
+          severity: critical
+          component: autofix
+        annotations:
+          summary: 'AutoFix failure spike detected'
+          description: 'AutoFix failure rate has spiked above 0.1 failures/min for 5 minutes. Current rate: {{ $value }} failures/min'
+          runbook_url: 'https://github.com/fegome90-cmd/QuanNex/blob/main/docs/RUNBOOK.md#autofix-failure-spike'

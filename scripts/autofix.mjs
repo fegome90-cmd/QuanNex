@@ -4,6 +4,14 @@ import { promisify } from 'node:util';
 import path from 'path';
 import { recordAutofixSuccess, recordAutofixFailure } from '../src/metrics/autofix-metrics.mjs';
 
+// V2 Handlers (behind AUTOFIX_V2 flag)
+const AUTOFIX_V2 = process.env.AUTOFIX_V2 === '1';
+if (AUTOFIX_V2) {
+  const { installTypes } = await import('./handlers/install_types.mjs');
+  const { updateScript } = await import('./handlers/update_script.mjs');
+  const { createTestBoiler } = await import('./handlers/create_test_boiler.mjs');
+}
+
 const exec = promisify(cp.exec);
 const policy = JSON.parse(fs.readFileSync('config/fixes.json', 'utf8'));
 
@@ -56,6 +64,24 @@ const handlers = {
     fs.writeFileSync(filePath, content);
     return { stdout: `created ${filePath}` };
   },
+
+  // V2 Handlers (behind AUTOFIX_V2 flag)
+  ...(AUTOFIX_V2
+    ? {
+        async install_types({ packageName, dev = true }) {
+          const { installTypes } = await import('./handlers/install_types.mjs');
+          return installTypes({ packageName, dev });
+        },
+        async update_script({ scriptName, newValue, reason }) {
+          const { updateScript } = await import('./handlers/update_script.mjs');
+          return updateScript({ scriptName, newValue, reason });
+        },
+        async create_test_boiler({ filePath, testFramework = 'vitest' }) {
+          const { createTestBoiler } = await import('./handlers/create_test_boiler.mjs');
+          return createTestBoiler({ filePath, testFramework });
+        },
+      }
+    : {}),
 };
 
 export async function autoFix({ actions = [], dryRun = true, branch = 'autofix/quannex' }) {
