@@ -2,6 +2,13 @@ import { describe, it, expect, vi } from 'vitest';
 
 import { fetchUser } from './fetchUser';
 
+// Definir tipo Database para los tests
+interface Database {
+  users: {
+    findById: (id: number) => Promise<{ id: number; name: string; email: string } | null>;
+  };
+}
+
 describe('fetchUser', () => {
   it('retorna usuario exitosamente', async () => {
     const mockDb = {
