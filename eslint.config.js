@@ -31,6 +31,15 @@ export default [
       'tests/**', // Excluir directorio tests
       'test-files/**', // Excluir directorio test-files
       'scripts/**', // Excluir directorio scripts
+      'agents/**', // Excluir directorio agents
+      'core/**', // Excluir directorio core
+      'examples/**', // Excluir directorio examples
+      'experiments/**', // Excluir directorio experiments
+      'ops/**', // Excluir directorio ops
+      'packages/**', // Excluir directorio packages
+      'quality-tests/**', // Excluir directorio quality-tests
+      'orchestrator.js', // Excluir archivo orchestrator.js
+      'test-server.mjs', // Excluir archivo test-server.mjs
       '*.min.js',
       '*.bundle.js',
     ],
