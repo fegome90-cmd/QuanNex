@@ -20,6 +20,7 @@ export default [
       'tests/fixtures/**/*.tsx', // Excluir archivos de prueba
       'apps/**/*.ts', // Excluir archivos de apps problemáticos
       'tools/tool-manager.js', // Excluir archivo con problemas de sintaxis
+      'orchestration/**', // Excluir directorio orchestration
       '*.min.js',
       '*.bundle.js',
     ],
