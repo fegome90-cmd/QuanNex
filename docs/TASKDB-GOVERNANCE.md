@@ -109,7 +109,10 @@ Estas métricas son diagnósticas, no se usan para evaluar personas.
 ## Comandos Útiles
 
 ```bash
-# Generar reporte semanal
+# Generar reporte semanal (CLI mejorado)
+node packages/taskdb-core/cli-reports.mjs --since 7d --md --out reports/TASKDB-WEEKLY.md
+
+# Generar reporte directo (legacy)
 node cli/qnx-report.js --since=7d
 
 # Verificar budget
@@ -124,6 +127,16 @@ npm run test:taskdb:smoke
 # Verificar status failover
 node -e "import('./core/taskdb/failover.js').then(m => console.log(m.getStatus()))"
 ```
+
+### Hotfix CLI Reports
+- **Archivo**: `packages/taskdb-core/cli-reports.mjs`
+- **Estado**: Reescrito con CLI estable y try/catch correcto
+- **Funcionalidad**: Reutiliza `cli/qnx-report.js` para generación de reportes
+- **Características**: 
+  - Sintaxis ESLint-compliant
+  - Manejo de errores robusto
+  - Integración con generador de reportes existente
+  - Soporte para períodos configurables
 
 ## Plan de Rollout
 

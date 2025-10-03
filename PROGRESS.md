@@ -2,6 +2,20 @@
 
 ## 🎯 Hitos Principales
 
+### 2025-10-03 — TaskDB v2 + Governance Release ✅
+
+**Estado:** ✅ TaskDB v2 listo para release v0.2.0  
+**Commit:** `feat(taskdb): v2 hardening + governance — lint & cli reports fix`  
+**Validación:** GO ✅ (todos los criterios cumplidos)
+
+#### 🔧 Hotfixes Aplicados
+
+- **CLI Reports**: Reescrito con try/catch correcto y CLI estable
+- **ESLint**: Incluye taskdb-core en scripts eslint + fix
+- **Smoke**: Verificación de eventos mínimos en CI pasa
+- **Release**: Listo para v0.2.0 (TaskDB v2 + Gobernanza)
+- **Shadow Write**: Soporte dual adapter para PG canary
+
 ### 2025-10-03 — TaskDB Governance ✅
 
 **Estado:** ✅ Gobernanza aprobada y lista para producción  

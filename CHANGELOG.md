@@ -7,7 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## v0.2.0 — TaskDB v2 + Governance (2025-10-03)
+
 ### Added
+
+- **TaskDB v2 Core**: Cola asíncrona con batching; ALS (contexto implícito); adaptadores SQLite/PG/JSONL; failover controlado
+- **CLI Reports**: Reportes con cláusula cultural automática; períodos configurables
+- **Gobernanza**: Budget warning, ritual semanal (issue), checklist de PR (Insight), smoke e2e
+- **Shadow Write**: Soporte dual adapter para migración canary a PostgreSQL
+
+### Fixed
+
+- **ESLint**: CLI reports y cobertura de `packages/taskdb-core`
+- **CLI Reports**: Reescrito con try/catch correcto y CLI estable
+- **Lint**: Incluye taskdb-core en scripts eslint + fix
+
+### Changed
+
+- **TaskDB**: Migración a arquitectura v2 con mejoras de rendimiento
+- **Reports**: Generación automática con cláusula cultural
+- **CI**: Verificación de eventos mínimos en smoke tests
+
+### Added
+
 - **EV-Hard-Evidence: Análisis Empírico Completo de MCP** (2025-10-02)
   - Evidencia empírica defendible de mejora +20.0 puntos en calidad de Cursor
   - Metodología rigurosa: Interleaving A/B con controles de falsificación (NoOp, Placebo)
@@ -21,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Registro completo en TaskDB con lecciones aprendidas críticas
 
 ### Added
+
 - **Análisis Exhaustivo de Parches - 20 Lecciones de Agentes IA** (2024-10-02)
   - Identificación de 15 fallas críticas adicionales en el sistema actual
   - Verificación automática con MCP QuanNex confirmó problemas de imports
@@ -34,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Registro completo en TaskDB y manual de integración
 
 ### Added
+
 - **Arquitectura Modular**: División del documento INTEGRATION_GUIDE_AGENTS.md en documentos especializados
   - `ARCHITECTURE-OVERVIEW.md` - Visión general y ranking de mejoras
   - `COST-BENEFIT-ANALYSIS.md` - Análisis ROI y trade-offs
@@ -48,11 +72,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dashboard Interactivo de KPIs**: Métricas en tiempo real
 
 ### Changed
+
 - **Estructura Documental**: De documento monolítico a sistema modular
 - **Navegación**: Índices semánticos y referencias cruzadas
 - **Referencias**: Enlaces directos a archivos fuente en mejoras_agentes/
 
 ### Technical Details
+
 - **Versionado**: Sistema semántico v1.0.0
 - **Compatibilidad**: Mantenida con estructura existente de startkit-main
 - **Validación**: Checksums SHA-256 para todos los archivos fuente
@@ -60,6 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-10-02
 
 ### Added
+
 - **20 Lecciones de Agentes IA** - Mejores prácticas validadas
   - Guardrails de entrada/salida implementados
   - Especialización de agentes por dominio
@@ -100,6 +127,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ROI validado: 134%
 
 ### Changed
+
 - **Arquitectura Base**: Integración modular con componentes existentes
   - `agents/base/agent.js` - Arquitectura base mejorada
   - `orchestration/orchestrator.js` - Orquestación multi-agente
@@ -107,18 +135,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `core/memory-system.js` - Gestión de memoria RAG
 
 ### Security
+
 - **Validación de Fuentes**: Sistema de checksums SHA-256
 - **Guardrails**: Anti-alucinación y validación de entrada/salida
 - **Aislamiento**: Contextos separados entre agentes
 - **Rate Limiting**: Límites de requests por agente
 
 ### Performance
+
 - **Throughput**: +327% (75 → 320 req/s)
 - **Latencia**: -70% (2.3s → 0.8s)
 - **Uptime**: +1.4 puntos (98.5% → 99.9%)
 - **Eficiencia PRP**: -81% tiempo generación (450ms → 85ms)
 
 ### Testing
+
 - **Cobertura**: +27 puntos (65% → 92%)
 - **Tasa Alucinaciones**: -90% (8.5% → 0.8%)
 - **Escalabilidad**: +47 puntos en orquestación compleja
@@ -127,54 +158,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.5.0] - 2025-09-15
 
 ### Added
+
 - **Método BMAD**: Metodología Breakthrough para desarrollo agéntico
 - **Agentes Centrales**: Analyst, PM, Architect, UX Expert, Scrum Master, Dev+QA
 - **Flujo SDLC**: Exploración → Planificación → Validación → Stories → Implementation
 - **Paquetes Expansión**: Personalización YAML para diferentes dominios
 
 ### Changed
+
 - **Coordinación**: Mejora en sincronización entre agentes centrales
 - **Flexibilidad**: Human-in-the-loop variable según complejidad
 
 ## [0.4.0] - 2025-09-01
 
 ### Added
+
 - **Experiencias Agénticas**: Protocolos emergentes AGUI/ACP
 - **AGUI Protocol**: Copilot Kit + Pydantic AI para sincronización bidireccional
 - **Herramientas Dinámicas**: Frontend tools con renderización en chat
 - **ACP Protocol**: Zed editor con JSON RPC
 
 ### Changed
+
 - **Interfaz Usuario**: Integración fluida de agentes en aplicaciones
 - **Estado Sincronización**: Bidireccional en tiempo real
 
 ## [0.3.0] - 2025-08-15
 
 ### Added
+
 - **Sistemas Evolutivos**: Modelo mental de 3 fases
 - **Vibe Planning**: Exploración libre vs Context Engineering estructurado
 - **Sub-agentes**: Investigación (✅) y Validación (✅) vs Implementación (❌)
 - **Gestión Tareas**: Granulares con slash commands y reglas globales
 
 ### Changed
+
 - **Automatización**: Workflows adaptativos basados en feedback
 - **Coordinación**: Sub-agentes especializados con ventanas de contexto
 
 ## [0.2.0] - 2025-08-01
 
 ### Added
+
 - **Framework PRP**: Context Engineering para desarrollo asistido
 - **Motor PRP**: Gathering de contexto automático desde codebase
 - **Validation Gates**: Type checking, linters, pruebas unitarias
 - **Flujo 3 Pasos**: Initial MD → Generar PRP → Ejecutar PRP
 
 ### Changed
+
 - **Eficiencia Desarrollo**: 10x speedup en ciclos de desarrollo
 - **Calidad Código**: Primera pasada lista para producción
 
 ## [0.1.0] - 2025-07-15
 
 ### Added
+
 - **20 Lecciones de Agentes IA**: Mejores prácticas validadas
 - **Guardrails**: Anti-alucinación y validación entrada/salida
 - **Especialización**: Agentes por dominio (Slack, Database, etc.)
@@ -182,6 +222,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Optimización Herramientas**: Anatomía perfecta con manejo errores
 
 ### Changed
+
 - **Arquitectura Base**: Mejora en estabilidad y predictibilidad
 - **Testing**: Cobertura aumentada significativamente
 
@@ -220,11 +261,13 @@ This project follows [Semantic Versioning](https://semver.org/):
 ### From 0.x to 1.0
 
 #### Breaking Changes
+
 - **Estructura Documental**: De monolítica a modular
 - **Referencias**: Cambiadas a enlaces relativos
 - **Navegación**: Índices semánticos requeridos
 
 #### Migration Steps
+
 1. Actualizar enlaces de documentación
 2. Reorganizar bookmarks y referencias
 3. Familiarizarse con nueva estructura modular
@@ -232,12 +275,12 @@ This project follows [Semantic Versioning](https://semver.org/):
 
 #### Compatibility Matrix
 
-| Component | 0.x Compatibility | Migration Required |
-|-----------|-------------------|-------------------|
-| Scripts de build | ✅ Compatible | No |
-| Tests existentes | ✅ Compatible | No |
-| Documentación | ⚠️ Requires update | Yes |
-| Integration guides | ✅ Compatible | No |
+| Component          | 0.x Compatibility  | Migration Required |
+| ------------------ | ------------------ | ------------------ |
+| Scripts de build   | ✅ Compatible      | No                 |
+| Tests existentes   | ✅ Compatible      | No                 |
+| Documentación      | ⚠️ Requires update | Yes                |
+| Integration guides | ✅ Compatible      | No                 |
 
 ---
 
@@ -257,12 +300,15 @@ This project follows [Semantic Versioning](https://semver.org/):
 ## [1.2.3] - 2025-10-02
 
 ### Added
+
 - New feature description ([issue #123](https://github.com/...))
 
 ### Changed
+
 - Updated existing functionality
 
 ### Fixed
+
 - Bug fix description
 ```
 
@@ -278,6 +324,7 @@ sha256sum -c SHA256SUMS
 ```
 
 Current release checksums:
+
 - `ARCHITECTURE-OVERVIEW.md`: `a1b2c3d4...`
 - `COST-BENEFIT-ANALYSIS.md`: `b2c3d4e5...`
 - `VALIDATION-EMPRICA.md`: `c3d4e5f6...`
@@ -285,4 +332,4 @@ Current release checksums:
 
 ---
 
-*For more information about specific improvements, see the [integration guides](docs/integration-guides/).*
+_For more information about specific improvements, see the [integration guides](docs/integration-guides/)._

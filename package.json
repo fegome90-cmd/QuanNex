@@ -1,6 +1,6 @@
 {
   "name": "claude-project-init-kit",
-  "version": "2.0.1",
+  "version": "0.2.0",
   "description": "Shell-based project initialization kit for AI-powered development workflows",
   "type": "module",
   "main": "core/claude-project-init.sh",
