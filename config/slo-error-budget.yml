@@ -1,0 +1,115 @@
+# SLO + Presupuesto de Error para QuanNex Metrics Integrity Gate
+# Operación madura con políticas de remediación
+
+slos:
+  metrics_availability:
+    name: 'Disponibilidad /metrics'
+    description: 'Endpoint /metrics disponible sin errores 500'
+    target: 99.9%
+    window: '30d'
+    error_budget: 43.2 # minutos por mes (0.1% de 30 días)
+
+    alerts:
+      - name: 'MetricsAvailabilityDegraded'
+        expr: "rate(http_requests_total{route='/metrics',code='500'}[5m]) > 0.001"
+        for: '5m'
+        severity: 'warning'
+        description: 'Error rate > 0.1% en /metrics'
+
+      - name: 'MetricsAvailabilityCritical'
+        expr: "rate(http_requests_total{route='/metrics',code='500'}[5m]) > 0.01"
+        for: '2m'
+        severity: 'critical'
+        description: 'Error rate > 1% en /metrics'
+
+  live_vs_snapshot_ratio:
+    name: 'Ratio Live vs Snapshot'
+    description: 'Métricas en vivo vs snapshot'
+    target: 95%
+    window: '24h'
+    error_budget: 72 # minutos por día (5% de 24 horas)
+
+    alerts:
+      - name: 'LiveRatioDegraded'
+        expr: 'rate(quannex_metrics_total[1h]) - rate(quannex_metrics_snapshot_total[1h]) / rate(quannex_metrics_total[1h]) < 0.95'
+        for: '6h'
+        severity: 'warning'
+        description: 'Ratio live < 95% por más de 6 horas'
+
+      - name: 'LiveRatioCritical'
+        expr: 'rate(quannex_metrics_total[1h]) - rate(quannex_metrics_snapshot_total[1h]) / rate(quannex_metrics_total[1h]) < 0.90'
+        for: '2h'
+        severity: 'critical'
+        description: 'Ratio live < 90% por más de 2 horas'
+
+  response_time_p95:
+    name: 'Tiempo de Respuesta p95'
+    description: 'Latencia p95 del endpoint /metrics'
+    target: 200ms
+    window: '24h'
+    error_budget: 1440 # minutos por día (100% del tiempo)
+
+    alerts:
+      - name: 'ResponseTimeHigh'
+        expr: 'histogram_quantile(0.95, rate(qn_http_request_duration_seconds_bucket[5m])) > 0.2'
+        for: '5m'
+        severity: 'warning'
+        description: 'p95 latency > 200ms'
+
+  e2e_freshness:
+    name: 'Frescura E2E'
+    description: 'Tiempo desde último E2E PASS'
+    target: 90min
+    window: '7d'
+    error_budget: 1008 # minutos por semana (2 veces por semana)
+
+    alerts:
+      - name: 'E2EStale'
+        expr: 'time() - quannex_e2e_last_pass_timestamp > 5400'
+        for: '10m'
+        severity: 'warning'
+        description: 'E2E sin PASS por > 90 min'
+
+# Políticas de remediación
+remediation_policies:
+  deployment_freeze:
+    trigger: 'live_vs_snapshot_ratio < 95% por > 6h'
+    action: 'Congelar despliegues a main hasta remediar'
+    duration: 'Hasta que ratio recupere > 95%'
+
+  post_mortem:
+    trigger: 'E2EStale > 90min ocurre 2 veces/semana'
+    action: 'Gatillar post-mortem ligero'
+    template: 'docs/post-mortem-template.md'
+
+  circuit_breaker_reset:
+    trigger: 'Circuit breaker activo por > 5min'
+    action: 'Reset manual del circuit breaker'
+    command: 'curl -X POST http://localhost:3000/metrics/reset-breaker'
+
+# Métricas de presupuesto de error
+error_budget_metrics:
+  - name: 'quannex_error_budget_remaining'
+    description: 'Presupuesto de error restante'
+    type: 'gauge'
+    labels: ['slo_name', 'window']
+
+  - name: 'quannex_error_budget_burn_rate'
+    description: 'Tasa de consumo del presupuesto de error'
+    type: 'gauge'
+    labels: ['slo_name', 'window']
+
+# Dashboard de presupuesto de error
+error_budget_dashboard:
+  panels:
+    - title: 'Error Budget Burn Rate'
+      query: 'quannex_error_budget_burn_rate'
+      type: 'graph'
+
+    - title: 'Error Budget Remaining'
+      query: 'quannex_error_budget_remaining'
+      type: 'stat'
+
+    - title: 'SLO Status'
+      query: 'quannex_slo_status'
+      type: 'table'

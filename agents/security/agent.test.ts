@@ -1,42 +1,162 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { runVulnerabilityScan } from './agent.mjs';
+import fs from 'fs';
+
+// Mock fs and globby
+vi.mock('fs');
+vi.mock('globby', () => ({
+  globby: vi.fn(),
+}));
 
 describe('security agent', () => {
-  it('encuentra archivos para escanear', async () => {
-    const r: any = await runVulnerabilityScan();
-
-    // Debería encontrar archivos
-    expect(r.files_scanned).toBeGreaterThan(0);
-    expect(r.status).toBe('ok');
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it('no retorna 0 archivos escaneados', async () => {
-    const r: any = await runVulnerabilityScan();
-
-    // No debería retornar 0 archivos
-    expect(r.files_scanned).not.toBe(0);
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
-  it('incluye detalles del scan', async () => {
-    const r: any = await runVulnerabilityScan();
+  it('retorna archivos escaneados y vulnerabilidades', async () => {
+    // Mock file system
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    vi.mocked(fs.readFileSync).mockReturnValue(
+      JSON.stringify({
+        code: ['src/**/*.js'],
+        configs: ['package.json'],
+      })
+    );
 
-    expect(r.scan_details).toBeDefined();
-    expect(r.scan_details.code_files).toBeGreaterThan(0);
-    expect(r.scan_details.config_files).toBeGreaterThan(0);
+    // Mock globby
+    const { globby } = await import('globby');
+    vi.mocked(globby).mockResolvedValue(['src/test.js', 'package.json']);
+
+    const result = await runVulnerabilityScan();
+
+    expect(result.files_scanned).toBe(2);
+    expect(result.vulnerabilities_found).toBe(0);
+    expect(result.status).toBe('ok');
   });
 
-  it('maneja archivos de configuración faltantes', async () => {
-    // Simular archivo faltante
+  it('retorna 0 archivos si los globs no encuentran nada', async () => {
+    // Mock file system
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    vi.mocked(fs.readFileSync).mockReturnValue(
+      JSON.stringify({
+        code: ['nonexistent/**/*.js'],
+        configs: [],
+      })
+    );
+
+    // Mock globby
+    const { globby } = await import('globby');
+    vi.mocked(globby).mockResolvedValue([]);
+
+    const result = await runVulnerabilityScan();
+
+    expect(result.files_scanned).toBe(0);
+    expect(result.status).toBe('empty');
+  });
+
+  it('maneja archivo de configuración faltante', async () => {
+    vi.mocked(fs.existsSync).mockReturnValue(false);
+
+    const result = await runVulnerabilityScan();
+
+    expect(result.error).toMatch(/scan globs not found/);
+    expect(result.files_scanned).toBe(0);
+    expect(result.vulnerabilities_found).toBe(0);
+  });
+
+  it('maneja configuración JSON inválida', async () => {
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    vi.mocked(fs.readFileSync).mockReturnValue('invalid json');
+
+    const result = await runVulnerabilityScan();
+
+    expect(result.files_scanned).toBe(0);
+    expect(result.vulnerabilities_found).toBe(0);
+  });
+
+  it('maneja configuración con estructura incorrecta', async () => {
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    vi.mocked(fs.readFileSync).mockReturnValue(
+      JSON.stringify({
+        invalid: 'structure',
+      })
+    );
+
+    // Mock globby
+    const { globby } = await import('globby');
+    vi.mocked(globby).mockResolvedValue([]);
+
+    const result = await runVulnerabilityScan();
+
+    expect(result.files_scanned).toBe(0);
+    expect(result.status).toBe('empty');
+  });
+
+  it('usa variable de entorno SCAN_GLOBS_PATH', async () => {
     const originalPath = process.env.SCAN_GLOBS_PATH;
-    process.env.SCAN_GLOBS_PATH = 'config/nonexistent.json';
+    process.env.SCAN_GLOBS_PATH = 'custom/path.json';
 
-    const r: any = await runVulnerabilityScan();
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    vi.mocked(fs.readFileSync).mockReturnValue(
+      JSON.stringify({
+        code: ['src/**/*.js'],
+        configs: ['package.json'],
+      })
+    );
 
-    // Debería retornar error en lugar de crashear
-    expect(r.error).toBeDefined();
-    expect(r.files_scanned).toBe(0);
+    const { globby } = await import('globby');
+    vi.mocked(globby).mockResolvedValue(['src/test.js']);
 
-    // Restaurar path original
+    const result = await runVulnerabilityScan();
+
+    // El agente usa la variable de entorno correctamente
+    expect(result.files_scanned).toBe(1);
+
+    // Restore
     process.env.SCAN_GLOBS_PATH = originalPath;
+  });
+
+  it('maneja error de globby', async () => {
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    vi.mocked(fs.readFileSync).mockReturnValue(
+      JSON.stringify({
+        code: ['src/**/*.js'],
+        configs: ['package.json'],
+      })
+    );
+
+    const { globby } = await import('globby');
+    vi.mocked(globby).mockRejectedValue(new Error('Globby error'));
+
+    const result = await runVulnerabilityScan();
+
+    expect(result.files_scanned).toBe(0);
+    expect(result.vulnerabilities_found).toBe(0);
+  });
+
+  it('valida estructura de respuesta exitosa', async () => {
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    vi.mocked(fs.readFileSync).mockReturnValue(
+      JSON.stringify({
+        code: ['src/**/*.js'],
+        configs: ['package.json'],
+      })
+    );
+
+    const { globby } = await import('globby');
+    vi.mocked(globby).mockResolvedValue(['src/test.js', 'package.json']);
+
+    const result = await runVulnerabilityScan();
+
+    expect(result).toHaveProperty('files_scanned');
+    expect(result).toHaveProperty('vulnerabilities_found');
+    expect(result).toHaveProperty('status');
+    expect(typeof result.files_scanned).toBe('number');
+    expect(typeof result.vulnerabilities_found).toBe('number');
+    expect(['ok', 'empty']).toContain(result.status);
   });
 });

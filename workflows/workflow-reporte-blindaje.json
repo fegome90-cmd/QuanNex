@@ -1,0 +1,38 @@
+{
+  "name": "QuanNex Reporte Blindaje",
+  "description": "Generar reporte consolidado del sistema de blindaje",
+  "version": "1.0.0",
+  "environment": "ci",
+  "steps": [
+    {
+      "step_id": "consolidar_resultados",
+      "agent": "context",
+      "tool": "analyze_project_state",
+      "name": "Consolidar Resultados",
+      "description": "Consolidar resultados de todos los gates de blindaje",
+      "params": {
+        "sources": ["reports/", "coverage/", "scripts/"],
+        "max_tokens": 2000
+      },
+      "timeout": 30
+    },
+    {
+      "step_id": "generar_reporte_final",
+      "agent": "prompting",
+      "tool": "generate_prompt",
+      "name": "Generar Reporte Final",
+      "description": "Generar reporte final del sistema de blindaje",
+      "params": {
+        "style": "technical_report",
+        "context": "blindaje_anti_manipulacion"
+      },
+      "timeout": 30
+    }
+  ],
+  "metadata": {
+    "author": "QuanNex Blindaje System",
+    "created": "2025-10-02",
+    "description": "Generación de reporte consolidado de blindaje",
+    "version": "1.0.0"
+  }
+}

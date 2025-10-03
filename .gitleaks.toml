@@ -1,0 +1,107 @@
+# Gitleaks configuration for QuanNex project
+# Detects secrets and sensitive information in commits
+
+title = "QuanNex Gitleaks Configuration"
+version = "8.18.0"
+
+# Global settings
+[gitleaks]
+    # Path to the repository
+    repo = "."
+    
+    # Verbose output
+    verbose = true
+    
+    # Redact secrets in output
+    redact = true
+    
+    # Exit code when secrets are found
+    exit-code = 1
+
+# Rules for detecting secrets
+[[rules]]
+    id = "generic-api-key"
+    description = "Generic API Key"
+    regex = '''(?i)(api[_-]?key|apikey|api_key|api-key)\s*[=:]\s*['"]?([a-zA-Z0-9_-]{20,})['"]?'''
+    severity = "high"
+    tags = ["key", "api"]
+
+[[rules]]
+    id = "generic-secret"
+    description = "Generic Secret"
+    regex = '''(?i)(secret|secrets|password|passwd|pwd)\s*[=:]\s*['"]?([a-zA-Z0-9_-]{8,})['"]?'''
+    severity = "high"
+    tags = ["secret", "password"]
+
+[[rules]]
+    id = "jwt-token"
+    description = "JWT Token"
+    regex = '''eyJ[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]*'''
+    severity = "high"
+    tags = ["jwt", "token"]
+
+[[rules]]
+    id = "aws-access-key"
+    description = "AWS Access Key"
+    regex = '''AKIA[0-9A-Z]{16}'''
+    severity = "critical"
+    tags = ["aws", "key"]
+
+[[rules]]
+    id = "aws-secret-key"
+    description = "AWS Secret Key"
+    regex = '''(?i)aws[_-]?secret[_-]?access[_-]?key\s*[=:]\s*['"]?([A-Za-z0-9/+=]{40})['"]?'''
+    severity = "critical"
+    tags = ["aws", "secret"]
+
+[[rules]]
+    id = "github-token"
+    description = "GitHub Token"
+    regex = '''ghp_[a-zA-Z0-9]{36}'''
+    severity = "high"
+    tags = ["github", "token"]
+
+[[rules]]
+    id = "private-key"
+    description = "Private Key"
+    regex = '''-----BEGIN[ A-Z]*PRIVATE KEY-----'''
+    severity = "critical"
+    tags = ["private", "key"]
+
+[[rules]]
+    id = "database-url"
+    description = "Database URL"
+    regex = '''(?i)(mysql|postgres|mongodb)://[^:]+:[^@]+@[^/]+/[^?]+'''
+    severity = "high"
+    tags = ["database", "url"]
+
+# Allowlist - files to ignore
+[allowlist]
+    description = "QuanNex allowlist"
+    
+    # Ignore test files
+    files = [
+        ".*\\.test\\.js$",
+        ".*\\.test\\.ts$",
+        ".*\\.test\\.mjs$",
+        ".*\\.spec\\.js$",
+        ".*\\.spec\\.ts$",
+        ".*\\.spec\\.mjs$",
+        ".*test-.*\\.js$",
+        ".*gap-.*\\.js$",
+        ".*quality-tests.*"
+    ]
+    
+    # Ignore documentation
+    paths = [
+        "docs/.*",
+        "README\\.md$",
+        "CHANGELOG\\.md$"
+    ]
+    
+    # Ignore configuration files with example values
+    commits = [
+        "example",
+        "test",
+        "sample"
+    ]

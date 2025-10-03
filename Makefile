@@ -1,91 +1,73 @@
-# Makefile para Paquete de Pruebas QuanNex
-# Encadena contracts → init → e2e → perf como ci-quannex-gate1
+# QuanNex Operations Makefile
 
-.PHONY: help test contracts unit integration e2e resilience perf security ci-quannex-gate1 ci-quannex-perf clean
+METRICS_URL ?= http://localhost:3000/metrics
+DOCKER_COMPOSE_FILE ?= ops/docker-compose.observability.yml
 
-help: ## Mostrar ayuda
-	@echo "📦 Paquete de Pruebas QuanNex"
+help:
+	@echo "QuanNex Operations - Comandos disponibles:"
 	@echo ""
-	@echo "Comandos disponibles:"
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
+	@echo "  ops:accept      Acceptance test 2 minutos"
+	@echo "  ops:smoke       Smoke pack 60 segundos"
+	@echo "  ops:rules       Validar rules con prom/promtool (docker)"
+	@echo "  ops:grafana     Levanta Prometheus+Grafana con dashboard y reglas"
+	@echo "  ops:down        Baja el stack de observabilidad"
+	@echo "  ops:check       Pack rápido antes del PR"
+	@echo "  ops:pr          Crear PR con rama ops/enterprise-metrics"
 
-test: contracts unit integration e2e ## Ejecutar todas las pruebas
+ops:accept:
+	@echo "Ejecutando acceptance test..."
+	bash ops/acceptance-test.sh
 
-contracts: ## Ejecutar pruebas de contratos
-	@echo "🧪 Ejecutando pruebas de contratos..."
-	npm run test:contracts
+ops:smoke:
+	@echo "Ejecutando smoke pack..."
+	bash ops/scripts/smoke-pack.sh $(METRICS_URL)
 
-unit: ## Ejecutar pruebas unitarias
-	@echo "🧪 Ejecutando pruebas unitarias..."
-	npm run test:unit
+ops:rules:
+	@echo "Validando reglas de Prometheus..."
+	docker run --rm -v $(PWD)/ops/prometheus:/rules prom/prometheus promtool check rules /rules/quannex-metrics.rules.yaml
 
-integration: ## Ejecutar pruebas de integración
-	@echo "🧪 Ejecutando pruebas de integración..."
-	npm run test:integration
+ops:grafana:
+	@echo "Levantando stack de observabilidad..."
+	docker compose -f $(DOCKER_COMPOSE_FILE) up -d
+	@echo "Prometheus: http://localhost:9090"
+	@echo "Grafana: http://localhost:3001 (admin/admin)"
 
-e2e: ## Ejecutar pruebas end-to-end
-	@echo "🧪 Ejecutando pruebas E2E..."
-	npm run test:e2e
+ops:down:
+	@echo "Bajando stack de observabilidad..."
+	docker compose -f $(DOCKER_COMPOSE_FILE) down -v
 
-resilience: ## Ejecutar pruebas de resiliencia
-	@echo "🧪 Ejecutando pruebas de resiliencia..."
-	npm run test:resilience
+ops:check:
+	@echo "Ejecutando checks rápidos..."
+	make ops:rules && make ops:smoke
 
-perf: ## Ejecutar pruebas de performance
-	@echo "🧪 Ejecutando pruebas de performance..."
-	npm run test:perf
+ops:pr:
+	@echo "Creando PR para Ops Enterprise Metrics..."
+	git checkout -b ops/enterprise-metrics
+	git add ops/ Makefile .github/PULL_REQUEST_TEMPLATE.md .pre-commit-config.yaml
+	git commit -m "feat(ops): Enterprise Metrics Integrity Gate"
+	git push -u origin ops/enterprise-metrics
+	@echo "PR creado: ops/enterprise-metrics"
 
-security: ## Ejecutar Security Gate Pack completo
-	@echo "🛡️ Ejecutando Security Gate Pack (GAP-001...005)..."
-	bash ops/security-gate.sh
+dev:start:
+	@echo "Iniciando servidor de métricas..."
+	node src/server.mjs &
 
-integrity: ## Ejecutar Gate 13 - Test Integrity
-	@echo "🚦 Ejecutando Gate 13 - Test Integrity..."
-	node tools/test-integrity.mjs
+dev:stop:
+	@echo "Deteniendo servidor de métricas..."
+	pkill -f "node src/server.mjs" || true
 
-ci-quannex-gate1: contracts e2e security integrity ## CI Gate 1: contracts + e2e + security + integrity
-	@echo "✅ CI QuanNex Gate 1 completado"
+validate:metrics:
+	@echo "Validando endpoint de métricas..."
+	bash ops/scripts/metrics-validate.sh $(METRICS_URL)
 
-init-mcp: ## Inicializar MCP QuanNex
-	@echo "🚀 Inicializando MCP QuanNex..."
-	./scripts/mcp-autonomous-init.sh --verbose
+validate:rules:
+	@echo "Validando reglas de Prometheus..."
+	make ops:rules
 
-ci-quannex-perf: perf ## CI Performance: verificar performance
-	@echo "📊 Verificando performance..."
-	node tools/verify-perf.js
-	node tools/snapshot-perf.js
-	@echo "✅ CI QuanNex Performance completado"
+clean:cache:
+	@echo "Limpiando cache de métricas..."
+	rm -rf .cache/
 
-validate-mcp: ## Validar que MCP server funcione
-	@echo "🔍 Validando MCP server..."
-	@node versions/v3/mcp-server-consolidated.js &
-	@MCP_PID=$$!; \
-	sleep 3; \
-	if kill -0 $$MCP_PID 2>/dev/null; then \
-		echo "✅ MCP server funcionando (PID: $$MCP_PID)"; \
-		kill $$MCP_PID; \
-	else \
-		echo "❌ MCP server falló"; \
-		exit 1; \
-	fi
-
-health-check: ## Verificar salud del sistema
-	@echo "🏥 Verificando salud del sistema..."
-	node orchestration/orchestrator.js health
-
-clean: ## Limpiar archivos temporales
-	@echo "🧹 Limpiando archivos temporales..."
-	rm -f create-*-workflow.json
-	rm -f test-*.json
-	@echo "✅ Limpieza completada"
-
-# Comando principal: ejecutar todo el paquete
-all: clean contracts e2e perf security ## Ejecutar paquete completo de pruebas (sin init-mcp problemático)
-	@echo "🎉 Paquete de pruebas completado exitosamente"
-
-# Comandos individuales que funcionan
-test-working: contracts security perf unit integration resilience ## Ejecutar solo las pruebas que funcionan
-	@echo "✅ Todas las pruebas funcionando completadas"
-
-test-safe: contracts security perf ## Ejecutar solo las pruebas más seguras
-	@echo "✅ Pruebas seguras completadas"
+clean:docker:
+	@echo "Limpiando contenedores Docker..."
+	docker compose -f $(DOCKER_COMPOSE_FILE) down -v --remove-orphans

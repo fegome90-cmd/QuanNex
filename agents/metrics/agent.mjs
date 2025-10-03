@@ -98,17 +98,38 @@ function toAgentReport(m) {
 
 export async function collectMetrics() {
   if (PROVIDER !== 'prometheus') {
-    return { error: 'Unsupported provider', provider: PROVIDER };
+    return { 
+      error: 'Unsupported provider', 
+      provider: PROVIDER,
+      performance: { status: 'crit' },
+      security: { status: 'crit' },
+      reliability: { status: 'crit' },
+      maintainability: { status: 'crit' }
+    };
   }
   
   try {
     const res = await fetch(METRICS_URL);
-    if (!res.ok) return { error: `Fetch metrics failed: ${res.status}` };
+    if (!res.ok) {
+      return { 
+        error: `Fetch metrics failed: ${res.status}`,
+        performance: { status: 'crit' },
+        security: { status: 'crit' },
+        reliability: { status: 'crit' },
+        maintainability: { status: 'crit' }
+      };
+    }
     const text = await res.text();
     const parsed = parsePrometheusText(text);
     return toAgentReport(parsed);
   } catch (error) {
-    return { error: `Metrics collection failed: ${error.message}` };
+    return { 
+      error: `Metrics collection failed: ${error.message}`,
+      performance: { status: 'crit' },
+      security: { status: 'crit' },
+      reliability: { status: 'crit' },
+      maintainability: { status: 'crit' }
+    };
   }
 }
 

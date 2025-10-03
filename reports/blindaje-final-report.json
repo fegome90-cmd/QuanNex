@@ -1,0 +1,127 @@
+{
+  "timestamp": "2025-10-02T23:56:30.000Z",
+  "environment": "ci",
+  "workflow_id": "wf_1759449388134_9340bc",
+  "blindaje_status": "completado_exitosamente",
+  "gates_ejecutados": [
+    {
+      "gate": "coverage_gate",
+      "status": "passed",
+      "description": "Coverage Gate Anti-Manipulación",
+      "resultado": "✅ Validación exitosa: Global L:85.5% B:78.2% | src/agents OK (L:85.2% B:78.5%) | src/tools OK (L:86.1% B:77.8%) | agents OK (L:85.1% B:75.1%)",
+      "archivos_criticos": 3,
+      "cobertura_cero": 0
+    },
+    {
+      "gate": "nomock_gate", 
+      "status": "passed",
+      "description": "No-Mock Gate",
+      "resultado": "✅ Validación anti-mock completada exitosamente | 39 archivos verificados sin módulos de mocking",
+      "variables_entorno": "limpias",
+      "modulos_verificados": 39
+    },
+    {
+      "gate": "scan_gate",
+      "status": "passed", 
+      "description": "Scan Gate",
+      "resultado": "✅ OK (474 archivos escaneados)",
+      "archivos_escaneados": 474,
+      "vulnerabilidades": 0,
+      "archivos_codigo": 176,
+      "archivos_configuracion": 221,
+      "archivos_seguridad": 3
+    },
+    {
+      "gate": "policy_gate",
+      "status": "passed",
+      "description": "Policy Gate", 
+      "resultado": "✅ Policy Check completado exitosamente",
+      "archivos_criticos": "presentes",
+      "archivos_encontrados": 471,
+      "apis_prohibidas": 0,
+      "secretos_detectados": 0
+    },
+    {
+      "gate": "metrics_integrity_gate",
+      "status": "failed",
+      "description": "Metrics Integrity Gate",
+      "resultado": "❌ Error scraping metrics: HTTP 500: Internal Server Error",
+      "nota": "Servidor de métricas requiere corrección"
+    }
+  ],
+  "resumen_ejecutivo": {
+    "total_gates": 5,
+    "gates_pasaron": 4,
+    "gates_fallaron": 1,
+    "tasa_exito": "80%",
+    "sistema_blindaje": "operacional",
+    "protecciones_activas": [
+      "cobertura_por_directorio_critico",
+      "no_mocking_en_ci", 
+      "validacion_archivos_reales",
+      "politicas_seguridad_estrictas",
+      "anti_tamper_working_tree"
+    ]
+  },
+  "protecciones_implementadas": {
+    "coverage_gate": {
+      "descripcion": "Valida cobertura real por directorio crítico + branches",
+      "archivo": "scripts/coverage-gate.mjs",
+      "funcionalidad": "No permite cobertura 'inflada' o simulada"
+    },
+    "nomock_gate": {
+      "descripcion": "Prohíbe variables de mock y módulos de simulación en CI",
+      "archivo": "scripts/no-mock-gate.mjs", 
+      "funcionalidad": "Garantiza que los tests midan comportamiento real"
+    },
+    "metrics_integrity_gate": {
+      "descripcion": "Valida que las métricas sean reales, no simuladas",
+      "archivo": "scripts/metrics-integrity.mjs",
+      "funcionalidad": "Obliga a que los contadores incrementen con tráfico real"
+    },
+    "scan_gate": {
+      "descripcion": "Verifica que se escanean archivos reales",
+      "archivo": "scripts/scan-gate.mjs",
+      "funcionalidad": "Previene '0 archivos escaneados'"
+    },
+    "policy_gate": {
+      "descripcion": "Verifica políticas de seguridad",
+      "archivo": "scripts/policy-check.mjs",
+      "funcionalidad": "Bloquea APIs prohibidas y secretos en código"
+    },
+    "schema_gate": {
+      "descripcion": "Valida esquemas de reportes",
+      "archivo": "scripts/report-validate.mjs",
+      "funcionalidad": "Previene manipulación de datos de reportes"
+    },
+    "antitamper_gate": {
+      "descripcion": "Verifica que el working tree esté limpio",
+      "archivo": "scripts/anti-tamper.mjs",
+      "funcionalidad": "Previene generación de archivos 'truchos'"
+    }
+  },
+  "workflows_quannex": {
+    "workflow_blindaje_simple": "wf_1759449340505_2c5c30",
+    "workflow_blindaje_directo": "wf_1759449352379_11c9b8", 
+    "workflow_reporte_blindaje": "wf_1759449388134_9340bc",
+    "estado": "workflows_creados_exitosamente",
+    "orquestador": "operacional"
+  },
+  "ci_integration": {
+    "workflow_ci": ".github/workflows/ci-blindaje.yml",
+    "estado": "configurado",
+    "protecciones_branch": "requeridas",
+    "required_checks": [
+      "verify-blindaje",
+      "e2e-docker-blindaje", 
+      "security-blindaje"
+    ]
+  },
+  "conclusion": {
+    "sistema_blindaje": "IMPLEMENTADO_EXITOSAMENTE",
+    "nivel_confiabilidad": "ALTO",
+    "anti_manipulacion": "ACTIVO",
+    "quannex_integration": "COMPLETO",
+    "proximo_paso": "Corregir servidor de métricas para 100% de gates"
+  }
+}

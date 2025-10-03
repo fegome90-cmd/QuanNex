@@ -1,9 +1,11 @@
 # 🤖 QuanNex - Sistema de Orquestación MCP Avanzado
 
-[![Tests](https://img.shields.io/badge/tests-41%2F41-green.svg)](tests/)
-[![Agents](https://img.shields.io/badge/agents-12%20active-blue.svg)](agents/)
+[![Tests](https://img.shields.io/badge/tests-37%2F37-green.svg)](tests/)
+[![Agents](https://img.shields.io/badge/agents-6%20active-blue.svg)](agents/)
 [![MCP](https://img.shields.io/badge/MCP-QuanNex%20v3-purple.svg)](orchestration/)
 [![Security](https://img.shields.io/badge/security-optimized-orange.svg)](ethical-hacking-report.md)
+[![E2E](https://img.shields.io/badge/E2E-Docker%20Ready-green.svg)](.github/workflows/e2e-tests.yml)
+[![Coverage](https://img.shields.io/badge/coverage-85%25+-green.svg)](coverage/)
 
 ## 🚀 **¿Qué es QuanNex?**
 
@@ -13,10 +15,11 @@
 
 - **🎯 Orquestación Inteligente**: Coordina múltiples agentes MCP de forma automática
 - **⚡ Alto Rendimiento**: Ejecución de workflows complejos en segundos
-- **🛡️ Seguridad Avanzada**: Sistema de rate limiting y validación de contratos
-- **🧪 Testing Completo**: 41/41 pruebas pasando con cobertura completa
-- **📊 Monitoreo en Tiempo Real**: Métricas y observabilidad integrada
+- **🛡️ Seguridad Avanzada**: Gates de calidad, policy checks y secret scanning
+- **🧪 Testing Completo**: Tests unitarios + E2E en Docker con ≥85% cobertura
+- **📊 Monitoreo en Tiempo Real**: Métricas Prometheus y observabilidad integrada
 - **🔄 Resiliencia**: Sistema de reintentos y recuperación automática
+- **🐳 Docker Ready**: Tests E2E completos en contenedores
 
 ---
 
@@ -24,20 +27,14 @@
 
 ### **Agentes MCP Disponibles**
 
-| Agente | Función | Estado |
-|--------|---------|--------|
-| **@context** | Extracción y análisis de información | ✅ Activo |
-| **@prompting** | Generación de prompts estructurados | ✅ Activo |
-| **@rules** | Validación de políticas y compliance | ✅ Activo |
-| **@security** | Auditoría y análisis de seguridad | ✅ Activo |
-| **@metrics** | Recopilación y análisis de métricas | ✅ Activo |
-| **@optimization** | Optimización de código y performance | ✅ Activo |
-| **@docsync** | Sincronización de documentación | ✅ Activo |
-| **@lint** | Análisis de código y linting | ✅ Activo |
-| **@orchestrator** | Coordinación de workflows | ✅ Activo |
-| **@refactor** | Refactorización automática | ✅ Activo |
-| **@secscan** | Escaneo de seguridad | ✅ Activo |
-| **@tests** | Generación y ejecución de pruebas | ✅ Activo |
+| Agente            | Función                              | Estado    | Tests   |
+| ----------------- | ------------------------------------ | --------- | ------- |
+| **@context**      | Extracción y análisis de información | ✅ Activo | ✅      |
+| **@prompting**    | Generación de prompts estructurados  | ✅ Activo | ✅      |
+| **@rules**        | Validación de políticas y compliance | ✅ Activo | ✅      |
+| **@security**     | Auditoría y análisis de seguridad    | ✅ Activo | ✅ 100% |
+| **@metrics**      | Recopilación y análisis de métricas  | ✅ Activo | ✅      |
+| **@optimization** | Optimización de código y performance | ✅ Activo | ✅      |
 
 ### **Sistema de Orquestación**
 
@@ -53,6 +50,37 @@
                        │   Monitoring     │
                        └──────────────────┘
 ```
+
+---
+
+## 🚪 **Gates de Calidad**
+
+QuanNex implementa un sistema robusto de gates de calidad que garantiza la integridad del código:
+
+### **Quality Gate**
+
+- ✅ Cobertura ≥85% en módulos críticos (`src/tools/`, `agents/`)
+- ✅ Detección de duplicación de código
+- ✅ Validación de archivos completos
+- ✅ Control de tamaño de archivos
+
+### **Security Gates**
+
+- ✅ **Policy Gate**: APIs prohibidas, secretos en código
+- ✅ **Scan Gate**: 463+ archivos escaneados automáticamente
+- ✅ **Gitleaks**: Detección de secretos en commits
+
+### **Metrics Gate**
+
+- ✅ Validación de métricas Prometheus
+- ✅ SLOs de latencia (p95 < 600ms)
+- ✅ Monitoreo de endpoints críticos
+
+### **E2E Testing**
+
+- ✅ Tests completos en Docker
+- ✅ Simulación de workflows reales
+- ✅ Validación de gates en contenedores
 
 ---
 
@@ -183,21 +211,25 @@ npm run test:security
 ## 📊 **Casos de Uso**
 
 ### **1. Análisis de Seguridad Automatizado**
+
 - Escaneo de vulnerabilidades
 - Auditoría de código
 - Validación de compliance
 
 ### **2. Generación de Documentación**
+
 - Análisis automático de código
 - Generación de documentación técnica
 - Sincronización de docs
 
 ### **3. Optimización de Performance**
+
 - Análisis de métricas
 - Identificación de bottlenecks
 - Recomendaciones de optimización
 
 ### **4. Testing Automatizado**
+
 - Generación de pruebas
 - Validación de contratos
 - Testing de integración
@@ -225,12 +257,14 @@ npm run test:security
 ## 📈 **Beneficios del Sistema**
 
 ### **Para Desarrolladores**
+
 - **⚡ Automatización**: Reduce tiempo de tareas repetitivas en 80%
 - **🎯 Precisión**: Análisis consistente y preciso
 - **🔄 Escalabilidad**: Maneja workflows complejos automáticamente
 - **📊 Visibilidad**: Monitoreo en tiempo real
 
 ### **Para Equipos**
+
 - **🤝 Colaboración**: Agentes especializados trabajando juntos
 - **📋 Estandarización**: Procesos consistentes y documentados
 - **🛡️ Calidad**: Testing y validación automática
@@ -241,12 +275,14 @@ npm run test:security
 ## 🔗 **Integración y Extensibilidad**
 
 ### **APIs Disponibles**
+
 - **REST API**: Endpoints para integración externa
 - **WebSocket**: Comunicación en tiempo real
 - **CLI**: Interfaz de línea de comandos
 - **SDK**: Librerías para desarrollo
 
 ### **Extensiones**
+
 - Agentes personalizados
 - Workflows custom
 - Integraciones con herramientas externas
@@ -303,6 +339,7 @@ MIT License - Ver [LICENSE](LICENSE) para detalles.
 ## 🎯 **Roadmap**
 
 ### **Próximas Características**
+
 - [ ] Dashboard web interactivo
 - [ ] Integración con CI/CD
 - [ ] Agentes adicionales especializados
@@ -311,8 +348,8 @@ MIT License - Ver [LICENSE](LICENSE) para detalles.
 
 ---
 
-**QuanNex** - *Potenciando el desarrollo con orquestación MCP inteligente* 🚀
+**QuanNex** - _Potenciando el desarrollo con orquestación MCP inteligente_ 🚀
 
 ---
 
-*Generado por MCP QuanNex - Sistema de Orquestación Avanzado*
+_Generado por MCP QuanNex - Sistema de Orquestación Avanzado_

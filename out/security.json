@@ -3,10 +3,10 @@
   "agent_version": "2.0.0",
   "scan_type": "full",
   "target_path": ".",
-  "timestamp": "2025-10-02T21:58:39.514Z",
+  "timestamp": "2025-10-02T23:55:54.699Z",
   "results": {
     "vulnerability_scan": {
-      "files_scanned": 462,
+      "files_scanned": 474,
       "vulnerabilities_found": 0,
       "critical_issues": 0,
       "high_issues": 0,
@@ -19,7 +19,7 @@
       "details": [
         {
           "type": "dependency_check",
-          "message": "Checked 25 dependencies",
+          "message": "Checked 29 dependencies",
           "severity": "info"
         }
       ]
@@ -40,7 +40,7 @@
     }
   },
   "summary": {
-    "total_issues": 462,
+    "total_issues": 474,
     "critical_count": 0,
     "high_count": 0,
     "medium_count": 0,

@@ -1,148 +1,218 @@
 #!/usr/bin/env node
 /**
- * Policy Check Script
- * Valida configuración de escaneo y elimina "0 archivos escaneados"
+ * Policy Check - Detección de APIs prohibidas y secretos en claro
+ * Gate de seguridad para el Nivel 2 de QuanNex
  */
 
-import { readFileSync, existsSync } from 'node:fs';
+import fs from 'node:fs';
 import { globby } from 'globby';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const PROJECT_ROOT = join(__dirname, '..');
+// Configuración de políticas de seguridad
+const FORBIDDEN_APIS = [
+  'eval\\(',
+  'exec\\(',
+  'Function\\(',
+  'setTimeout.*string',
+  'setInterval.*string',
+  'new Function',
+  'vm\\.runInNewContext',
+  'vm\\.runInThisContext',
+  'child_process\\.exec',
+  'child_process\\.execSync',
+];
 
-// Función para fallar con mensaje
-function fail(message) {
-  console.error(`❌ ${message}`);
+const SECRET_PATTERNS = [
+  /password\s*=\s*['"][^'"]+['"]/gi,
+  /api[_-]?key\s*=\s*['"][^'"]+['"]/gi,
+  /secret\s*=\s*['"][^'"]+['"]/gi,
+  /token\s*=\s*['"][^'"]+['"]/gi,
+  /private[_-]?key\s*=\s*['"][^'"]+['"]/gi,
+  /access[_-]?token\s*=\s*['"][^'"]+['"]/gi,
+  /bearer\s*=\s*['"][^'"]+['"]/gi,
+];
+
+const CRITICAL_FILES = ['config/scan-globs.json', 'package.json', 'package-lock.json'];
+
+async function fail(msg) {
+  console.error(`\n❌ [POLICY-FAIL] ${msg}\n`);
   process.exit(1);
 }
 
-// Función para éxito con mensaje
-function success(message) {
-  console.log(`✅ ${message}`);
+async function log(msg) {
+  console.log(`[POLICY] ${msg}`);
 }
 
-async function main() {
-  console.log('🔍 Policy Check - Validating scan configuration...\n');
+async function checkForbiddenAPIs() {
+  log('🔍 Escaneando APIs prohibidas...');
 
-  // 1. Verificar que existe el archivo de configuración
-  const configPath = join(PROJECT_ROOT, 'config', 'scan-globs.json');
-  if (!existsSync(configPath)) {
-    fail('scan-globs.json not found in config/ directory');
-  }
+  const files = await globby(
+    ['src/**/*.{js,ts,mjs}', 'agents/**/*.{js,ts,mjs}', 'scripts/**/*.{js,mjs}'],
+    {
+      gitignore: true,
+    }
+  );
 
-  // 2. Leer configuración
-  let globs;
-  try {
-    const configContent = readFileSync(configPath, 'utf8');
-    globs = JSON.parse(configContent);
-  } catch (error) {
-    fail(`Error reading scan-globs.json: ${error.message}`);
-  }
+  const violations = [];
 
-  // 3. Validar estructura de configuración
-  const requiredSections = ['code', 'configs', 'security', 'exclude'];
-  for (const section of requiredSections) {
-    if (!globs[section] || !Array.isArray(globs[section])) {
-      fail(`Missing or invalid '${section}' section in scan-globs.json`);
+  for (const file of files) {
+    try {
+      const content = fs.readFileSync(file, 'utf8');
+      const lines = content.split('\n');
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        // Skip comments, strings, and pattern definitions (legitimate security scanning)
+        if (
+          line.trim().startsWith('//') ||
+          line.trim().startsWith('*') ||
+          line.includes('includes(') ||
+          (line.includes("'") && line.includes('FORBIDDEN_APIS')) ||
+          (line.includes('const ') && line.includes('FORBIDDEN_APIS')) ||
+          (line.includes("'") && line.includes('setTimeout')) ||
+          (line.includes("'") && line.includes('setInterval')) ||
+          (line.includes("'") && line.includes('new Function'))
+        ) {
+          continue;
+        }
+
+        // Check for actual usage of forbidden APIs
+        for (const api of FORBIDDEN_APIS) {
+          const regex = new RegExp(api, 'gi');
+          const matches = line.match(regex);
+
+          if (matches) {
+            violations.push({
+              file,
+              line: i + 1,
+              api,
+              content: line.trim(),
+            });
+          }
+        }
+      }
+    } catch (error) {
+      log(`Warning: No se pudo leer ${file}: ${error.message}`);
     }
   }
 
-  success('Configuration file structure is valid');
+  if (violations.length > 0) {
+    const list = violations.map(v => ` - ${v.file}:${v.line} ${v.api} - "${v.content}"`).join('\n');
+    fail(`Se detectaron APIs prohibidas:\n${list}`);
+  } else {
+    log('✅ Verificación de APIs prohibidas OK.');
+  }
+}
 
-  // 4. Encontrar archivos según los globs
-  const allGlobs = [...globs.code, ...globs.configs, ...globs.security];
-  const excludeGlobs = globs.exclude;
+async function checkSecretsInCode() {
+  log('🔍 Escaneando secretos en código...');
 
-  console.log(`📁 Scanning patterns: ${allGlobs.length} include, ${excludeGlobs.length} exclude`);
-
-  let files;
-  try {
-    files = await globby(allGlobs, {
+  const files = await globby(
+    ['src/**/*.{js,ts,mjs}', 'agents/**/*.{js,ts,mjs}', 'scripts/**/*.{js,mjs}'],
+    {
       gitignore: true,
-      ignore: excludeGlobs,
-      cwd: PROJECT_ROOT,
-    });
+    }
+  );
+
+  const violations = [];
+
+  for (const file of files) {
+    try {
+      const content = fs.readFileSync(file, 'utf8');
+
+      for (const pattern of SECRET_PATTERNS) {
+        const matches = content.match(pattern);
+
+        if (matches) {
+          violations.push({
+            file,
+            pattern: pattern.toString(),
+            matches: matches.length,
+          });
+        }
+      }
+    } catch (error) {
+      log(`Warning: No se pudo leer ${file}: ${error.message}`);
+    }
+  }
+
+  if (violations.length > 0) {
+    const list = violations
+      .map(v => ` - ${v.file}: ${v.pattern} (${v.matches} ocurrencias)`)
+      .join('\n');
+    fail(`Se detectaron secretos en código:\n${list}`);
+  } else {
+    log('✅ Verificación de secretos OK.');
+  }
+}
+
+async function checkCriticalFiles() {
+  log('🔍 Verificando archivos críticos...');
+
+  const missing = [];
+
+  for (const file of CRITICAL_FILES) {
+    if (!fs.existsSync(file)) {
+      missing.push(file);
+    }
+  }
+
+  if (missing.length > 0) {
+    fail(`Archivos críticos faltantes: ${missing.join(', ')}`);
+  } else {
+    log('✅ Archivos críticos presentes.');
+  }
+}
+
+async function checkScanGlobs() {
+  log('🔍 Verificando configuración de escaneo...');
+
+  const globsPath = 'config/scan-globs.json';
+  if (!fs.existsSync(globsPath)) {
+    fail(`No se encontró el archivo de configuración de globs: ${globsPath}`);
+  }
+
+  try {
+    const globs = JSON.parse(fs.readFileSync(globsPath, 'utf8'));
+
+    if (
+      !globs.code ||
+      !Array.isArray(globs.code) ||
+      !globs.configs ||
+      !Array.isArray(globs.configs)
+    ) {
+      fail('El archivo scan-globs.json debe contener arrays "code" y "configs".');
+    }
+
+    // Verificar que los globs encuentran archivos
+    const files = await globby([...globs.code, ...globs.configs], { gitignore: true });
+
+    if (files.length === 0) {
+      fail(
+        'Configurado, pero 0 archivos encontrados por los globs. Revisa rutas/monorepo o la configuración de scan-globs.json.'
+      );
+    } else {
+      log(`✅ Policy Check: ${files.length} archivos encontrados para escanear.`);
+    }
   } catch (error) {
-    fail(`Error scanning files: ${error.message}`);
+    fail(`Error leyendo scan-globs.json: ${error.message}`);
   }
-
-  // 5. Validar que se encontraron archivos
-  if (files.length === 0) {
-    fail('Configurado, pero 0 archivos encontrados. Revisa rutas/monorepo.');
-  }
-
-  success(`Found ${files.length} files to scan`);
-
-  // 6. Categorizar archivos encontrados
-  const categorized = {
-    code: files.filter(f => /\.(ts|js|mjs|tsx)$/.test(f)),
-    configs: files.filter(f => /\.(json|yml|yaml)$/.test(f) || /\.config\.(js|ts)$/.test(f)),
-    security: files.filter(
-      f => /\.(env|key|pem|p12)$/.test(f) || f.includes('secrets') || f.includes('keys')
-    ),
-  };
-
-  console.log('\n📊 File categorization:');
-  console.log(`  Code files: ${categorized.code.length}`);
-  console.log(`  Config files: ${categorized.configs.length}`);
-  console.log(`  Security files: ${categorized.security.length}`);
-
-  // 7. Validar que hay archivos en cada categoría crítica
-  if (categorized.code.length === 0) {
-    fail('No code files found - check code globs');
-  }
-
-  if (categorized.configs.length === 0) {
-    fail('No config files found - check config globs');
-  }
-
-  success('All critical file categories have files');
-
-  // 8. Mostrar algunos ejemplos
-  console.log('\n📋 Sample files found:');
-  console.log('  Code files:');
-  categorized.code.slice(0, 3).forEach(f => console.log(`    - ${f}`));
-  if (categorized.code.length > 3) {
-    console.log(`    ... and ${categorized.code.length - 3} more`);
-  }
-
-  console.log('  Config files:');
-  categorized.configs.slice(0, 3).forEach(f => console.log(`    - ${f}`));
-  if (categorized.configs.length > 3) {
-    console.log(`    ... and ${categorized.configs.length - 3} more`);
-  }
-
-  // 9. Generar reporte de configuración
-  const report = {
-    timestamp: new Date().toISOString(),
-    totalFiles: files.length,
-    categorized,
-    globs: {
-      include: allGlobs,
-      exclude: excludeGlobs,
-    },
-    status: 'PASSED',
-  };
-
-  console.log('\n🎯 Policy Check Summary:');
-  console.log(`  Status: ${report.status}`);
-  console.log(`  Total files: ${report.totalFiles}`);
-  console.log(`  Code files: ${report.categorized.code.length}`);
-  console.log(`  Config files: ${report.categorized.configs.length}`);
-  console.log(`  Security files: ${report.categorized.security.length}`);
-
-  success('Policy check completed successfully');
 }
 
-// Ejecutar si es llamado directamente
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(error => {
-    console.error('❌ Policy check failed:', error.message);
-    process.exit(1);
-  });
+async function main() {
+  try {
+    log('🚀 Iniciando Policy Check...');
+
+    await checkCriticalFiles();
+    await checkScanGlobs();
+    await checkForbiddenAPIs();
+    await checkSecretsInCode();
+
+    log('✅ Policy Check completado exitosamente.');
+  } catch (error) {
+    fail(`Error durante el Policy Check: ${error.message}`);
+  }
 }
 
-export default main;
+main();

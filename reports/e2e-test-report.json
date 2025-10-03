@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-10-02T22:28:08.977Z",
+  "environment": "docker",
+  "tests": {
+    "server_health": true,
+    "metrics_endpoint": false,
+    "quality_gate": false,
+    "policy_check": true,
+    "scan_gate": true,
+    "metrics_gate": false,
+    "workflow_simulation": true
+  },
+  "summary": {
+    "total_tests": 7,
+    "passed": 4,
+    "failed": 3,
+    "success_rate": "57%"
+  }
+}

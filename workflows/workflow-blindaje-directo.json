@@ -1,0 +1,53 @@
+{
+  "name": "QuanNex Blindaje Directo",
+  "description": "Workflow directo ejecutando gates de blindaje",
+  "version": "1.0.0",
+  "environment": "ci",
+  "steps": [
+    {
+      "step_id": "preparar_coverage",
+      "agent": "context",
+      "tool": "analyze_project_state",
+      "name": "Preparar Coverage",
+      "description": "Preparar datos de cobertura para validación",
+      "params": {
+        "sources": ["src/", "agents/"],
+        "max_tokens": 1000
+      },
+      "timeout": 30
+    },
+    {
+      "step_id": "ejecutar_gates",
+      "agent": "security",
+      "tool": "run_vulnerability_scan", 
+      "name": "Ejecutar Gates de Blindaje",
+      "description": "Ejecutar todos los gates de validación anti-manipulación",
+      "params": {},
+      "timeout": 60
+    },
+    {
+      "step_id": "validar_metricas",
+      "agent": "metrics",
+      "tool": "collect_metrics",
+      "name": "Validar Métricas",
+      "description": "Recopilar y validar métricas del sistema",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "verificar_politicas",
+      "agent": "rules",
+      "tool": "validate_policies",
+      "name": "Verificar Políticas",
+      "description": "Validar políticas de seguridad y compliance",
+      "params": {},
+      "timeout": 30
+    }
+  ],
+  "metadata": {
+    "author": "QuanNex Blindaje System",
+    "created": "2025-10-02",
+    "description": "Sistema directo de blindaje anti-manipulación",
+    "version": "1.0.0"
+  }
+}

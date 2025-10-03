@@ -1,0 +1,62 @@
+groups:
+  - name: quannex-metrics
+    rules:
+      - alert: QuanNexMetricsMissing
+        expr: absent(quannex_gate_status)
+        for: 5m
+        labels:
+          severity: critical
+          service: quannex-metrics
+        annotations:
+          summary: 'No se expone quannex_gate_status'
+          description: 'Scrape sin métrica de negocio QuanNex por más de 5 minutos'
+
+      - alert: QuanNexMetricsDegraded
+        expr: increase(quannex_metrics_fallback_total[15m]) > 0
+        for: 0m
+        labels:
+          severity: warning
+          service: quannex-metrics
+        annotations:
+          summary: 'Fallback a snapshot detectado'
+          description: 'Revisa generador/latencia - métricas usando snapshot de fallback'
+
+      - alert: QuanNexE2EStale
+        expr: time() - quannex_e2e_last_pass_timestamp > 3600
+        for: 10m
+        labels:
+          severity: warning
+          service: quannex-e2e
+        annotations:
+          summary: 'E2E sin PASS reciente'
+          description: 'Hace más de 60 minutos sin E2E PASS'
+
+      - alert: QuanNexMetricsHighLatency
+        expr: histogram_quantile(0.95, rate(qn_http_request_duration_seconds_bucket[5m])) > 0.2
+        for: 5m
+        labels:
+          severity: warning
+          service: quannex-metrics
+        annotations:
+          summary: 'Latencia alta en /metrics'
+          description: 'p95 latency > 200ms en endpoint de métricas'
+
+      - alert: QuanNexCircuitBreakerActive
+        expr: quannex_circuit_breaker_active == 1
+        for: 2m
+        labels:
+          severity: critical
+          service: quannex-metrics
+        annotations:
+          summary: 'Circuit breaker activo'
+          description: 'Circuit breaker activo por más de 2 minutos - métricas degradadas'
+
+      - alert: QuanNexSnapshotRatioHigh
+        expr: rate(quannex_metrics_snapshot_total[1h]) / rate(quannex_metrics_total[1h]) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+          service: quannex-metrics
+        annotations:
+          summary: 'Ratio snapshot alto'
+          description: 'Más del 5% de métricas usando snapshot en la última hora'

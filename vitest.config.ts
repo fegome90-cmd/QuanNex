@@ -2,14 +2,17 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    include: ['src/**/*.test.{ts,js}', 'utils/**/*.test.{ts,js}'],
+    include: [
+      'src/**/*.test.{ts,js,mjs}',
+      'utils/**/*.test.{ts,js,mjs}',
+      'agents/**/*.test.{ts,js,mjs}',
+    ],
     exclude: [
       'node_modules/**',
       'dist/**',
       'coverage/**',
       'build/**',
-      'tests/**/*.test.{ts,js}',
-      'agents/**/*.test.{ts,js}',
+      'tests/**/*.test.{ts,js,mjs}',
     ],
     coverage: {
       provider: 'istanbul',
@@ -21,10 +24,10 @@ export default defineConfig({
         statements: 0,
         branches: 0,
       }, // mediremos en el quality gate
-      include: ['src/**/*.{ts,js}', 'utils/**/*.{ts,js}', 'agents/**/*.{ts,js}'],
+      include: ['src/**/*.{ts,js,mjs}', 'utils/**/*.{ts,js,mjs}', 'agents/**/*.{ts,js,mjs}'],
       exclude: [
-        '**/*.test.{ts,js}',
-        '**/*.spec.{ts,js}',
+        '**/*.test.{ts,js,mjs}',
+        '**/*.spec.{ts,js,mjs}',
         '**/node_modules/**',
         '**/dist/**',
         '**/coverage/**',

@@ -1,0 +1,50 @@
+{
+  "name": "QuanNex Blindaje Simple",
+  "description": "Workflow simplificado de validación anti-manipulación",
+  "version": "1.0.0",
+  "environment": "ci",
+  "steps": [
+    {
+      "step_id": "coverage_gate",
+      "agent": "context",
+      "tool": "analyze_project_state",
+      "name": "Coverage Gate",
+      "description": "Validar cobertura anti-manipulación",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "nomock_gate", 
+      "agent": "security",
+      "tool": "run_vulnerability_scan",
+      "name": "No-Mock Gate",
+      "description": "Verificar que no hay módulos de mocking",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "metrics_gate",
+      "agent": "metrics", 
+      "tool": "collect_metrics",
+      "name": "Metrics Gate",
+      "description": "Validar métricas reales",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "policy_gate",
+      "agent": "rules",
+      "tool": "validate_policies", 
+      "name": "Policy Gate",
+      "description": "Verificar políticas de seguridad",
+      "params": {},
+      "timeout": 30
+    }
+  ],
+  "metadata": {
+    "author": "QuanNex Blindaje System",
+    "created": "2025-10-02",
+    "description": "Sistema simplificado de blindaje anti-manipulación",
+    "version": "1.0.0"
+  }
+}

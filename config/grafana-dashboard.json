@@ -1,0 +1,115 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "QuanNex Metrics Integrity Gate - Golden Dashboard",
+    "tags": ["quannex", "metrics", "blindaje"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Live vs Snapshot Ratio (%)",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "100 * (1 - rate(quannex_metrics_snapshot_total[5m]) / rate(quannex_metrics_total[5m]))",
+            "legendFormat": "Live Ratio %"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "yellow", "value": 95},
+                {"color": "green", "value": 99}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Fallback Count Rate (15m)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(quannex_metrics_fallback_total[15m])",
+            "legendFormat": "Fallback Rate"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "Fallbacks/sec",
+            "min": 0
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "p95 Latency /metrics",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(qn_http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "p95 Latency"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "seconds",
+            "min": 0,
+            "max": 1
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      },
+      {
+        "id": 4,
+        "title": "E2E Last Pass Age (minutes)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "(time() - quannex_e2e_last_pass_timestamp) / 60",
+            "legendFormat": "Minutes since last E2E PASS"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "minutes",
+            "min": 0
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "30s",
+    "annotations": {
+      "list": [
+        {
+          "name": "Circuit Breaker Active",
+          "datasource": "Prometheus",
+          "expr": "quannex_circuit_breaker_active == 1",
+          "iconColor": "red"
+        },
+        {
+          "name": "High Fallback Rate",
+          "datasource": "Prometheus", 
+          "expr": "rate(quannex_metrics_fallback_total[15m]) > 0.1",
+          "iconColor": "yellow"
+        }
+      ]
+    },
+    "templating": {
+      "list": []
+    }
+  }
+}

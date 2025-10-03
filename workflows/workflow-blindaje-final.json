@@ -1,0 +1,158 @@
+{
+  "name": "QuanNex Blindaje Final - A Prueba de Balas",
+  "description": "Workflow completo de blindaje anti-manipulación con Metrics Integrity Gate funcionando",
+  "version": "1.0.0",
+  "environment": "ci",
+  "steps": [
+    {
+      "step_id": "preparacion_entorno",
+      "agent": "context",
+      "tool": "analyze_project_state",
+      "name": "Preparación del Entorno",
+      "description": "Configurar entorno limpio para validaciones de blindaje",
+      "params": {
+        "sources": ["src/", "agents/", "scripts/"],
+        "max_tokens": 1000
+      },
+      "timeout": 30
+    },
+    {
+      "step_id": "inicio_servidor_metricas",
+      "agent": "context",
+      "tool": "analyze_project_state",
+      "name": "Inicio del Servidor de Métricas",
+      "description": "Iniciar servidor de métricas con hot-fix y fallback",
+      "params": {
+        "sources": ["src/server.mjs"],
+        "max_tokens": 500
+      },
+      "timeout": 30
+    },
+    {
+      "step_id": "gate_coverage",
+      "agent": "context",
+      "tool": "analyze_project_state",
+      "name": "Coverage Gate Anti-Manipulación",
+      "description": "Validar cobertura real por directorio crítico",
+      "params": {
+        "sources": ["coverage/", "scripts/coverage-gate.mjs"],
+        "max_tokens": 500
+      },
+      "timeout": 30
+    },
+    {
+      "step_id": "gate_nomock",
+      "agent": "security",
+      "tool": "run_vulnerability_scan",
+      "name": "No-Mock Gate",
+      "description": "Verificar que no hay módulos de mocking en CI",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "gate_metrics_integrity",
+      "agent": "metrics",
+      "tool": "collect_metrics",
+      "name": "Metrics Integrity Gate",
+      "description": "Validar que las métricas sean reales, no simuladas",
+      "params": {},
+      "timeout": 60
+    },
+    {
+      "step_id": "gate_scan",
+      "agent": "security",
+      "tool": "run_vulnerability_scan",
+      "name": "Scan Gate",
+      "description": "Verificar que se escanean archivos reales",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "gate_policy",
+      "agent": "rules",
+      "tool": "validate_policies",
+      "name": "Policy Gate",
+      "description": "Verificar políticas de seguridad",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "gate_schema",
+      "agent": "rules",
+      "tool": "validate_policies",
+      "name": "Schema Gate",
+      "description": "Validar esquemas de reportes",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "gate_antitamper",
+      "agent": "security",
+      "tool": "run_vulnerability_scan",
+      "name": "Anti-Tamper Gate",
+      "description": "Verificar que el working tree esté limpio",
+      "params": {},
+      "timeout": 30
+    },
+    {
+      "step_id": "e2e_docker",
+      "agent": "context",
+      "tool": "analyze_project_state",
+      "name": "E2E Tests en Docker",
+      "description": "Ejecutar tests end-to-end en entorno hermético",
+      "params": {
+        "sources": ["Dockerfile.test", "scripts/e2e-test.mjs"],
+        "max_tokens": 500
+      },
+      "timeout": 120
+    },
+    {
+      "step_id": "consolidacion_resultados",
+      "agent": "prompting",
+      "tool": "generate_prompt",
+      "name": "Consolidación de Resultados",
+      "description": "Consolidar resultados de todos los gates de blindaje",
+      "params": {
+        "style": "technical_report",
+        "context": "blindaje_anti_manipulacion_completo"
+      },
+      "timeout": 30
+    },
+    {
+      "step_id": "limpieza_final",
+      "agent": "context",
+      "tool": "analyze_project_state",
+      "name": "Limpieza Final",
+      "description": "Limpiar recursos y generar reporte final",
+      "params": {
+        "sources": ["reports/", ".cache/"],
+        "max_tokens": 500
+      },
+      "timeout": 30
+    }
+  ],
+  "metadata": {
+    "author": "QuanNex Blindaje System",
+    "created": "2025-10-03",
+    "description": "Sistema completo de blindaje anti-manipulación a prueba de balas",
+    "version": "1.0.0",
+    "gates_incluidos": [
+      "coverage_gate",
+      "nomock_gate", 
+      "metrics_integrity_gate",
+      "scan_gate",
+      "policy_gate",
+      "schema_gate",
+      "antitamper_gate",
+      "e2e_docker"
+    ],
+    "protecciones": [
+      "hot_fix_metrics_server",
+      "circuit_breaker",
+      "snapshot_fallback",
+      "dynamic_metrics",
+      "real_traffic_validation",
+      "hermetic_e2e_testing"
+    ]
+  }
+}

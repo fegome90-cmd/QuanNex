@@ -1,0 +1,213 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "QuanNex Report Schema",
+  "description": "Esquema de validación para reportes de QuanNex - Anti-manipulación",
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp ISO 8601 del reporte"
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["local", "ci", "docker", "production"],
+      "description": "Entorno donde se generó el reporte"
+    },
+    "performance": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["ok", "warn", "crit"],
+          "description": "Estado de performance"
+        },
+        "response_time_p50_ms": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Latencia percentil 50 en milisegundos"
+        },
+        "response_time_p95_ms": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Latencia percentil 95 en milisegundos"
+        },
+        "response_time_p99_ms": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Latencia percentil 99 en milisegundos"
+        },
+        "requests_count": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número total de requests"
+        },
+        "rps_est": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Requests por segundo estimados"
+        }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["ok", "warn", "crit"],
+          "description": "Estado de seguridad"
+        },
+        "files_scanned": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número de archivos escaneados"
+        },
+        "vulnerabilities_found": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número de vulnerabilidades encontradas"
+        },
+        "apis_prohibidas": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número de APIs prohibidas detectadas"
+        },
+        "secretos_detectados": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número de secretos detectados"
+        }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+    "reliability": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["ok", "warn", "crit"],
+          "description": "Estado de confiabilidad"
+        },
+        "uptime_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Porcentaje de uptime"
+        },
+        "error_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Tasa de error en porcentaje"
+        },
+        "timeout_count": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número de timeouts"
+        }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+    "maintainability": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["ok", "warn", "crit"],
+          "description": "Estado de mantenibilidad"
+        },
+        "coverage_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Porcentaje de cobertura de tests"
+        },
+        "duplicated_lines": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número de líneas duplicadas"
+        },
+        "complexity_score": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Puntuación de complejidad ciclomática"
+        },
+        "technical_debt": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Deuda técnica en horas"
+        }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+    "tests": {
+      "type": "object",
+      "properties": {
+        "server_health": {
+          "type": "boolean",
+          "description": "Estado del servidor"
+        },
+        "metrics_endpoint": {
+          "type": "boolean",
+          "description": "Disponibilidad del endpoint de métricas"
+        },
+        "quality_gate": {
+          "type": "boolean",
+          "description": "Resultado del quality gate"
+        },
+        "policy_check": {
+          "type": "boolean",
+          "description": "Resultado del policy check"
+        },
+        "scan_gate": {
+          "type": "boolean",
+          "description": "Resultado del scan gate"
+        },
+        "metrics_gate": {
+          "type": "boolean",
+          "description": "Resultado del metrics gate"
+        },
+        "workflow_simulation": {
+          "type": "boolean",
+          "description": "Resultado de simulación de workflow"
+        }
+      },
+      "required": ["server_health", "metrics_endpoint", "quality_gate", "policy_check", "scan_gate", "metrics_gate", "workflow_simulation"],
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_tests": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número total de tests"
+        },
+        "passed": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número de tests que pasaron"
+        },
+        "failed": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Número de tests que fallaron"
+        },
+        "success_rate": {
+          "type": "string",
+          "pattern": "^\\d+%$",
+          "description": "Tasa de éxito en formato porcentaje"
+        }
+      },
+      "required": ["total_tests", "passed", "failed", "success_rate"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["timestamp", "environment", "performance", "security", "reliability", "maintainability", "tests", "summary"],
+  "additionalProperties": false
+}
