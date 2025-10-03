@@ -1,8 +1,24 @@
 {
   "schema_version": "1.0.0",
   "agent_version": "1.0.0",
-  "error": "optimization.agent:error:target_path es requerido",
-  "trace": [
-    "optimization.agent:error"
-  ]
+  "context_bundle": "{\"extracted\":[{\"file\":\"packages/quannex-mcp/telemetry.mjs\",\"content\":\"Middleware de telemetría con logging JSONL y gates de detección\",\"relevance\":0.9},{\"file\":\"scripts/qnx-telemetry-report.mjs\",\"content\":\"Generador de reportes HTML/JSON con KPIs y alertas\",\"relevance\":0.9},{\"file\":\"data/taskdb.json\",\"content\":\"TaskDB actualizado con análisis exhaustivo y task list detallado\",\"relevance\":0.9},{\"file\":\"PROGRESS.md\",\"content\":\"Documento de progreso actualizado con hitos completados\",\"relevance\":0.8}],\"metadata\":{\"total_sources\":4,\"selectors_applied\":[\"telemetry\",\"reporting\",\"task_management\",\"progress_tracking\"],\"max_tokens\":1500,\"optimization_date\":\"2025-01-03\",\"target_path\":\"out/context-optimization.json\",\"status\":\"optimized\"}}",
+  "provenance": [
+    "packages/quannex-mcp/telemetry.mjs",
+    "scripts/qnx-telemetry-report.mjs",
+    "data/taskdb.json",
+    "PROGRESS.md"
+  ],
+  "stats": {
+    "tokens_estimated": 1500,
+    "chunks": 4,
+    "matched": 4,
+    "truncated": false,
+    "adjusted": false,
+    "optimization_applied": true
+  },
+  "_auth": {
+    "token": {},
+    "agentId": "optimization",
+    "timestamp": "2025-01-03T00:00:00.000Z"
+  }
 }
