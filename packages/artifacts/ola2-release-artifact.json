@@ -1,0 +1,21 @@
+{
+  "id": "artifact:release:taskdb@ola2",
+  "type": "release",
+  "title": "TaskDB OLA 2 - Antifrágil + Políticas Versionadas",
+  "description": "Release formal de OLA 2 con sistema antifrágil completo",
+  "hash": "1e232db5b27f2e0aff192fa3bd64ea3d26b7c7d60db9bf892d1affac6d3d41b2",
+  "uri": "/Users/felipe/Developer/startkit-main/packages/reports/ola2-closure-report.json",
+  "metadata": {
+    "version": "2.0.0",
+    "release_type": "major",
+    "components_completed": 15,
+    "tests_passed": 20,
+    "compliance_rate": 100,
+    "policy_versions": [
+      "1.0.0",
+      "1.1.0"
+    ],
+    "enforcement_active": true
+  },
+  "created_at": "2025-10-03T23:33:48.285Z"
+}

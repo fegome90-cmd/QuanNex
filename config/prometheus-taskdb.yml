@@ -1,0 +1,18 @@
+# Configuración Prometheus para TaskDB
+# Añadir a tu prometheus.yml existente
+
+scrape_configs:
+  - job_name: 'taskdb'
+    static_configs:
+      - targets: ['localhost:9464']   # METRICS_PORT
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    
+  # Si tienes múltiples instancias de TaskDB
+  - job_name: 'taskdb-cluster'
+    static_configs:
+      - targets: 
+        - 'localhost:9464'
+        - 'localhost:9465'  # instancia adicional si existe
+    scrape_interval: 15s
+    metrics_path: '/metrics'

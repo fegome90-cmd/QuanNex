@@ -72,6 +72,9 @@
     "taskdb:report": "node cli/qnx-report.js",
     "taskdb:budget": "node scripts/taskdb-budget.mjs",
     "taskdb:migrate": "npx ts-node ops/migrate/jsonl-to-pg.ts",
+    "taskdb:shadow:on": "cross-env TASKDB_DRIVER=dual node scripts/taskdb-shadow-on.mjs",
+    "taskdb:metrics": "node metrics/exporter.mjs",
+    "taskdb:baseline": "node cli/generate-baseline.mjs",
     "prepush": "npm run verify:quick",
     "audit:bypasses": "node scripts/audit-git-bypasses.mjs",
     "prepare": "husky",
@@ -262,6 +265,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.18.2",
     "acorn": "^8.15.0",
+    "cross-env": "^10.1.0",
     "express": "^5.1.0",
     "globby": "^15.0.0",
     "minimatch": "^9.0.3",

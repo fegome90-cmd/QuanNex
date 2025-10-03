@@ -1,0 +1,170 @@
+# TaskDB Policy Versioned Configuration
+# Plan Maestro TaskDB - OLA 2: Políticas Versionadas
+# Permite evolución de reglas sin invalidar tareas anteriores
+
+# Configuración principal
+config_version: '1.1.0'
+environment: 'development'
+
+# Política activa actual (se estampará en nuevas tareas)
+current_policy_version: "1.1.0"
+
+# Catálogo de versiones de políticas
+policy_versions:
+  "1.0.0":
+    description: "Política inicial - Requiere lint y seguridad básica"
+    required_gates:
+      default: [lint, security]
+    thresholds:
+      security: 0.90
+      lint: 0.85
+    metadata:
+      created_at: "2025-01-03T00:00:00Z"
+      deprecated: false
+
+  "1.1.0":
+    description: "Política endurecida - Añade gate de quality obligatorio"
+    required_gates:
+      default: [lint, security, quality]
+    thresholds:
+      security: 0.95  # Umbral más estricto
+      lint: 0.90      # Umbral más estricto
+      quality: 0.80   # Nuevo umbral
+    metadata:
+      created_at: "2025-01-03T23:30:00Z"
+      deprecated: false
+      breaking_changes:
+        - "Añadido gate 'quality' obligatorio"
+        - "Umbral de security aumentado de 0.90 a 0.95"
+
+# Configuración del Provenance Verifier Hardened
+provenance_verifier:
+  # BLINDAJE 1: Seguridad - Ventana de validez para snapshots
+  snapshot_validity_window_days: 7
+
+  # BLINDAJE 2: Integridad - Límites de recursos
+  resource_limits:
+    max_task_ids_per_report: 1000
+    max_run_ids_per_report: 1000
+    max_artifact_hashes_per_report: 500
+    max_claims_per_report: 100
+
+  # BLINDAJE 3: Operatividad - Timeouts y retry
+  timeouts:
+    verification_timeout_ms: 30000 # 30 segundos máximo por verificación
+    retry_attempts: 3
+    retry_delay_ms: 1000
+
+  # BLINDAJE 4: Validación de estructura
+  structure_validation:
+    strict_mode: true
+    required_fields:
+      - report_provenance
+      - verification_snapshot_ts
+      - task_ids
+      - run_ids
+      - artifact_hashes
+
+# Configuración de CLI
+cli:
+  require_provenance: true
+  validate_on_publish: true
+  create_correction_tasks_on_retract: true
+  default_policy_version: "1.1.0"
+
+# Configuración de enforcement
+enforcement:
+  enabled: true
+  mode: 'mandatory'
+  gates:
+    - orchestrator_usage
+    - telemetry_tracking
+    - component_instrumentation
+
+# Thresholds para métricas de salud
+thresholds:
+  orchestrator_share_min: 95
+  telemetry_coverage_min: 100
+  component_usage_min: 80
+  run_success_rate_min: 90
+
+# Componentes obligatorios para instrumentar
+mandatory_components:
+  - orchestrator
+  - validator
+  - codegen
+  - planner
+  - router
+
+# Eventos obligatorios para trackear
+mandatory_events:
+  - run_start
+  - run_end
+  - component_used
+  - gate_violation
+  - tool_misfire
+
+# Configuración de gates
+gates:
+  orchestrator_usage:
+    description: 'Todas las tareas deben usar el orchestrator QuanNex'
+    threshold: 95
+    action: 'block' # block, warn, log
+
+  telemetry_tracking:
+    description: 'Todas las operaciones deben tener telemetría'
+    threshold: 100
+    action: 'block'
+
+  component_instrumentation:
+    description: 'Componentes críticos deben estar instrumentados'
+    threshold: 80
+    action: 'warn'
+
+# Configuración de alertas
+alerts:
+  enabled: true
+  channels:
+    - console
+    - log_file
+    - metrics_endpoint
+
+  triggers:
+    - orchestrator_share_below_threshold
+    - telemetry_coverage_below_threshold
+    - component_instrumentation_below_threshold
+    - run_failure_rate_above_threshold
+
+# Configuración de reportes
+reporting:
+  frequency: 'real-time'
+  formats:
+    - json
+    - html
+    - metrics
+
+  destinations:
+    - .reports/metrics/
+    - console
+    - prometheus_endpoint
+
+# SLOs (Service Level Objectives)
+slos:
+  availability: 99.9
+  provenance_verification_latency_p95_ms: 5000
+  taskdb_doctor_check_success_rate: 100
+  report_publication_success_rate: 100
+  retraction_task_creation_time_ms: 1000
+
+# Configuración de desarrollo
+development:
+  dry_run: false
+  verbose_logging: true
+  debug_mode: false
+
+# Configuración de producción
+production:
+  dry_run: false
+  verbose_logging: false
+  debug_mode: false
+  strict_enforcement: true

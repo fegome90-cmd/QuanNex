@@ -1,0 +1,28 @@
+# Makefile para Shadow Write + Métricas TaskDB
+# Uso: make baseline
+
+.PHONY: baseline shadow-on metrics baseline-report
+
+baseline: shadow-on metrics baseline-report
+
+shadow-on:
+	@echo "🔄 Activando shadow write..."
+	npm run taskdb:shadow:on
+
+metrics:
+	@echo "📊 Iniciando exportador de métricas..."
+	npm run taskdb:metrics &
+	@sleep 2
+
+baseline-report:
+	@echo "📋 Generando baseline report..."
+	npm run taskdb:baseline
+	@echo "✅ Baseline generado en reports/TASKDB-BASELINE.md"
+
+test-metrics:
+	@echo "🧪 Probando endpoint de métricas..."
+	@curl -s http://localhost:9464/metrics | head -n 20
+
+clean:
+	@echo "🧹 Limpiando procesos de métricas..."
+	@pkill -f "metrics/exporter.mjs" || true
