@@ -88,3 +88,14 @@ jobs:
       - name: Run legacy security tests
         run: npm run security:deps:moderate
         continue-on-error: true
+
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run build
+      - run: npm run quannex:check reports/QUANNEX-METRICAS-USO-IMPLEMENTACION.md
+      - run: test -f reports/QUANNEX-METRICAS-USO-IMPLEMENTACION.md && echo "📊 Metrics report present"

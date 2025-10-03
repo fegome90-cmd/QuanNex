@@ -2,6 +2,13 @@
 
 ## 🎯 Hitos Principales
 
+### 2025-10-03 — 📊 Informe de Métricas Ola 1 ✅
+
+**Archivo:** reports/QUANNEX-METRICAS-USO-IMPLEMENTACION.md  
+**Estado:** ✅ Validado (confianza 90%)  
+**Highlights:** build 1.387s; validación 0.29–0.34s; CPU 82–91%; cobertura 463 archivos objetivo; -67% scripts redundantes; -80% tiempo pre-commit.  
+**Decisión:** Avanzar a Ola 2 (Guardrails I/O, Router de modelos, Memoria RAG, Perf).
+
 ### 2025-01-03 — Plan Maestro TaskDB - OLA 1: ROBUSTEZ CERRADA ✅
 
 **Estado:** ✅ COMPLETADO Y VALIDADO  
