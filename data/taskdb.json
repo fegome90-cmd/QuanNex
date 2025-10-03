@@ -204,6 +204,74 @@
       }
     }
   },
+  "future_roadmap": {
+    "title": "Mapa de Trabajo Core 2025Q4 - Roadmap Estructurado",
+    "date": "2025-01-02",
+    "impact": "critical",
+    "status": "planned",
+    "description": "Plan maestro estructurado para desarrollo futuro de QuanNex/MCP basado en auditorías neutral, escéptico y Abraham Wald",
+    "methodology": {
+      "approach": "realista, acotado y blindado",
+      "auditor_basis": "neutral, escéptico y Abraham Wald",
+      "synthesis_included": true,
+      "prioritization_matrix": "completa"
+    },
+    "phases": {
+      "fase_1": {
+        "title": "Núcleo MVP Usable + Auditabilidad",
+        "duration": "2-3 semanas",
+        "priority": "critical",
+        "description": "Base sólida y funcional con capacidades de auditoría",
+        "objectives": [
+          "PRP Generator + TaskDB DAG",
+          "Reflect Loop (before:done)",
+          "MCP Server QuanNex-Core",
+          "CI/CD básico + Contract Tests",
+          "UX mínima en Cursor",
+          "Manejo de errores del orquestador",
+          "Documentación viva"
+        ]
+      },
+      "fase_2": {
+        "title": "Robustez + Control de Recursos",
+        "duration": "1-2 meses",
+        "priority": "high",
+        "description": "Sistema robusto con control de recursos y persistencia",
+        "objectives": [
+          "Persistencia mínima + backups",
+          "Inventario de tools y agentes",
+          "Telemetría mínima extendida",
+          "Versionado de system prompts"
+        ]
+      },
+      "fase_3": {
+        "title": "Expansión Research + Optimización",
+        "duration": "Q1 2026",
+        "priority": "medium",
+        "description": "Capacidades avanzadas de investigación y optimización",
+        "objectives": [
+          "Research Agents + RAG mínimo",
+          "Orquestador híbrido Exec/Research",
+          "Telemetría avanzada + dashboards",
+          "Router multi-modelo",
+          "Documentación ampliada + playbooks"
+        ]
+      }
+    },
+    "task_priorities": {
+      "alta": 7,
+      "media": 4,
+      "baja": 5
+    },
+    "total_tasks": 16,
+    "estimated_effort": "3-4 meses",
+    "success_metrics": [
+      "MVP usable funcionando",
+      "Sistema auditado y documentado",
+      "Base sólida para expansión",
+      "Metodología validada"
+    ]
+  },
   "lessons_learned": {
     "analisis_parches_20_lecciones": {
       "title": "Análisis Exhaustivo de Parches - 20 Lecciones de Agentes IA",
@@ -752,6 +820,68 @@
         "Configurar infraestructura para canary",
         "Iniciar Fase 1 (Canary 10%)"
       ]
+    },
+    {
+      "id": "future-roadmap-2025q4",
+      "title": "Mapa de Trabajo Core 2025Q4 - Roadmap Estructurado",
+      "description": "Plan maestro estructurado para desarrollo futuro de QuanNex/MCP basado en auditorías neutral, escéptico y Abraham Wald",
+      "docs": [
+        "docs/roadmap/FUTURE-ROADMAP-2025Q4.md",
+        "docs/roadmap/METODOLOGIA-AUDITORIA-NEUTRAL.md",
+        "docs/roadmap/PRIORIZACION-MATRIX.md"
+      ],
+      "features": [
+        "Núcleo MVP",
+        "Robustez",
+        "Expansión"
+      ],
+      "data": {
+        "status": "PLANNED",
+        "total_phases": 3,
+        "total_tasks": 16,
+        "priority_breakdown": {
+          "alta": 7,
+          "media": 4,
+          "baja": 5
+        },
+        "estimated_duration": "3-4 meses",
+        "methodology": {
+          "approach": "realista, acotado y blindado",
+          "auditor_basis": "neutral, escéptico y Abraham Wald",
+          "synthesis_included": true,
+          "prioritization_matrix": "completa"
+        },
+        "phases": {
+          "fase_1": {
+            "title": "Núcleo MVP Usable + Auditabilidad",
+            "duration": "2-3 semanas",
+            "tasks": 7,
+            "priority": "critical"
+          },
+          "fase_2": {
+            "title": "Robustez + Control de Recursos",
+            "duration": "1-2 meses",
+            "tasks": 4,
+            "priority": "high"
+          },
+          "fase_3": {
+            "title": "Expansión Research + Optimización",
+            "duration": "Q1 2026",
+            "tasks": 5,
+            "priority": "medium"
+          }
+        },
+        "success_metrics": [
+          "MVP usable funcionando",
+          "Sistema auditado y documentado",
+          "Base sólida para expansión",
+          "Metodología validada"
+        ]
+      },
+      "github_repo": "local",
+      "pinned": true,
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
     }
   ],
   "tasks": [
@@ -1283,6 +1413,246 @@
       "feature": "Quality Assurance",
       "created_at": "2025-01-02T17:45:00.000Z",
       "updated_at": "2025-01-02T17:45:00.000Z"
+    },
+    {
+      "id": "roadmap-001-prp-generator",
+      "project_id": "future-roadmap-2025q4",
+      "title": "PRP Generator + TaskDB DAG",
+      "description": "Implementar generador de PRPs (Project Requirements & Planning) con grafo acíclico dirigido en TaskDB",
+      "status": "todo",
+      "priority": "alta",
+      "task_order": 1,
+      "feature": "Núcleo MVP",
+      "phase": "FASE 1",
+      "estimated_effort": "3-4 días",
+      "estimated_value": "9",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-002-reflect-loop",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Reflect Loop (before:done)",
+      "description": "Implementar loop de reflexión antes de marcar tareas como completadas",
+      "status": "todo",
+      "priority": "alta",
+      "task_order": 2,
+      "feature": "Núcleo MVP",
+      "phase": "FASE 1",
+      "estimated_effort": "2-3 días",
+      "estimated_value": "8",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-003-mcp-server",
+      "project_id": "future-roadmap-2025q4",
+      "title": "MCP Server QuanNex-Core",
+      "description": "Desarrollar servidor MCP centralizado para QuanNex con capacidades core",
+      "status": "todo",
+      "priority": "alta",
+      "task_order": 3,
+      "feature": "Núcleo MVP",
+      "phase": "FASE 1",
+      "estimated_effort": "5-6 días",
+      "estimated_value": "10",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-004-cicd-basic",
+      "project_id": "future-roadmap-2025q4",
+      "title": "CI/CD básico + Contract Tests",
+      "description": "Implementar pipeline CI/CD básico con tests de contrato",
+      "status": "todo",
+      "priority": "alta",
+      "task_order": 4,
+      "feature": "Núcleo MVP",
+      "phase": "FASE 1",
+      "estimated_effort": "3-4 días",
+      "estimated_value": "8",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-005-ux-cursor",
+      "project_id": "future-roadmap-2025q4",
+      "title": "UX mínima en Cursor",
+      "description": "Crear interfaz de usuario mínima integrada con Cursor",
+      "status": "todo",
+      "priority": "alta",
+      "task_order": 5,
+      "feature": "Núcleo MVP",
+      "phase": "FASE 1",
+      "estimated_effort": "4-5 días",
+      "estimated_value": "9",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-006-error-handling",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Manejo de errores del orquestador",
+      "description": "Implementar sistema robusto de manejo de errores en el orquestador",
+      "status": "todo",
+      "priority": "alta",
+      "task_order": 6,
+      "feature": "Núcleo MVP",
+      "phase": "FASE 1",
+      "estimated_effort": "2-3 días",
+      "estimated_value": "7",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-007-live-docs",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Documentación viva",
+      "description": "Crear sistema de documentación que se mantenga actualizada automáticamente",
+      "status": "todo",
+      "priority": "alta",
+      "task_order": 7,
+      "feature": "Núcleo MVP",
+      "phase": "FASE 1",
+      "estimated_effort": "3-4 días",
+      "estimated_value": "8",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-008-persistence",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Persistencia mínima + backups",
+      "description": "Implementar sistema de persistencia básico con respaldos automáticos",
+      "status": "todo",
+      "priority": "media",
+      "task_order": 8,
+      "feature": "Robustez",
+      "phase": "FASE 2",
+      "estimated_effort": "4-5 días",
+      "estimated_value": "6",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-009-inventory",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Inventario de tools y agentes",
+      "description": "Crear catálogo completo de herramientas y agentes disponibles",
+      "status": "todo",
+      "priority": "media",
+      "task_order": 9,
+      "feature": "Robustez",
+      "phase": "FASE 2",
+      "estimated_effort": "2-3 días",
+      "estimated_value": "5",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-010-telemetry-extended",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Telemetría mínima extendida",
+      "description": "Expandir sistema de telemetría con métricas adicionales",
+      "status": "todo",
+      "priority": "media",
+      "task_order": 10,
+      "feature": "Robustez",
+      "phase": "FASE 2",
+      "estimated_effort": "3-4 días",
+      "estimated_value": "6",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-011-prompt-versioning",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Versionado de system prompts",
+      "description": "Implementar sistema de versionado para prompts del sistema",
+      "status": "todo",
+      "priority": "media",
+      "task_order": 11,
+      "feature": "Robustez",
+      "phase": "FASE 2",
+      "estimated_effort": "2-3 días",
+      "estimated_value": "5",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-012-research-agents",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Research Agents + RAG mínimo",
+      "description": "Desarrollar agentes de investigación con RAG básico",
+      "status": "todo",
+      "priority": "baja",
+      "task_order": 12,
+      "feature": "Expansión",
+      "phase": "FASE 3",
+      "estimated_effort": "6-8 días",
+      "estimated_value": "7",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-013-hybrid-orchestrator",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Orquestador híbrido Exec/Research",
+      "description": "Crear orquestador que combine ejecución y investigación",
+      "status": "todo",
+      "priority": "baja",
+      "task_order": 13,
+      "feature": "Expansión",
+      "phase": "FASE 3",
+      "estimated_effort": "8-10 días",
+      "estimated_value": "8",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-014-advanced-telemetry",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Telemetría avanzada + dashboards",
+      "description": "Implementar telemetría avanzada con dashboards visuales",
+      "status": "todo",
+      "priority": "baja",
+      "task_order": 14,
+      "feature": "Expansión",
+      "phase": "FASE 3",
+      "estimated_effort": "5-6 días",
+      "estimated_value": "6",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-015-multi-model-router",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Router multi-modelo",
+      "description": "Desarrollar router que maneje múltiples modelos de IA",
+      "status": "todo",
+      "priority": "baja",
+      "task_order": 15,
+      "feature": "Expansión",
+      "phase": "FASE 3",
+      "estimated_effort": "6-7 días",
+      "estimated_value": "7",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "roadmap-016-extended-docs",
+      "project_id": "future-roadmap-2025q4",
+      "title": "Documentación ampliada + playbooks",
+      "description": "Crear documentación completa con playbooks de operación",
+      "status": "todo",
+      "priority": "baja",
+      "task_order": 16,
+      "feature": "Expansión",
+      "phase": "FASE 3",
+      "estimated_effort": "4-5 días",
+      "estimated_value": "5",
+      "created_at": "2025-01-02T18:00:00.000Z",
+      "updated_at": "2025-01-02T18:00:00.000Z"
     }
   ]
 }
