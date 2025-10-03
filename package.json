@@ -36,6 +36,8 @@
     "autofix:apply": "node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":false}'",
     "autofix:safe:dry": "node scripts/autofix-safe.mjs '{\"actions\":[],\"dryRun\":true}'",
     "autofix:safe:apply": "SAFE_CLEAN=0 node scripts/autofix-safe.mjs '{\"actions\":[],\"dryRun\":false}'",
+    "autofix:v2:dry": "AUTOFIX_V2=1 node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":true}'",
+    "autofix:v2:apply": "AUTOFIX_V2=1 node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":false}'",
     "e2e:docker": "bash scripts/e2e-run.sh",
     "e2e:red2green": "node scripts/e2e-autofix-red2green.mjs",
     "e2e:simple": "node scripts/e2e-autofix-simple.mjs",
@@ -173,9 +175,10 @@
     "quannex:smoke": "npm run test:e2e",
     "ci-quannex-gate1": "npm run test:contracts && ./scripts/mcp-autonomous-init.sh && npm run test:e2e",
     "ci-quannex-perf": "node tools/verify-perf.js && node tools/snapshot-perf.js && node --test tests/perf",
-    "test:autofix": "echo autofix test",
     "test:smoke": "echo smoke test",
-    "test:safe-success": "echo safe success"
+    "test:autofix": "echo autofix test",
+    "test:safe-success": "echo safe success",
+    "test:demo": "echo updated demo test"
   },
   "keywords": [
     "claude",

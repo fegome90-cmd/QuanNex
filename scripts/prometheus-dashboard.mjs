@@ -54,6 +54,16 @@ async function generateDashboard() {
   console.log('⚡ Performance Metrics:');
   console.log(`   Verify Duration (p95): ${verifyDuration}s`);
 
+  // AutoFix Success Rate (diaria)
+  const autofixSuccessRate =
+    autofixTotal > 0 ? ((autofixSuccess / autofixTotal) * 100).toFixed(1) : 0;
+  console.log(`   AutoFix Success Rate (diaria): ${autofixSuccessRate}%`);
+
+  // Playbook Mismatches (últimos 15 min)
+  const mismatchRate =
+    playbookTotal > 0 ? ((playbookMismatch / playbookTotal) * 100).toFixed(1) : 0;
+  console.log(`   Playbook Mismatch Rate: ${mismatchRate}%`);
+
   // SLO Status
   console.log('\n🎯 SLO Status:');
   console.log(

@@ -1,5 +1,5 @@
 {
-  "allowed": ["install_missing_dep","fix_import_path","add_npm_script","apply_lint_fix","format_fix","create_config_file"],
-  "risk_levels": { "install_missing_dep": 1, "fix_import_path": 1, "add_npm_script": 1, "apply_lint_fix": 0, "format_fix": 0, "create_config_file": 1 },
+  "allowed": ["install_missing_dep","fix_import_path","add_npm_script","apply_lint_fix","format_fix","create_config_file","install_types","update_script","create_test_boiler"],
+  "risk_levels": { "install_missing_dep": 1, "fix_import_path": 1, "add_npm_script": 1, "apply_lint_fix": 0, "format_fix": 0, "create_config_file": 1, "install_types": 1, "update_script": 1, "create_test_boiler": 1 },
   "max_risk_total": 3
 }

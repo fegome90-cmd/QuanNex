@@ -7,6 +7,10 @@
     "setTimeout(",
     "setInterval("
   ],
+  "allowInPaths": {
+    "child_process.exec": ["scripts/autofix.mjs", "scripts/e2e-*.mjs"],
+    "child_process.execSync": ["scripts/autofix.mjs", "scripts/e2e-*.mjs", "scripts/anti-tamper.mjs"]
+  },
   "maxEnvAccess": [
     "OPENAI_API_KEY",
     "ANTHROPIC_API_KEY",
