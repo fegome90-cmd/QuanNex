@@ -21,7 +21,8 @@
     "gate:metrics": "node scripts/metrics-gate.mjs",
     "gate:metrics:integrity": "node scripts/metrics-integrity.mjs",
     "gate:scan": "node scripts/scan-gate.mjs",
-    "gate:policy": "node scripts/policy-check.mjs",
+    "gate:policy": "node scripts/policy-check-ast.mjs",
+    "gate:policy:legacy": "node scripts/policy-check.mjs",
     "gate:nomock": "node scripts/no-mock-gate.mjs",
     "gate:schema": "node scripts/report-validate.mjs",
     "gate:dirty": "node scripts/anti-tamper.mjs",
@@ -31,6 +32,8 @@
     "dashboard": "node scripts/prometheus-dashboard.mjs",
     "autofix:dry": "node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":true}'",
     "autofix:apply": "node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":false}'",
+    "autofix:safe:dry": "node scripts/autofix-safe.mjs '{\"actions\":[],\"dryRun\":true}'",
+    "autofix:safe:apply": "SAFE_CLEAN=0 node scripts/autofix-safe.mjs '{\"actions\":[],\"dryRun\":false}'",
     "e2e:docker": "bash scripts/e2e-run.sh",
     "e2e:red2green": "node scripts/e2e-autofix-red2green.mjs",
     "e2e:simple": "node scripts/e2e-autofix-simple.mjs",
@@ -192,6 +195,9 @@
     "vitest": "^3.2.4"
   },
   "devDependencies": {
+    "@babel/parser": "^7.28.4",
+    "@babel/traverse": "^7.28.4",
+    "@babel/types": "^7.28.4",
     "@eslint/js": "^9.34.0",
     "@stylistic/eslint-plugin": "^2.9.0",
     "@types/express": "^5.0.3",

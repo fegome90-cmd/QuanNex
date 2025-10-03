@@ -7,6 +7,7 @@ export default defineConfig({
       'utils/**/*.test.{ts,js,mjs}',
       'agents/**/*.test.{ts,js,mjs}',
       'tests/**/*.test.{ts,js,mjs}',
+      'tests/**/*.spec.{ts,js,mjs}',
     ],
     exclude: ['node_modules/**', 'dist/**', 'coverage/**', 'build/**'],
     coverage: {

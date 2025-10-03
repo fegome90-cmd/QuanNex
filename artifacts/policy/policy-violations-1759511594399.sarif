@@ -1,0 +1,197 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "QuanNex Policy Checker",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/quannex/policy-checker"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/server/metrics.mjs"
+                },
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 31
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/tools/fetchUser.test.ts"
+                },
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 45
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/hotstart-enforcer/agent.js"
+                },
+                "region": {
+                  "startLine": 260,
+                  "startColumn": 31
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/hotstart-enforcer/agent.js"
+                },
+                "region": {
+                  "startLine": 290,
+                  "startColumn": 31
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/hotstart-enforcer/agent.js"
+                },
+                "region": {
+                  "startLine": 425,
+                  "startColumn": 39
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/context/server-http.mjs"
+                },
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/initialization-enforcer/agent.js"
+                },
+                "region": {
+                  "startLine": 214,
+                  "startColumn": 39
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/metrics-integrity.mjs"
+                },
+                "region": {
+                  "startLine": 106,
+                  "startColumn": 31
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/slo-check.mjs"
+                },
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 12
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

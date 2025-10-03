@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-10-03T02:04:37.917Z",
+  "branch": "autofix/test-artifact2",
+  "baseCommit": "36b46e9ac550b9506850655df82703ef8835cc60",
+  "finalCommit": "9cc30919b7c8ea6e4bfbb51f149a1b754317a45c",
+  "actions": [
+    {
+      "type": "add_npm_script",
+      "params": {
+        "type": "add_npm_script",
+        "key": "test:artifact2",
+        "value": "echo artifact test 2"
+      },
+      "risk": 1
+    }
+  ],
+  "riskTotal": 1,
+  "durationMs": 4519,
+  "durationSeconds": 4.519,
+  "result": {
+    "success": true,
+    "dryRun": false,
+    "log": [
+      {
+        "action": {
+          "type": "add_npm_script",
+          "key": "test:artifact2",
+          "value": "echo artifact test 2"
+        },
+        "res": {
+          "stdout": "script test:artifact2 added"
+        }
+      }
+    ]
+  },
+  "verifyResult": null,
+  "costAvoided": {
+    "actionsCount": 1,
+    "avgManualFixMinutes": 5,
+    "durationMinutes": 0.08,
+    "minutesSaved": 4.92,
+    "estimatedCostAvoided": "4.924683333333333 minutes"
+  },
+  "metadata": {
+    "nodeVersion": "v24.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cwd": "/Users/felipe/Developer/startkit-main"
+  }
+}

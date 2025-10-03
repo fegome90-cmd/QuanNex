@@ -1,34 +1,15 @@
 {
-  "code": [
-    "src/**/*.{ts,js,mjs,tsx}",
-    "agents/**/*.{js,mjs}",
-    "orchestration/**/*.{js,mjs}",
-    "tools/**/*.{js,mjs}",
-    "utils/**/*.{js,mjs}",
-    "scripts/**/*.{js,mjs,sh}"
-  ],
-  "configs": [
-    "**/*.{json,yml,yaml}",
-    "**/*.config.{js,ts}",
-    "**/package.json",
-    "**/tsconfig.json",
-    "**/vitest.config.ts",
-    "**/eslint.config.js"
-  ],
-  "security": [
-    "**/*.{env,env.*}",
-    "**/secrets/**",
-    "**/keys/**",
-    "**/*.key",
-    "**/*.pem",
-    "**/*.p12"
+  "include": [
+    "src/**/*.{js,ts,mjs}",
+    "agents/**/*.{js,ts,mjs}",
+    "scripts/**/*.{js,mjs}"
   ],
   "exclude": [
     "node_modules/**",
     "dist/**",
-    "coverage/**",
     "build/**",
     ".git/**",
-    "*.log"
+    "coverage/**",
+    "artifacts/**"
   ]
 }
