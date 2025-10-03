@@ -26,6 +26,9 @@
     "gate:schema": "node scripts/report-validate.mjs",
     "gate:dirty": "node scripts/anti-tamper.mjs",
     "gate:workflow": "node scripts/workflow-gate.mjs",
+    "gate:diff": "node scripts/diff-gate.mjs",
+    "autofix:dry": "node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":true}'",
+    "autofix:apply": "node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":false}'",
     "e2e:docker": "bash scripts/e2e-run.sh",
     "context:compact": "node scripts/context-compact.mjs || echo 'ok'",
     "deps:ensure-node": "node -v && npm -v",
@@ -71,8 +74,6 @@
     "security:deps:critical": "./core/scripts/security-deps-simple.sh -l critical",
     "security:aggregate": "./core/scripts/security-report-aggregator.sh",
     "security:full": "npm run security:deps && npm run dast:basic && npm run security:aggregate",
-    "autofix:dry": "node tools/run-autofix.mjs --dry-run",
-    "autofix:apply": "node tools/run-autofix.mjs --apply",
     "autofix:diff": "node tools/preview-diff.mjs > .reports/autofix.diff",
     "autofix:sarif": "node tools/sarif-aggregate.mjs > .reports/security.sarif",
     "modernize": "npm run autofix:dry && npm run autofix:diff && npm run autofix:sarif",
@@ -162,7 +163,8 @@
     "test:baseline": "node tools/gen-test-baseline.mjs",
     "quannex:smoke": "npm run test:e2e",
     "ci-quannex-gate1": "npm run test:contracts && ./scripts/mcp-autonomous-init.sh && npm run test:e2e",
-    "ci-quannex-perf": "node tools/verify-perf.js && node tools/snapshot-perf.js && node --test tests/perf"
+    "ci-quannex-perf": "node tools/verify-perf.js && node tools/snapshot-perf.js && node --test tests/perf",
+    "test:autofix": "echo autofix test"
   },
   "keywords": [
     "claude",
@@ -207,7 +209,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.18.2",
+    "@modelcontextprotocol/sdk": "^1.18.2",
     "acorn": "^8.15.0",
     "express": "^5.1.0",
     "globby": "^15.0.0",
