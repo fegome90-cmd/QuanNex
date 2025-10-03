@@ -6,3 +6,4 @@ logs/
 *.log
 out/
 out/*.tmp.json
+dist/

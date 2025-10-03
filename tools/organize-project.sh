@@ -167,7 +167,7 @@ console.log(`📁 Cargando desde: ${versionPath}`);
 
 // Importar la versión correcta
 try {
-  const { Orchestrator } = await import(join(versionPath, 'orchestrator.js'));
+  const { Orchestrator } = await import(join(versionPath, 'orchestrator'));
   const orchestrator = new Orchestrator();
   await orchestrator.start();
 } catch (error) {

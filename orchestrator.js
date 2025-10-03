@@ -3,7 +3,7 @@
  * orchestrator.js - Punto de entrada StartKit QuanNex
  * Selecciona la versión correcta basada en VERSION env var
  */
-import { existsSync } from "node:fs";
+import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'node:path';
 
@@ -41,7 +41,7 @@ console.log(`📁 Cargando desde: ${versionPath}`);
 
 // Importar la versión correcta
 try {
-  const { Orchestrator } = await import(join(versionPath, 'orchestrator.js'));
+  const { Orchestrator } = await import(join(versionPath, 'orchestrator'));
   const orchestrator = new Orchestrator();
   await orchestrator.start();
 } catch (error) {
