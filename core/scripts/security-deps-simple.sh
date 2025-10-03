@@ -3,11 +3,18 @@ set -euo pipefail
 
 # Security Dependencies Scanner Simplificado
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+if PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+    :
+else
+    SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+    PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+fi
+
 REPORTS_DIR="$PROJECT_ROOT/.reports"
 SECURITY_DIR="$REPORTS_DIR/security"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+RAW_AUDIT_FILE="$SECURITY_DIR/npm-audit-raw-$TIMESTAMP.json"
+NPM_REGISTRY_URL="https://registry.npmjs.org"
 
 # Colores
 RED='\033[0;31m'
@@ -21,8 +28,22 @@ warn() { echo -e "${YELLOW}[WARN]${NC} $1" >&2; }
 error() { echo -e "${RED}[ERROR]${NC} $1" >&2; }
 success() { echo -e "${GREEN}[SUCCESS]${NC} $1" >&2; }
 
+verify_network() {
+    if ! command -v curl >/dev/null 2>&1; then
+        warn "curl no disponible para verificar red; continuando sin comprobación"
+        return 0
+    fi
+
+    if curl -sSfL "$NPM_REGISTRY_URL" -o /dev/null --max-time 5; then
+        return 0
+    fi
+
+    return 1
+}
+
 # Crear directorios
 mkdir -p "$SECURITY_DIR"
+cd "$PROJECT_ROOT"
 
 # Configuración
 OUTPUT_FILE="$SECURITY_DIR/security-deps-report-$TIMESTAMP.json"
@@ -66,54 +87,75 @@ scan_npm_deps() {
     fi
     
     if [[ ! -f "$PROJECT_ROOT/package.json" ]]; then
-        if [[ "$VERBOSE" == "true" ]]; then
-            warn "package.json no encontrado, saltando escaneo npm"
-        fi
+        error "package.json no encontrado en $PROJECT_ROOT"
+        exit 2
+    fi
+
+    if ! verify_network; then
+        warn "Sin conectividad a registry.npmjs.org, omitiendo npm audit"
         return
     fi
-    
-    # Ejecutar npm audit
-    local audit_output
-    if audit_output=$(cd "$PROJECT_ROOT" && npm audit --json 2>/dev/null); then
+
+    local audit_output=""
+    local audit_exit_code=0
+
+    if [[ "$VERBOSE" == "true" ]]; then
+        log "Ejecutando npm audit (nivel $AUDIT_LEVEL)..."
+    fi
+
+    set +e
+    audit_output=$(npm audit --json --audit-level "$AUDIT_LEVEL" 2>&1)
+    audit_exit_code=$?
+    set -e
+
+    if [[ $audit_exit_code -gt 1 ]]; then
+        error "npm audit falló (código $audit_exit_code): $audit_output"
+        return
+    fi
+
+    if [[ $audit_exit_code -eq 0 ]]; then
         if [[ "$VERBOSE" == "true" ]]; then
             log "npm audit completado sin vulnerabilidades"
         fi
     else
-        local audit_exit_code=$?
-        if [[ $audit_exit_code -eq 1 ]]; then
-            if [[ "$VERBOSE" == "true" ]]; then
-                log "Vulnerabilidades encontradas en dependencias npm"
-            fi
-            
-            # Procesar vulnerabilidades por severidad
-            echo "$audit_output" | jq -r '.vulnerabilities // {} | to_entries[] | select(.value.severity != null) | "\(.value.severity)|\(.key)|\(.value.title // "No title")|\(.value.range // "No range")"' | while IFS='|' read -r severity package title range; do
-                case "$AUDIT_LEVEL" in
-                    "critical")
-                        if [[ "$severity" == "critical" ]]; then
-                            findings+=("npm_vulnerability|$package|$severity|$title|$range")
-                        fi
-                        ;;
-                    "high")
-                        if [[ "$severity" =~ ^(critical|high)$ ]]; then
-                            findings+=("npm_vulnerability|$package|$severity|$title|$range")
-                        fi
-                        ;;
-                    "moderate")
-                        if [[ "$severity" =~ ^(critical|high|moderate)$ ]]; then
-                            findings+=("npm_vulnerability|$package|$severity|$title|$range")
-                        fi
-                        ;;
-                    "low")
-                        findings+=("npm_vulnerability|$package|$severity|$title|$range")
-                        ;;
-                esac
-            done
-        else
-            if [[ "$VERBOSE" == "true" ]]; then
-                error "Error ejecutando npm audit"
-            fi
+        if [[ "$VERBOSE" == "true" ]]; then
+            log "npm audit reportó vulnerabilidades"
         fi
     fi
+
+    if ! jq -e '.' >/dev/null 2>&1 <<<"$audit_output"; then
+        error "La salida de npm audit no es JSON válido"
+        return
+    fi
+
+    echo "$audit_output" >"$RAW_AUDIT_FILE"
+
+    if [[ "$VERBOSE" == "true" ]]; then
+        log "Reporte bruto guardado en $RAW_AUDIT_FILE"
+    fi
+
+    echo "$audit_output" | jq -r '.vulnerabilities // {} | to_entries[] | select(.value.severity != null) | "\(.value.severity)|\(.key)|\(.value.title // "No title")|\(.value.range // "No range")"' | while IFS='|' read -r severity package title range; do
+        case "$AUDIT_LEVEL" in
+            "critical")
+                if [[ "$severity" == "critical" ]]; then
+                    findings+=("npm_vulnerability|$package|$severity|$title|$range")
+                fi
+                ;;
+            "high")
+                if [[ "$severity" =~ ^(critical|high)$ ]]; then
+                    findings+=("npm_vulnerability|$package|$severity|$title|$range")
+                fi
+                ;;
+            "moderate")
+                if [[ "$severity" =~ ^(critical|high|moderate)$ ]]; then
+                    findings+=("npm_vulnerability|$package|$severity|$title|$range")
+                fi
+                ;;
+            "low")
+                findings+=("npm_vulnerability|$package|$severity|$title|$range")
+                ;;
+        esac
+    done
     
     # Imprimir findings
     for finding in "${findings[@]}"; do
@@ -138,28 +180,38 @@ scan_secrets() {
     fi
     
     # Ejecutar gitleaks
-    local gitleaks_output
-    if gitleaks_output=$(cd "$PROJECT_ROOT" && gitleaks detect --source . --report-format json --no-git 2>/dev/null); then
+    local gitleaks_output=""
+    local gitleaks_exit_code=0
+
+    set +e
+    gitleaks_output=$(gitleaks detect --source . --report-format json --no-git 2>&1)
+    gitleaks_exit_code=$?
+    set -e
+
+    if [[ $gitleaks_exit_code -gt 1 ]]; then
+        error "gitleaks falló (código $gitleaks_exit_code): $gitleaks_output"
+        return
+    fi
+
+    if [[ $gitleaks_exit_code -eq 0 ]]; then
         if [[ "$VERBOSE" == "true" ]]; then
             log "gitleaks completado sin secretos encontrados"
         fi
-    else
-        local gitleaks_exit_code=$?
-        if [[ $gitleaks_exit_code -eq 1 ]]; then
-            if [[ "$VERBOSE" == "true" ]]; then
-                log "Secretos encontrados en el código"
-            fi
-            
-            # Procesar output de gitleaks
-            echo "$gitleaks_output" | jq -r '.[] | "\(.rule)|\(.severity)|\(.file)|\(.line)"' | while IFS='|' read -r rule severity file line; do
-                findings+=("secret_leak|$rule|$severity|$file|$line")
-            done
-        else
-            if [[ "$VERBOSE" == "true" ]]; then
-                error "Error ejecutando gitleaks"
-            fi
-        fi
+        return
     fi
+
+    if [[ "$VERBOSE" == "true" ]]; then
+        log "gitleaks detectó posibles secretos"
+    fi
+
+    if ! jq -e '.' >/dev/null 2>&1 <<<"$gitleaks_output"; then
+        error "La salida de gitleaks no es JSON válido"
+        return
+    fi
+
+    echo "$gitleaks_output" | jq -r '.[] | "\(.rule)|\(.severity)|\(.file)|\(.line)"' | while IFS='|' read -r rule severity file line; do
+        findings+=("secret_leak|$rule|$severity|$file|$line")
+    done
     
     # Imprimir findings
     for finding in "${findings[@]}"; do
@@ -174,8 +226,11 @@ main() {
     fi
     
     # Ejecutar escaneos
-    local npm_findings=$(scan_npm_deps)
-    local secrets_findings=$(scan_secrets)
+    local npm_findings
+    npm_findings=$(scan_npm_deps)
+
+    local secrets_findings
+    secrets_findings=$(scan_secrets)
     
     # Procesar findings
     local total_findings=0

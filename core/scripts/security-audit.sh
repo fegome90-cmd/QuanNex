@@ -18,6 +18,10 @@ PROJECT_DIR="${1:-$(pwd)}"
 REPORT_DIR="${PROJECT_DIR}/security-reports"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 REPORT_FILE="${REPORT_DIR}/security-audit-${TIMESTAMP}.json"
+AUDIT_JSON_FILE="${REPORT_DIR}/npm-audit-${TIMESTAMP}.json"
+NPM_REGISTRY_URL="https://registry.npmjs.org"
+NETWORK_TIMEOUT="${NETWORK_TIMEOUT:-5}"
+AUDIT_FAILURE=0
 
 # Función de logging
 log() {
@@ -34,6 +38,19 @@ warning() {
 
 error() {
   echo -e "${RED}[ERROR]${NC} $1"
+}
+
+check_network() {
+  if ! command -v curl >/dev/null 2>&1; then
+    warning "curl no disponible para comprobar conectividad; continuando"
+    return 0
+  fi
+
+  if curl -sSfL "$NPM_REGISTRY_URL" -o /dev/null --max-time "$NETWORK_TIMEOUT"; then
+    return 0
+  fi
+
+  return 1
 }
 
 # Crear directorio de reportes
@@ -69,7 +86,8 @@ add_vulnerability() {
   local line="$5"
   local recommendation="$6"
 
-  local temp_file=$(mktemp)
+  local temp_file
+  temp_file=$(mktemp)
   jq --arg severity "$severity" \
     --arg type "$type" \
     --arg description "$description" \
@@ -88,7 +106,8 @@ add_vulnerability() {
 
 # Función para actualizar resumen
 update_summary() {
-  local temp_file=$(mktemp)
+  local temp_file
+  temp_file=$(mktemp)
   jq --arg severity "$1" \
     '.summary[$severity] += 1 | .summary.total_vulnerabilities += 1' \
     "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
@@ -118,28 +137,66 @@ audit_npm_dependencies() {
   log "Auditando dependencias npm..."
 
   if [[ -f "${PROJECT_DIR}/package.json" ]]; then
-    cd "$PROJECT_DIR"
-
-    # Ejecutar npm audit
-    if npm audit --json >"${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" 2>/dev/null; then
-      success "npm audit completado"
-    else
-      warning "npm audit encontró vulnerabilidades"
+    if ! check_network; then
+      warning "Sin salida a Internet hacia $NPM_REGISTRY_URL. Saltando npm audit."
+      echo "::warning::Sin salida a Internet. Saltando npm audit sin bloquear CI." >&2
+      return
     fi
 
-    # Procesar resultados
-    if [[ -f "${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" ]]; then
-      local vulnerabilities=$(jq -r '.vulnerabilities | keys[]' "${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" 2>/dev/null || echo "")
+    pushd "$PROJECT_DIR" >/dev/null
 
-      if [[ -n $vulnerabilities ]]; then
-        while IFS= read -r vuln; do
-          local severity=$(jq -r ".vulnerabilities[\"$vuln\"].severity" "${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" 2>/dev/null || echo "unknown")
-          local description=$(jq -r ".vulnerabilities[\"$vuln\"].title" "${REPORT_DIR}/npm-audit-${TIMESTAMP}.json" 2>/dev/null || echo "Vulnerability in $vuln")
+    local audit_status=0
 
-          add_vulnerability "$severity" "dependency" "$description" "package.json" "0" "Update dependency to latest secure version"
-          update_summary "$severity"
-        done <<<"$vulnerabilities"
-      fi
+    set +e
+    npm audit --json --audit-level=moderate | tee "$AUDIT_JSON_FILE" >/dev/null
+    audit_status=$?
+    set -e
+
+    popd >/dev/null
+
+    if [[ $audit_status -gt 1 ]]; then
+      error "npm audit falló con código $audit_status"
+      AUDIT_FAILURE=1
+      return
+    fi
+
+    if [[ ! -s "$AUDIT_JSON_FILE" ]]; then
+      warning "Archivo de reporte npm audit vacío"
+      return
+    fi
+
+    if [[ $audit_status -eq 0 ]]; then
+      success "npm audit completado sin vulnerabilidades moderadas"
+    else
+      warning "npm audit reportó vulnerabilidades moderadas o críticas"
+    fi
+
+    if ! jq -e '.' "$AUDIT_JSON_FILE" >/dev/null 2>&1; then
+      error "El reporte de npm audit no es JSON válido"
+      AUDIT_FAILURE=1
+      return
+    fi
+
+    local vulnerabilities
+    vulnerabilities=$(jq -r '.vulnerabilities | keys[]' "$AUDIT_JSON_FILE" 2>/dev/null || echo "")
+
+    if [[ -n $vulnerabilities ]]; then
+      while IFS= read -r vuln; do
+        local severity
+        severity=$(jq -r ".vulnerabilities[\"$vuln\"].severity" "$AUDIT_JSON_FILE" 2>/dev/null || echo "unknown")
+        local description
+        description=$(jq -r ".vulnerabilities[\"$vuln\"].title" "$AUDIT_JSON_FILE" 2>/dev/null || echo "Vulnerability in $vuln")
+
+        add_vulnerability "$severity" "dependency" "$description" "package.json" "0" "Update dependency to latest secure version"
+        update_summary "$severity"
+      done <<<"$vulnerabilities"
+    fi
+
+    local moderate_plus
+    moderate_plus=$(jq '(.metadata.vulnerabilities.moderate // 0) + (.metadata.vulnerabilities.high // 0) + (.metadata.vulnerabilities.critical // 0)' "$AUDIT_JSON_FILE" 2>/dev/null || echo "0")
+
+    if (( moderate_plus > 0 )); then
+      AUDIT_FAILURE=1
     fi
   else
     warning "package.json no encontrado, saltando auditoría de dependencias npm"
@@ -205,17 +262,23 @@ generate_final_report() {
   log "Generando reporte final..."
 
   # Actualizar timestamp final
-  local temp_file=$(mktemp)
+  local temp_file
+  temp_file=$(mktemp)
   jq --arg timestamp "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
     '.audit_completed = $timestamp' \
     "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
 
   # Mostrar resumen
-  local total=$(jq -r '.summary.total_vulnerabilities' "$REPORT_FILE")
-  local critical=$(jq -r '.summary.critical' "$REPORT_FILE")
-  local high=$(jq -r '.summary.high' "$REJECT_FILE")
-  local medium=$(jq -r '.summary.medium' "$REPORT_FILE")
-  local low=$(jq -r '.summary.low' "$REPORT_FILE")
+  local total
+  total=$(jq -r '.summary.total_vulnerabilities' "$REPORT_FILE")
+  local critical
+  critical=$(jq -r '.summary.critical' "$REPORT_FILE")
+  local high
+  high=$(jq -r '.summary.high' "$REPORT_FILE")
+  local medium
+  medium=$(jq -r '.summary.medium' "$REPORT_FILE")
+  local low
+  low=$(jq -r '.summary.low' "$REPORT_FILE")
 
   echo ""
   echo "=========================================="
@@ -260,7 +323,16 @@ main() {
   audit_source_code
 
   # Generar reporte final
-  generate_final_report
+  local report_status=0
+  if ! generate_final_report; then
+    report_status=1
+  fi
+
+  if (( AUDIT_FAILURE > 0 )); then
+    exit 1
+  fi
+
+  exit $report_status
 }
 
 # Ejecutar función principal
