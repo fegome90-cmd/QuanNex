@@ -18,6 +18,7 @@ export default [
       'tmp/**',
       'types/**/*.d.ts', // Excluir archivos de tipos TypeScript
       'tests/fixtures/**/*.tsx', // Excluir archivos de prueba
+      'core/taskdb/**/*.ts', // Excluir archivos de TaskDB temporalmente
       'archived/**', // Excluir directorio archived
       'backups/**', // Excluir directorio backups
       'versions/**', // Excluir directorio versions

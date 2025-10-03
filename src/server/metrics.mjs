@@ -41,13 +41,13 @@ const gateStatuses = {
 // Contadores dinámicos que cambian con el tráfico real
 let requestCount = 0;
 let histogramObservations = [];
-let lastRequestTime = Date.now();
+const lastRequestTime = Date.now();
 
 // Métricas de observabilidad adicionales
 let fallbackCount = 0;
 let totalMetricsRequests = 0;
 let circuitBreakerActive = 0;
-let e2eLastPassTimestamp = Date.now();
+const e2eLastPassTimestamp = Date.now();
 
 /**
  * Genera métricas con timeout y validación

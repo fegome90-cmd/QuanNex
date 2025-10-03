@@ -558,6 +558,44 @@ class TaskDBCore {
     };
   }
 
+  // ==================== REPORTES ====================
+
+  /**
+   * Obtener un reporte por ID
+   */
+  getReport(reportId) {
+    return this.data.reports.find(r => r.id === reportId);
+  }
+
+  /**
+   * Actualizar un reporte
+   */
+  updateReport(reportId, updates) {
+    const reportIndex = this.data.reports.findIndex(r => r.id === reportId);
+    if (reportIndex === -1) {
+      throw new Error(`Reporte no encontrado: ${reportId}`);
+    }
+
+    const oldReport = { ...this.data.reports[reportIndex] };
+    const updatedReport = {
+      ...oldReport,
+      ...updates,
+    };
+
+    this.data.reports[reportIndex] = updatedReport;
+    this.saveJSONData();
+    this.createEvent('report_updated', reportId, 'report', { old: oldReport, new: updatedReport });
+
+    return updatedReport;
+  }
+
+  /**
+   * Registrar un evento (alias para createEvent)
+   */
+  logEvent(entityType, entityId, action, details = {}) {
+    return this.createEvent(action, entityId, entityType, details);
+  }
+
   // ==================== ESTADÍSTICAS ====================
 
   /**

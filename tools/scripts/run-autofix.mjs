@@ -24,22 +24,18 @@ const argv = yargs(hideBin(process.argv))
     'dry-run',
     'Ejecuta las herramientas en modo de solo lectura para previsualizar cambios.'
   )
-  .command(
-    'apply',
-    'Ejecuta las herramientas y aplica las correcciones automáticamente.'
-  )
+  .command('apply', 'Ejecuta las herramientas y aplica las correcciones automáticamente.')
   .demandCommand(1, 'Debes especificar un modo: "dry-run" o "apply".')
   .option('verbose', {
     alias: 'v',
     type: 'boolean',
     description: 'Muestra salida detallada de los comandos ejecutados.',
-    default: false
+    default: false,
   })
   .option('lang', {
     alias: 'l',
     type: 'string',
-    description:
-      'Ejecuta fixers solo para un lenguaje específico (ej. "javascript").'
+    description: 'Ejecuta fixers solo para un lenguaje específico (ej. "javascript").',
   })
   .help()
   .alias('help', 'h').argv;
@@ -56,16 +52,14 @@ const colors = {
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
   magenta: '\x1b[35m',
-  cyan: '\x1b[36m'
+  cyan: '\x1b[36m',
 };
 
 function log(level, message) {
   const timestamp = new Date().toISOString().substring(11, 23);
   const color = colors[level] || colors.reset;
-  // eslint-disable-next-line no-console
-  console.log(
-    `${color}[${timestamp}][${level.toUpperCase()}]${colors.reset} ${message}`
-  );
+
+  console.log(`${color}[${timestamp}][${level.toUpperCase()}]${colors.reset} ${message}`);
 }
 
 function runCommand(cmd, args = [], options = {}) {
@@ -75,7 +69,7 @@ function runCommand(cmd, args = [], options = {}) {
       stdio: 'pipe',
       cwd: PROJECT_ROOT,
       shell: false, // Cambiado a false para evitar vulnerabilidades de seguridad
-      ...options
+      ...options,
     });
 
     let stdout = '';
@@ -102,15 +96,15 @@ const fixers = {
         name: 'ESLint --fix',
         cmd: join(NODE_MODULES_BIN, 'eslint'),
         args: ['--fix', '--ext', '.js,.mjs,.ts', '.'],
-        dryRunArgs: ['--ext', '.js,.mjs,.ts', '.', '--format', 'json']
+        dryRunArgs: ['--ext', '.js,.mjs,.ts', '.', '--format', 'json'],
       },
       {
         name: 'Prettier --write',
         cmd: join(NODE_MODULES_BIN, 'prettier'),
         args: ['--write', '.', '--ignore-path', '.prettierignore'],
-        dryRunArgs: ['--check', '.', '--ignore-path', '.prettierignore']
-      }
-    ]
+        dryRunArgs: ['--check', '.', '--ignore-path', '.prettierignore'],
+      },
+    ],
   },
   // MEJORA: Se añaden categorías de seguridad, expandiendo la funcionalidad.
   security: {
@@ -120,16 +114,16 @@ const fixers = {
         name: 'NPM Audit (SCA)',
         cmd: 'npm',
         args: ['audit', 'fix'],
-        dryRunArgs: ['audit', '--json']
+        dryRunArgs: ['audit', '--json'],
       },
       {
         name: 'Snyk Code (SAST)',
         cmd: join(NODE_MODULES_BIN, 'snyk'),
         args: ['code', 'test'], // Snyk no tiene un modo "fix" directo, el test es la acción principal.
-        dryRunArgs: ['code', 'test', '--json']
-      }
-    ]
-  }
+        dryRunArgs: ['code', 'test', '--json'],
+      },
+    ],
+  },
 };
 
 // --- Lógica Principal ---
@@ -145,9 +139,7 @@ async function runFixer(category, fixer) {
     try {
       const args = DRY_RUN ? command.dryRunArgs : command.args;
       const result = await runCommand(command.cmd, args);
-      const success =
-        result.code === 0 ||
-        (command.name.includes('NPM Audit') && result.code <= 1); // npm audit a veces sale con código 1 para vulns.
+      const success = result.code === 0 || (command.name.includes('NPM Audit') && result.code <= 1); // npm audit a veces sale con código 1 para vulns.
 
       const commandResult = {
         name: command.name,
@@ -157,19 +149,15 @@ async function runFixer(category, fixer) {
           cmd: `${command.cmd} ${args.join(' ')}`,
           code: result.code,
           stdout: result.stdout,
-          stderr: result.stderr
-        }
+          stderr: result.stderr,
+        },
       };
 
       if (!success) {
         log('red', `    ❌ ${command.name} falló (código: ${result.code})`);
         // MEJORA: Muestra el error directamente en la consola para un feedback inmediato.
         if (result.stderr) {
-          console.error(
-            colors.red,
-            `    Error: ${result.stderr}`,
-            colors.reset
-          );
+          console.error(colors.red, `    Error: ${result.stderr}`, colors.reset);
         }
       } else {
         log('green', `    ✅ ${command.name} completado`);
@@ -184,7 +172,7 @@ async function runFixer(category, fixer) {
         name: command.name,
         success: false,
         durationMs: Date.now() - commandStartTime,
-        error: error.message
+        error: error.message,
       };
     }
   });
@@ -197,14 +185,12 @@ async function runFixer(category, fixer) {
     name: fixer.name,
     success: overallSuccess,
     durationMs: Date.now() - startTime,
-    commands: commandResults
+    commands: commandResults,
   };
 }
 
 async function generateReport(results) {
-  const successfulCommands = results
-    .flatMap(r => r.commands)
-    .filter(c => c.success).length;
+  const successfulCommands = results.flatMap(r => r.commands).filter(c => c.success).length;
   const totalCommands = results.flatMap(r => r.commands).length;
 
   const report = {
@@ -212,7 +198,7 @@ async function generateReport(results) {
       timestamp: new Date().toISOString(),
       mode: DRY_RUN ? 'dry-run' : 'apply',
       verbose: VERBOSE,
-      languageFilter: argv.lang || 'all'
+      languageFilter: argv.lang || 'all',
     },
     summary: {
       overallSuccess: results.every(r => r.success),
@@ -221,9 +207,9 @@ async function generateReport(results) {
       failed_categories: results.filter(r => !r.success).length,
       successful_commands: successfulCommands,
       failed_commands: totalCommands - successfulCommands,
-      total_commands: totalCommands
+      total_commands: totalCommands,
     },
-    results
+    results,
   };
 
   const reportsDir = join(PROJECT_ROOT, '.reports');
@@ -244,9 +230,7 @@ async function main() {
   const targetFixers = argv.lang ? { [argv.lang]: fixers[argv.lang] } : fixers;
 
   // MEJORA: Ejecución concurrente de todas las categorías de fixers para mayor velocidad.
-  const fixerPromises = Object.entries(targetFixers).map(([lang, fixer]) =>
-    runFixer(lang, fixer)
-  );
+  const fixerPromises = Object.entries(targetFixers).map(([lang, fixer]) => runFixer(lang, fixer));
 
   const results = await Promise.all(fixerPromises);
   const report = await generateReport(results);
@@ -256,16 +240,10 @@ async function main() {
     'blue',
     `  Comandos Exitosos: ${report.summary.successful_commands} de ${report.summary.total_commands}`
   );
-  log(
-    'blue',
-    `  Duración Total: ${(report.summary.totalDurationMs / 1000).toFixed(2)}s`
-  );
+  log('blue', `  Duración Total: ${(report.summary.totalDurationMs / 1000).toFixed(2)}s`);
 
   if (!report.summary.overallSuccess) {
-    log(
-      'red',
-      '\n❌ Autofix completado con errores. Revisa el reporte para más detalles.'
-    );
+    log('red', '\n❌ Autofix completado con errores. Revisa el reporte para más detalles.');
     process.exit(1);
   } else {
     log('green', '\n✅ Autofix completado exitosamente.');

@@ -1,0 +1,468 @@
+{
+  "version": "1.0.0",
+  "policies": [
+    {
+      "id": "1dc6c116-04ee-4556-b4ab-eb5f3866215d",
+      "version": "1.0.0",
+      "name": "Initial Policy",
+      "description": "Política inicial del TaskDB",
+      "rules": {
+        "task_validation": {
+          "required_fields": [
+            "title",
+            "description",
+            "priority"
+          ],
+          "max_title_length": 255,
+          "allowed_priorities": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "run_validation": {
+          "max_duration_ms": 3600000,
+          "required_metrics": [
+            "success_rate",
+            "error_count"
+          ]
+        },
+        "gate_validation": {
+          "required_types": [
+            "lint",
+            "policy",
+            "security",
+            "quality",
+            "truth"
+          ],
+          "max_checks_per_gate": 100
+        }
+      },
+      "created_at": "2025-10-03T22:32:15.698Z",
+      "is_active": true
+    }
+  ],
+  "tasks": [
+    {
+      "id": "c312fae7-9076-4b3f-b080-a20b47f78766",
+      "title": "Corrección por retractación de reporte: Test Report with Provenance",
+      "description": "El reporte 53b840bb-2192-4f75-aa66-497ffe9b6dc7 fue retractado por la razón: Test de retractación CLI. Se requiere una tarea de corrección.",
+      "status": "todo",
+      "priority": "critical",
+      "policy_version": "1.0.0",
+      "created_at": "2025-10-03T22:34:33.307Z",
+      "updated_at": "2025-10-03T22:34:33.307Z",
+      "completed_at": null,
+      "assigned_to": null,
+      "tags": [],
+      "metadata": {
+        "type": "correction",
+        "original_report_id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+        "retraction_reason": "Test de retractación CLI",
+        "created_via": "cli_retract"
+      }
+    }
+  ],
+  "runs": [],
+  "gates": [],
+  "artifacts": [
+    {
+      "id": "20be9bd9-23b0-458c-9376-926e39554a09",
+      "name": "test-report-with-provenance.json",
+      "type": "report",
+      "uri": "/Users/felipe/Developer/startkit-main/packages/reports/published-test-report-with-provenance.json",
+      "hash": "266bfe48717d9ffb74e404bbae4f9c92b21450fbc78d9d7ae7e0ff4259ba014b",
+      "size_bytes": 799,
+      "created_at": "2025-10-03T22:32:54.304Z",
+      "metadata": {
+        "published": true,
+        "original_file": "packages/reports/test-report-with-provenance.json",
+        "published_at": "2025-10-03T22:32:54.303Z"
+      }
+    },
+    {
+      "id": "c863757d-129b-4370-8a9d-34d7782e9ba8",
+      "name": "test-report-with-provenance.json",
+      "type": "report",
+      "uri": "/Users/felipe/Developer/startkit-main/packages/reports/published-test-report-with-provenance.json",
+      "hash": "266bfe48717d9ffb74e404bbae4f9c92b21450fbc78d9d7ae7e0ff4259ba014b",
+      "size_bytes": 799,
+      "created_at": "2025-10-03T22:34:25.632Z",
+      "metadata": {
+        "published": true,
+        "original_file": "packages/reports/test-report-with-provenance.json",
+        "published_at": "2025-10-03T22:34:25.630Z"
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "91da0f8d-6afa-4e47-898c-0848bcd3bbfb",
+      "type": "artifact_created",
+      "entity_id": "20be9bd9-23b0-458c-9376-926e39554a09",
+      "entity_type": "artifact",
+      "timestamp": "2025-10-03T22:32:54.305Z",
+      "data": {
+        "id": "20be9bd9-23b0-458c-9376-926e39554a09",
+        "name": "test-report-with-provenance.json",
+        "type": "report",
+        "uri": "/Users/felipe/Developer/startkit-main/packages/reports/published-test-report-with-provenance.json",
+        "hash": "266bfe48717d9ffb74e404bbae4f9c92b21450fbc78d9d7ae7e0ff4259ba014b",
+        "size_bytes": 799,
+        "created_at": "2025-10-03T22:32:54.304Z",
+        "metadata": {
+          "published": true,
+          "original_file": "packages/reports/test-report-with-provenance.json",
+          "published_at": "2025-10-03T22:32:54.303Z"
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "62d7de16-0498-4e8b-8459-d49424042bdc",
+      "type": "report_created",
+      "entity_id": "85a18f42-f81b-4256-b0d2-a9264314b7bd",
+      "entity_type": "report",
+      "timestamp": "2025-10-03T22:32:54.306Z",
+      "data": {
+        "id": "85a18f42-f81b-4256-b0d2-a9264314b7bd",
+        "title": "Test Report with Provenance",
+        "status": "draft",
+        "report_provenance": {
+          "task_ids": [],
+          "run_ids": [],
+          "artifact_hashes": [],
+          "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+          "verified_at": "2025-10-03T22:30:00.000Z",
+          "policy_version_used": "1.0.0",
+          "row_counts": {
+            "tasks": 0,
+            "runs": 0,
+            "gates": 0,
+            "artifacts": 0,
+            "events": 0,
+            "reports": 1
+          },
+          "claims_validated": [
+            {
+              "claim": "Test report validado exitosamente",
+              "evidence": "CLI validation test",
+              "status": "validated"
+            }
+          ]
+        },
+        "created_at": "2025-10-03T22:32:54.305Z",
+        "published_at": null,
+        "retracted_at": null
+      },
+      "source": "api"
+    },
+    {
+      "id": "3cfb2746-8e1f-4a0a-9a0e-3b8d9d459baa",
+      "type": "artifact_created",
+      "entity_id": "c863757d-129b-4370-8a9d-34d7782e9ba8",
+      "entity_type": "artifact",
+      "timestamp": "2025-10-03T22:34:25.634Z",
+      "data": {
+        "id": "c863757d-129b-4370-8a9d-34d7782e9ba8",
+        "name": "test-report-with-provenance.json",
+        "type": "report",
+        "uri": "/Users/felipe/Developer/startkit-main/packages/reports/published-test-report-with-provenance.json",
+        "hash": "266bfe48717d9ffb74e404bbae4f9c92b21450fbc78d9d7ae7e0ff4259ba014b",
+        "size_bytes": 799,
+        "created_at": "2025-10-03T22:34:25.632Z",
+        "metadata": {
+          "published": true,
+          "original_file": "packages/reports/test-report-with-provenance.json",
+          "published_at": "2025-10-03T22:34:25.630Z"
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "2679fd93-cfe3-4843-8beb-fde2354bbd1e",
+      "type": "report_created",
+      "entity_id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+      "entity_type": "report",
+      "timestamp": "2025-10-03T22:34:25.643Z",
+      "data": {
+        "id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+        "title": "Test Report with Provenance",
+        "status": "draft",
+        "report_provenance": {
+          "task_ids": [],
+          "run_ids": [],
+          "artifact_hashes": [],
+          "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+          "verified_at": "2025-10-03T22:30:00.000Z",
+          "policy_version_used": "1.0.0",
+          "row_counts": {
+            "tasks": 0,
+            "runs": 0,
+            "gates": 0,
+            "artifacts": 0,
+            "events": 0,
+            "reports": 1
+          },
+          "claims_validated": [
+            {
+              "claim": "Test report validado exitosamente",
+              "evidence": "CLI validation test",
+              "status": "validated"
+            }
+          ]
+        },
+        "created_at": "2025-10-03T22:34:25.640Z",
+        "published_at": null,
+        "retracted_at": null
+      },
+      "source": "api"
+    },
+    {
+      "id": "9bb898c3-4728-4114-9fb2-28d289a1e152",
+      "type": "report_updated",
+      "entity_id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+      "entity_type": "report",
+      "timestamp": "2025-10-03T22:34:25.648Z",
+      "data": {
+        "old": {
+          "id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+          "title": "Test Report with Provenance",
+          "status": "draft",
+          "report_provenance": {
+            "task_ids": [],
+            "run_ids": [],
+            "artifact_hashes": [],
+            "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+            "verified_at": "2025-10-03T22:30:00.000Z",
+            "policy_version_used": "1.0.0",
+            "row_counts": {
+              "tasks": 0,
+              "runs": 0,
+              "gates": 0,
+              "artifacts": 0,
+              "events": 0,
+              "reports": 1
+            },
+            "claims_validated": [
+              {
+                "claim": "Test report validado exitosamente",
+                "evidence": "CLI validation test",
+                "status": "validated"
+              }
+            ]
+          },
+          "created_at": "2025-10-03T22:34:25.640Z",
+          "published_at": null,
+          "retracted_at": null
+        },
+        "new": {
+          "id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+          "title": "Test Report with Provenance",
+          "status": "published",
+          "report_provenance": {
+            "task_ids": [],
+            "run_ids": [],
+            "artifact_hashes": [],
+            "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+            "verified_at": "2025-10-03T22:30:00.000Z",
+            "policy_version_used": "1.0.0",
+            "row_counts": {
+              "tasks": 0,
+              "runs": 0,
+              "gates": 0,
+              "artifacts": 0,
+              "events": 0,
+              "reports": 1
+            },
+            "claims_validated": [
+              {
+                "claim": "Test report validado exitosamente",
+                "evidence": "CLI validation test",
+                "status": "validated"
+              }
+            ]
+          },
+          "created_at": "2025-10-03T22:34:25.640Z",
+          "published_at": null,
+          "retracted_at": null
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "5a596dea-6b18-4764-a9c4-a9cca617a87a",
+      "type": "report_updated",
+      "entity_id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+      "entity_type": "report",
+      "timestamp": "2025-10-03T22:34:33.307Z",
+      "data": {
+        "old": {
+          "id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+          "title": "Test Report with Provenance",
+          "status": "published",
+          "report_provenance": {
+            "task_ids": [],
+            "run_ids": [],
+            "artifact_hashes": [],
+            "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+            "verified_at": "2025-10-03T22:30:00.000Z",
+            "policy_version_used": "1.0.0",
+            "row_counts": {
+              "tasks": 0,
+              "runs": 0,
+              "gates": 0,
+              "artifacts": 0,
+              "events": 0,
+              "reports": 1
+            },
+            "claims_validated": [
+              {
+                "claim": "Test report validado exitosamente",
+                "evidence": "CLI validation test",
+                "status": "validated"
+              }
+            ]
+          },
+          "created_at": "2025-10-03T22:34:25.640Z",
+          "published_at": null,
+          "retracted_at": null
+        },
+        "new": {
+          "id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+          "title": "Test Report with Provenance",
+          "status": "retracted",
+          "report_provenance": {
+            "task_ids": [],
+            "run_ids": [],
+            "artifact_hashes": [],
+            "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+            "verified_at": "2025-10-03T22:30:00.000Z",
+            "policy_version_used": "1.0.0",
+            "row_counts": {
+              "tasks": 0,
+              "runs": 0,
+              "gates": 0,
+              "artifacts": 0,
+              "events": 0,
+              "reports": 1
+            },
+            "claims_validated": [
+              {
+                "claim": "Test report validado exitosamente",
+                "evidence": "CLI validation test",
+                "status": "validated"
+              }
+            ]
+          },
+          "created_at": "2025-10-03T22:34:25.640Z",
+          "published_at": null,
+          "retracted_at": "2025-10-03T22:34:33.306Z",
+          "metadata": {
+            "retraction_reason": "Test de retractación CLI",
+            "retracted_at": "2025-10-03T22:34:33.306Z",
+            "retracted_via": "cli"
+          }
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "82792f13-4e30-4bce-9082-b1d257ea8f24",
+      "type": "task_created",
+      "entity_id": "c312fae7-9076-4b3f-b080-a20b47f78766",
+      "entity_type": "task",
+      "timestamp": "2025-10-03T22:34:33.308Z",
+      "data": {
+        "id": "c312fae7-9076-4b3f-b080-a20b47f78766",
+        "title": "Corrección por retractación de reporte: Test Report with Provenance",
+        "description": "El reporte 53b840bb-2192-4f75-aa66-497ffe9b6dc7 fue retractado por la razón: Test de retractación CLI. Se requiere una tarea de corrección.",
+        "status": "todo",
+        "priority": "critical",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T22:34:33.307Z",
+        "updated_at": "2025-10-03T22:34:33.307Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [],
+        "metadata": {
+          "type": "correction",
+          "original_report_id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+          "retraction_reason": "Test de retractación CLI",
+          "created_via": "cli_retract"
+        }
+      },
+      "source": "api"
+    }
+  ],
+  "reports": [
+    {
+      "id": "85a18f42-f81b-4256-b0d2-a9264314b7bd",
+      "title": "Test Report with Provenance",
+      "status": "draft",
+      "report_provenance": {
+        "task_ids": [],
+        "run_ids": [],
+        "artifact_hashes": [],
+        "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+        "verified_at": "2025-10-03T22:30:00.000Z",
+        "policy_version_used": "1.0.0",
+        "row_counts": {
+          "tasks": 0,
+          "runs": 0,
+          "gates": 0,
+          "artifacts": 0,
+          "events": 0,
+          "reports": 1
+        },
+        "claims_validated": [
+          {
+            "claim": "Test report validado exitosamente",
+            "evidence": "CLI validation test",
+            "status": "validated"
+          }
+        ]
+      },
+      "created_at": "2025-10-03T22:32:54.305Z",
+      "published_at": null,
+      "retracted_at": null
+    },
+    {
+      "id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
+      "title": "Test Report with Provenance",
+      "status": "retracted",
+      "report_provenance": {
+        "task_ids": [],
+        "run_ids": [],
+        "artifact_hashes": [],
+        "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+        "verified_at": "2025-10-03T22:30:00.000Z",
+        "policy_version_used": "1.0.0",
+        "row_counts": {
+          "tasks": 0,
+          "runs": 0,
+          "gates": 0,
+          "artifacts": 0,
+          "events": 0,
+          "reports": 1
+        },
+        "claims_validated": [
+          {
+            "claim": "Test report validado exitosamente",
+            "evidence": "CLI validation test",
+            "status": "validated"
+          }
+        ]
+      },
+      "created_at": "2025-10-03T22:34:25.640Z",
+      "published_at": null,
+      "retracted_at": "2025-10-03T22:34:33.306Z",
+      "metadata": {
+        "retraction_reason": "Test de retractación CLI",
+        "retracted_at": "2025-10-03T22:34:33.306Z",
+        "retracted_via": "cli"
+      }
+    }
+  ]
+}

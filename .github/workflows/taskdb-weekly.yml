@@ -1,0 +1,39 @@
+name: TaskDB Weekly
+
+on:
+  schedule:
+    - cron: '0 12 * * 1' # Every Monday at 12:00 UTC
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate weekly report
+        run: node cli/qnx-report.js --since=7d --output=reports/TASKDB-WEEKLY.md
+
+      - name: Create Issue from report
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: 'TaskDB Weekly Report - ${{ github.run_number }}'
+          content-filepath: reports/TASKDB-WEEKLY.md
+          labels: taskdb,weekly,automated
+          assignees: felipe-gonzalez
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: taskdb-weekly-report
+          path: reports/TASKDB-WEEKLY.md

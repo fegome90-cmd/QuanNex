@@ -2,6 +2,34 @@
 
 ## 🎯 Hitos Principales
 
+### 2025-10-03 — TaskDB Governance ✅
+
+**Estado:** ✅ Gobernanza aprobada y lista para producción  
+**Commit:** `feat(taskdb): implement TaskDB v2 + Governance`  
+**Validación:** GO ✅ (todos los criterios cumplidos)
+
+#### 🚀 Logros Alcanzados
+
+- **TaskDB v2**: Trazabilidad completa sin impacto en performance
+- **Gobernanza Cultural**: Budget warning, cláusula automática, ritual semanal
+- **Failover Robusto**: Postgres → JSONL → re-sync automático
+- **CI/CD Integrado**: Smoke tests, budget checks, reportes automáticos
+
+#### 📊 Métricas Clave
+
+- **Queue Lag P95**: <1s (objetivo cumplido)
+- **Flush Success Rate**: >99.5% (objetivo cumplido)
+- **Budget de Complejidad**: 200 LOC máximo (controlado)
+- **Eventos por Run**: ≥7 eventos críticos registrados
+
+#### 🎯 Insight
+
+**Patrón Técnico**: Implementamos cola asíncrona con batch processing para mantener la ruta crítica sin bloqueos. El contexto implícito con AsyncLocalStorage elimina la necesidad de pasar contexto manualmente, reduciendo fricción en el código.
+
+**Lección Operativa**: La gobernanza cultural debe estar instrumentada desde el código, no solo en documentación. La cláusula automática en reportes y el budget warning en CI crean accountability sin fricción.
+
+**Impacto Arquitectural**: TaskDB se convierte en la médula trazable del sistema, permitiendo decisiones basadas en datos reales y no en suposiciones.
+
 ### 2025-10-03 — 📊 Informe de Métricas Ola 1 ✅
 
 **Archivo:** reports/QUANNEX-METRICAS-USO-IMPLEMENTACION.md  

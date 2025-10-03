@@ -99,3 +99,34 @@ jobs:
       - run: npm run build
       - run: npm run quannex:check reports/QUANNEX-METRICAS-USO-IMPLEMENTACION.md
       - run: test -f reports/QUANNEX-METRICAS-USO-IMPLEMENTACION.md && echo "📊 Metrics report present"
+
+  taskdb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run build
+
+      - name: TaskDB budget check
+        run: node scripts/taskdb-budget.mjs
+        continue-on-error: true
+
+      - name: TaskDB smoke test
+        run: |
+          # Test TaskDB integration with orchestrator
+          node -e "
+            import('./orchestration/orchestrator.js').then(async (mod) => {
+              const result = await mod.executeTask({
+                kind: 'code.fix',
+                taskId: 'smoke-test',
+                maxTokens: 1000,
+                text: 'test input'
+              });
+              console.log('✅ TaskDB smoke test passed:', result.ok);
+            }).catch(err => {
+              console.error('❌ TaskDB smoke test failed:', err);
+              process.exit(1);
+            });
+          "

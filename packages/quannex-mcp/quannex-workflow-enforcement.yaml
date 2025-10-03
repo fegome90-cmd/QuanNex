@@ -1,0 +1,92 @@
+# QuanNex Workflow Enforcement - Regla Obligatoria
+# Plan Maestro TaskDB - Integración QuanNex como estándar
+
+# Configuración de enforcement
+enforcement:
+  enabled: true
+  mode: 'mandatory' # mandatory, recommended, optional
+  gates:
+    - orchestrator_usage
+    - telemetry_tracking
+    - component_instrumentation
+    - run_lifecycle_tracking
+
+# Thresholds para métricas de salud
+thresholds:
+  orchestrator_share_min: 95 # 95% de tareas deben usar orchestrator
+  telemetry_coverage_min: 100 # 100% de operaciones deben tener telemetría
+  component_usage_min: 80 # 80% de componentes deben estar instrumentados
+  run_success_rate_min: 90 # 90% de runs deben ser exitosos
+
+# Componentes obligatorios para instrumentar
+mandatory_components:
+  - orchestrator
+  - validator
+  - codegen
+  - planner
+  - router
+
+# Eventos obligatorios para trackear
+mandatory_events:
+  - run_start
+  - run_end
+  - component_used
+  - gate_violation
+  - tool_misfire
+
+# Configuración de gates
+gates:
+  orchestrator_usage:
+    description: 'Todas las tareas deben usar el orchestrator QuanNex'
+    threshold: 95
+    action: 'block' # block, warn, log
+
+  telemetry_tracking:
+    description: 'Todas las operaciones deben tener telemetría'
+    threshold: 100
+    action: 'block'
+
+  component_instrumentation:
+    description: 'Componentes críticos deben estar instrumentados'
+    threshold: 80
+    action: 'warn'
+
+# Configuración de alertas
+alerts:
+  enabled: true
+  channels:
+    - console
+    - log_file
+    - metrics_endpoint
+
+  triggers:
+    - orchestrator_share_below_threshold
+    - telemetry_coverage_below_threshold
+    - component_instrumentation_below_threshold
+    - run_failure_rate_above_threshold
+
+# Configuración de reportes
+reporting:
+  frequency: 'real-time'
+  formats:
+    - json
+    - html
+    - metrics
+
+  destinations:
+    - .reports/metrics/
+    - console
+    - prometheus_endpoint
+
+# Configuración de desarrollo
+development:
+  dry_run: false
+  verbose_logging: true
+  debug_mode: false
+
+# Configuración de producción
+production:
+  dry_run: false
+  verbose_logging: false
+  debug_mode: false
+  strict_enforcement: true

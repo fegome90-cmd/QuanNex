@@ -1,0 +1,33 @@
+{
+  "id": "test-report-123",
+  "title": "Test Report with Provenance",
+  "description": "Reporte de prueba para validar CLI",
+  "content": {
+    "summary": "Test report for CLI validation",
+    "status": "completed",
+    "tests_passed": 3
+  },
+  "report_provenance": {
+    "task_ids": [],
+    "run_ids": [],
+    "artifact_hashes": [],
+    "verification_snapshot_ts": "2025-10-03T22:30:00.000Z",
+    "verified_at": "2025-10-03T22:30:00.000Z",
+    "policy_version_used": "1.0.0",
+    "row_counts": {
+      "tasks": 0,
+      "runs": 0,
+      "gates": 0,
+      "artifacts": 0,
+      "events": 0,
+      "reports": 1
+    },
+    "claims_validated": [
+      {
+        "claim": "Test report validado exitosamente",
+        "evidence": "CLI validation test",
+        "status": "validated"
+      }
+    ]
+  }
+}

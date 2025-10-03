@@ -1,0 +1,137 @@
+#!/usr/bin/env node
+
+/**
+ * Script ejecutable para QuanNex Workflow Enforcement
+ * Uso: ./qnx-enforce [check|report|fix]
+ */
+
+import QuanNexWorkflowEnforcement from './workflow-enforcement.mjs';
+import { writeFileSync } from 'fs';
+import { join } from 'path';
+
+async function main() {
+  const args = process.argv.slice(2);
+  const command = args[0] || 'check';
+  
+  console.log('🔍 QuanNex Workflow Enforcement');
+  console.log('================================\n');
+
+  try {
+    const enforcement = new QuanNexWorkflowEnforcement();
+    
+    switch (command) {
+      case 'check':
+        await runComplianceCheck(enforcement);
+        break;
+        
+      case 'report':
+        await generateReport(enforcement);
+        break;
+        
+      case 'fix':
+        await suggestFixes(enforcement);
+        break;
+        
+      default:
+        console.log('Comandos disponibles:');
+        console.log('  check  - Verificar compliance (por defecto)');
+        console.log('  report - Generar reporte detallado');
+        console.log('  fix    - Sugerir correcciones');
+        process.exit(1);
+    }
+  } catch (error) {
+    console.error('❌ Error ejecutando enforcement:', error.message);
+    process.exit(1);
+  }
+}
+
+async function runComplianceCheck(enforcement) {
+  console.log('🔍 Verificando compliance con QuanNex...\n');
+  
+  const report = await enforcement.checkCompliance();
+  
+  console.log('📊 RESULTADOS:');
+  console.log(`Estado: ${report.status === 'pass' ? '✅ PASS' : '❌ FAIL'}`);
+  console.log(`Compliance: ${report.overall_compliance.toFixed(1)}%`);
+  console.log(`Violaciones: ${report.violations.length}`);
+  
+  console.log('\n📈 MÉTRICAS:');
+  console.log(`  Orchestrator: ${report.metrics.orchestrator_share.toFixed(1)}%`);
+  console.log(`  Telemetría: ${report.metrics.telemetry_coverage.toFixed(1)}%`);
+  console.log(`  Componentes: ${report.metrics.component_usage.toFixed(1)}%`);
+  console.log(`  Runs: ${report.metrics.run_success_rate.toFixed(1)}%`);
+  
+  if (report.violations.length > 0) {
+    console.log('\n⚠️  VIOLACIONES:');
+    report.violations.forEach((violation, index) => {
+      console.log(`  ${index + 1}. [${violation.gate}] ${violation.message}`);
+    });
+  }
+  
+  if (report.recommendations.length > 0) {
+    console.log('\n💡 RECOMENDACIONES:');
+    report.recommendations.forEach((rec, index) => {
+      console.log(`  ${index + 1}. [${rec.priority.toUpperCase()}] ${rec.recommendation}`);
+    });
+  }
+  
+  // Guardar reporte
+  const reportPath = join(process.cwd(), '.reports/quannex-enforcement-report.json');
+  writeFileSync(reportPath, JSON.stringify(report, null, 2));
+  console.log(`\n📄 Reporte: ${reportPath}`);
+  
+  process.exit(report.status === 'pass' ? 0 : 1);
+}
+
+async function generateReport(enforcement) {
+  console.log('📊 Generando reporte detallado...\n');
+  
+  const report = await enforcement.checkCompliance();
+  
+  const htmlReport = generateHTMLReport(report);
+  const htmlPath = join(process.cwd(), '.reports/quannex-enforcement-report.html');
+  writeFileSync(htmlPath, htmlReport);
+  
+  console.log('✅ Reporte HTML:', htmlPath);
+  console.log('✅ Reporte JSON: .reports/quannex-enforcement-report.json');
+}
+
+async function suggestFixes(enforcement) {
+  console.log('🔧 Sugiriendo correcciones...\n');
+  
+  const report = await enforcement.checkCompliance();
+  
+  if (report.violations.length === 0) {
+    console.log('✅ No hay violaciones. Sistema en compliance.');
+    return;
+  }
+  
+  console.log('🔧 CORRECCIONES:');
+  report.recommendations.forEach((rec, index) => {
+    console.log(`${index + 1}. ${rec.recommendation}`);
+    console.log(`   ${rec.action}`);
+    console.log('');
+  });
+}
+
+function generateHTMLReport(report) {
+  return `<!DOCTYPE html>
+<html><head><title>QuanNex Enforcement Report</title></head>
+<body>
+<h1>🔍 QuanNex Workflow Enforcement Report</h1>
+<p><strong>Estado:</strong> ${report.status === 'pass' ? '✅ PASS' : '❌ FAIL'}</p>
+<p><strong>Compliance:</strong> ${report.overall_compliance.toFixed(1)}%</p>
+<h2>📈 Métricas</h2>
+<p>Orchestrator: ${report.metrics.orchestrator_share.toFixed(1)}%</p>
+<p>Telemetría: ${report.metrics.telemetry_coverage.toFixed(1)}%</p>
+<p>Componentes: ${report.metrics.component_usage.toFixed(1)}%</p>
+<p>Runs: ${report.metrics.run_success_rate.toFixed(1)}%</p>
+${report.violations.length > 0 ? `<h2>⚠️ Violaciones</h2>${report.violations.map(v => `<p><strong>${v.gate}:</strong> ${v.message}</p>`).join('')}` : ''}
+${report.recommendations.length > 0 ? `<h2>💡 Recomendaciones</h2>${report.recommendations.map(r => `<p><strong>${r.priority}:</strong> ${r.recommendation}</p>`).join('')}` : ''}
+</body></html>`;
+}
+
+main().catch(error => {
+  console.error('❌ Error:', error);
+  process.exit(1);
+});
