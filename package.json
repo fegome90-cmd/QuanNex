@@ -27,6 +27,7 @@
     "gate:dirty": "node scripts/anti-tamper.mjs",
     "gate:workflow": "node scripts/workflow-gate.mjs",
     "gate:diff": "node scripts/diff-gate.mjs",
+    "gate:config": "node scripts/config-checksum-gate.mjs",
     "autofix:dry": "node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":true}'",
     "autofix:apply": "node scripts/autofix.mjs '{\"actions\":[],\"dryRun\":false}'",
     "e2e:docker": "bash scripts/e2e-run.sh",

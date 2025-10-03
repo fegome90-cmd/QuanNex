@@ -19,6 +19,10 @@ describe('detectProfile', () => {
     const r = detectProfile(fx('fastapi'));
     expect(r.profile).toBe('fastapi');
   });
+  it('mixed', () => {
+    const r = detectProfile(fx('mixed'));
+    expect(r.profile).toBe('mixed');
+  });
   it('fallback', () => {
     const r = detectProfile(fx('fallback'));
     expect(r.profile).toBe('fallback');

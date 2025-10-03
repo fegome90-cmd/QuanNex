@@ -1,6 +1,28 @@
 signals:
-  react: ['package.json:dependencies.react', 'src/**/*.tsx', 'next.config.*', 'vite.config.*']
-  express: ['package.json:dependencies.express', 'src/**/server.*', 'src/**/*.mjs']
-  fastapi: ['pyproject.toml', 'app/main.py']
-weights: { react: 1.0, express: 1.0, fastapi: 1.0 }
+  react:
+    [
+      'package.json:dependencies.react',
+      'src/**/*.tsx',
+      'next.config.*',
+      'vite.config.*',
+      'src/**/*.jsx',
+      'public/index.html',
+    ]
+  express:
+    [
+      'package.json:dependencies.express',
+      'src/**/server.*',
+      'src/**/*.mjs',
+      'src/**/app.*',
+      'src/**/index.*',
+    ]
+  fastapi: ['pyproject.toml', 'app/main.py', 'requirements.txt', 'app/**/*.py']
+  mixed:
+    [
+      'package.json:dependencies.react',
+      'package.json:dependencies.express',
+      'src/**/*.tsx',
+      'src/**/server.*',
+    ]
+weights: { react: 1.0, express: 1.0, fastapi: 1.0, mixed: 1.2 }
 threshold: 0.5
