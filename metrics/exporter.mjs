@@ -1,4 +1,5 @@
 /* eslint-env node */
+/* global console, process */
 import http from 'node:http';
 import client from 'prom-client';
 

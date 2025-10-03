@@ -1,22 +1,27 @@
 #!/usr/bin/env node
 /* eslint-env node */
+/* global console, process */
 import fs from 'node:fs';
 import path from 'node:path';
 
 const OUT = 'reports/TASKDB-BASELINE.md';
 const SINCE_MS = 1000 * 60 * 60 * 24 * 7; // 7 días por defecto
 
-function fmtPct(n){ return (n*100).toFixed(1) + '%'; }
-function fmtMs(n){ return `${Math.round(n)}ms`; }
+function fmtPct(n) {
+  return (n * 100).toFixed(1) + '%';
+}
+function fmtMs(n) {
+  return `${Math.round(n)}ms`;
+}
 
 async function main() {
   // Leer datos existentes de TaskDB
   const taskdbPath = 'data/taskdb.json';
   const taskdbCorePath = 'data/taskdb-core.json';
-  
+
   let events = [];
   let coreEvents = [];
-  
+
   try {
     if (fs.existsSync(taskdbPath)) {
       const taskdbData = JSON.parse(fs.readFileSync(taskdbPath, 'utf8'));
@@ -25,7 +30,7 @@ async function main() {
         events = taskdbData.events;
       }
     }
-    
+
     if (fs.existsSync(taskdbCorePath)) {
       const coreData = JSON.parse(fs.readFileSync(taskdbCorePath, 'utf8'));
       // Extraer eventos si existen en la estructura
@@ -36,7 +41,7 @@ async function main() {
   } catch (err) {
     console.warn('⚠️ Error leyendo datos de TaskDB:', err.message);
   }
-  
+
   const sinceTs = Date.now() - SINCE_MS;
   const ev = [...events, ...coreEvents].filter(e => e && e.ts && e.ts >= sinceTs);
 
@@ -63,9 +68,10 @@ async function main() {
     const t1 = callByRun.get(runId);
     if (t1) deltas.push(t1 - t0);
   }
-  deltas.sort((a,b)=>a-b);
-  const p = (q)=> deltas.length ? deltas[Math.floor(q*(deltas.length-1))] : 0;
-  const ttfq_p50 = p(0.5), ttfq_p95 = p(0.95);
+  deltas.sort((a, b) => a - b);
+  const p = q => (deltas.length ? deltas[Math.floor(q * (deltas.length - 1))] : 0);
+  const ttfq_p50 = p(0.5),
+    ttfq_p95 = p(0.95);
 
   const md = `# TaskDB Baseline Report (últimos 7 días)
 
@@ -79,7 +85,7 @@ async function main() {
 - TTFQ: p50=${fmtMs(ttfq_p50)}, p95=${fmtMs(ttfq_p95)}
 
 ## Eventos por tipo/estado
-${[...byKind.entries()].map(([k,v])=>`- ${k}: ${v}`).join('\n')}
+${[...byKind.entries()].map(([k, v]) => `- ${k}: ${v}`).join('\n')}
 
 ## Estado del Sistema
 - **Shadow Write**: ${process.env.TASKDB_DRIVER === 'dual' ? '✅ Activo' : '❌ Inactivo'}
@@ -98,4 +104,7 @@ ${[...byKind.entries()].map(([k,v])=>`- ${k}: ${v}`).join('\n')}
   console.log(`✅ Baseline escrito en ${OUT}`);
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch(e => {
+  console.error(e);
+  process.exit(1);
+});
