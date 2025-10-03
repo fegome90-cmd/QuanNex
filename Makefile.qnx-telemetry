@@ -1,0 +1,126 @@
+# Makefile para telemetría QuanNex
+# Sistema de medición plug-and-play para monitorear uso de QuanNex
+
+.PHONY: telemetry-report telemetry-stats telemetry-clean telemetry-test telemetry-health
+
+# Directorios
+TELEMETRY_DIR = .reports/metrics
+LOG_FILE = $(TELEMETRY_DIR)/qnx-events.jsonl
+
+# Colores para output
+GREEN = \033[0;32m
+YELLOW = \033[1;33m
+RED = \033[0;31m
+NC = \033[0m # No Color
+
+##@ Telemetría QuanNex
+
+telemetry-report: ## Generar reporte completo de telemetría (HTML + JSON)
+	@echo "$(GREEN)📊 Generando reporte completo de telemetría...$(NC)"
+	@node scripts/qnx-telemetry-report.mjs
+
+telemetry-stats: ## Mostrar estadísticas rápidas de telemetría
+	@echo "$(GREEN)📈 Estadísticas rápidas de telemetría:$(NC)"
+	@./scripts/qnx-quick-stats.sh
+
+telemetry-health: ## Verificar salud del sistema QuanNex
+	@echo "$(GREEN)🏥 Verificando salud del sistema...$(NC)"
+	@if [ -f "$(LOG_FILE)" ]; then \
+		ORCHESTRATOR_SHARE=$$(jq -r 'select(.event=="component_used" and .component=="orchestrator")|.run_id' "$(LOG_FILE)" | sort -u | wc -l); \
+		TOTAL_RUNS=$$(jq -r 'select(.event=="run_start")|.run_id' "$(LOG_FILE)" | sort -u | wc -l); \
+		if [ "$$TOTAL_RUNS" -gt 0 ]; then \
+			SHARE=$$((ORCHESTRATOR_SHARE * 100 / TOTAL_RUNS)); \
+			if [ "$$SHARE" -ge 95 ]; then \
+				echo "$(GREEN)✅ Orchestrator Share: $$SHARE% (Saludable)$(NC)"; \
+			else \
+				echo "$(YELLOW)⚠️ Orchestrator Share: $$SHARE% (Revisar)$(NC)"; \
+			fi; \
+		else \
+			echo "$(YELLOW)⚠️ No hay datos de telemetría disponibles$(NC)"; \
+		fi; \
+	else \
+		echo "$(RED)❌ No se encontró archivo de telemetría$(NC)"; \
+	fi
+
+telemetry-clean: ## Limpiar datos de telemetría
+	@echo "$(YELLOW)🧹 Limpiando datos de telemetría...$(NC)"
+	@rm -f $(LOG_FILE)
+	@rm -f .reports/qnx-telemetry-*.html
+	@rm -f .reports/qnx-telemetry-*.json
+	@echo "$(GREEN)✅ Datos de telemetría limpiados$(NC)"
+
+telemetry-test: ## Probar sistema de telemetría
+	@echo "$(GREEN)🧪 Probando sistema de telemetría...$(NC)"
+	@mkdir -p $(TELEMETRY_DIR)
+	@echo '{"ts":"$(shell date -u +%Y-%m-%dT%H:%M:%S.%3NZ)","run_id":"test-$(shell date +%s)","event":"run_start","ok":true,"meta":{"source":"test","intent":"telemetry_test"}}' >> $(LOG_FILE)
+	@echo '{"ts":"$(shell date -u +%Y-%m-%dT%H:%M:%S.%3NZ)","run_id":"test-$(shell date +%s)","event":"component_used","component":"orchestrator","action":"invoke","count":1,"latency_ms":150,"ok":true,"meta":{"test":true}}' >> $(LOG_FILE)
+	@echo '{"ts":"$(shell date -u +%Y-%m-%dT%H:%M:%S.%3NZ)","run_id":"test-$(shell date +%s)","event":"run_end","ok":true,"meta":{"test":true}}' >> $(LOG_FILE)
+	@echo "$(GREEN)✅ Eventos de prueba generados$(NC)"
+	@make telemetry-stats
+
+telemetry-watch: ## Monitorear telemetría en tiempo real
+	@echo "$(GREEN)👀 Monitoreando telemetría en tiempo real...$(NC)"
+	@echo "Presiona Ctrl+C para salir"
+	@if command -v tail >/dev/null 2>&1; then \
+		tail -f $(LOG_FILE) 2>/dev/null || echo "$(RED)❌ No hay datos de telemetría para monitorear$(NC)"; \
+	else \
+		echo "$(RED)❌ Comando 'tail' no disponible$(NC)"; \
+	fi
+
+telemetry-export: ## Exportar datos de telemetría
+	@echo "$(GREEN)📤 Exportando datos de telemetría...$(NC)"
+	@TIMESTAMP=$$(date +%Y%m%d-%H%M%S); \
+	if [ -f "$(LOG_FILE)" ]; then \
+		cp $(LOG_FILE) .reports/qnx-telemetry-export-$$TIMESTAMP.jsonl; \
+		echo "$(GREEN)✅ Datos exportados a: .reports/qnx-telemetry-export-$$TIMESTAMP.jsonl$(NC)"; \
+	else \
+		echo "$(RED)❌ No hay datos de telemetría para exportar$(NC)"; \
+	fi
+
+telemetry-import: ## Importar datos de telemetría desde archivo
+	@echo "$(GREEN)📥 Importando datos de telemetría...$(NC)"
+	@if [ -z "$(FILE)" ]; then \
+		echo "$(RED)❌ Especifica el archivo: make telemetry-import FILE=archivo.jsonl$(NC)"; \
+		exit 1; \
+	fi; \
+	if [ -f "$(FILE)" ]; then \
+		mkdir -p $(TELEMETRY_DIR); \
+		cat "$(FILE)" >> $(LOG_FILE); \
+		echo "$(GREEN)✅ Datos importados desde: $(FILE)$(NC)"; \
+	else \
+		echo "$(RED)❌ Archivo no encontrado: $(FILE)$(NC)"; \
+	fi
+
+telemetry-setup: ## Configurar sistema de telemetría
+	@echo "$(GREEN)⚙️ Configurando sistema de telemetría...$(NC)"
+	@mkdir -p $(TELEMETRY_DIR)
+	@mkdir -p .reports
+	@echo "$(GREEN)✅ Directorios creados$(NC)"
+	@echo "$(YELLOW)📝 Para habilitar telemetría, asegúrate de que:$(NC)"
+	@echo "   1. El servidor MCP incluye el middleware de telemetría"
+	@echo "   2. Los tools MCP están instrumentados"
+	@echo "   3. Los gates están configurados correctamente"
+
+telemetry-dashboard: ## Abrir dashboard de telemetría en navegador
+	@echo "$(GREEN)🌐 Abriendo dashboard de telemetría...$(NC)"
+	@if [ -f ".reports/qnx-telemetry-report.html" ]; then \
+		if command -v open >/dev/null 2>&1; then \
+			open .reports/qnx-telemetry-report.html; \
+		elif command -v xdg-open >/dev/null 2>&1; then \
+			xdg-open .reports/qnx-telemetry-report.html; \
+		else \
+			echo "$(YELLOW)📄 Abre manualmente: .reports/qnx-telemetry-report.html$(NC)"; \
+		fi; \
+	else \
+		echo "$(YELLOW)📊 Generando reporte primero...$(NC)"; \
+		make telemetry-report; \
+		make telemetry-dashboard; \
+	fi
+
+##@ Ayuda
+
+help: ## Mostrar esta ayuda
+	@awk 'BEGIN {FS = ":.*##"; printf "\n$(GREEN)Telemetría QuanNex$(NC)\n\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  $(YELLOW)%-20s$(NC) %s\n", $$1, $$2 } /^##@/ { printf "\n$(GREEN)%s$(NC)\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+
+# Configuración por defecto
+.DEFAULT_GOAL := help

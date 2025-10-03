@@ -1,11 +1,5 @@
 #!/usr/bin/env node
-import {
-  readFileSync,
-  writeFileSync,
-  existsSync,
-  mkdirSync,
-  rmSync
-} from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { join, dirname, resolve } from 'node:path';
 import { hello, isHello } from '../shared/contracts/handshake.js';
@@ -15,6 +9,18 @@ import crypto from 'node:crypto';
 import { checkRateLimit, getRateLimitStats } from './utils/rate-limiter.js';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+
+// Import telemetry
+import {
+  qnxRunStart,
+  qnxRunEnd,
+  qnxUse,
+  qnxInstrument,
+  COMPONENTS,
+  SOURCES,
+  ACTIONS,
+} from '../packages/quannex-mcp/telemetry.mjs';
+
 // import TaskRunner from './task-runner.js';
 // import RouterV2 from './router-v2.js';
 // import FSMV2 from './fsm-v2.js';
@@ -38,7 +44,7 @@ const STATUS = {
   COMPLETED: 'completed',
   FAILED: 'failed',
   SKIPPED: 'skipped',
-  IDLE: 'idle'
+  IDLE: 'idle',
 };
 
 function nowIso() {
@@ -57,7 +63,7 @@ class WorkflowOrchestrator {
     this.timeoutMs = opts.timeoutMs || DEFAULT_TIMEOUT_MS;
     this.isShuttingDown = false; // BLINDAJE: Flag para cierre seguro.
     // this.taskRunner = new TaskRunner({ orchestrator: this });
-    
+
     // SEMANA 1: Router v2 + FSM v2 + Canary + Monitoreo
     // SEMANA 2: Context v2 + Handoffs
     this.version = '2.1.0';
@@ -67,15 +73,15 @@ class WorkflowOrchestrator {
       canary: process.env.FEATURE_CANARY === '1',
       monitoring: process.env.FEATURE_MONITORING === '1',
       contextV2: process.env.FEATURE_CONTEXT_V2 === '1',
-      handoffs: process.env.FEATURE_HANDOFF === '1'
+      handoffs: process.env.FEATURE_HANDOFF === '1',
     };
-    
+
     // Inicializar componentes v2
     // this.router = new RouterV2();
     // this.fsm = new FSMV2();
     // this.canary = new CanaryManager();
     // this.monitor = new PerformanceMonitor();
-    
+
     this.metrics = {
       totalRequests: 0,
       canaryRequests: 0,
@@ -84,9 +90,9 @@ class WorkflowOrchestrator {
       alerts: 0,
       averageLatency: 0,
       p95Latency: 0,
-      errorRate: 0
+      errorRate: 0,
     };
-    
+
     this.initializeAgents();
     if (!existsSync(REPORTS_DIR)) mkdirSync(REPORTS_DIR, { recursive: true });
     this.loadWorkflows();
@@ -99,9 +105,7 @@ class WorkflowOrchestrator {
       if (this.isShuttingDown) return;
       this.isShuttingDown = true;
       // eslint-disable-next-line no-console
-      console.log(
-        `\n[INFO] Recibida señal ${signal}. Guardando estado antes de salir...`
-      );
+      console.log(`\n[INFO] Recibida señal ${signal}. Guardando estado antes de salir...`);
       this.saveWorkflows();
       // eslint-disable-next-line no-console
       console.log('[INFO] Estado guardado. Saliendo.');
@@ -138,7 +142,7 @@ class WorkflowOrchestrator {
     this.agentStatus.set('context', { status: 'idle', lastHeartbeat: null });
     this.agentStatus.set('prompting', { status: 'idle', lastHeartbeat: null });
     this.agentStatus.set('rules', { status: 'idle', lastHeartbeat: null });
-    
+
     // SEMANA 1: Inicializar monitoreo si está habilitado
     if (this.featureFlags.monitoring) {
       this.monitor.startMonitoring().catch(error => {
@@ -178,13 +182,13 @@ class WorkflowOrchestrator {
       steps: workflowConfig.steps.map(s => ({
         ...s,
         status: 'pending',
-        retry_count: 0
+        retry_count: 0,
       })),
       status: 'pending',
       created_at: nowIso(),
       context: workflowConfig.context || {},
       results: {},
-      artifacts_dir: join(REPORTS_DIR, workflowId) // NEW
+      artifacts_dir: join(REPORTS_DIR, workflowId), // NEW
     };
     if (!existsSync(workflow.artifacts_dir)) {
       mkdirSync(workflow.artifacts_dir, { recursive: true });
@@ -203,13 +207,25 @@ class WorkflowOrchestrator {
   async executeWorkflow(workflowId) {
     const workflow = this.workflows.get(workflowId);
     if (!workflow) throw new Error(`Workflow ${workflowId} not found`);
-    workflow.status = 'running';
-    workflow.started_at = nowIso();
-    const budget = workflow.context?.budget || {};
-    const startTime = Date.now();
-    let hopCount = 0;
+
+    // Iniciar telemetría para el workflow
+    const intent = `workflow:${workflow.name || 'unnamed'}`;
+    const runId = qnxRunStart(SOURCES.CLI, intent);
+
+    // Registrar inicio del orchestrator
+    const t0 = Date.now();
+    qnxUse(runId, COMPONENTS.ORCHESTRATOR, ACTIONS.INVOKE, t0, true, {
+      workflow_id: workflowId,
+      workflow_name: workflow.name,
+      steps_count: workflow.steps?.length || 0,
+    });
 
     try {
+      workflow.status = 'running';
+      workflow.started_at = nowIso();
+      const budget = workflow.context?.budget || {};
+      const startTime = Date.now();
+      let hopCount = 0;
       const executedSteps = new Set();
       const pending = new Set(workflow.steps.map(s => s.step_id));
 
@@ -227,9 +243,7 @@ class WorkflowOrchestrator {
           throw new Error('Circular dependency or no ready steps');
         }
 
-        const results = await Promise.allSettled(
-          ready.map(s => this.executeStep(workflow, s))
-        );
+        const results = await Promise.allSettled(ready.map(s => this.executeStep(workflow, s)));
 
         for (let i = 0; i < results.length; i++) {
           const step = ready[i];
@@ -246,9 +260,7 @@ class WorkflowOrchestrator {
             step.status = 'failed';
             step.error = r.reason?.message || String(r.reason);
             // NEW: fail-fast de dependientes
-            const dependents = workflow.steps.filter(x =>
-              x.depends_on?.includes(step.step_id)
-            );
+            const dependents = workflow.steps.filter(x => x.depends_on?.includes(step.step_id));
             for (const d of dependents) {
               d.status = 'skipped';
               pending.delete(d.step_id);
@@ -262,12 +274,47 @@ class WorkflowOrchestrator {
       workflow.completed_at = nowIso();
       this.writeWorkflowSummary(workflow); // NEW
       this.saveWorkflows();
+
+      // Registrar éxito del orchestrator
+      qnxUse(runId, COMPONENTS.ORCHESTRATOR, ACTIONS.SUCCESS, t0, true, {
+        workflow_id: workflowId,
+        duration_ms: Date.now() - startTime,
+        steps_completed: executedSteps.size,
+        hops_used: hopCount,
+      });
+
+      // Finalizar run exitosamente
+      qnxRunEnd(runId, true, {
+        workflow_id: workflowId,
+        status: 'completed',
+        duration_ms: Date.now() - startTime,
+        steps_completed: executedSteps.size,
+      });
+
       return workflow;
     } catch (err) {
       workflow.status = 'failed';
       workflow.error = { message: err.message, timestamp: nowIso() };
       this.writeWorkflowSummary(workflow); // NEW
       this.saveWorkflows();
+
+      // Registrar error del orchestrator
+      qnxUse(runId, COMPONENTS.ORCHESTRATOR, ACTIONS.ERROR, t0, false, {
+        workflow_id: workflowId,
+        error: err.message,
+        error_type: err.constructor.name,
+        duration_ms: Date.now() - startTime,
+        steps_completed: executedSteps.size || 0,
+      });
+
+      // Finalizar run con error
+      qnxRunEnd(runId, false, {
+        workflow_id: workflowId,
+        status: 'failed',
+        error: err.message,
+        duration_ms: Date.now() - startTime,
+      });
+
       throw err;
     }
   }
@@ -286,13 +333,10 @@ class WorkflowOrchestrator {
         agent: s.agent,
         status: s.status,
         retry_count: s.retry_count,
-        error: s.error || null
-      }))
+        error: s.error || null,
+      })),
     };
-    writeFileSync(
-      join(workflow.artifacts_dir, 'summary.json'),
-      JSON.stringify(summary, null, 2)
-    );
+    writeFileSync(join(workflow.artifacts_dir, 'summary.json'), JSON.stringify(summary, null, 2));
   }
 
   // NEW: gate opcional por paso (pass_if). Soporte simple: equals/exits/jsonpath-lite
@@ -317,9 +361,7 @@ class WorkflowOrchestrator {
 
   // NEW: selector minimalista tipo "a.b.c"
   pick(obj, path) {
-    return path
-      .split('.')
-      .reduce((acc, k) => (acc == null ? undefined : acc[k]), obj);
+    return path.split('.').reduce((acc, k) => (acc == null ? undefined : acc[k]), obj);
   }
 
   async executeStep(workflow, step) {
@@ -328,12 +370,9 @@ class WorkflowOrchestrator {
 
     try {
       const input = { ...step.input, workflow_context: workflow.context };
-      const result = await this.callAgent(
-        step.agent,
-        step.action || '',
-        input,
-        { timeoutMs: step.timeout_ms || this.timeoutMs }
-      );
+      const result = await this.callAgent(step.agent, step.action || '', input, {
+        timeoutMs: step.timeout_ms || this.timeoutMs,
+      });
       // NEW: gates
       if (!this.checkPassIf(result, step.pass_if)) {
         throw new Error(`pass_if gate failed for ${step.step_id}`);
@@ -345,11 +384,7 @@ class WorkflowOrchestrator {
       // NEW: log por paso
       writeFileSync(
         join(workflow.artifacts_dir, `${step.step_id}.json`),
-        JSON.stringify(
-          { input, output: result, meta: { duration_ms: step.duration_ms } },
-          null,
-          2
-        )
+        JSON.stringify({ input, output: result, meta: { duration_ms: step.duration_ms } }, null, 2)
       );
       return result;
     } catch (error) {
@@ -378,7 +413,7 @@ class WorkflowOrchestrator {
       artifacts: baseTask.artifacts,
       metadata: baseTask.metadata || baseTask.plan || {},
       thread_state_id: threadStateId,
-      threadStateId
+      threadStateId,
     };
 
     // SEMANA 1: Usar Router v2 + FSM v2 si están habilitados
@@ -392,7 +427,7 @@ class WorkflowOrchestrator {
       plan: payload.plan,
       skipPolicy: options.skipPolicy,
       workflowConfig: options.workflowConfig,
-      workflowId: options.workflowId
+      workflowId: options.workflowId,
     };
 
     if (runnerOptions.workflowConfig) {
@@ -409,12 +444,15 @@ class WorkflowOrchestrator {
     const startTime = performance.now();
     this.metrics.totalRequests++;
 
-    console.log(`📨 Procesando request v2 ${this.metrics.totalRequests}: ${request.intent || 'unknown'}`);
+    console.log(
+      `📨 Procesando request v2 ${this.metrics.totalRequests}: ${request.intent || 'unknown'}`
+    );
 
     try {
       // 1. Decidir si usar canary
-      const useCanary = this.featureFlags.canary ? 
-        await this.canary.shouldUseCanary(request) : false;
+      const useCanary = this.featureFlags.canary
+        ? await this.canary.shouldUseCanary(request)
+        : false;
 
       if (useCanary) {
         this.metrics.canaryRequests++;
@@ -425,20 +463,22 @@ class WorkflowOrchestrator {
       }
 
       // 2. Ejecutar routing
-      const routeResult = useCanary && this.featureFlags.routerV2 ?
-        await this.router.route(request) :
-        await this.fallbackRoute(request);
+      const routeResult =
+        useCanary && this.featureFlags.routerV2
+          ? await this.router.route(request)
+          : await this.fallbackRoute(request);
 
       // 3. Ejecutar FSM
-      const fsmResult = useCanary && this.featureFlags.fsmV2 ?
-        await this.fsm.execute(request) :
-        await this.fallbackFSM(request);
+      const fsmResult =
+        useCanary && this.featureFlags.fsmV2
+          ? await this.fsm.execute(request)
+          : await this.fallbackFSM(request);
 
       // 4. Combinar resultados
       const result = this.combineResults(routeResult, fsmResult, {
         useCanary,
         latency: performance.now() - startTime,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       // 5. Registrar métricas
@@ -451,49 +491,50 @@ class WorkflowOrchestrator {
 
       console.log(`✅ Request v2 procesado exitosamente (${result.latency.toFixed(1)}ms)`);
       return result;
-
     } catch (error) {
       console.error('❌ Error procesando request v2:', error.message);
-      
+
       // Registrar error en métricas
-      this.metrics.errorRate = (this.metrics.errorRate * (this.metrics.totalRequests - 1) + 1) / this.metrics.totalRequests;
-      
+      this.metrics.errorRate =
+        (this.metrics.errorRate * (this.metrics.totalRequests - 1) + 1) /
+        this.metrics.totalRequests;
+
       return {
         success: false,
         error: error.message,
         latency: performance.now() - startTime,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     }
   }
 
   async fallbackRoute(request) {
     console.log('🔄 Usando Router v1 (fallback)');
-    
+
     // Simular routing v1
     await new Promise(resolve => setTimeout(resolve, 100));
-    
+
     return {
       success: true,
       route: 'fallback',
       target_agent: 'agents.orchestrator.fallback',
       latency_ms: 100,
       optimized: false,
-      version: 'v1'
+      version: 'v1',
     };
   }
 
   async fallbackFSM(request) {
     console.log('🔄 Usando FSM v1 (fallback)');
-    
+
     // Simular FSM v1
     await new Promise(resolve => setTimeout(resolve, 500));
-    
+
     return {
       success: true,
       version: 'v1',
       latency_ms: 500,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 
@@ -509,19 +550,19 @@ class WorkflowOrchestrator {
       canary: metadata.useCanary,
       version: {
         router: routeResult.version || 'v1',
-        fsm: fsmResult.version || 'v1'
+        fsm: fsmResult.version || 'v1',
       },
       performance: {
         p95: this.calculateP95(metadata.latency),
         errorRate: this.metrics.errorRate,
-        throughput: this.calculateThroughput()
+        throughput: this.calculateThroughput(),
       },
       metadata: {
         requestId: this.generateRequestId(),
         timestamp: metadata.timestamp,
         hops: routeResult.hops_saved || 0,
-        performance_gain: routeResult.performance_gain || 0
-      }
+        performance_gain: routeResult.performance_gain || 0,
+      },
     };
   }
 
@@ -541,8 +582,8 @@ class WorkflowOrchestrator {
 
   updateMetrics(result) {
     // Actualizar latencia promedio
-    this.metrics.averageLatency = 
-      (this.metrics.averageLatency * (this.metrics.totalRequests - 1) + result.latency) / 
+    this.metrics.averageLatency =
+      (this.metrics.averageLatency * (this.metrics.totalRequests - 1) + result.latency) /
       this.metrics.totalRequests;
 
     // Actualizar P95
@@ -550,8 +591,8 @@ class WorkflowOrchestrator {
 
     // Actualizar error rate
     if (!result.success) {
-      this.metrics.errorRate = 
-        (this.metrics.errorRate * (this.metrics.totalRequests - 1) + 1) / 
+      this.metrics.errorRate =
+        (this.metrics.errorRate * (this.metrics.totalRequests - 1) + 1) /
         this.metrics.totalRequests;
     }
   }
@@ -574,12 +615,7 @@ class WorkflowOrchestrator {
     return stats;
   }
 
-  async callAgent(
-    agentName,
-    action,
-    input,
-    { timeoutMs = DEFAULT_TIMEOUT_MS } = {}
-  ) {
+  async callAgent(agentName, action, input, { timeoutMs = DEFAULT_TIMEOUT_MS } = {}) {
     // GAP-002: Implementar rate limiting
     try {
       checkRateLimit(agentName);
@@ -596,17 +632,11 @@ class WorkflowOrchestrator {
     return new Promise((resolve, reject) => {
       const child = spawn(
         'bash',
-        [
-          runCleanPath,
-          agentName,
-          '--stdin-json',
-          '--out',
-          `out/${agentName}.json`
-        ],
+        [runCleanPath, agentName, '--stdin-json', '--out', `out/${agentName}.json`],
         {
           stdio: ['pipe', 'pipe', 'pipe'],
           cwd: PROJECT_ROOT,
-          env: agentToken ? { ...process.env, MCP_AGENT_AUTH_TOKEN: agentToken } : process.env
+          env: agentToken ? { ...process.env, MCP_AGENT_AUTH_TOKEN: agentToken } : process.env,
         }
       );
       let stdout = '';
@@ -665,11 +695,7 @@ class WorkflowOrchestrator {
             );
           }
         } else {
-          reject(
-            new Error(
-              `Agent ${agentName} failed (${code}): ${stderr.slice(0, 500)}`
-            )
-          );
+          reject(new Error(`Agent ${agentName} failed (${code}): ${stderr.slice(0, 500)}`));
         }
       });
 
@@ -704,13 +730,13 @@ class WorkflowOrchestrator {
       router: this.router.getMetrics(),
       fsm: this.fsm.getMetrics(),
       canary: this.canary.getMetrics(),
-      monitor: this.monitor.getStatus()
+      monitor: this.monitor.getStatus(),
     };
   }
 
   getHealth() {
     const status = this.getStatus();
-    
+
     return {
       healthy: this.metrics.errorRate < 0.05,
       version: this.version,
@@ -720,50 +746,45 @@ class WorkflowOrchestrator {
       p95Latency: this.metrics.p95Latency,
       canaryPercentage: status.canary.canaryPercentage,
       alerts: status.monitor.alerts,
-      rollbacks: status.canary.rollbackCount
+      rollbacks: status.canary.rollbackCount,
     };
   }
 
   async healthCheck() {
     // MEJORA: Ejecución de health checks en paralelo para mayor velocidad.
-    const healthPromises = Array.from(this.agentStatus.keys()).map(
-      async agentName => {
-        try {
-          let testInput = {};
-          switch (agentName) {
-            case 'rules':
-              testInput = {
-                policy_refs: ['README.md'],
-                compliance_level: 'basic'
-              };
-              break;
-            case 'context':
-              testInput = {
-                sources: ['README.md'],
-                selectors: ['test'],
-                max_tokens: 100
-              };
-              break;
-            case 'prompting':
-              testInput = {
-                goal: 'test',
-                style: 'formal'
-              };
-              break;
-          }
-
-          await this.callAgent(agentName, 'ping', testInput, {
-            timeoutMs: 5_000
-          });
-          return [agentName, { status: 'healthy', lastCheck: nowIso() }];
-        } catch (e) {
-          return [
-            agentName,
-            { status: 'unhealthy', error: e.message, lastCheck: nowIso() }
-          ];
+    const healthPromises = Array.from(this.agentStatus.keys()).map(async agentName => {
+      try {
+        let testInput = {};
+        switch (agentName) {
+          case 'rules':
+            testInput = {
+              policy_refs: ['README.md'],
+              compliance_level: 'basic',
+            };
+            break;
+          case 'context':
+            testInput = {
+              sources: ['README.md'],
+              selectors: ['test'],
+              max_tokens: 100,
+            };
+            break;
+          case 'prompting':
+            testInput = {
+              goal: 'test',
+              style: 'formal',
+            };
+            break;
         }
+
+        await this.callAgent(agentName, 'ping', testInput, {
+          timeoutMs: 5_000,
+        });
+        return [agentName, { status: 'healthy', lastCheck: nowIso() }];
+      } catch (e) {
+        return [agentName, { status: 'unhealthy', error: e.message, lastCheck: nowIso() }];
       }
-    );
+    });
     const healthResults = await Promise.all(healthPromises);
     return Object.fromEntries(healthResults);
   }
@@ -796,12 +817,12 @@ async function main() {
 
   process.on('SIGINT', handleShutdown);
   process.on('SIGTERM', handleShutdown);
-  process.on('uncaughtException', async (error) => {
+  process.on('uncaughtException', async error => {
     console.error('❌ Uncaught exception:', error);
     process.exit(1);
   });
 
-  process.on('unhandledRejection', async (reason) => {
+  process.on('unhandledRejection', async reason => {
     console.error('❌ Unhandled rejection:', reason);
     process.exit(1);
   });
@@ -813,8 +834,7 @@ async function main() {
       'Crea un nuevo workflow desde un archivo JSON o stdin',
       y => {
         y.positional('config', {
-          describe:
-            'Ruta al archivo de configuración JSON. Si se omite, lee desde stdin.'
+          describe: 'Ruta al archivo de configuración JSON. Si se omite, lee desde stdin.',
         });
       },
       async argv => {
@@ -826,9 +846,7 @@ async function main() {
             configStr = readFileSync(0, 'utf8'); // Lee desde stdin
           } catch {
             // eslint-disable-next-line no-console
-            console.error(
-              'Se requiere una configuración JSON desde un archivo o stdin.'
-            );
+            console.error('Se requiere una configuración JSON desde un archivo o stdin.');
             process.exit(1);
           }
         }
@@ -839,63 +857,46 @@ async function main() {
         process.exit(0);
       }
     )
-    .command(
-      'execute <workflowId>',
-      'Ejecuta un workflow existente por su ID',
-      {},
-      async argv => {
-        // eslint-disable-next-line no-console
-        console.log(`[INFO] Ejecutando workflow ${argv.workflowId}...`);
-        const result = await orchestrator.executeWorkflow(argv.workflowId);
-        // eslint-disable-next-line no-console
-        console.log(
-          `[INFO] Workflow ${argv.workflowId} finalizado con estado: ${result.status}`
-        );
-        // eslint-disable-next-line no-console
-        console.log(JSON.stringify(result, null, 2));
-        process.exit(0);
-      }
-    )
-    .command(
-      'status [workflowId]',
-      'Muestra el estado de un workflow o lista todos',
-      {},
-      argv => {
-        const result = argv.workflowId ?
-          orchestrator.getWorkflow(argv.workflowId) :
-          orchestrator.listWorkflows();
-        // eslint-disable-next-line no-console
-        console.log(JSON.stringify(result, null, 2));
-        process.exit(0);
-      }
-    )
-    .command(
-      'health',
-      'Realiza un chequeo de salud de todos los agentes',
-      {},
-      async() => {
-        const health = await orchestrator.healthCheck();
-        // eslint-disable-next-line no-console
-        console.log(JSON.stringify(health, null, 2));
-        process.exit(0);
-      }
-    )
+    .command('execute <workflowId>', 'Ejecuta un workflow existente por su ID', {}, async argv => {
+      // eslint-disable-next-line no-console
+      console.log(`[INFO] Ejecutando workflow ${argv.workflowId}...`);
+      const result = await orchestrator.executeWorkflow(argv.workflowId);
+      // eslint-disable-next-line no-console
+      console.log(`[INFO] Workflow ${argv.workflowId} finalizado con estado: ${result.status}`);
+      // eslint-disable-next-line no-console
+      console.log(JSON.stringify(result, null, 2));
+      process.exit(0);
+    })
+    .command('status [workflowId]', 'Muestra el estado de un workflow o lista todos', {}, argv => {
+      const result = argv.workflowId
+        ? orchestrator.getWorkflow(argv.workflowId)
+        : orchestrator.listWorkflows();
+      // eslint-disable-next-line no-console
+      console.log(JSON.stringify(result, null, 2));
+      process.exit(0);
+    })
+    .command('health', 'Realiza un chequeo de salud de todos los agentes', {}, async () => {
+      const health = await orchestrator.healthCheck();
+      // eslint-disable-next-line no-console
+      console.log(JSON.stringify(health, null, 2));
+      process.exit(0);
+    })
     .command(
       'task [payload]',
       'Evalua routing, presupuesto y politicas para una tarea',
       y =>
         y
           .positional('payload', {
-            describe: 'Ruta al JSON de la tarea. Si se omite, lee desde stdin.'
+            describe: 'Ruta al JSON de la tarea. Si se omite, lee desde stdin.',
           })
           .option('workflow', {
             type: 'string',
-            describe: 'Ruta a un workflow JSON a ejecutar tras el enrutamiento'
+            describe: 'Ruta a un workflow JSON a ejecutar tras el enrutamiento',
           })
           .option('skip-policy', {
             type: 'boolean',
             default: false,
-            describe: 'Omite la evaluacion de politicas (solo depuracion)'
+            describe: 'Omite la evaluacion de politicas (solo depuracion)',
           }),
       async argv => {
         let payloadRaw;
@@ -926,26 +927,19 @@ async function main() {
 
         const result = await orchestrator.runTaskPayload(payload, {
           skipPolicy: argv.skipPolicy,
-          workflowConfig
+          workflowConfig,
         });
         // eslint-disable-next-line no-console
         console.log(JSON.stringify(result, null, 2));
         process.exit(0);
       }
     )
-    .command(
-      'cleanup <workflowId>',
-      'Elimina los artefactos de un workflow',
-      {},
-      argv => {
-        const ok = orchestrator.cleanup(argv.workflowId);
-        // eslint-disable-next-line no-console
-        console.log(
-          JSON.stringify({ workflow_id: argv.workflowId, cleaned: ok }, null, 2)
-        );
-        process.exit(0);
-      }
-    )
+    .command('cleanup <workflowId>', 'Elimina los artefactos de un workflow', {}, argv => {
+      const ok = orchestrator.cleanup(argv.workflowId);
+      // eslint-disable-next-line no-console
+      console.log(JSON.stringify({ workflow_id: argv.workflowId, cleaned: ok }, null, 2));
+      process.exit(0);
+    })
     .demandCommand(1, 'Debes proporcionar un comando.')
     .strict()
     .help()
@@ -956,7 +950,7 @@ async function main() {
       process.exit(1);
     })
     .parse();
-  
+
   // MEJORADO: Cleanup automático (del V3)
   process.on('exit', () => {
     console.log('🧹 Cleaning up...');
@@ -965,37 +959,37 @@ async function main() {
 
 // Nueva función para manejar mensajes con handshake
 async function onMessage(msg) {
-  if (isHello(msg)) return hello("orchestration");
-  if (!validateReq(msg)) return fail("INVALID_SCHEMA_MIN");
+  if (isHello(msg)) return hello('orchestration');
+  if (!validateReq(msg)) return fail('INVALID_SCHEMA_MIN');
 
   // Reenvío simple a agentes
   const target = msg.agent;
-  if (!target) return fail("MISSING_AGENT");
-  
+  if (!target) return fail('MISSING_AGENT');
+
   // Simular respuesta del agente
   if (target === 'context') {
     return ok({
-      project: "demo-repo",
-      branch: "main",
-      filesChanged: ["src/index.js"],
+      project: 'demo-repo',
+      branch: 'main',
+      filesChanged: ['src/index.js'],
     });
   }
-  
+
   if (target === 'prompting') {
     return ok({
-      templateId: "default",
-      filled: "Template default with vars: {}",
+      templateId: 'default',
+      filled: 'Template default with vars: {}',
     });
   }
-  
+
   if (target === 'rules') {
     return ok({
-      rulesetVersion: "1.0.0",
+      rulesetVersion: '1.0.0',
       violations: [],
       policy_ok: true,
     });
   }
-  
+
   return fail(`UNKNOWN_AGENT: ${target}`);
 }
 
@@ -1004,16 +998,16 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   if (!process.stdin.isTTY) {
     let rawInput = '';
     process.stdin.setEncoding('utf8');
-    
-    process.stdin.on('data', (chunk) => {
+
+    process.stdin.on('data', chunk => {
       rawInput += chunk;
     });
-    
+
     process.stdin.on('end', async () => {
       if (rawInput.trim()) {
         try {
           const data = JSON.parse(rawInput);
-          if (data.type === "hello" || data.requestId) {
+          if (data.type === 'hello' || data.requestId) {
             const response = await onMessage(data);
             console.log(JSON.stringify(response, null, 2));
             process.exit(0);
@@ -1022,7 +1016,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
           // Continuar con lógica normal
         }
       }
-      
+
       // Si no es handshake, ejecutar lógica normal
       main().catch(e => {
         console.error(` ${e.message}`);
