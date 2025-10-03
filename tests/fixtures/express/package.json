@@ -1,0 +1,6 @@
+{
+  "name": "fx-express",
+  "dependencies": {
+    "express": "4.19.0"
+  }
+}

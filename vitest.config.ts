@@ -6,14 +6,9 @@ export default defineConfig({
       'src/**/*.test.{ts,js,mjs}',
       'utils/**/*.test.{ts,js,mjs}',
       'agents/**/*.test.{ts,js,mjs}',
-    ],
-    exclude: [
-      'node_modules/**',
-      'dist/**',
-      'coverage/**',
-      'build/**',
       'tests/**/*.test.{ts,js,mjs}',
     ],
+    exclude: ['node_modules/**', 'dist/**', 'coverage/**', 'build/**'],
     coverage: {
       provider: 'istanbul',
       reportsDirectory: './coverage',

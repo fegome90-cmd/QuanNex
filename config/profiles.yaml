@@ -1,0 +1,6 @@
+signals:
+  react: ['package.json:dependencies.react', 'src/**/*.tsx', 'next.config.*', 'vite.config.*']
+  express: ['package.json:dependencies.express', 'src/**/server.*', 'src/**/*.mjs']
+  fastapi: ['pyproject.toml', 'app/main.py']
+weights: { react: 1.0, express: 1.0, fastapi: 1.0 }
+threshold: 0.5

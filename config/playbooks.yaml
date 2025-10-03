@@ -1,0 +1,9 @@
+playbooks:
+  react:
+    plan: ['context:compact', 'deps:ensure-node', 'ui:scaffold', 'tests:rtl', 'gates:verify']
+  express:
+    plan: ['context:compact', 'deps:ensure-node', 'api:scaffold', 'tests:supertest', 'gates:verify']
+  fastapi:
+    plan: ['context:compact', 'deps:ensure-py', 'api:scaffold', 'tests:pytest', 'gates:verify']
+fallback:
+  plan: ['context:compact', 'deps:baseline', 'gates:verify']
