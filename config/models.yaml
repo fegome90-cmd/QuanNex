@@ -1,0 +1,13 @@
+defaults:
+  max_tokens: 2048
+  temperature: 0.3
+
+routes:
+  - when: { kind: 'code.fix' }
+    prefer: [{ id: 'gpt-4o-mini', cost: 'low', reason: 'tool-use + speed' }]
+  - when: { kind: 'reasoning.heavy' }
+    prefer: [{ id: 'gpt-5-thinking', cost: 'high', reason: 'depth' }]
+  - when: { kind: 'summarize.long' }
+    prefer: [{ id: 'claude-3.7-sonnet', cost: 'mid', reason: 'long context' }]
+
+fallback: [{ id: 'gpt-4o', reason: 'generalist' }]

@@ -18,12 +18,18 @@
   },
   "include": [
     "cli/**/*",
-    "gates/**/*"
+    "gates/**/*",
+    "core/guardrails/**/*",
+    "core/model-router/**/*",
+    "core/memory/**/*",
+    "orchestration/**/*",
+    "ops/**/*"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "ops/**/*"
   ]
 }

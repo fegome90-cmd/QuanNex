@@ -1,0 +1,174 @@
+# TaskDB Hardened Configuration
+# Plan Maestro TaskDB - OLA 2: Antifrágil
+#
+# Configuración gobernable para blindajes de seguridad, integridad y operatividad
+
+# Configuración del Provenance Verifier Hardened
+provenance_verifier:
+  # BLINDAJE 1: Seguridad - Ventana de validez para snapshots
+  snapshot_validity_window_days: 7
+
+  # BLINDAJE 2: Integridad - Límites de recursos
+  resource_limits:
+    max_task_ids_per_report: 1000
+    max_run_ids_per_report: 1000
+    max_artifact_hashes_per_report: 500
+    max_claims_per_report: 100
+
+  # BLINDAJE 3: Operatividad - Timeouts y retry
+  timeouts:
+    verification_timeout_ms: 30000 # 30 segundos máximo por verificación
+    reconstruction_timeout_ms: 10000 # 10 segundos máximo para reconstrucción
+
+  # BLINDAJE 4: Seguridad - Validaciones estrictas
+  security:
+    reject_future_timestamps: true
+    reject_invalid_iso8601: true
+    require_evidence_for_claims: true
+    validate_artifact_integrity: true
+
+  # BLINDAJE 5: Integridad - Validaciones de estructura
+  integrity:
+    require_all_ola2_fields: true
+    validate_data_types: true
+    enforce_array_types: true
+    require_non_empty_arrays: false # Permitir arrays vacíos para casos edge
+
+# Configuración del TaskDB Doctor Hardened
+taskdb_doctor:
+  # Límites de diagnóstico
+  max_diagnostics_per_run: 1000
+  max_fixes_per_run: 100
+
+  # Configuración de fixes automáticos
+  auto_fix:
+    enabled: true
+    max_auto_fixes: 50
+    require_confirmation: false # En CI/CD puede ser false
+
+  # Configuración de archivado
+  archive:
+    enabled: true
+    max_age_days: 180
+    archive_dir: '.reports/taskdb-archive'
+
+# Configuración de CLI Hardened
+cli:
+  # Límites de comandos
+  max_operations_per_session: 100
+  max_batch_size: 50
+
+  # Configuración de reportes
+  reports:
+    require_provenance: true
+    validate_on_publish: true
+    create_correction_tasks_on_retract: true
+
+# Configuración de métricas y alertas
+metrics:
+  # Umbrales de alerta
+  alerts:
+    verification_success_rate_threshold: 95 # % mínimo de éxito
+    doctor_health_threshold: 90 # % mínimo de salud del sistema
+    provenance_failure_threshold: 5 # Número máximo de fallos consecutivos
+
+  # Configuración de Prometheus
+  prometheus:
+    enabled: true
+    port: 9090
+    path: '/metrics'
+    collect_interval_ms: 30000
+
+# Configuración de políticas versionadas
+policies:
+  # Política activa
+  active_version: '1.0.0'
+
+  # Configuración de migración automática
+  auto_migration:
+    enabled: true
+    migrate_on_startup: true
+    backup_before_migration: true
+
+  # Configuración de validación
+  validation:
+    strict_mode: true
+    require_policy_version: true
+    validate_on_task_creation: true
+
+# Configuración de SLOs (Service Level Objectives)
+slos:
+  # Disponibilidad
+  availability:
+    target: 99.9 # 99.9% de disponibilidad
+    measurement_window_hours: 24
+
+  # Latencia
+  latency:
+    verification_p95_ms: 5000 # 95% de verificaciones en < 5s
+    doctor_check_p95_ms: 10000 # 95% de checks de doctor en < 10s
+
+  # Calidad
+  quality:
+    provenance_accuracy: 100 # 100% de reportes con provenance válido
+    doctor_health_score: 90 # Mínimo 90% de salud del sistema
+
+# Configuración de desarrollo y testing
+development:
+  # Modo de desarrollo
+  dev_mode: false
+
+  # Configuración de logging
+  logging:
+    level: 'info' # debug, info, warn, error
+    include_stack_traces: true
+    log_verification_details: false # Solo en desarrollo
+
+  # Configuración de testing
+  testing:
+    mock_database: false
+    fast_mode: false
+    skip_integration_tests: false
+
+# Configuración de producción
+production:
+  # Configuración de seguridad
+  security:
+    require_https: true
+    validate_certificates: true
+    rate_limiting:
+      enabled: true
+      requests_per_minute: 100
+
+  # Configuración de backup
+  backup:
+    enabled: true
+    interval_hours: 6
+    retention_days: 30
+    compression: true
+
+  # Configuración de monitoreo
+  monitoring:
+    health_check_interval_ms: 60000 # 1 minuto
+    alert_on_failure: true
+    notify_on_critical: true
+
+# Configuración de escalabilidad (futuro)
+scalability:
+  # Configuración de clustering
+  clustering:
+    enabled: false
+    max_nodes: 3
+    replication_factor: 2
+
+  # Configuración de caching
+  caching:
+    enabled: false
+    cache_size_mb: 100
+    ttl_seconds: 300
+
+  # Configuración de load balancing
+  load_balancing:
+    enabled: false
+    algorithm: 'round_robin'
+    health_check_path: '/health'

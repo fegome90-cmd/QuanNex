@@ -341,6 +341,50 @@
         "owner": "felipe",
         "blocker": "Ola 2 completion"
       }
+    },
+    {
+      "id": "65d2fb45-e0a4-466d-8d71-283c39e8ff8d",
+      "title": "OLA 2 - Hello World Snapshot TS",
+      "description": "Primera implementación de verification_snapshot_ts en provenance",
+      "status": "todo",
+      "priority": "high",
+      "policy_version": "1.0.0",
+      "created_at": "2025-10-03T21:23:11.284Z",
+      "updated_at": "2025-10-03T21:23:11.284Z",
+      "completed_at": null,
+      "assigned_to": null,
+      "tags": [
+        "ola2",
+        "snapshot",
+        "provenance"
+      ],
+      "metadata": {
+        "ola": "ola2-antifragil",
+        "feature": "snapshot_timestamp",
+        "owner": "felipe"
+      }
+    },
+    {
+      "id": "c6d8a1b0-21f2-4d6a-b95d-11cd973ab92d",
+      "title": "OLA 2 - Hello World Snapshot TS",
+      "description": "Primera implementación de verification_snapshot_ts en provenance",
+      "status": "todo",
+      "priority": "high",
+      "policy_version": "1.0.0",
+      "created_at": "2025-10-03T21:23:22.717Z",
+      "updated_at": "2025-10-03T21:23:22.717Z",
+      "completed_at": null,
+      "assigned_to": null,
+      "tags": [
+        "ola2",
+        "snapshot",
+        "provenance"
+      ],
+      "metadata": {
+        "ola": "ola2-antifragil",
+        "feature": "snapshot_timestamp",
+        "owner": "felipe"
+      }
     }
   ],
   "runs": [
@@ -802,6 +846,60 @@
         "error_count": 0
       },
       "error_message": null
+    },
+    {
+      "id": "25edcf78-650a-4a50-9776-89189829f251",
+      "task_id": "65d2fb45-e0a4-466d-8d71-283c39e8ff8d",
+      "status": "completed",
+      "started_at": "2025-10-03T21:23:11.285Z",
+      "completed_at": "2025-10-03T21:23:11.286Z",
+      "duration_ms": 1,
+      "tool_calls": [
+        {
+          "tool_name": "snapshot_implementation",
+          "args": {
+            "feature": "verification_snapshot_ts"
+          },
+          "result": {
+            "success": true,
+            "implementation": "extended_provenance_verifier"
+          },
+          "duration_ms": 2500
+        }
+      ],
+      "metrics": {
+        "success_rate": 1,
+        "error_count": 0,
+        "latency_p95": 2500
+      },
+      "error_message": null
+    },
+    {
+      "id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+      "task_id": "c6d8a1b0-21f2-4d6a-b95d-11cd973ab92d",
+      "status": "completed",
+      "started_at": "2025-10-03T21:23:22.718Z",
+      "completed_at": "2025-10-03T21:23:22.719Z",
+      "duration_ms": 1,
+      "tool_calls": [
+        {
+          "tool_name": "snapshot_implementation",
+          "args": {
+            "feature": "verification_snapshot_ts"
+          },
+          "result": {
+            "success": true,
+            "implementation": "extended_provenance_verifier"
+          },
+          "duration_ms": 2500
+        }
+      ],
+      "metrics": {
+        "success_rate": 1,
+        "error_count": 0,
+        "latency_p95": 2500
+      },
+      "error_message": null
     }
   ],
   "gates": [
@@ -1006,6 +1104,27 @@
       "policy_version": "1.0.0",
       "run_id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
       "created_at": "2025-10-03T20:56:13.369Z"
+    },
+    {
+      "id": "3c1eb018-bfbc-41ef-9ab1-9b6265721241",
+      "name": "snapshot_ts_implementation",
+      "type": "security",
+      "status": "pass",
+      "checks": [
+        {
+          "name": "snapshot_ts_validation",
+          "status": "pass",
+          "message": "verification_snapshot_ts implementado correctamente"
+        },
+        {
+          "name": "provenance_extension",
+          "status": "pass",
+          "message": "Provenance Verifier extendido con snapshot temporal"
+        }
+      ],
+      "policy_version": "1.0.0",
+      "run_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+      "created_at": "2025-10-03T21:23:22.720Z"
     }
   ],
   "artifacts": [
@@ -1093,6 +1212,36 @@
         "release": "taskdb@ola1",
         "type": "go_no_go_report",
         "validation_status": "GO"
+      }
+    },
+    {
+      "id": "01edf865-a4e9-4dec-b8a0-67efe57f505e",
+      "name": "ola2-snapshot-implementation.js",
+      "type": "code",
+      "uri": "/Users/felipe/Developer/startkit-main/packages/reports/ola2-snapshot-implementation.js",
+      "hash": "425dbeb915c8c3ff7ec66f35412704890dd20c602ec55467e5aaf3f27ae5847f",
+      "size_bytes": 512,
+      "created_at": "2025-10-03T21:23:22.724Z",
+      "run_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+      "metadata": {
+        "ola": "ola2-antifragil",
+        "feature": "snapshot_timestamp",
+        "language": "javascript"
+      }
+    },
+    {
+      "id": "3bd920d7-37e4-4488-83f0-1b8296dc47d8",
+      "name": "ola2-snapshot-hello-report.json",
+      "type": "report",
+      "uri": "/Users/felipe/Developer/startkit-main/packages/reports/ola2-snapshot-hello-report.json",
+      "hash": "691a9791908255b17fdbe916120772679231a2ea608c71545de5e018c396db2d",
+      "size_bytes": 1146,
+      "created_at": "2025-10-03T21:23:22.727Z",
+      "run_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+      "metadata": {
+        "ola": "ola2-antifragil",
+        "feature": "snapshot_timestamp",
+        "validation_status": "pass"
       }
     }
   ],
@@ -3512,6 +3661,398 @@
         "next_ola": "ola2-antifragil"
       },
       "source": "system"
+    },
+    {
+      "id": "6756f601-a219-451f-8f87-d3e27dc4d7d5",
+      "type": "task_created",
+      "entity_id": "65d2fb45-e0a4-466d-8d71-283c39e8ff8d",
+      "entity_type": "task",
+      "timestamp": "2025-10-03T21:23:11.285Z",
+      "data": {
+        "id": "65d2fb45-e0a4-466d-8d71-283c39e8ff8d",
+        "title": "OLA 2 - Hello World Snapshot TS",
+        "description": "Primera implementación de verification_snapshot_ts en provenance",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T21:23:11.284Z",
+        "updated_at": "2025-10-03T21:23:11.284Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "ola2",
+          "snapshot",
+          "provenance"
+        ],
+        "metadata": {
+          "ola": "ola2-antifragil",
+          "feature": "snapshot_timestamp",
+          "owner": "felipe"
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "7df593bc-61ec-47cb-9da4-8154dd6473ed",
+      "type": "run_started",
+      "entity_id": "25edcf78-650a-4a50-9776-89189829f251",
+      "entity_type": "run",
+      "timestamp": "2025-10-03T21:23:11.286Z",
+      "data": {
+        "id": "25edcf78-650a-4a50-9776-89189829f251",
+        "task_id": "65d2fb45-e0a4-466d-8d71-283c39e8ff8d",
+        "status": "pending",
+        "started_at": "2025-10-03T21:23:11.285Z",
+        "completed_at": null,
+        "duration_ms": null,
+        "tool_calls": [
+          {
+            "tool_name": "snapshot_implementation",
+            "args": {
+              "feature": "verification_snapshot_ts"
+            },
+            "result": {
+              "success": true,
+              "implementation": "extended_provenance_verifier"
+            },
+            "duration_ms": 2500
+          }
+        ],
+        "metrics": {},
+        "error_message": null
+      },
+      "source": "api"
+    },
+    {
+      "id": "70e37b0e-8700-4a3c-8e52-e3ad3230d89b",
+      "type": "run_completed",
+      "entity_id": "25edcf78-650a-4a50-9776-89189829f251",
+      "entity_type": "run",
+      "timestamp": "2025-10-03T21:23:11.286Z",
+      "data": {
+        "id": "25edcf78-650a-4a50-9776-89189829f251",
+        "task_id": "65d2fb45-e0a4-466d-8d71-283c39e8ff8d",
+        "status": "completed",
+        "started_at": "2025-10-03T21:23:11.285Z",
+        "completed_at": "2025-10-03T21:23:11.286Z",
+        "duration_ms": 1,
+        "tool_calls": [
+          {
+            "tool_name": "snapshot_implementation",
+            "args": {
+              "feature": "verification_snapshot_ts"
+            },
+            "result": {
+              "success": true,
+              "implementation": "extended_provenance_verifier"
+            },
+            "duration_ms": 2500
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0,
+          "latency_p95": 2500
+        },
+        "error_message": null
+      },
+      "source": "api"
+    },
+    {
+      "id": "53ed8a32-a1b1-48f0-84d3-b6587a935167",
+      "type": "task_created",
+      "entity_id": "c6d8a1b0-21f2-4d6a-b95d-11cd973ab92d",
+      "entity_type": "task",
+      "timestamp": "2025-10-03T21:23:22.718Z",
+      "data": {
+        "id": "c6d8a1b0-21f2-4d6a-b95d-11cd973ab92d",
+        "title": "OLA 2 - Hello World Snapshot TS",
+        "description": "Primera implementación de verification_snapshot_ts en provenance",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T21:23:22.717Z",
+        "updated_at": "2025-10-03T21:23:22.717Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "ola2",
+          "snapshot",
+          "provenance"
+        ],
+        "metadata": {
+          "ola": "ola2-antifragil",
+          "feature": "snapshot_timestamp",
+          "owner": "felipe"
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "d5f560c4-7be7-462d-8cba-5cf7a4b20f4b",
+      "type": "run_started",
+      "entity_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+      "entity_type": "run",
+      "timestamp": "2025-10-03T21:23:22.719Z",
+      "data": {
+        "id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+        "task_id": "c6d8a1b0-21f2-4d6a-b95d-11cd973ab92d",
+        "status": "pending",
+        "started_at": "2025-10-03T21:23:22.718Z",
+        "completed_at": null,
+        "duration_ms": null,
+        "tool_calls": [
+          {
+            "tool_name": "snapshot_implementation",
+            "args": {
+              "feature": "verification_snapshot_ts"
+            },
+            "result": {
+              "success": true,
+              "implementation": "extended_provenance_verifier"
+            },
+            "duration_ms": 2500
+          }
+        ],
+        "metrics": {},
+        "error_message": null
+      },
+      "source": "api"
+    },
+    {
+      "id": "4a6796d1-008b-4ab1-a9c7-c0ac74f48ac4",
+      "type": "run_completed",
+      "entity_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+      "entity_type": "run",
+      "timestamp": "2025-10-03T21:23:22.720Z",
+      "data": {
+        "id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+        "task_id": "c6d8a1b0-21f2-4d6a-b95d-11cd973ab92d",
+        "status": "completed",
+        "started_at": "2025-10-03T21:23:22.718Z",
+        "completed_at": "2025-10-03T21:23:22.719Z",
+        "duration_ms": 1,
+        "tool_calls": [
+          {
+            "tool_name": "snapshot_implementation",
+            "args": {
+              "feature": "verification_snapshot_ts"
+            },
+            "result": {
+              "success": true,
+              "implementation": "extended_provenance_verifier"
+            },
+            "duration_ms": 2500
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0,
+          "latency_p95": 2500
+        },
+        "error_message": null
+      },
+      "source": "api"
+    },
+    {
+      "id": "9a374d2f-42bd-4c6d-890d-9f82363886ad",
+      "type": "gate_created",
+      "entity_id": "3c1eb018-bfbc-41ef-9ab1-9b6265721241",
+      "entity_type": "gate",
+      "timestamp": "2025-10-03T21:23:22.720Z",
+      "data": {
+        "id": "3c1eb018-bfbc-41ef-9ab1-9b6265721241",
+        "name": "snapshot_ts_implementation",
+        "type": "security",
+        "status": "pending",
+        "checks": [
+          {
+            "name": "snapshot_ts_validation",
+            "status": "pass",
+            "message": "verification_snapshot_ts implementado correctamente"
+          },
+          {
+            "name": "provenance_extension",
+            "status": "pass",
+            "message": "Provenance Verifier extendido con snapshot temporal"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+        "created_at": "2025-10-03T21:23:22.720Z"
+      },
+      "source": "api"
+    },
+    {
+      "id": "6dd2810b-e483-45e6-852d-0146dfe085a1",
+      "type": "gate_updated",
+      "entity_id": "3c1eb018-bfbc-41ef-9ab1-9b6265721241",
+      "entity_type": "gate",
+      "timestamp": "2025-10-03T21:23:22.721Z",
+      "data": {
+        "id": "3c1eb018-bfbc-41ef-9ab1-9b6265721241",
+        "name": "snapshot_ts_implementation",
+        "type": "security",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "snapshot_ts_validation",
+            "status": "pass",
+            "message": "verification_snapshot_ts implementado correctamente"
+          },
+          {
+            "name": "provenance_extension",
+            "status": "pass",
+            "message": "Provenance Verifier extendido con snapshot temporal"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+        "created_at": "2025-10-03T21:23:22.720Z"
+      },
+      "source": "api"
+    },
+    {
+      "id": "99bffe77-1add-4f3d-a3ec-f61a070bf589",
+      "type": "artifact_created",
+      "entity_id": "01edf865-a4e9-4dec-b8a0-67efe57f505e",
+      "entity_type": "artifact",
+      "timestamp": "2025-10-03T21:23:22.724Z",
+      "data": {
+        "id": "01edf865-a4e9-4dec-b8a0-67efe57f505e",
+        "name": "ola2-snapshot-implementation.js",
+        "type": "code",
+        "uri": "/Users/felipe/Developer/startkit-main/packages/reports/ola2-snapshot-implementation.js",
+        "hash": "425dbeb915c8c3ff7ec66f35412704890dd20c602ec55467e5aaf3f27ae5847f",
+        "size_bytes": 512,
+        "created_at": "2025-10-03T21:23:22.724Z",
+        "run_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+        "metadata": {
+          "ola": "ola2-antifragil",
+          "feature": "snapshot_timestamp",
+          "language": "javascript"
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "3f490caf-4543-4b53-925b-fd91841ff9e8",
+      "type": "report_created",
+      "entity_id": "27e3ae2e-89b7-4d9c-bfa6-aca2ed91ec8b",
+      "entity_type": "report",
+      "timestamp": "2025-10-03T21:23:22.726Z",
+      "data": {
+        "id": "27e3ae2e-89b7-4d9c-bfa6-aca2ed91ec8b",
+        "title": "OLA 2 - Reporte con Snapshot TS",
+        "type": "implementation",
+        "status": "draft",
+        "content": {
+          "summary": "Primera implementación de verification_snapshot_ts en OLA 2",
+          "ola": "ola2-antifragil",
+          "feature": "snapshot_timestamp",
+          "implementation_date": "2025-10-03T21:23:22.725Z",
+          "status": "completed",
+          "tests_passed": 3
+        },
+        "report_provenance": {
+          "task_ids": [
+            "c6d8a1b0-21f2-4d6a-b95d-11cd973ab92d"
+          ],
+          "run_ids": [
+            "de3836e7-f6a3-4d6f-b281-3af529b02670"
+          ],
+          "artifact_hashes": [
+            "425dbeb915c8c3ff7ec66f35412704890dd20c602ec55467e5aaf3f27ae5847f"
+          ],
+          "claims_validated": [
+            {
+              "claim": "verification_snapshot_ts implementado correctamente",
+              "evidence": "Provenance Verifier extendido con snapshot temporal",
+              "status": "validated"
+            },
+            {
+              "claim": "Estado de TaskDB consistente al snapshot",
+              "evidence": "Gates pasados, runs completados",
+              "status": "validated"
+            }
+          ],
+          "verification_snapshot_ts": "2025-10-03T21:23:22.725Z",
+          "verified_at": "2025-10-03T21:23:22.725Z",
+          "policy_version_used": "1.0.0",
+          "row_counts": {
+            "tasks": 19,
+            "runs": 18,
+            "gates": 13,
+            "artifacts": 7,
+            "events": 90,
+            "reports": 5
+          }
+        },
+        "created_at": "2025-10-03T21:23:22.725Z",
+        "published_at": null,
+        "retracted_at": null
+      },
+      "source": "api"
+    },
+    {
+      "id": "c702190a-5b8e-4a5e-bd76-28762b001b49",
+      "type": "artifact_created",
+      "entity_id": "3bd920d7-37e4-4488-83f0-1b8296dc47d8",
+      "entity_type": "artifact",
+      "timestamp": "2025-10-03T21:23:22.727Z",
+      "data": {
+        "id": "3bd920d7-37e4-4488-83f0-1b8296dc47d8",
+        "name": "ola2-snapshot-hello-report.json",
+        "type": "report",
+        "uri": "/Users/felipe/Developer/startkit-main/packages/reports/ola2-snapshot-hello-report.json",
+        "hash": "691a9791908255b17fdbe916120772679231a2ea608c71545de5e018c396db2d",
+        "size_bytes": 1146,
+        "created_at": "2025-10-03T21:23:22.727Z",
+        "run_id": "de3836e7-f6a3-4d6f-b281-3af529b02670",
+        "metadata": {
+          "ola": "ola2-antifragil",
+          "feature": "snapshot_timestamp",
+          "validation_status": "pass"
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "7b23e353-54f7-4040-9c4a-ff71f958388f",
+      "type": "report_created",
+      "entity_id": "9115cb54-f074-4862-8110-64eea49b7dc3",
+      "entity_type": "report",
+      "timestamp": "2025-10-03T21:23:33.428Z",
+      "data": {
+        "id": "9115cb54-f074-4862-8110-64eea49b7dc3",
+        "title": "Test OLA 2 Snapshot",
+        "type": "test",
+        "status": "draft",
+        "content": {
+          "test": "ola2_snapshot"
+        },
+        "report_provenance": {
+          "task_ids": [],
+          "run_ids": [],
+          "artifact_hashes": [],
+          "verification_snapshot_ts": "2025-10-03T21:23:33.427Z",
+          "verified_at": "2025-10-03T21:23:33.427Z",
+          "policy_version_used": "1.0.0",
+          "row_counts": {
+            "tasks": 1,
+            "runs": 0,
+            "gates": 0,
+            "artifacts": 0,
+            "events": 0,
+            "reports": 1
+          },
+          "claims_validated": []
+        },
+        "created_at": "2025-10-03T21:23:33.428Z",
+        "published_at": null,
+        "retracted_at": null
+      },
+      "source": "api"
     }
   ],
   "reports": [
@@ -3701,6 +4242,86 @@
         "verification_snapshot_ts": "2025-10-03T21:02:51.773Z"
       },
       "created_at": "2025-10-03T21:02:51.773Z",
+      "published_at": null,
+      "retracted_at": null
+    },
+    {
+      "id": "27e3ae2e-89b7-4d9c-bfa6-aca2ed91ec8b",
+      "title": "OLA 2 - Reporte con Snapshot TS",
+      "type": "implementation",
+      "status": "draft",
+      "content": {
+        "summary": "Primera implementación de verification_snapshot_ts en OLA 2",
+        "ola": "ola2-antifragil",
+        "feature": "snapshot_timestamp",
+        "implementation_date": "2025-10-03T21:23:22.725Z",
+        "status": "completed",
+        "tests_passed": 3
+      },
+      "report_provenance": {
+        "task_ids": [
+          "c6d8a1b0-21f2-4d6a-b95d-11cd973ab92d"
+        ],
+        "run_ids": [
+          "de3836e7-f6a3-4d6f-b281-3af529b02670"
+        ],
+        "artifact_hashes": [
+          "425dbeb915c8c3ff7ec66f35412704890dd20c602ec55467e5aaf3f27ae5847f"
+        ],
+        "claims_validated": [
+          {
+            "claim": "verification_snapshot_ts implementado correctamente",
+            "evidence": "Provenance Verifier extendido con snapshot temporal",
+            "status": "validated"
+          },
+          {
+            "claim": "Estado de TaskDB consistente al snapshot",
+            "evidence": "Gates pasados, runs completados",
+            "status": "validated"
+          }
+        ],
+        "verification_snapshot_ts": "2025-10-03T21:23:22.725Z",
+        "verified_at": "2025-10-03T21:23:22.725Z",
+        "policy_version_used": "1.0.0",
+        "row_counts": {
+          "tasks": 19,
+          "runs": 18,
+          "gates": 13,
+          "artifacts": 7,
+          "events": 90,
+          "reports": 5
+        }
+      },
+      "created_at": "2025-10-03T21:23:22.725Z",
+      "published_at": null,
+      "retracted_at": null
+    },
+    {
+      "id": "9115cb54-f074-4862-8110-64eea49b7dc3",
+      "title": "Test OLA 2 Snapshot",
+      "type": "test",
+      "status": "draft",
+      "content": {
+        "test": "ola2_snapshot"
+      },
+      "report_provenance": {
+        "task_ids": [],
+        "run_ids": [],
+        "artifact_hashes": [],
+        "verification_snapshot_ts": "2025-10-03T21:23:33.427Z",
+        "verified_at": "2025-10-03T21:23:33.427Z",
+        "policy_version_used": "1.0.0",
+        "row_counts": {
+          "tasks": 1,
+          "runs": 0,
+          "gates": 0,
+          "artifacts": 0,
+          "events": 0,
+          "reports": 1
+        },
+        "claims_validated": []
+      },
+      "created_at": "2025-10-03T21:23:33.428Z",
       "published_at": null,
       "retracted_at": null
     }

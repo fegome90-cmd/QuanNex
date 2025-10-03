@@ -8,6 +8,10 @@ export default defineConfig({
       'agents/**/*.test.{ts,js,mjs}',
       'tests/**/*.test.{ts,js,mjs}',
       'tests/**/*.spec.{ts,js,mjs}',
+      'test/**/*.test.{ts,js,mjs}',
+      'test/**/*.spec.{ts,js,mjs}',
+      'core/**/*.test.{ts,js,mjs}',
+      'core/**/*.spec.{ts,js,mjs}',
     ],
     exclude: ['node_modules/**', 'dist/**', 'coverage/**', 'build/**'],
     coverage: {
@@ -20,7 +24,12 @@ export default defineConfig({
         statements: 0,
         branches: 0,
       }, // mediremos en el quality gate
-      include: ['src/**/*.{ts,js,mjs}', 'utils/**/*.{ts,js,mjs}', 'agents/**/*.{ts,js,mjs}'],
+      include: [
+        'src/**/*.{ts,js,mjs}',
+        'utils/**/*.{ts,js,mjs}',
+        'agents/**/*.{ts,js,mjs}',
+        'core/**/*.{ts,js,mjs}',
+      ],
       exclude: [
         '**/*.test.{ts,js,mjs}',
         '**/*.spec.{ts,js,mjs}',

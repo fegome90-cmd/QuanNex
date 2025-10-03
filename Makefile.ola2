@@ -1,0 +1,27 @@
+# Ola 2 Performance Targets
+
+.PHONY: perf.router perf.guardrails perf.memory perf.all
+
+perf.router:
+	@echo "🚀 Testing Model Router Performance..."
+	npm run perf:router
+
+perf.guardrails:
+	@echo "🛡️ Testing Guardrails Performance..."
+	npm run perf:guardrails
+
+perf.memory:
+	@echo "🧠 Testing Memory RAG Performance..."
+	npm run perf:memory
+
+perf.all: perf.router perf.guardrails perf.memory
+	@echo "✅ All performance tests completed"
+
+test.ola2:
+	@echo "🧪 Running Ola 2 Tests..."
+	npm run test:guardrails
+	npm run test:model-router
+	npm run test:memory
+
+ci.ola2: test.ola2 perf.all
+	@echo "✅ Ola 2 CI checks completed"
