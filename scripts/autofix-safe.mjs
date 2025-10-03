@@ -185,12 +185,11 @@ export async function autoFixSafe({ actions = [], dryRun = true, branch = 'autof
       });
 
       // Merge worktree back to main branch
-      process.chdir(
-        process
-          .cwd()
-          .replace(worktreePath, '')
-          .replace('/.worktrees/' + branch, '')
-      );
+      const mainDir = process
+        .cwd()
+        .replace(worktreePath, '')
+        .replace('/.worktrees/' + branch, '');
+      process.chdir(mainDir);
       await run(
         `git merge ${branch} --no-ff -m "Merge autofix: ${actions.map(x => x.type).join(', ')}"`
       );
@@ -216,12 +215,11 @@ export async function autoFixSafe({ actions = [], dryRun = true, branch = 'autof
     // Safe cleanup: just remove worktree, main branch is untouched
     if (!dryRun && worktreePath) {
       try {
-        process.chdir(
-          process
-            .cwd()
-            .replace(worktreePath, '')
-            .replace('/.worktrees/' + branch, '')
-        );
+        const mainDir = process
+          .cwd()
+          .replace(worktreePath, '')
+          .replace('/.worktrees/' + branch, '');
+        process.chdir(mainDir);
         await removeWorktree(worktreePath);
         console.log(`[AUTOFIX-SAFE] Cleaned up worktree: ${worktreePath}`);
       } catch (cleanupError) {
