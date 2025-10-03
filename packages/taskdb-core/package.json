@@ -1,0 +1,47 @@
+{
+  "name": "@quannex/taskdb-core",
+  "version": "1.0.0",
+  "description": "TaskDB Core - Sistema Antifrágil de Gestión de Tareas",
+  "type": "module",
+  "main": "taskdb-core.mjs",
+  "bin": {
+    "taskdb": "./cli.mjs"
+  },
+  "scripts": {
+    "start": "node taskdb-core.mjs",
+    "cli": "node cli.mjs",
+    "doctor": "node cli.mjs doctor --verbose",
+    "test": "node --test test/*.test.mjs",
+    "lint": "eslint *.mjs",
+    "format": "prettier --write *.mjs"
+  },
+  "keywords": [
+    "taskdb",
+    "task-management",
+    "antifragile",
+    "provenance",
+    "verification",
+    "quannex"
+  ],
+  "author": "QuanNex Team",
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fegome90-cmd/QuanNex.git",
+    "directory": "packages/taskdb-core"
+  },
+  "bugs": {
+    "url": "https://github.com/fegome90-cmd/QuanNex/issues"
+  },
+  "homepage": "https://github.com/fegome90-cmd/QuanNex#readme"
+}
