@@ -24,6 +24,13 @@ export default [
       'versions/**', // Excluir directorio versions
       'tools/**', // Excluir directorio tools completo
       'utils/**', // Excluir directorio utils completo
+      'archived/**', // Excluir directorio archived
+      'backups/**', // Excluir directorio backups
+      'shared/**', // Excluir directorio shared
+      'src/**', // Excluir directorio src
+      'tests/**', // Excluir directorio tests
+      'test-files/**', // Excluir directorio test-files
+      'scripts/**', // Excluir directorio scripts
       '*.min.js',
       '*.bundle.js',
     ],
