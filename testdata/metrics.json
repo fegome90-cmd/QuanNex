@@ -1,0 +1,27 @@
+{
+  "linting": {
+    "errors_before": 176,
+    "errors_after": 0,
+    "warnings_before": 402,
+    "warnings_after": 284,
+    "total_problems_before": 578,
+    "total_problems_after": 284,
+    "improvement_percentage": 50.9
+  },
+  "performance": {
+    "quannex_detection_time": 2.5,
+    "validation_time": 3.7,
+    "total_time": 120,
+    "success_rate": 100
+  },
+  "gates": {
+    "total_gates": 5,
+    "passed_gates": 5,
+    "success_rate": 100
+  },
+  "files": {
+    "total_files": 1247,
+    "processed_files": 1247,
+    "excluded_files": 0
+  }
+}

@@ -1,0 +1,377 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "QuanNex Policy Checker",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/quannex/policy-checker"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/server/metrics.mjs"
+                },
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 31
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/tools/fetchUser.test.ts"
+                },
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 45
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/context/server-http.mjs"
+                },
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/hotstart-enforcer/agent.js"
+                },
+                "region": {
+                  "startLine": 260,
+                  "startColumn": 31
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/hotstart-enforcer/agent.js"
+                },
+                "region": {
+                  "startLine": 290,
+                  "startColumn": 31
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/hotstart-enforcer/agent.js"
+                },
+                "region": {
+                  "startLine": 425,
+                  "startColumn": 39
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "agents/initialization-enforcer/agent.js"
+                },
+                "region": {
+                  "startLine": 214,
+                  "startColumn": 39
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.execSync",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.execSync"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/audit-git-bypasses.mjs"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 13
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.exec",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.exec"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/autofix-safe.mjs"
+                },
+                "region": {
+                  "startLine": 47,
+                  "startColumn": 35
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.execSync",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.execSync"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/diff-gate.mjs"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 13
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.execSync",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.execSync"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/gitleaks-check.mjs"
+                },
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.execSync",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.execSync"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/gitleaks-check.mjs"
+                },
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.execSync",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.execSync"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/gitleaks-check.mjs"
+                },
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 6
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.execSync",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.execSync"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/gitleaks-check.mjs"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 19
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/metrics-integrity.mjs"
+                },
+                "region": {
+                  "startLine": 106,
+                  "startColumn": 31
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-setTimeout",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: setTimeout"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/slo-check.mjs"
+                },
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 12
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.execSync",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.execSync"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/smoke-test.mjs"
+                },
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 19
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "forbidden-api-child_process.execSync",
+          "level": "error",
+          "message": {
+            "text": "Forbidden API usage: child_process.execSync"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/handlers/install_types.mjs"
+                },
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 19
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

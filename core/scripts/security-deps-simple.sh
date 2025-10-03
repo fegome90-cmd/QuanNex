@@ -29,6 +29,38 @@ warn() { echo -e "${YELLOW}[WARN]${NC} $1" >&2; }
 error() { echo -e "${RED}[ERROR]${NC} $1" >&2; }
 success() { echo -e "${GREEN}[SUCCESS]${NC} $1" >&2; }
 
+HAS_JQ=true
+if ! command -v jq >/dev/null 2>&1; then
+    HAS_JQ=false
+    warn "jq no está instalado; usando fallback con node para operaciones JSON básicas"
+fi
+
+HAS_NODE=true
+if ! command -v node >/dev/null 2>&1; then
+    HAS_NODE=false
+fi
+
+if [[ "$HAS_JQ" == "false" && "$HAS_NODE" == "false" ]]; then
+    error "Se requiere 'jq' o 'node' para procesar los reportes JSON"
+    exit 1
+fi
+
+validate_json() {
+    local payload="$1"
+
+    if [[ "$HAS_JQ" == "true" ]]; then
+        echo "$payload" | jq -e '.' >/dev/null 2>&1
+        return $?
+    fi
+
+    if [[ "$HAS_NODE" == "true" ]]; then
+        node -e "const fs=require('fs');const data=fs.readFileSync(0,'utf8');JSON.parse(data);" <<<"$payload" >/dev/null 2>&1
+        return $?
+    fi
+
+    return 1
+}
+
 verify_network() {
     if ! command -v curl >/dev/null 2>&1; then
         warn "curl no disponible para verificar red; continuando sin comprobación"
@@ -114,6 +146,7 @@ scan_npm_deps() {
 
     if ! verify_network; then
         warn "Sin conectividad a registry.npmjs.org, omitiendo npm audit"
+        echo "::warning::[SEC-DEPS] Sin conectividad a registry.npmjs.org. npm audit omitido."
         return
     fi
 
@@ -144,7 +177,7 @@ scan_npm_deps() {
         fi
     fi
 
-    if ! jq -e '.' >/dev/null 2>&1 <<<"$audit_output"; then
+    if ! validate_json "$audit_output"; then
         error "La salida de npm audit no es JSON válido"
         return
     fi
@@ -156,28 +189,84 @@ scan_npm_deps() {
         log "Reporte bruto guardado en $RAW_AUDIT_FILE"
     fi
 
-    echo "$audit_output" | jq -r '.vulnerabilities // {} | to_entries[] | select(.value.severity != null) | "\(.value.severity)|\(.key)|\(.value.title // "No title")|\(.value.range // "No range")"' | while IFS='|' read -r severity package title range; do
-        case "$AUDIT_LEVEL" in
-            "critical")
-                if [[ "$severity" == "critical" ]]; then
+    if [[ "$HAS_JQ" == "true" ]]; then
+        echo "$audit_output" | jq -r '.vulnerabilities // {} | to_entries[] | select(.value.severity != null) | "\(.value.severity)|\(.key)|\(.value.title // "No title")|\(.value.range // "No range")"' | while IFS='|' read -r severity package title range; do
+            case "$AUDIT_LEVEL" in
+                "critical")
+                    if [[ "$severity" == "critical" ]]; then
+                        findings+=("npm_vulnerability|$package|$severity|$title|$range")
+                    fi
+                    ;;
+                "high")
+                    if [[ "$severity" =~ ^(critical|high)$ ]]; then
+                        findings+=("npm_vulnerability|$package|$severity|$title|$range")
+                    fi
+                    ;;
+                "moderate")
+                    if [[ "$severity" =~ ^(critical|high|moderate)$ ]]; then
+                        findings+=("npm_vulnerability|$package|$severity|$title|$range")
+                    fi
+                    ;;
+                "low")
                     findings+=("npm_vulnerability|$package|$severity|$title|$range")
-                fi
-                ;;
-            "high")
-                if [[ "$severity" =~ ^(critical|high)$ ]]; then
+                    ;;
+            esac
+        done
+    else
+        local fallback_output=""
+        local fallback_status=0
+        set +e
+        fallback_output=$(
+          AUDIT_LEVEL="$AUDIT_LEVEL" node -e "$(cat <<'NODE'
+const fs = require('fs');
+const raw = fs.readFileSync(0, 'utf8');
+if (!raw.trim()) process.exit(0);
+let data;
+try {
+  data = JSON.parse(raw);
+} catch (error) {
+  process.stderr.write('invalid-json');
+  process.exit(1);
+}
+
+const level = process.env.AUDIT_LEVEL || 'moderate';
+const allowByLevel = {
+  critical: new Set(['critical']),
+  high: new Set(['critical', 'high']),
+  moderate: new Set(['critical', 'high', 'moderate']),
+  low: new Set(['critical', 'high', 'moderate', 'low']),
+};
+
+const allows = allowByLevel[level] || allowByLevel.moderate;
+const lines = [];
+for (const [pkg, info] of Object.entries(data.vulnerabilities || {})) {
+  if (!info || !info.severity || !allows.has(info.severity)) {
+    continue;
+  }
+
+  const title = (info.title || 'No title').replace(/\s+/g, ' ').trim();
+  const range = info.range || 'No range';
+  lines.push(`${info.severity}|${pkg}|${title}|${range}`);
+}
+
+if (lines.length > 0) {
+  process.stdout.write(lines.join('\n'));
+}
+NODE
+)" <<<"$audit_output"
+        )
+        fallback_status=$?
+        set -e
+        if [[ $fallback_status -eq 0 ]]; then
+            if [[ -n "$fallback_output" ]]; then
+                while IFS='|' read -r severity package title range; do
                     findings+=("npm_vulnerability|$package|$severity|$title|$range")
-                fi
-                ;;
-            "moderate")
-                if [[ "$severity" =~ ^(critical|high|moderate)$ ]]; then
-                    findings+=("npm_vulnerability|$package|$severity|$title|$range")
-                fi
-                ;;
-            "low")
-                findings+=("npm_vulnerability|$package|$severity|$title|$range")
-                ;;
-        esac
-    done
+                done <<< "$fallback_output"
+            fi
+        else
+            error "No se pudo procesar la salida de npm audit sin jq"
+        fi
+    fi
     
     # Imprimir findings
     for finding in "${findings[@]}"; do
@@ -226,14 +315,64 @@ scan_secrets() {
         log "gitleaks detectó posibles secretos"
     fi
 
-    if ! jq -e '.' >/dev/null 2>&1 <<<"$gitleaks_output"; then
-        error "La salida de gitleaks no es JSON válido"
-        return
-    fi
+    if [[ "$HAS_JQ" == "true" ]]; then
+        if ! jq -e '.' >/dev/null 2>&1 <<<"$gitleaks_output"; then
+            error "La salida de gitleaks no es JSON válido"
+            return
+        fi
 
-    echo "$gitleaks_output" | jq -r '.[] | "\(.rule)|\(.severity)|\(.file)|\(.line)"' | while IFS='|' read -r rule severity file line; do
-        findings+=("secret_leak|$rule|$severity|$file|$line")
-    done
+        echo "$gitleaks_output" | jq -r '.[] | "\(.rule)|\(.severity)|\(.file)|\(.line)"' | while IFS='|' read -r rule severity file line; do
+            findings+=("secret_leak|$rule|$severity|$file|$line")
+        done
+    else
+        local gitleaks_fallback=""
+        set +e
+        gitleaks_fallback=$(
+          node -e "$(cat <<'NODE'
+const fs = require('fs');
+const raw = fs.readFileSync(0, 'utf8');
+if (!raw.trim()) process.exit(0);
+let data;
+try {
+  data = JSON.parse(raw);
+} catch (error) {
+  process.stderr.write('invalid-json');
+  process.exit(1);
+}
+
+if (!Array.isArray(data)) {
+  process.exit(0);
+}
+
+const lines = [];
+for (const item of data) {
+  if (!item) continue;
+  const rule = item.rule || 'unknown';
+  const severity = item.severity || 'unknown';
+  const file = item.file || 'unknown';
+  const line = item.line != null ? String(item.line) : '0';
+  lines.push(`${rule}|${severity}|${file}|${line}`);
+}
+
+if (lines.length > 0) {
+  process.stdout.write(lines.join('\n'));
+}
+NODE
+)" <<<"$gitleaks_output"
+        )
+        local gitleaks_status=$?
+        set -e
+        if [[ $gitleaks_status -eq 0 ]]; then
+            if [[ -n "$gitleaks_fallback" ]]; then
+                while IFS='|' read -r rule severity file line; do
+                    findings+=("secret_leak|$rule|$severity|$file|$line")
+                done <<< "$gitleaks_fallback"
+            fi
+        else
+            error "No se pudo procesar la salida de gitleaks sin jq"
+            return
+        fi
+    fi
     
     # Imprimir findings
     for finding in "${findings[@]}"; do

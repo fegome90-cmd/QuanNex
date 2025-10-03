@@ -179,3 +179,11 @@ versions/v2/
 # Documentación experimental
 docs/research/imported/
 docs/audits/*.md
+
+
+# QuanNex Telemetry
+.reports/metrics/
+.reports/logs/
+!reports/qnx-telemetry-config.json
+*.jsonl
+qnx-alerts-*.json

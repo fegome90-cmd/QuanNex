@@ -41,6 +41,38 @@ error() {
   echo -e "${RED}[ERROR]${NC} $1"
 }
 
+HAS_JQ=true
+if ! command -v jq >/dev/null 2>&1; then
+  HAS_JQ=false
+  warning "jq no está disponible; se utilizará fallback basado en node para operaciones JSON"
+fi
+
+HAS_NODE=true
+if ! command -v node >/dev/null 2>&1; then
+  HAS_NODE=false
+fi
+
+if [[ "$HAS_JQ" == "false" && "$HAS_NODE" == "false" ]]; then
+  error "Se requiere 'jq' o 'node' para procesar reportes JSON"
+  exit 1
+fi
+
+validate_json_file() {
+  local path="$1"
+
+  if [[ "$HAS_JQ" == "true" ]]; then
+    jq -e '.' "$path" >/dev/null 2>&1
+    return $?
+  fi
+
+  if [[ "$HAS_NODE" == "true" ]]; then
+    node -e "const fs=require('fs');const data=fs.readFileSync(process.argv[1],'utf8');JSON.parse(data);" "$path" >/dev/null 2>&1
+    return $?
+  fi
+
+  return 1
+}
+
 rotate_reports() {
   local dir="$1"
   local prefix="$2"
@@ -107,31 +139,84 @@ add_vulnerability() {
   local line="$5"
   local recommendation="$6"
 
-  local temp_file
-  temp_file=$(mktemp)
-  jq --arg severity "$severity" \
-    --arg type "$type" \
-    --arg description "$description" \
-    --arg file "$file" \
-    --arg line "$line" \
-    --arg recommendation "$recommendation" \
-    '.vulnerabilities += [{
-         "severity": $severity,
-         "type": $type,
-         "description": $description,
-         "file": $file,
-         "line": $line,
-         "recommendation": $recommendation
-       }]' "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
+  if [[ "$HAS_JQ" == "true" ]]; then
+    local temp_file
+    temp_file=$(mktemp)
+    jq --arg severity "$severity" \
+      --arg type "$type" \
+      --arg description "$description" \
+      --arg file "$file" \
+      --arg line "$line" \
+      --arg recommendation "$recommendation" \
+      '.vulnerabilities += [{
+           "severity": $severity,
+           "type": $type,
+           "description": $description,
+           "file": $file,
+           "line": $line,
+           "recommendation": $recommendation
+         }]' "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
+  else
+    node -e "$(cat <<'NODE'
+const fs = require('fs');
+const [,, reportPath, severity, type, description, file, line, recommendation] = process.argv;
+const raw = fs.readFileSync(reportPath, 'utf8');
+const data = JSON.parse(raw);
+if (!Array.isArray(data.vulnerabilities)) {
+  data.vulnerabilities = [];
+}
+
+data.vulnerabilities.push({
+  severity,
+  type,
+  description,
+  file,
+  line,
+  recommendation,
+});
+
+fs.writeFileSync(reportPath, JSON.stringify(data, null, 2));
+NODE
+)" "$REPORT_FILE" "$severity" "$type" "$description" "$file" "$line" "$recommendation"
+  fi
 }
 
 # Función para actualizar resumen
 update_summary() {
-  local temp_file
-  temp_file=$(mktemp)
-  jq --arg severity "$1" \
-    '.summary[$severity] += 1 | .summary.total_vulnerabilities += 1' \
-    "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
+  if [[ "$HAS_JQ" == "true" ]]; then
+    local temp_file
+    temp_file=$(mktemp)
+    jq --arg severity "$1" \
+      '.summary[$severity] += 1 | .summary.total_vulnerabilities += 1' \
+      "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
+  else
+    node -e "$(cat <<'NODE'
+const fs = require('fs');
+const [,, reportPath, severity] = process.argv;
+const raw = fs.readFileSync(reportPath, 'utf8');
+const data = JSON.parse(raw);
+if (!data.summary) {
+  data.summary = {
+    total_vulnerabilities: 0,
+    critical: 0,
+    high: 0,
+    medium: 0,
+    low: 0,
+    info: 0,
+  };
+}
+
+if (!Object.prototype.hasOwnProperty.call(data.summary, severity)) {
+  data.summary[severity] = 0;
+}
+
+data.summary[severity] += 1;
+data.summary.total_vulnerabilities += 1;
+
+fs.writeFileSync(reportPath, JSON.stringify(data, null, 2));
+NODE
+)" "$REPORT_FILE" "$1"
+  fi
 }
 
 # Verificar dependencias
@@ -142,7 +227,9 @@ check_dependencies() {
 
   # Verificar herramientas de seguridad
   command -v npm >/dev/null 2>&1 || missing_deps+=("npm")
-  command -v jq >/dev/null 2>&1 || missing_deps+=("jq")
+  if [[ "$HAS_JQ" == "false" && "$HAS_NODE" == "false" ]]; then
+    missing_deps+=("jq")
+  fi
 
   if [[ ${#missing_deps[@]} -gt 0 ]]; then
     error "Dependencias faltantes: ${missing_deps[*]}"
@@ -192,7 +279,7 @@ audit_npm_dependencies() {
       warning "npm audit reportó vulnerabilidades moderadas o críticas"
     fi
 
-    if ! jq -e '.' "$AUDIT_JSON_FILE" >/dev/null 2>&1; then
+    if ! validate_json_file "$AUDIT_JSON_FILE"; then
       error "El reporte de npm audit no es JSON válido"
       AUDIT_FAILURE=1
       return
@@ -200,23 +287,73 @@ audit_npm_dependencies() {
 
     rotate_reports "$REPORT_DIR" "npm-audit-" "$MAX_REPORTS"
 
-    local vulnerabilities
-    vulnerabilities=$(jq -r '.vulnerabilities | keys[]' "$AUDIT_JSON_FILE" 2>/dev/null || echo "")
+    local vulnerabilities_data=""
+    local vulnerabilities_status=0
+    if [[ "$HAS_JQ" == "true" ]]; then
+      vulnerabilities_data=$(jq -r '.vulnerabilities | to_entries[] | "\(.key)|\(.value.severity // \"unknown\")|\(.value.title // \"Vulnerability\")"' "$AUDIT_JSON_FILE" 2>/dev/null || echo "")
+    else
+      set +e
+      vulnerabilities_data=$(node -e "$(cat <<'NODE'
+const fs = require('fs');
+const path = process.argv[2];
+let data;
+try {
+  data = JSON.parse(fs.readFileSync(path, 'utf8'));
+} catch (error) {
+  process.exit(1);
+}
 
-    if [[ -n $vulnerabilities ]]; then
-      while IFS= read -r vuln; do
-        local severity
-        severity=$(jq -r ".vulnerabilities[\"$vuln\"].severity" "$AUDIT_JSON_FILE" 2>/dev/null || echo "unknown")
-        local description
-        description=$(jq -r ".vulnerabilities[\"$vuln\"].title" "$AUDIT_JSON_FILE" 2>/dev/null || echo "Vulnerability in $vuln")
+const entries = Object.entries(data.vulnerabilities || {});
+const lines = [];
+for (const [pkg, info] of entries) {
+  if (!info) continue;
+  const severity = info.severity || 'unknown';
+  const title = (info.title || `Vulnerability in ${pkg}`).replace(/\s+/g, ' ').trim();
+  lines.push(`${pkg}|${severity}|${title}`);
+}
 
+if (lines.length > 0) {
+  process.stdout.write(lines.join('\n'));
+}
+NODE
+)" "$AUDIT_JSON_FILE")
+      vulnerabilities_status=$?
+      set -e
+      if [[ $vulnerabilities_status -ne 0 ]]; then
+        error "No se pudo interpretar npm-audit.json sin jq"
+        AUDIT_FAILURE=1
+        return
+      fi
+    fi
+
+    if [[ -n $vulnerabilities_data ]]; then
+      while IFS='|' read -r _pkg severity description; do
         add_vulnerability "$severity" "dependency" "$description" "package.json" "0" "Update dependency to latest secure version"
         update_summary "$severity"
-      done <<<"$vulnerabilities"
+      done <<<"$vulnerabilities_data"
     fi
 
     local moderate_plus
-    moderate_plus=$(jq '(.metadata.vulnerabilities.moderate // 0) + (.metadata.vulnerabilities.high // 0) + (.metadata.vulnerabilities.critical // 0)' "$AUDIT_JSON_FILE" 2>/dev/null || echo "0")
+    if [[ "$HAS_JQ" == "true" ]]; then
+      moderate_plus=$(jq '(.metadata.vulnerabilities.moderate // 0) + (.metadata.vulnerabilities.high // 0) + (.metadata.vulnerabilities.critical // 0)' "$AUDIT_JSON_FILE" 2>/dev/null || echo "0")
+    else
+      moderate_plus=$(node -e "$(cat <<'NODE'
+const fs = require('fs');
+const path = process.argv[2];
+let data;
+try {
+  data = JSON.parse(fs.readFileSync(path, 'utf8'));
+} catch (error) {
+  process.stdout.write('0');
+  process.exit(0);
+}
+
+const metadata = (data.metadata && data.metadata.vulnerabilities) || {};
+const total = (metadata.moderate || 0) + (metadata.high || 0) + (metadata.critical || 0);
+process.stdout.write(String(total));
+NODE
+)" "$AUDIT_JSON_FILE")
+    fi
 
     if (( moderate_plus > 0 )); then
       AUDIT_FAILURE=1
@@ -285,25 +422,72 @@ generate_final_report() {
   log "Generando reporte final..."
 
   # Actualizar timestamp final
-  local temp_file
-  temp_file=$(mktemp)
-  jq --arg timestamp "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
-    '.audit_completed = $timestamp' \
-    "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
+  local timestamp
+  timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+  if [[ "$HAS_JQ" == "true" ]]; then
+    local temp_file
+    temp_file=$(mktemp)
+    jq --arg timestamp "$timestamp" \
+      '.audit_completed = $timestamp' \
+      "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
+  else
+    node -e "$(cat <<'NODE'
+const fs = require('fs');
+const [,, reportPath, timestamp] = process.argv;
+const raw = fs.readFileSync(reportPath, 'utf8');
+const data = JSON.parse(raw);
+data.audit_completed = timestamp;
+fs.writeFileSync(reportPath, JSON.stringify(data, null, 2));
+NODE
+)" "$REPORT_FILE" "$timestamp"
+  fi
 
   rotate_reports "$REPORT_DIR" "security-audit-" "$MAX_REPORTS"
 
   # Mostrar resumen
   local total
-  total=$(jq -r '.summary.total_vulnerabilities' "$REPORT_FILE")
   local critical
-  critical=$(jq -r '.summary.critical' "$REPORT_FILE")
   local high
-  high=$(jq -r '.summary.high' "$REPORT_FILE")
   local medium
-  medium=$(jq -r '.summary.medium' "$REPORT_FILE")
   local low
-  low=$(jq -r '.summary.low' "$REPORT_FILE")
+
+  if [[ "$HAS_JQ" == "true" ]]; then
+    total=$(jq -r '.summary.total_vulnerabilities' "$REPORT_FILE")
+    critical=$(jq -r '.summary.critical' "$REPORT_FILE")
+    high=$(jq -r '.summary.high' "$REPORT_FILE")
+    medium=$(jq -r '.summary.medium' "$REPORT_FILE")
+    low=$(jq -r '.summary.low' "$REPORT_FILE")
+  else
+    local summary_line
+    summary_line=$(node -e "$(cat <<'NODE'
+const fs = require('fs');
+const path = process.argv[2];
+let data;
+try {
+  data = JSON.parse(fs.readFileSync(path, 'utf8'));
+} catch (error) {
+  console.log('0|0|0|0|0');
+  process.exit(0);
+}
+
+const summary = data.summary || {};
+const values = [
+  summary.total_vulnerabilities || 0,
+  summary.critical || 0,
+  summary.high || 0,
+  summary.medium || 0,
+  summary.low || 0,
+];
+console.log(values.join('|'));
+NODE
+)" "$REPORT_FILE")
+    total=$(echo "$summary_line" | cut -d'|' -f1)
+    critical=$(echo "$summary_line" | cut -d'|' -f2)
+    high=$(echo "$summary_line" | cut -d'|' -f3)
+    medium=$(echo "$summary_line" | cut -d'|' -f4)
+    low=$(echo "$summary_line" | cut -d'|' -f5)
+  fi
 
   echo ""
   echo "=========================================="

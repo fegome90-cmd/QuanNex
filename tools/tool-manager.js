@@ -13,37 +13,63 @@ const __dirname = dirname(__filename);
 const PROJECT_ROOT = join(__dirname, '..');
 const MAX_DEPENDENCY_LENGTH = 64;
 const SAFE_DEPENDENCY_REGEX = /^[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?$/;
+const LOG_REDACT_PATTERN = /[^A-Za-z0-9._-]/g;
 const POSIX_SAFE_PATH = '/usr/bin:/bin';
 const DEFAULT_SYSTEM_ROOT = process.env.SystemRoot || 'C:\\Windows';
 const WINDOWS_SAFE_PATH = `${DEFAULT_SYSTEM_ROOT}\\System32`;
 
-function isSafeBinaryName(name) {
+function sanitizeForLog(value) {
+  if (typeof value !== 'string') {
+    return 'invalid-input';
+  }
+  return value.replace(LOG_REDACT_PATTERN, '?').slice(0, MAX_DEPENDENCY_LENGTH);
+}
+
+function validateBinaryName(name) {
   if (typeof name !== 'string') {
-    return false;
+    return { valid: false, detail: 'not_string' };
   }
 
-  if (name.length === 0 || name.length > MAX_DEPENDENCY_LENGTH) {
-    return false;
+  if (name.length === 0) {
+    return { valid: false, detail: 'empty' };
   }
 
-  if (!SAFE_DEPENDENCY_REGEX.test(name)) {
-    return false;
+  if (name.length > MAX_DEPENDENCY_LENGTH) {
+    return { valid: false, detail: 'too_long' };
   }
 
   if (name.includes('/') || name.includes('\\')) {
-    return false;
+    return { valid: false, detail: 'path_separator' };
   }
 
   if (name.includes('..')) {
-    return false;
+    return { valid: false, detail: 'path_traversal' };
   }
 
-  return name === basename(name);
+  if (!SAFE_DEPENDENCY_REGEX.test(name)) {
+    return { valid: false, detail: 'pattern_mismatch' };
+  }
+
+  if (name !== basename(name)) {
+    return { valid: false, detail: 'basename_mismatch' };
+  }
+
+  return { valid: true, detail: 'ok' };
+}
+
+function isSafeBinaryName(name) {
+  return validateBinaryName(name).valid;
 }
 
 function safeWhich(binName, { platform = process.platform } = {}) {
-  if (!isSafeBinaryName(binName)) {
-    return { found: false, reason: 'invalid_name' };
+  const validation = validateBinaryName(binName);
+  if (!validation.valid) {
+    return {
+      found: false,
+      reason: 'invalid_name',
+      detail: validation.detail,
+      sanitized: sanitizeForLog(binName),
+    };
   }
 
   const isWindows = platform === 'win32';
@@ -70,17 +96,49 @@ function safeWhich(binName, { platform = process.platform } = {}) {
   });
 
   if (result.error && result.error.code === 'ETIMEDOUT') {
-    return { found: false, reason: 'timeout' };
+    return {
+      found: false,
+      reason: 'timeout',
+      detail: 'command_timeout',
+      sanitized: sanitizeForLog(binName),
+    };
   }
 
   if (result.status === null) {
-    return { found: false, reason: 'timeout' };
+    return {
+      found: false,
+      reason: 'timeout',
+      detail: 'unknown',
+      sanitized: sanitizeForLog(binName),
+    };
   }
 
   return {
     found: result.status === 0,
     reason: result.status === 0 ? 'ok' : 'not_found',
+    detail: result.status === 0 ? 'ok' : 'not_found',
+    sanitized: sanitizeForLog(binName),
   };
+}
+
+function logDependencyWarning(toolName, dependency, reason, detail) {
+  const payload = {
+    event: 'tool_dependency_check',
+    status: 'unavailable',
+    tool: toolName,
+    dependency: sanitizeForLog(dependency),
+    reason,
+    detail,
+    timestamp: new Date().toISOString(),
+  };
+
+  try {
+    console.warn(JSON.stringify(payload));
+  } catch (error) {
+    console.warn(
+      `{"event":"tool_dependency_check","status":"unavailable","tool":"${toolName}","reason":"${reason}"}`
+    );
+  }
 }
 
 class ToolManager {
@@ -259,15 +317,28 @@ class ToolManager {
 
     const missing = [];
     const invalid = [];
+    const diagnostics = [];
 
     for (const dep of tool.dependencies || []) {
-      const { found, reason } = safeWhich(dep);
+      const result = safeWhich(dep);
+      const { found, reason, detail, sanitized } = result;
 
       if (!found) {
         missing.push(dep);
 
+        const diagnosticEntry = {
+          dependency: dep,
+          sanitized: sanitized ?? sanitizeForLog(dep),
+          reason,
+          detail: detail || null,
+        };
+        diagnostics.push(diagnosticEntry);
+
         if (reason === 'invalid_name') {
           invalid.push(dep);
+          logDependencyWarning(toolName, dep, reason, detail || 'invalid_name');
+        } else if (reason === 'timeout') {
+          logDependencyWarning(toolName, dep, reason, detail || 'timeout');
         }
       }
     }
@@ -277,6 +348,7 @@ class ToolManager {
       available: missing.length === 0,
       missing,
       invalid,
+      diagnostics,
       dependencies: tool.dependencies || [],
     };
   }

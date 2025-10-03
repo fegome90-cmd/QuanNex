@@ -1,4 +1,19 @@
 {
+  "code": [
+    "src/**/*.{js,ts,mjs}",
+    "agents/**/*.{js,ts,mjs}",
+    "scripts/**/*.{js,mjs}",
+    "core/**/*.{js,ts,mjs}",
+    "packages/**/*.{js,ts,mjs}",
+    "tools/**/*.{js,mjs}",
+    "utils/**/*.{js,mjs}"
+  ],
+  "configs": [
+    "config/**/*.{json,js,mjs}",
+    "*.{json,js,mjs}",
+    ".github/**/*.{yml,yaml}",
+    "*.config.{js,mjs,ts}"
+  ],
   "include": [
     "src/**/*.{js,ts,mjs}",
     "agents/**/*.{js,ts,mjs}",

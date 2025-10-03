@@ -1,0 +1,3428 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2025-10-03T21:02:51.769Z",
+  "ola": "ola1-robustez",
+  "data": {
+    "tasks": [
+      {
+        "id": "8a5c8298-3818-464d-a703-b34a1a118ad4",
+        "title": "Implementar sistema de autenticación",
+        "description": "Implementar autenticación JWT con refresh tokens",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:51:57.212Z",
+        "updated_at": "2025-10-03T20:51:57.212Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "auth",
+          "security",
+          "backend"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "4ad32bbb-361f-472f-88c7-65b486f69055",
+        "title": "Crear dashboard de métricas",
+        "description": "Dashboard en tiempo real con métricas de sistema",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:51:57.213Z",
+        "updated_at": "2025-10-03T20:51:57.213Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "frontend",
+          "dashboard",
+          "metrics"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "5aa65896-7026-47d8-afb2-24957a9f71e5",
+        "title": "Implementar sistema de autenticación",
+        "description": "Implementar autenticación JWT con refresh tokens",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:52:20.865Z",
+        "updated_at": "2025-10-03T20:52:20.865Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "auth",
+          "security",
+          "backend"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "5918cb32-08e9-4d83-9abd-6feee68e3ff6",
+        "title": "Crear dashboard de métricas",
+        "description": "Dashboard en tiempo real con métricas de sistema",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:52:20.867Z",
+        "updated_at": "2025-10-03T20:52:20.867Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "frontend",
+          "dashboard",
+          "metrics"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "d1de3658-f72f-4734-b42e-94e120b22001",
+        "title": "Implementar sistema de autenticación",
+        "description": "Implementar autenticación JWT con refresh tokens",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:52:29.945Z",
+        "updated_at": "2025-10-03T20:52:29.945Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "auth",
+          "security",
+          "backend"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "6c9a2216-c485-45d6-822a-1452b5d452a4",
+        "title": "Crear dashboard de métricas",
+        "description": "Dashboard en tiempo real con métricas de sistema",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:52:29.946Z",
+        "updated_at": "2025-10-03T20:52:29.946Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "frontend",
+          "dashboard",
+          "metrics"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "942f2dd4-a9fe-4fcf-a83f-57d733426cda",
+        "title": "Validación TaskDB - Test 1",
+        "description": "Tarea de prueba para validación",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:53:19.001Z",
+        "updated_at": "2025-10-03T20:53:19.001Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "9def139e-bf59-4235-9ab7-c430c2a3dce8",
+        "title": "Validación TaskDB - Test 2",
+        "description": "Segunda tarea de prueba",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:53:19.002Z",
+        "updated_at": "2025-10-03T20:53:19.002Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "70a434c3-b64e-4a29-884e-81f5327434d9",
+        "title": "Validación TaskDB - Test 1",
+        "description": "Tarea de prueba para validación",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:53:31.772Z",
+        "updated_at": "2025-10-03T20:53:31.772Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "e32afa3e-6d86-48ca-a314-ff195a6ab7a5",
+        "title": "Validación TaskDB - Test 2",
+        "description": "Segunda tarea de prueba",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:53:31.773Z",
+        "updated_at": "2025-10-03T20:53:31.773Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "01743e29-944d-495f-95b7-1538668161f6",
+        "title": "Validación TaskDB - Test 1",
+        "description": "Tarea de prueba para validación",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:53:50.156Z",
+        "updated_at": "2025-10-03T20:53:50.156Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "fe35ee4c-3574-433e-bb75-e6ca54e938ba",
+        "title": "Validación TaskDB - Test 2",
+        "description": "Segunda tarea de prueba",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:53:50.157Z",
+        "updated_at": "2025-10-03T20:53:50.157Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "f49f439b-f151-4ff3-9266-435f3580e7ae",
+        "title": "Validación TaskDB - Test 1",
+        "description": "Tarea de prueba para validación",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:54:15.547Z",
+        "updated_at": "2025-10-03T20:54:15.547Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "bc32f874-378f-4687-90f9-1d1cad091f31",
+        "title": "Validación TaskDB - Test 2",
+        "description": "Segunda tarea de prueba",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:54:15.548Z",
+        "updated_at": "2025-10-03T20:54:15.548Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "19a00aab-3eee-4a4b-829f-9212d4914646",
+        "title": "Validación TaskDB - Test 1",
+        "description": "Tarea de prueba para validación",
+        "status": "todo",
+        "priority": "high",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:56:13.365Z",
+        "updated_at": "2025-10-03T20:56:13.365Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "c8b8bc6e-1457-4732-87db-fd53a706d1ac",
+        "title": "Validación TaskDB - Test 2",
+        "description": "Segunda tarea de prueba",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T20:56:13.366Z",
+        "updated_at": "2025-10-03T20:56:13.366Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "validation",
+          "test"
+        ],
+        "metadata": {}
+      },
+      {
+        "id": "ebafc7dc-7df3-4f7c-8679-04f8bcd33af0",
+        "title": "Re-habilitar lint para TaskDB Core",
+        "description": "Remover exclusión temporal de ESLint para packages/taskdb-core/** después de completar OLA 2",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T21:02:51.767Z",
+        "updated_at": "2025-10-03T21:02:51.767Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [
+          "maintenance",
+          "eslint",
+          "ola2"
+        ],
+        "metadata": {
+          "due_date": "2025-02-15",
+          "owner": "felipe",
+          "blocker": "Ola 2 completion"
+        }
+      }
+    ],
+    "runs": [
+      {
+        "id": "96ccce14-51bd-4bef-8187-bc7b8881f07b",
+        "task_id": "8a5c8298-3818-464d-a703-b34a1a118ad4",
+        "status": "pending",
+        "started_at": "2025-10-03T20:51:57.213Z",
+        "completed_at": null,
+        "duration_ms": null,
+        "tool_calls": [
+          {
+            "tool_name": "npm install",
+            "args": {
+              "packages": [
+                "jsonwebtoken",
+                "bcryptjs"
+              ]
+            },
+            "result": {
+              "success": true,
+              "packages_installed": 2
+            },
+            "duration_ms": 1500
+          },
+          {
+            "tool_name": "code_generation",
+            "args": {
+              "feature": "jwt_auth"
+            },
+            "result": {
+              "files_created": 3,
+              "lines_of_code": 250
+            },
+            "duration_ms": 8000
+          }
+        ],
+        "metrics": {},
+        "error_message": null
+      },
+      {
+        "id": "f81dc4a0-08fc-4b7f-b129-a9db4fd1b54a",
+        "task_id": "4ad32bbb-361f-472f-88c7-65b486f69055",
+        "status": "pending",
+        "started_at": "2025-10-03T20:51:57.213Z",
+        "completed_at": null,
+        "duration_ms": null,
+        "tool_calls": [
+          {
+            "tool_name": "npm install",
+            "args": {
+              "packages": [
+                "chart.js",
+                "react"
+              ]
+            },
+            "result": {
+              "success": true,
+              "packages_installed": 15
+            },
+            "duration_ms": 3000
+          }
+        ],
+        "metrics": {},
+        "error_message": null
+      },
+      {
+        "id": "009ec6aa-5881-4b09-a837-99124716c784",
+        "task_id": "5aa65896-7026-47d8-afb2-24957a9f71e5",
+        "status": "completed",
+        "started_at": "2025-10-03T20:52:20.869Z",
+        "completed_at": "2025-10-03T20:52:20.871Z",
+        "duration_ms": 2,
+        "tool_calls": [
+          {
+            "tool_name": "npm install",
+            "args": {
+              "packages": [
+                "jsonwebtoken",
+                "bcryptjs"
+              ]
+            },
+            "result": {
+              "success": true,
+              "packages_installed": 2
+            },
+            "duration_ms": 1500
+          },
+          {
+            "tool_name": "code_generation",
+            "args": {
+              "feature": "jwt_auth"
+            },
+            "result": {
+              "files_created": 3,
+              "lines_of_code": 250
+            },
+            "duration_ms": 8000
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0,
+          "latency_p50": 1200,
+          "latency_p95": 2500
+        },
+        "error_message": null
+      },
+      {
+        "id": "e08838bd-9feb-456d-bb30-92c7c95c4bfe",
+        "task_id": "5918cb32-08e9-4d83-9abd-6feee68e3ff6",
+        "status": "completed",
+        "started_at": "2025-10-03T20:52:20.870Z",
+        "completed_at": "2025-10-03T20:52:20.872Z",
+        "duration_ms": 2,
+        "tool_calls": [
+          {
+            "tool_name": "npm install",
+            "args": {
+              "packages": [
+                "chart.js",
+                "react"
+              ]
+            },
+            "result": {
+              "success": true,
+              "packages_installed": 15
+            },
+            "duration_ms": 3000
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0,
+          "latency_p50": 800,
+          "latency_p95": 1500
+        },
+        "error_message": null
+      },
+      {
+        "id": "36283982-640c-4abb-bb50-0dc04869583f",
+        "task_id": "d1de3658-f72f-4734-b42e-94e120b22001",
+        "status": "completed",
+        "started_at": "2025-10-03T20:52:29.946Z",
+        "completed_at": "2025-10-03T20:52:29.946Z",
+        "duration_ms": 0,
+        "tool_calls": [
+          {
+            "tool_name": "npm install",
+            "args": {
+              "packages": [
+                "jsonwebtoken",
+                "bcryptjs"
+              ]
+            },
+            "result": {
+              "success": true,
+              "packages_installed": 2
+            },
+            "duration_ms": 1500
+          },
+          {
+            "tool_name": "code_generation",
+            "args": {
+              "feature": "jwt_auth"
+            },
+            "result": {
+              "files_created": 3,
+              "lines_of_code": 250
+            },
+            "duration_ms": 8000
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0,
+          "latency_p50": 1200,
+          "latency_p95": 2500
+        },
+        "error_message": null
+      },
+      {
+        "id": "2b2de4a3-8391-4ee9-80e7-581c4011010b",
+        "task_id": "6c9a2216-c485-45d6-822a-1452b5d452a4",
+        "status": "completed",
+        "started_at": "2025-10-03T20:52:29.946Z",
+        "completed_at": "2025-10-03T20:52:29.947Z",
+        "duration_ms": 1,
+        "tool_calls": [
+          {
+            "tool_name": "npm install",
+            "args": {
+              "packages": [
+                "chart.js",
+                "react"
+              ]
+            },
+            "result": {
+              "success": true,
+              "packages_installed": 15
+            },
+            "duration_ms": 3000
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0,
+          "latency_p50": 800,
+          "latency_p95": 1500
+        },
+        "error_message": null
+      },
+      {
+        "id": "da75655d-dd28-499e-877e-0bf5b0b8e73f",
+        "task_id": "942f2dd4-a9fe-4fcf-a83f-57d733426cda",
+        "status": "completed",
+        "started_at": "2025-10-03T20:53:19.003Z",
+        "completed_at": "2025-10-03T20:53:19.005Z",
+        "duration_ms": 2,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test",
+            "args": {
+              "test": "go_no_go"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 100
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "25bd7a60-de11-49ce-b0e0-c085f66ee92c",
+        "task_id": "9def139e-bf59-4235-9ab7-c430c2a3dce8",
+        "status": "completed",
+        "started_at": "2025-10-03T20:53:19.004Z",
+        "completed_at": "2025-10-03T20:53:19.006Z",
+        "duration_ms": 2,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test_2",
+            "args": {
+              "test": "go_no_go_2"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 150
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "86dc427a-aba9-4bc2-a73b-cc1222a4c315",
+        "task_id": "70a434c3-b64e-4a29-884e-81f5327434d9",
+        "status": "completed",
+        "started_at": "2025-10-03T20:53:31.774Z",
+        "completed_at": "2025-10-03T20:53:31.777Z",
+        "duration_ms": 3,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test",
+            "args": {
+              "test": "go_no_go"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 100
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "bb00c022-4daf-4f4f-8c86-d0c5b3b2b629",
+        "task_id": "e32afa3e-6d86-48ca-a314-ff195a6ab7a5",
+        "status": "completed",
+        "started_at": "2025-10-03T20:53:31.775Z",
+        "completed_at": "2025-10-03T20:53:31.780Z",
+        "duration_ms": 5,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test_2",
+            "args": {
+              "test": "go_no_go_2"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 150
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+        "task_id": "01743e29-944d-495f-95b7-1538668161f6",
+        "status": "completed",
+        "started_at": "2025-10-03T20:53:50.157Z",
+        "completed_at": "2025-10-03T20:53:50.158Z",
+        "duration_ms": 1,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test",
+            "args": {
+              "test": "go_no_go"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 100
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "5c35d622-336e-453d-8280-39de6b79773a",
+        "task_id": "fe35ee4c-3574-433e-bb75-e6ca54e938ba",
+        "status": "completed",
+        "started_at": "2025-10-03T20:53:50.158Z",
+        "completed_at": "2025-10-03T20:53:50.159Z",
+        "duration_ms": 1,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test_2",
+            "args": {
+              "test": "go_no_go_2"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 150
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+        "task_id": "f49f439b-f151-4ff3-9266-435f3580e7ae",
+        "status": "completed",
+        "started_at": "2025-10-03T20:54:15.551Z",
+        "completed_at": "2025-10-03T20:54:15.555Z",
+        "duration_ms": 4,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test",
+            "args": {
+              "test": "go_no_go"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 100
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "77e91cea-96ee-4932-80e7-4da9fae58acd",
+        "task_id": "bc32f874-378f-4687-90f9-1d1cad091f31",
+        "status": "completed",
+        "started_at": "2025-10-03T20:54:15.553Z",
+        "completed_at": "2025-10-03T20:54:15.558Z",
+        "duration_ms": 5,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test_2",
+            "args": {
+              "test": "go_no_go_2"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 150
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+        "task_id": "19a00aab-3eee-4a4b-829f-9212d4914646",
+        "status": "completed",
+        "started_at": "2025-10-03T20:56:13.367Z",
+        "completed_at": "2025-10-03T20:56:13.368Z",
+        "duration_ms": 1,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test",
+            "args": {
+              "test": "go_no_go"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 100
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      },
+      {
+        "id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
+        "task_id": "c8b8bc6e-1457-4732-87db-fd53a706d1ac",
+        "status": "completed",
+        "started_at": "2025-10-03T20:56:13.368Z",
+        "completed_at": "2025-10-03T20:56:13.368Z",
+        "duration_ms": 0,
+        "tool_calls": [
+          {
+            "tool_name": "validation_test_2",
+            "args": {
+              "test": "go_no_go_2"
+            },
+            "result": {
+              "success": true
+            },
+            "duration_ms": 150
+          }
+        ],
+        "metrics": {
+          "success_rate": 1,
+          "error_count": 0
+        },
+        "error_message": null
+      }
+    ],
+    "gates": [
+      {
+        "id": "8f7a3ec0-8012-4877-b4d2-172ba887f8f1",
+        "name": "security_audit",
+        "type": "security",
+        "status": "pending",
+        "checks": [
+          {
+            "name": "jwt_security_check",
+            "status": "pass",
+            "message": "JWT tokens configurados con expiración segura"
+          },
+          {
+            "name": "password_hashing_check",
+            "status": "pass",
+            "message": "Passwords hasheados con bcrypt"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "009ec6aa-5881-4b09-a837-99124716c784",
+        "created_at": "2025-10-03T20:52:20.873Z"
+      },
+      {
+        "id": "0296e4bf-7933-4017-a51b-cefe9d4fdb97",
+        "name": "security_audit",
+        "type": "security",
+        "status": "pending",
+        "checks": [
+          {
+            "name": "jwt_security_check",
+            "status": "pass",
+            "message": "JWT tokens configurados con expiración segura"
+          },
+          {
+            "name": "password_hashing_check",
+            "status": "pass",
+            "message": "Passwords hasheados con bcrypt"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "36283982-640c-4abb-bb50-0dc04869583f",
+        "created_at": "2025-10-03T20:52:29.947Z"
+      },
+      {
+        "id": "f6ccc9b1-4703-489e-9d45-0bc0baf15f58",
+        "name": "validation_gate_1",
+        "type": "security",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "security_check",
+            "status": "pass",
+            "message": "Security check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "da75655d-dd28-499e-877e-0bf5b0b8e73f",
+        "created_at": "2025-10-03T20:53:19.008Z"
+      },
+      {
+        "id": "ab09ccd2-85a8-4e47-a71f-88bd8859783e",
+        "name": "validation_gate_2",
+        "type": "lint",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "lint_check",
+            "status": "pass",
+            "message": "Lint check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "25bd7a60-de11-49ce-b0e0-c085f66ee92c",
+        "created_at": "2025-10-03T20:53:19.012Z"
+      },
+      {
+        "id": "9c13de2c-aaa8-40e6-83dd-0e12015f82ab",
+        "name": "validation_gate_1",
+        "type": "security",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "security_check",
+            "status": "pass",
+            "message": "Security check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "86dc427a-aba9-4bc2-a73b-cc1222a4c315",
+        "created_at": "2025-10-03T20:53:31.782Z"
+      },
+      {
+        "id": "ef0a573c-7242-48e3-a7d9-3058cd9bcaed",
+        "name": "validation_gate_2",
+        "type": "lint",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "lint_check",
+            "status": "pass",
+            "message": "Lint check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "bb00c022-4daf-4f4f-8c86-d0c5b3b2b629",
+        "created_at": "2025-10-03T20:53:31.783Z"
+      },
+      {
+        "id": "bded55ca-95a6-483e-9adb-e7d055bff024",
+        "name": "validation_gate_1",
+        "type": "security",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "security_check",
+            "status": "pass",
+            "message": "Security check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+        "created_at": "2025-10-03T20:53:50.159Z"
+      },
+      {
+        "id": "77e0f943-9f71-470e-9ef0-00c7f0db08a4",
+        "name": "validation_gate_2",
+        "type": "lint",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "lint_check",
+            "status": "pass",
+            "message": "Lint check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "5c35d622-336e-453d-8280-39de6b79773a",
+        "created_at": "2025-10-03T20:53:50.159Z"
+      },
+      {
+        "id": "fd0d1125-bbc9-4f0a-8a5f-81a89e2de759",
+        "name": "validation_gate_1",
+        "type": "security",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "security_check",
+            "status": "pass",
+            "message": "Security check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+        "created_at": "2025-10-03T20:54:15.559Z"
+      },
+      {
+        "id": "c6b666a1-694d-4d21-9317-48b33a9f0465",
+        "name": "validation_gate_2",
+        "type": "lint",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "lint_check",
+            "status": "pass",
+            "message": "Lint check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "77e91cea-96ee-4932-80e7-4da9fae58acd",
+        "created_at": "2025-10-03T20:54:15.560Z"
+      },
+      {
+        "id": "71423fda-d8bd-41b5-87f8-2b611b08b6d2",
+        "name": "validation_gate_1",
+        "type": "security",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "security_check",
+            "status": "pass",
+            "message": "Security check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+        "created_at": "2025-10-03T20:56:13.369Z"
+      },
+      {
+        "id": "e38e849e-fb1e-4a6f-b374-891ed4a4c736",
+        "name": "validation_gate_2",
+        "type": "lint",
+        "status": "pass",
+        "checks": [
+          {
+            "name": "lint_check",
+            "status": "pass",
+            "message": "Lint check passed"
+          }
+        ],
+        "policy_version": "1.0.0",
+        "run_id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
+        "created_at": "2025-10-03T20:56:13.369Z"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": "a26bbe58-ee74-4a62-a9e8-e14314bb71ec",
+        "name": "validation-report-1.json",
+        "type": "report",
+        "uri": "reports/validation-1.json",
+        "hash": "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0",
+        "size_bytes": 1024,
+        "created_at": "2025-10-03T20:53:50.160Z",
+        "run_id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+        "metadata": {}
+      },
+      {
+        "id": "47e69cef-f052-4530-a4b2-05d229cdebaf",
+        "name": "validation-report-1.json",
+        "type": "report",
+        "uri": "reports/validation-1.json",
+        "hash": "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0",
+        "size_bytes": 1024,
+        "created_at": "2025-10-03T20:54:15.562Z",
+        "run_id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+        "metadata": {}
+      },
+      {
+        "id": "59220919-13de-48ef-94a0-b1acf8708d31",
+        "name": "validation-report-1.json",
+        "type": "report",
+        "uri": "/dev/null",
+        "hash": "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0",
+        "size_bytes": 1024,
+        "created_at": "2025-10-03T20:56:13.372Z",
+        "run_id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+        "metadata": {}
+      }
+    ],
+    "events": [
+      {
+        "id": "cf59c134-5cb3-4503-90bb-16ba46bf9744",
+        "type": "task_created",
+        "entity_id": "8a5c8298-3818-464d-a703-b34a1a118ad4",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:51:57.213Z",
+        "data": {
+          "id": "8a5c8298-3818-464d-a703-b34a1a118ad4",
+          "title": "Implementar sistema de autenticación",
+          "description": "Implementar autenticación JWT con refresh tokens",
+          "status": "todo",
+          "priority": "high",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:51:57.212Z",
+          "updated_at": "2025-10-03T20:51:57.212Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "auth",
+            "security",
+            "backend"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "f0db0bae-bd29-48f6-b23b-4519fb53dd95",
+        "type": "task_created",
+        "entity_id": "4ad32bbb-361f-472f-88c7-65b486f69055",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:51:57.213Z",
+        "data": {
+          "id": "4ad32bbb-361f-472f-88c7-65b486f69055",
+          "title": "Crear dashboard de métricas",
+          "description": "Dashboard en tiempo real con métricas de sistema",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:51:57.213Z",
+          "updated_at": "2025-10-03T20:51:57.213Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "frontend",
+            "dashboard",
+            "metrics"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "f735ec1f-c6d0-406e-af60-b78042168cbf",
+        "type": "run_started",
+        "entity_id": "96ccce14-51bd-4bef-8187-bc7b8881f07b",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:51:57.213Z",
+        "data": {
+          "id": "96ccce14-51bd-4bef-8187-bc7b8881f07b",
+          "task_id": "8a5c8298-3818-464d-a703-b34a1a118ad4",
+          "status": "pending",
+          "started_at": "2025-10-03T20:51:57.213Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "jsonwebtoken",
+                  "bcryptjs"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 2
+              },
+              "duration_ms": 1500
+            },
+            {
+              "tool_name": "code_generation",
+              "args": {
+                "feature": "jwt_auth"
+              },
+              "result": {
+                "files_created": 3,
+                "lines_of_code": 250
+              },
+              "duration_ms": 8000
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "6660f06b-de33-45b9-9211-b58bcc1a110d",
+        "type": "run_started",
+        "entity_id": "f81dc4a0-08fc-4b7f-b129-a9db4fd1b54a",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:51:57.213Z",
+        "data": {
+          "id": "f81dc4a0-08fc-4b7f-b129-a9db4fd1b54a",
+          "task_id": "4ad32bbb-361f-472f-88c7-65b486f69055",
+          "status": "pending",
+          "started_at": "2025-10-03T20:51:57.213Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "chart.js",
+                  "react"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 15
+              },
+              "duration_ms": 3000
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "65468e66-9675-4809-bf33-2d99a6d6a8e7",
+        "type": "task_created",
+        "entity_id": "5aa65896-7026-47d8-afb2-24957a9f71e5",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:52:20.867Z",
+        "data": {
+          "id": "5aa65896-7026-47d8-afb2-24957a9f71e5",
+          "title": "Implementar sistema de autenticación",
+          "description": "Implementar autenticación JWT con refresh tokens",
+          "status": "todo",
+          "priority": "high",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:52:20.865Z",
+          "updated_at": "2025-10-03T20:52:20.865Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "auth",
+            "security",
+            "backend"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "3dcdce0c-5475-4331-a618-c1de9389ec36",
+        "type": "task_created",
+        "entity_id": "5918cb32-08e9-4d83-9abd-6feee68e3ff6",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:52:20.868Z",
+        "data": {
+          "id": "5918cb32-08e9-4d83-9abd-6feee68e3ff6",
+          "title": "Crear dashboard de métricas",
+          "description": "Dashboard en tiempo real con métricas de sistema",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:52:20.867Z",
+          "updated_at": "2025-10-03T20:52:20.867Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "frontend",
+            "dashboard",
+            "metrics"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "aa32f5bc-a634-45ca-8caf-510f10fb11a5",
+        "type": "run_started",
+        "entity_id": "009ec6aa-5881-4b09-a837-99124716c784",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:52:20.869Z",
+        "data": {
+          "id": "009ec6aa-5881-4b09-a837-99124716c784",
+          "task_id": "5aa65896-7026-47d8-afb2-24957a9f71e5",
+          "status": "pending",
+          "started_at": "2025-10-03T20:52:20.869Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "jsonwebtoken",
+                  "bcryptjs"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 2
+              },
+              "duration_ms": 1500
+            },
+            {
+              "tool_name": "code_generation",
+              "args": {
+                "feature": "jwt_auth"
+              },
+              "result": {
+                "files_created": 3,
+                "lines_of_code": 250
+              },
+              "duration_ms": 8000
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "0f3c7fa6-a022-4610-92d6-0cc23d22d1e1",
+        "type": "run_started",
+        "entity_id": "e08838bd-9feb-456d-bb30-92c7c95c4bfe",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:52:20.870Z",
+        "data": {
+          "id": "e08838bd-9feb-456d-bb30-92c7c95c4bfe",
+          "task_id": "5918cb32-08e9-4d83-9abd-6feee68e3ff6",
+          "status": "pending",
+          "started_at": "2025-10-03T20:52:20.870Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "chart.js",
+                  "react"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 15
+              },
+              "duration_ms": 3000
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "354a9246-b6c6-4821-9e75-fb4be2af2906",
+        "type": "run_completed",
+        "entity_id": "009ec6aa-5881-4b09-a837-99124716c784",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:52:20.871Z",
+        "data": {
+          "id": "009ec6aa-5881-4b09-a837-99124716c784",
+          "task_id": "5aa65896-7026-47d8-afb2-24957a9f71e5",
+          "status": "completed",
+          "started_at": "2025-10-03T20:52:20.869Z",
+          "completed_at": "2025-10-03T20:52:20.871Z",
+          "duration_ms": 2,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "jsonwebtoken",
+                  "bcryptjs"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 2
+              },
+              "duration_ms": 1500
+            },
+            {
+              "tool_name": "code_generation",
+              "args": {
+                "feature": "jwt_auth"
+              },
+              "result": {
+                "files_created": 3,
+                "lines_of_code": 250
+              },
+              "duration_ms": 8000
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0,
+            "latency_p50": 1200,
+            "latency_p95": 2500
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "c70724c6-66ae-4078-97a8-ae6e1d172cba",
+        "type": "run_completed",
+        "entity_id": "e08838bd-9feb-456d-bb30-92c7c95c4bfe",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:52:20.872Z",
+        "data": {
+          "id": "e08838bd-9feb-456d-bb30-92c7c95c4bfe",
+          "task_id": "5918cb32-08e9-4d83-9abd-6feee68e3ff6",
+          "status": "completed",
+          "started_at": "2025-10-03T20:52:20.870Z",
+          "completed_at": "2025-10-03T20:52:20.872Z",
+          "duration_ms": 2,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "chart.js",
+                  "react"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 15
+              },
+              "duration_ms": 3000
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0,
+            "latency_p50": 800,
+            "latency_p95": 1500
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "4af6a711-ac1d-484d-9998-253b0abdf6ba",
+        "type": "gate_created",
+        "entity_id": "8f7a3ec0-8012-4877-b4d2-172ba887f8f1",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:52:20.873Z",
+        "data": {
+          "id": "8f7a3ec0-8012-4877-b4d2-172ba887f8f1",
+          "name": "security_audit",
+          "type": "security",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "jwt_security_check",
+              "status": "pass",
+              "message": "JWT tokens configurados con expiración segura"
+            },
+            {
+              "name": "password_hashing_check",
+              "status": "pass",
+              "message": "Passwords hasheados con bcrypt"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "009ec6aa-5881-4b09-a837-99124716c784",
+          "created_at": "2025-10-03T20:52:20.873Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "9e1808b8-b148-4ded-918f-d867bae44f83",
+        "type": "task_created",
+        "entity_id": "d1de3658-f72f-4734-b42e-94e120b22001",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:52:29.945Z",
+        "data": {
+          "id": "d1de3658-f72f-4734-b42e-94e120b22001",
+          "title": "Implementar sistema de autenticación",
+          "description": "Implementar autenticación JWT con refresh tokens",
+          "status": "todo",
+          "priority": "high",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:52:29.945Z",
+          "updated_at": "2025-10-03T20:52:29.945Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "auth",
+            "security",
+            "backend"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "f69b15cf-6b3e-46f9-9be8-4c7683199160",
+        "type": "task_created",
+        "entity_id": "6c9a2216-c485-45d6-822a-1452b5d452a4",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:52:29.946Z",
+        "data": {
+          "id": "6c9a2216-c485-45d6-822a-1452b5d452a4",
+          "title": "Crear dashboard de métricas",
+          "description": "Dashboard en tiempo real con métricas de sistema",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:52:29.946Z",
+          "updated_at": "2025-10-03T20:52:29.946Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "frontend",
+            "dashboard",
+            "metrics"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "e675483e-fd99-4cb7-aa61-f3319a7dfaa9",
+        "type": "run_started",
+        "entity_id": "36283982-640c-4abb-bb50-0dc04869583f",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:52:29.946Z",
+        "data": {
+          "id": "36283982-640c-4abb-bb50-0dc04869583f",
+          "task_id": "d1de3658-f72f-4734-b42e-94e120b22001",
+          "status": "pending",
+          "started_at": "2025-10-03T20:52:29.946Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "jsonwebtoken",
+                  "bcryptjs"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 2
+              },
+              "duration_ms": 1500
+            },
+            {
+              "tool_name": "code_generation",
+              "args": {
+                "feature": "jwt_auth"
+              },
+              "result": {
+                "files_created": 3,
+                "lines_of_code": 250
+              },
+              "duration_ms": 8000
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "2f05c715-70e0-4257-a944-44bf195b7b5e",
+        "type": "run_started",
+        "entity_id": "2b2de4a3-8391-4ee9-80e7-581c4011010b",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:52:29.946Z",
+        "data": {
+          "id": "2b2de4a3-8391-4ee9-80e7-581c4011010b",
+          "task_id": "6c9a2216-c485-45d6-822a-1452b5d452a4",
+          "status": "pending",
+          "started_at": "2025-10-03T20:52:29.946Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "chart.js",
+                  "react"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 15
+              },
+              "duration_ms": 3000
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "45d1daa9-5d70-49fc-97f9-9452bf84e38a",
+        "type": "run_completed",
+        "entity_id": "36283982-640c-4abb-bb50-0dc04869583f",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:52:29.947Z",
+        "data": {
+          "id": "36283982-640c-4abb-bb50-0dc04869583f",
+          "task_id": "d1de3658-f72f-4734-b42e-94e120b22001",
+          "status": "completed",
+          "started_at": "2025-10-03T20:52:29.946Z",
+          "completed_at": "2025-10-03T20:52:29.946Z",
+          "duration_ms": 0,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "jsonwebtoken",
+                  "bcryptjs"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 2
+              },
+              "duration_ms": 1500
+            },
+            {
+              "tool_name": "code_generation",
+              "args": {
+                "feature": "jwt_auth"
+              },
+              "result": {
+                "files_created": 3,
+                "lines_of_code": 250
+              },
+              "duration_ms": 8000
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0,
+            "latency_p50": 1200,
+            "latency_p95": 2500
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "fc45af83-be8f-42fe-9ed4-2dc530e05b09",
+        "type": "run_completed",
+        "entity_id": "2b2de4a3-8391-4ee9-80e7-581c4011010b",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:52:29.947Z",
+        "data": {
+          "id": "2b2de4a3-8391-4ee9-80e7-581c4011010b",
+          "task_id": "6c9a2216-c485-45d6-822a-1452b5d452a4",
+          "status": "completed",
+          "started_at": "2025-10-03T20:52:29.946Z",
+          "completed_at": "2025-10-03T20:52:29.947Z",
+          "duration_ms": 1,
+          "tool_calls": [
+            {
+              "tool_name": "npm install",
+              "args": {
+                "packages": [
+                  "chart.js",
+                  "react"
+                ]
+              },
+              "result": {
+                "success": true,
+                "packages_installed": 15
+              },
+              "duration_ms": 3000
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0,
+            "latency_p50": 800,
+            "latency_p95": 1500
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "fbbd6acf-5f2d-41e9-84d6-b49275c054ba",
+        "type": "gate_created",
+        "entity_id": "0296e4bf-7933-4017-a51b-cefe9d4fdb97",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:52:29.947Z",
+        "data": {
+          "id": "0296e4bf-7933-4017-a51b-cefe9d4fdb97",
+          "name": "security_audit",
+          "type": "security",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "jwt_security_check",
+              "status": "pass",
+              "message": "JWT tokens configurados con expiración segura"
+            },
+            {
+              "name": "password_hashing_check",
+              "status": "pass",
+              "message": "Passwords hasheados con bcrypt"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "36283982-640c-4abb-bb50-0dc04869583f",
+          "created_at": "2025-10-03T20:52:29.947Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "5b2f542b-c308-4e4e-94e4-c9614f5b1c9f",
+        "type": "task_created",
+        "entity_id": "942f2dd4-a9fe-4fcf-a83f-57d733426cda",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:53:19.002Z",
+        "data": {
+          "id": "942f2dd4-a9fe-4fcf-a83f-57d733426cda",
+          "title": "Validación TaskDB - Test 1",
+          "description": "Tarea de prueba para validación",
+          "status": "todo",
+          "priority": "high",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:53:19.001Z",
+          "updated_at": "2025-10-03T20:53:19.001Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "92effe8a-b861-4019-94e3-f41d6f2c2651",
+        "type": "task_created",
+        "entity_id": "9def139e-bf59-4235-9ab7-c430c2a3dce8",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:53:19.002Z",
+        "data": {
+          "id": "9def139e-bf59-4235-9ab7-c430c2a3dce8",
+          "title": "Validación TaskDB - Test 2",
+          "description": "Segunda tarea de prueba",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:53:19.002Z",
+          "updated_at": "2025-10-03T20:53:19.002Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "4002c345-2058-41f7-9e61-ef073a7fc0e6",
+        "type": "run_started",
+        "entity_id": "da75655d-dd28-499e-877e-0bf5b0b8e73f",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:19.004Z",
+        "data": {
+          "id": "da75655d-dd28-499e-877e-0bf5b0b8e73f",
+          "task_id": "942f2dd4-a9fe-4fcf-a83f-57d733426cda",
+          "status": "pending",
+          "started_at": "2025-10-03T20:53:19.003Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "4ba2abd8-1532-4c4d-9f92-773ed64ecb42",
+        "type": "run_started",
+        "entity_id": "25bd7a60-de11-49ce-b0e0-c085f66ee92c",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:19.004Z",
+        "data": {
+          "id": "25bd7a60-de11-49ce-b0e0-c085f66ee92c",
+          "task_id": "9def139e-bf59-4235-9ab7-c430c2a3dce8",
+          "status": "pending",
+          "started_at": "2025-10-03T20:53:19.004Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "3c209457-a9b9-4e48-a8b9-050a39fc9cd0",
+        "type": "run_completed",
+        "entity_id": "da75655d-dd28-499e-877e-0bf5b0b8e73f",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:19.005Z",
+        "data": {
+          "id": "da75655d-dd28-499e-877e-0bf5b0b8e73f",
+          "task_id": "942f2dd4-a9fe-4fcf-a83f-57d733426cda",
+          "status": "completed",
+          "started_at": "2025-10-03T20:53:19.003Z",
+          "completed_at": "2025-10-03T20:53:19.005Z",
+          "duration_ms": 2,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "47ab3c0c-60f6-4a53-bb27-8b67dbbfb344",
+        "type": "run_completed",
+        "entity_id": "25bd7a60-de11-49ce-b0e0-c085f66ee92c",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:19.006Z",
+        "data": {
+          "id": "25bd7a60-de11-49ce-b0e0-c085f66ee92c",
+          "task_id": "9def139e-bf59-4235-9ab7-c430c2a3dce8",
+          "status": "completed",
+          "started_at": "2025-10-03T20:53:19.004Z",
+          "completed_at": "2025-10-03T20:53:19.006Z",
+          "duration_ms": 2,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "f947f8eb-46c2-437c-b57a-db9d862f44c5",
+        "type": "gate_created",
+        "entity_id": "f6ccc9b1-4703-489e-9d45-0bc0baf15f58",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:19.011Z",
+        "data": {
+          "id": "f6ccc9b1-4703-489e-9d45-0bc0baf15f58",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "da75655d-dd28-499e-877e-0bf5b0b8e73f",
+          "created_at": "2025-10-03T20:53:19.008Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "9402d590-4b16-4e85-8ade-01d6af36798c",
+        "type": "gate_created",
+        "entity_id": "ab09ccd2-85a8-4e47-a71f-88bd8859783e",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:19.013Z",
+        "data": {
+          "id": "ab09ccd2-85a8-4e47-a71f-88bd8859783e",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "25bd7a60-de11-49ce-b0e0-c085f66ee92c",
+          "created_at": "2025-10-03T20:53:19.012Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "28b4c44b-9582-4723-b442-d5bf53e3764b",
+        "type": "gate_updated",
+        "entity_id": "f6ccc9b1-4703-489e-9d45-0bc0baf15f58",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:19.015Z",
+        "data": {
+          "id": "f6ccc9b1-4703-489e-9d45-0bc0baf15f58",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "da75655d-dd28-499e-877e-0bf5b0b8e73f",
+          "created_at": "2025-10-03T20:53:19.008Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "20d40bb8-99a9-41f8-a9a4-986eadf4a533",
+        "type": "gate_updated",
+        "entity_id": "ab09ccd2-85a8-4e47-a71f-88bd8859783e",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:19.016Z",
+        "data": {
+          "id": "ab09ccd2-85a8-4e47-a71f-88bd8859783e",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "25bd7a60-de11-49ce-b0e0-c085f66ee92c",
+          "created_at": "2025-10-03T20:53:19.012Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "aa4ded22-ab66-43dc-85aa-a5c9b05a55c7",
+        "type": "task_created",
+        "entity_id": "70a434c3-b64e-4a29-884e-81f5327434d9",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:53:31.772Z",
+        "data": {
+          "id": "70a434c3-b64e-4a29-884e-81f5327434d9",
+          "title": "Validación TaskDB - Test 1",
+          "description": "Tarea de prueba para validación",
+          "status": "todo",
+          "priority": "high",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:53:31.772Z",
+          "updated_at": "2025-10-03T20:53:31.772Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "57aa113e-48a3-4305-b3ea-543c77998bda",
+        "type": "task_created",
+        "entity_id": "e32afa3e-6d86-48ca-a314-ff195a6ab7a5",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:53:31.773Z",
+        "data": {
+          "id": "e32afa3e-6d86-48ca-a314-ff195a6ab7a5",
+          "title": "Validación TaskDB - Test 2",
+          "description": "Segunda tarea de prueba",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:53:31.773Z",
+          "updated_at": "2025-10-03T20:53:31.773Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "2efa8821-4d55-4fa1-811c-040ce6cb87a2",
+        "type": "run_started",
+        "entity_id": "86dc427a-aba9-4bc2-a73b-cc1222a4c315",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:31.775Z",
+        "data": {
+          "id": "86dc427a-aba9-4bc2-a73b-cc1222a4c315",
+          "task_id": "70a434c3-b64e-4a29-884e-81f5327434d9",
+          "status": "pending",
+          "started_at": "2025-10-03T20:53:31.774Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "13f80cf0-e170-48a5-a320-b22e7b4342f5",
+        "type": "run_started",
+        "entity_id": "bb00c022-4daf-4f4f-8c86-d0c5b3b2b629",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:31.776Z",
+        "data": {
+          "id": "bb00c022-4daf-4f4f-8c86-d0c5b3b2b629",
+          "task_id": "e32afa3e-6d86-48ca-a314-ff195a6ab7a5",
+          "status": "pending",
+          "started_at": "2025-10-03T20:53:31.775Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "69e3427a-b348-4326-b75f-26e709f7e454",
+        "type": "run_completed",
+        "entity_id": "86dc427a-aba9-4bc2-a73b-cc1222a4c315",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:31.780Z",
+        "data": {
+          "id": "86dc427a-aba9-4bc2-a73b-cc1222a4c315",
+          "task_id": "70a434c3-b64e-4a29-884e-81f5327434d9",
+          "status": "completed",
+          "started_at": "2025-10-03T20:53:31.774Z",
+          "completed_at": "2025-10-03T20:53:31.777Z",
+          "duration_ms": 3,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "7f79b695-03d0-4b69-8217-cfa639509977",
+        "type": "run_completed",
+        "entity_id": "bb00c022-4daf-4f4f-8c86-d0c5b3b2b629",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:31.781Z",
+        "data": {
+          "id": "bb00c022-4daf-4f4f-8c86-d0c5b3b2b629",
+          "task_id": "e32afa3e-6d86-48ca-a314-ff195a6ab7a5",
+          "status": "completed",
+          "started_at": "2025-10-03T20:53:31.775Z",
+          "completed_at": "2025-10-03T20:53:31.780Z",
+          "duration_ms": 5,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "b5f8d4fb-9e58-4338-b546-6f7fa606f85c",
+        "type": "gate_created",
+        "entity_id": "9c13de2c-aaa8-40e6-83dd-0e12015f82ab",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:31.782Z",
+        "data": {
+          "id": "9c13de2c-aaa8-40e6-83dd-0e12015f82ab",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "86dc427a-aba9-4bc2-a73b-cc1222a4c315",
+          "created_at": "2025-10-03T20:53:31.782Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "b11f7ed5-5234-4982-83bc-7dcfa897104f",
+        "type": "gate_created",
+        "entity_id": "ef0a573c-7242-48e3-a7d9-3058cd9bcaed",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:31.783Z",
+        "data": {
+          "id": "ef0a573c-7242-48e3-a7d9-3058cd9bcaed",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "bb00c022-4daf-4f4f-8c86-d0c5b3b2b629",
+          "created_at": "2025-10-03T20:53:31.783Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "33ed82a4-756d-4812-ab06-8a41fbc99399",
+        "type": "gate_updated",
+        "entity_id": "9c13de2c-aaa8-40e6-83dd-0e12015f82ab",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:31.784Z",
+        "data": {
+          "id": "9c13de2c-aaa8-40e6-83dd-0e12015f82ab",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "86dc427a-aba9-4bc2-a73b-cc1222a4c315",
+          "created_at": "2025-10-03T20:53:31.782Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "fc037b39-fa73-4669-964b-6cbda8191318",
+        "type": "gate_updated",
+        "entity_id": "ef0a573c-7242-48e3-a7d9-3058cd9bcaed",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:31.785Z",
+        "data": {
+          "id": "ef0a573c-7242-48e3-a7d9-3058cd9bcaed",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "bb00c022-4daf-4f4f-8c86-d0c5b3b2b629",
+          "created_at": "2025-10-03T20:53:31.783Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "b735d92c-e877-479c-8ba4-28d68bf55ff1",
+        "type": "task_created",
+        "entity_id": "01743e29-944d-495f-95b7-1538668161f6",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:53:50.156Z",
+        "data": {
+          "id": "01743e29-944d-495f-95b7-1538668161f6",
+          "title": "Validación TaskDB - Test 1",
+          "description": "Tarea de prueba para validación",
+          "status": "todo",
+          "priority": "high",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:53:50.156Z",
+          "updated_at": "2025-10-03T20:53:50.156Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "27e630c2-4c94-4ac7-81cb-39929136e248",
+        "type": "task_created",
+        "entity_id": "fe35ee4c-3574-433e-bb75-e6ca54e938ba",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:53:50.157Z",
+        "data": {
+          "id": "fe35ee4c-3574-433e-bb75-e6ca54e938ba",
+          "title": "Validación TaskDB - Test 2",
+          "description": "Segunda tarea de prueba",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:53:50.157Z",
+          "updated_at": "2025-10-03T20:53:50.157Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "f657449c-9cd5-4721-9f31-cd1f762fbe1a",
+        "type": "run_started",
+        "entity_id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:50.157Z",
+        "data": {
+          "id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+          "task_id": "01743e29-944d-495f-95b7-1538668161f6",
+          "status": "pending",
+          "started_at": "2025-10-03T20:53:50.157Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "5935fe37-7b0e-41a3-9b03-5a9a3907a645",
+        "type": "run_started",
+        "entity_id": "5c35d622-336e-453d-8280-39de6b79773a",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:50.158Z",
+        "data": {
+          "id": "5c35d622-336e-453d-8280-39de6b79773a",
+          "task_id": "fe35ee4c-3574-433e-bb75-e6ca54e938ba",
+          "status": "pending",
+          "started_at": "2025-10-03T20:53:50.158Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "d382b615-11ad-479c-9de9-8c8057a97e81",
+        "type": "run_completed",
+        "entity_id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:50.158Z",
+        "data": {
+          "id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+          "task_id": "01743e29-944d-495f-95b7-1538668161f6",
+          "status": "completed",
+          "started_at": "2025-10-03T20:53:50.157Z",
+          "completed_at": "2025-10-03T20:53:50.158Z",
+          "duration_ms": 1,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "5a82e9dc-0972-4e72-8ded-fad93e4b7a74",
+        "type": "run_completed",
+        "entity_id": "5c35d622-336e-453d-8280-39de6b79773a",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:53:50.159Z",
+        "data": {
+          "id": "5c35d622-336e-453d-8280-39de6b79773a",
+          "task_id": "fe35ee4c-3574-433e-bb75-e6ca54e938ba",
+          "status": "completed",
+          "started_at": "2025-10-03T20:53:50.158Z",
+          "completed_at": "2025-10-03T20:53:50.159Z",
+          "duration_ms": 1,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "c4d5eec4-c086-4374-b84d-54faea16b6e3",
+        "type": "gate_created",
+        "entity_id": "bded55ca-95a6-483e-9adb-e7d055bff024",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:50.159Z",
+        "data": {
+          "id": "bded55ca-95a6-483e-9adb-e7d055bff024",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+          "created_at": "2025-10-03T20:53:50.159Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "d9554690-392d-4f9d-9db5-2dcf1138f242",
+        "type": "gate_created",
+        "entity_id": "77e0f943-9f71-470e-9ef0-00c7f0db08a4",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:50.159Z",
+        "data": {
+          "id": "77e0f943-9f71-470e-9ef0-00c7f0db08a4",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "5c35d622-336e-453d-8280-39de6b79773a",
+          "created_at": "2025-10-03T20:53:50.159Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "6f017789-81fc-4727-9f1e-d62b29a29b08",
+        "type": "gate_updated",
+        "entity_id": "bded55ca-95a6-483e-9adb-e7d055bff024",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:50.160Z",
+        "data": {
+          "id": "bded55ca-95a6-483e-9adb-e7d055bff024",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+          "created_at": "2025-10-03T20:53:50.159Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "d84ca4db-15c1-4162-8109-a7c3231d472d",
+        "type": "gate_updated",
+        "entity_id": "77e0f943-9f71-470e-9ef0-00c7f0db08a4",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:53:50.160Z",
+        "data": {
+          "id": "77e0f943-9f71-470e-9ef0-00c7f0db08a4",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "5c35d622-336e-453d-8280-39de6b79773a",
+          "created_at": "2025-10-03T20:53:50.159Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "03300c05-3493-4bd6-8f08-e52f889d5d46",
+        "type": "artifact_created",
+        "entity_id": "a26bbe58-ee74-4a62-a9e8-e14314bb71ec",
+        "entity_type": "artifact",
+        "timestamp": "2025-10-03T20:53:50.161Z",
+        "data": {
+          "id": "a26bbe58-ee74-4a62-a9e8-e14314bb71ec",
+          "name": "validation-report-1.json",
+          "type": "report",
+          "uri": "reports/validation-1.json",
+          "hash": "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0",
+          "size_bytes": 1024,
+          "created_at": "2025-10-03T20:53:50.160Z",
+          "run_id": "26a26bd0-6101-4aca-baab-5a784a90cf75",
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "819164a6-e6ec-4d45-9e3c-1ff3f9073cf7",
+        "type": "report_created",
+        "entity_id": "8105a384-ea89-4458-90a5-43fcfa699867",
+        "entity_type": "report",
+        "timestamp": "2025-10-03T20:53:50.162Z",
+        "data": {
+          "id": "8105a384-ea89-4458-90a5-43fcfa699867",
+          "title": "Reporte de Validación TaskDB",
+          "type": "analysis",
+          "status": "draft",
+          "content": {
+            "summary": "Validación exitosa del sistema TaskDB",
+            "tests_passed": 8,
+            "system_health": "excellent"
+          },
+          "report_provenance": {
+            "task_ids": [
+              "01743e29-944d-495f-95b7-1538668161f6",
+              "fe35ee4c-3574-433e-bb75-e6ca54e938ba"
+            ],
+            "run_ids": [
+              "26a26bd0-6101-4aca-baab-5a784a90cf75",
+              "5c35d622-336e-453d-8280-39de6b79773a"
+            ],
+            "artifact_hashes": [
+              "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0"
+            ],
+            "claims_validated": [
+              {
+                "claim": "Sistema TaskDB operativo",
+                "evidence": "Gates pasados, runs completados",
+                "status": "validated"
+              }
+            ],
+            "verification_snapshot_ts": "2025-10-03T20:53:50.161Z"
+          },
+          "created_at": "2025-10-03T20:53:50.161Z",
+          "published_at": null,
+          "retracted_at": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "40373f04-9c36-4287-87e9-a7816d17dee4",
+        "type": "report_created",
+        "entity_id": "ec7e6b77-8d29-47b6-9f6f-b39ec4e7d331",
+        "entity_type": "report",
+        "timestamp": "2025-10-03T20:54:00.599Z",
+        "data": {
+          "id": "ec7e6b77-8d29-47b6-9f6f-b39ec4e7d331",
+          "title": "Test Report",
+          "type": "analysis",
+          "status": "draft",
+          "content": {
+            "test": true
+          },
+          "report_provenance": {
+            "task_ids": [],
+            "run_ids": [],
+            "artifact_hashes": [],
+            "claims_validated": [],
+            "verification_snapshot_ts": "2025-10-03T20:54:00.598Z"
+          },
+          "created_at": "2025-10-03T20:54:00.598Z",
+          "published_at": null,
+          "retracted_at": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "88e4bd2a-9386-4ef2-8f06-77b1a2ab20f2",
+        "type": "task_created",
+        "entity_id": "f49f439b-f151-4ff3-9266-435f3580e7ae",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:54:15.547Z",
+        "data": {
+          "id": "f49f439b-f151-4ff3-9266-435f3580e7ae",
+          "title": "Validación TaskDB - Test 1",
+          "description": "Tarea de prueba para validación",
+          "status": "todo",
+          "priority": "high",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:54:15.547Z",
+          "updated_at": "2025-10-03T20:54:15.547Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "592032b7-e41f-4012-84d0-c26dc6b79305",
+        "type": "task_created",
+        "entity_id": "bc32f874-378f-4687-90f9-1d1cad091f31",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:54:15.549Z",
+        "data": {
+          "id": "bc32f874-378f-4687-90f9-1d1cad091f31",
+          "title": "Validación TaskDB - Test 2",
+          "description": "Segunda tarea de prueba",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:54:15.548Z",
+          "updated_at": "2025-10-03T20:54:15.548Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "da36d580-f73e-4577-ad4b-5f68ee36576c",
+        "type": "run_started",
+        "entity_id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:54:15.552Z",
+        "data": {
+          "id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+          "task_id": "f49f439b-f151-4ff3-9266-435f3580e7ae",
+          "status": "pending",
+          "started_at": "2025-10-03T20:54:15.551Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "cfc393f9-9607-47e6-8a93-bce06ba3b92f",
+        "type": "run_started",
+        "entity_id": "77e91cea-96ee-4932-80e7-4da9fae58acd",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:54:15.554Z",
+        "data": {
+          "id": "77e91cea-96ee-4932-80e7-4da9fae58acd",
+          "task_id": "bc32f874-378f-4687-90f9-1d1cad091f31",
+          "status": "pending",
+          "started_at": "2025-10-03T20:54:15.553Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "506e0fd5-e992-4d13-85cc-df4d521e14dc",
+        "type": "run_completed",
+        "entity_id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:54:15.556Z",
+        "data": {
+          "id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+          "task_id": "f49f439b-f151-4ff3-9266-435f3580e7ae",
+          "status": "completed",
+          "started_at": "2025-10-03T20:54:15.551Z",
+          "completed_at": "2025-10-03T20:54:15.555Z",
+          "duration_ms": 4,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "98ba243f-edb4-4d28-a8af-a3fae35396f8",
+        "type": "run_completed",
+        "entity_id": "77e91cea-96ee-4932-80e7-4da9fae58acd",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:54:15.558Z",
+        "data": {
+          "id": "77e91cea-96ee-4932-80e7-4da9fae58acd",
+          "task_id": "bc32f874-378f-4687-90f9-1d1cad091f31",
+          "status": "completed",
+          "started_at": "2025-10-03T20:54:15.553Z",
+          "completed_at": "2025-10-03T20:54:15.558Z",
+          "duration_ms": 5,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "ad68d5b6-8971-4789-9858-dd7463ec839b",
+        "type": "gate_created",
+        "entity_id": "fd0d1125-bbc9-4f0a-8a5f-81a89e2de759",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:54:15.560Z",
+        "data": {
+          "id": "fd0d1125-bbc9-4f0a-8a5f-81a89e2de759",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+          "created_at": "2025-10-03T20:54:15.559Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "a5932ddf-a579-4d4b-bcf6-a61689c15aa9",
+        "type": "gate_created",
+        "entity_id": "c6b666a1-694d-4d21-9317-48b33a9f0465",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:54:15.560Z",
+        "data": {
+          "id": "c6b666a1-694d-4d21-9317-48b33a9f0465",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "77e91cea-96ee-4932-80e7-4da9fae58acd",
+          "created_at": "2025-10-03T20:54:15.560Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "7ca5d51e-81c5-482d-81c4-b7a209e9e2bf",
+        "type": "gate_updated",
+        "entity_id": "fd0d1125-bbc9-4f0a-8a5f-81a89e2de759",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:54:15.561Z",
+        "data": {
+          "id": "fd0d1125-bbc9-4f0a-8a5f-81a89e2de759",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+          "created_at": "2025-10-03T20:54:15.559Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "e06c066f-07e5-4d7f-9263-18987bd887ea",
+        "type": "gate_updated",
+        "entity_id": "c6b666a1-694d-4d21-9317-48b33a9f0465",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:54:15.561Z",
+        "data": {
+          "id": "c6b666a1-694d-4d21-9317-48b33a9f0465",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "77e91cea-96ee-4932-80e7-4da9fae58acd",
+          "created_at": "2025-10-03T20:54:15.560Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "26ac78a1-b8a7-4968-a04e-e239101e0cb4",
+        "type": "artifact_created",
+        "entity_id": "47e69cef-f052-4530-a4b2-05d229cdebaf",
+        "entity_type": "artifact",
+        "timestamp": "2025-10-03T20:54:15.562Z",
+        "data": {
+          "id": "47e69cef-f052-4530-a4b2-05d229cdebaf",
+          "name": "validation-report-1.json",
+          "type": "report",
+          "uri": "reports/validation-1.json",
+          "hash": "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0",
+          "size_bytes": 1024,
+          "created_at": "2025-10-03T20:54:15.562Z",
+          "run_id": "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "f20eb60a-c24f-4151-810b-65ed72c34589",
+        "type": "report_created",
+        "entity_id": "65b89182-e1b5-44f6-9253-2b3215401ed8",
+        "entity_type": "report",
+        "timestamp": "2025-10-03T20:54:15.566Z",
+        "data": {
+          "id": "65b89182-e1b5-44f6-9253-2b3215401ed8",
+          "title": "Reporte de Validación TaskDB",
+          "type": "analysis",
+          "status": "draft",
+          "content": {
+            "summary": "Validación exitosa del sistema TaskDB",
+            "tests_passed": 8,
+            "system_health": "excellent"
+          },
+          "report_provenance": {
+            "task_ids": [
+              "f49f439b-f151-4ff3-9266-435f3580e7ae",
+              "bc32f874-378f-4687-90f9-1d1cad091f31"
+            ],
+            "run_ids": [
+              "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+              "77e91cea-96ee-4932-80e7-4da9fae58acd"
+            ],
+            "artifact_hashes": [
+              "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0"
+            ],
+            "claims_validated": [
+              {
+                "claim": "Sistema TaskDB operativo",
+                "evidence": "Gates pasados, runs completados",
+                "status": "validated"
+              }
+            ],
+            "verification_snapshot_ts": "2025-10-03T20:54:15.565Z"
+          },
+          "created_at": "2025-10-03T20:54:15.565Z",
+          "published_at": null,
+          "retracted_at": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "4f6f2f33-9b70-467c-b97d-4b05b0587967",
+        "type": "task_created",
+        "entity_id": "19a00aab-3eee-4a4b-829f-9212d4914646",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:56:13.365Z",
+        "data": {
+          "id": "19a00aab-3eee-4a4b-829f-9212d4914646",
+          "title": "Validación TaskDB - Test 1",
+          "description": "Tarea de prueba para validación",
+          "status": "todo",
+          "priority": "high",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:56:13.365Z",
+          "updated_at": "2025-10-03T20:56:13.365Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "1617100e-bff8-4b55-8931-c18e59ed7a3b",
+        "type": "task_created",
+        "entity_id": "c8b8bc6e-1457-4732-87db-fd53a706d1ac",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T20:56:13.366Z",
+        "data": {
+          "id": "c8b8bc6e-1457-4732-87db-fd53a706d1ac",
+          "title": "Validación TaskDB - Test 2",
+          "description": "Segunda tarea de prueba",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T20:56:13.366Z",
+          "updated_at": "2025-10-03T20:56:13.366Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "validation",
+            "test"
+          ],
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "62b49bcf-ea0d-43df-b8bd-85612aee8111",
+        "type": "run_started",
+        "entity_id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:56:13.367Z",
+        "data": {
+          "id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+          "task_id": "19a00aab-3eee-4a4b-829f-9212d4914646",
+          "status": "pending",
+          "started_at": "2025-10-03T20:56:13.367Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "0129829e-c2c5-4405-a0c4-e9cb03b1e7ec",
+        "type": "run_started",
+        "entity_id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:56:13.368Z",
+        "data": {
+          "id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
+          "task_id": "c8b8bc6e-1457-4732-87db-fd53a706d1ac",
+          "status": "pending",
+          "started_at": "2025-10-03T20:56:13.368Z",
+          "completed_at": null,
+          "duration_ms": null,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {},
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "c5273f80-bded-4e17-a3e2-661e7625e0a1",
+        "type": "run_completed",
+        "entity_id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:56:13.368Z",
+        "data": {
+          "id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+          "task_id": "19a00aab-3eee-4a4b-829f-9212d4914646",
+          "status": "completed",
+          "started_at": "2025-10-03T20:56:13.367Z",
+          "completed_at": "2025-10-03T20:56:13.368Z",
+          "duration_ms": 1,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test",
+              "args": {
+                "test": "go_no_go"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 100
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "197a33fd-c8dd-4bb3-b7b0-ea3edca8c441",
+        "type": "run_completed",
+        "entity_id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
+        "entity_type": "run",
+        "timestamp": "2025-10-03T20:56:13.369Z",
+        "data": {
+          "id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
+          "task_id": "c8b8bc6e-1457-4732-87db-fd53a706d1ac",
+          "status": "completed",
+          "started_at": "2025-10-03T20:56:13.368Z",
+          "completed_at": "2025-10-03T20:56:13.368Z",
+          "duration_ms": 0,
+          "tool_calls": [
+            {
+              "tool_name": "validation_test_2",
+              "args": {
+                "test": "go_no_go_2"
+              },
+              "result": {
+                "success": true
+              },
+              "duration_ms": 150
+            }
+          ],
+          "metrics": {
+            "success_rate": 1,
+            "error_count": 0
+          },
+          "error_message": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "99deeb02-c8ca-4eff-81a5-a713809f664c",
+        "type": "gate_created",
+        "entity_id": "71423fda-d8bd-41b5-87f8-2b611b08b6d2",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:56:13.369Z",
+        "data": {
+          "id": "71423fda-d8bd-41b5-87f8-2b611b08b6d2",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+          "created_at": "2025-10-03T20:56:13.369Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "38f9dccf-edb3-4ec5-b5f6-e8388cd4c52e",
+        "type": "gate_created",
+        "entity_id": "e38e849e-fb1e-4a6f-b374-891ed4a4c736",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:56:13.370Z",
+        "data": {
+          "id": "e38e849e-fb1e-4a6f-b374-891ed4a4c736",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pending",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
+          "created_at": "2025-10-03T20:56:13.369Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "bd115e08-2e58-42cd-ba83-9747808e56ce",
+        "type": "gate_updated",
+        "entity_id": "71423fda-d8bd-41b5-87f8-2b611b08b6d2",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:56:13.370Z",
+        "data": {
+          "id": "71423fda-d8bd-41b5-87f8-2b611b08b6d2",
+          "name": "validation_gate_1",
+          "type": "security",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "security_check",
+              "status": "pass",
+              "message": "Security check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+          "created_at": "2025-10-03T20:56:13.369Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "e3591d7c-7703-499a-bd6e-d772b6dfc597",
+        "type": "gate_updated",
+        "entity_id": "e38e849e-fb1e-4a6f-b374-891ed4a4c736",
+        "entity_type": "gate",
+        "timestamp": "2025-10-03T20:56:13.371Z",
+        "data": {
+          "id": "e38e849e-fb1e-4a6f-b374-891ed4a4c736",
+          "name": "validation_gate_2",
+          "type": "lint",
+          "status": "pass",
+          "checks": [
+            {
+              "name": "lint_check",
+              "status": "pass",
+              "message": "Lint check passed"
+            }
+          ],
+          "policy_version": "1.0.0",
+          "run_id": "ad080498-86c8-46c4-a1d3-5e40b2ba2560",
+          "created_at": "2025-10-03T20:56:13.369Z"
+        },
+        "source": "api"
+      },
+      {
+        "id": "35255b6f-d74e-4a4f-9a2d-4047f4c15bd5",
+        "type": "artifact_created",
+        "entity_id": "59220919-13de-48ef-94a0-b1acf8708d31",
+        "entity_type": "artifact",
+        "timestamp": "2025-10-03T20:56:13.372Z",
+        "data": {
+          "id": "59220919-13de-48ef-94a0-b1acf8708d31",
+          "name": "validation-report-1.json",
+          "type": "report",
+          "uri": "/dev/null",
+          "hash": "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0",
+          "size_bytes": 1024,
+          "created_at": "2025-10-03T20:56:13.372Z",
+          "run_id": "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+          "metadata": {}
+        },
+        "source": "api"
+      },
+      {
+        "id": "04dcdb7e-9475-4a13-84ad-bc5f5b0b919d",
+        "type": "report_created",
+        "entity_id": "8084404f-8480-4bbf-91e1-7cfd17675b0f",
+        "entity_type": "report",
+        "timestamp": "2025-10-03T20:56:13.374Z",
+        "data": {
+          "id": "8084404f-8480-4bbf-91e1-7cfd17675b0f",
+          "title": "Reporte de Validación TaskDB",
+          "type": "analysis",
+          "status": "draft",
+          "content": {
+            "summary": "Validación exitosa del sistema TaskDB",
+            "tests_passed": 8,
+            "system_health": "excellent"
+          },
+          "report_provenance": {
+            "task_ids": [
+              "19a00aab-3eee-4a4b-829f-9212d4914646",
+              "c8b8bc6e-1457-4732-87db-fd53a706d1ac"
+            ],
+            "run_ids": [
+              "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+              "ad080498-86c8-46c4-a1d3-5e40b2ba2560"
+            ],
+            "artifact_hashes": [
+              "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0"
+            ],
+            "claims_validated": [
+              {
+                "claim": "Sistema TaskDB operativo",
+                "evidence": "Gates pasados, runs completados",
+                "status": "validated"
+              }
+            ],
+            "verification_snapshot_ts": "2025-10-03T20:56:13.373Z"
+          },
+          "created_at": "2025-10-03T20:56:13.373Z",
+          "published_at": null,
+          "retracted_at": null
+        },
+        "source": "api"
+      },
+      {
+        "id": "f160ace8-bd69-4c4f-bcf7-478349f5bd67",
+        "type": "task_created",
+        "entity_id": "ebafc7dc-7df3-4f7c-8679-04f8bcd33af0",
+        "entity_type": "task",
+        "timestamp": "2025-10-03T21:02:51.768Z",
+        "data": {
+          "id": "ebafc7dc-7df3-4f7c-8679-04f8bcd33af0",
+          "title": "Re-habilitar lint para TaskDB Core",
+          "description": "Remover exclusión temporal de ESLint para packages/taskdb-core/** después de completar OLA 2",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T21:02:51.767Z",
+          "updated_at": "2025-10-03T21:02:51.767Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [
+            "maintenance",
+            "eslint",
+            "ola2"
+          ],
+          "metadata": {
+            "due_date": "2025-02-15",
+            "owner": "felipe",
+            "blocker": "Ola 2 completion"
+          }
+        },
+        "source": "api"
+      }
+    ],
+    "reports": [
+      {
+        "id": "8105a384-ea89-4458-90a5-43fcfa699867",
+        "title": "Reporte de Validación TaskDB",
+        "type": "analysis",
+        "status": "draft",
+        "content": {
+          "summary": "Validación exitosa del sistema TaskDB",
+          "tests_passed": 8,
+          "system_health": "excellent"
+        },
+        "report_provenance": {
+          "task_ids": [
+            "01743e29-944d-495f-95b7-1538668161f6",
+            "fe35ee4c-3574-433e-bb75-e6ca54e938ba"
+          ],
+          "run_ids": [
+            "26a26bd0-6101-4aca-baab-5a784a90cf75",
+            "5c35d622-336e-453d-8280-39de6b79773a"
+          ],
+          "artifact_hashes": [
+            "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0"
+          ],
+          "claims_validated": [
+            {
+              "claim": "Sistema TaskDB operativo",
+              "evidence": "Gates pasados, runs completados",
+              "status": "validated"
+            }
+          ],
+          "verification_snapshot_ts": "2025-10-03T20:53:50.161Z"
+        },
+        "created_at": "2025-10-03T20:53:50.161Z",
+        "published_at": null,
+        "retracted_at": null
+      },
+      {
+        "id": "ec7e6b77-8d29-47b6-9f6f-b39ec4e7d331",
+        "title": "Test Report",
+        "type": "analysis",
+        "status": "draft",
+        "content": {
+          "test": true
+        },
+        "report_provenance": {
+          "task_ids": [],
+          "run_ids": [],
+          "artifact_hashes": [],
+          "claims_validated": [],
+          "verification_snapshot_ts": "2025-10-03T20:54:00.598Z"
+        },
+        "created_at": "2025-10-03T20:54:00.598Z",
+        "published_at": null,
+        "retracted_at": null
+      },
+      {
+        "id": "65b89182-e1b5-44f6-9253-2b3215401ed8",
+        "title": "Reporte de Validación TaskDB",
+        "type": "analysis",
+        "status": "draft",
+        "content": {
+          "summary": "Validación exitosa del sistema TaskDB",
+          "tests_passed": 8,
+          "system_health": "excellent"
+        },
+        "report_provenance": {
+          "task_ids": [
+            "f49f439b-f151-4ff3-9266-435f3580e7ae",
+            "bc32f874-378f-4687-90f9-1d1cad091f31"
+          ],
+          "run_ids": [
+            "e59c2009-56ac-42e4-b420-6937c57b6dc1",
+            "77e91cea-96ee-4932-80e7-4da9fae58acd"
+          ],
+          "artifact_hashes": [
+            "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0"
+          ],
+          "claims_validated": [
+            {
+              "claim": "Sistema TaskDB operativo",
+              "evidence": "Gates pasados, runs completados",
+              "status": "validated"
+            }
+          ],
+          "verification_snapshot_ts": "2025-10-03T20:54:15.565Z"
+        },
+        "created_at": "2025-10-03T20:54:15.565Z",
+        "published_at": null,
+        "retracted_at": null
+      },
+      {
+        "id": "8084404f-8480-4bbf-91e1-7cfd17675b0f",
+        "title": "Reporte de Validación TaskDB",
+        "type": "analysis",
+        "status": "draft",
+        "content": {
+          "summary": "Validación exitosa del sistema TaskDB",
+          "tests_passed": 8,
+          "system_health": "excellent"
+        },
+        "report_provenance": {
+          "task_ids": [
+            "19a00aab-3eee-4a4b-829f-9212d4914646",
+            "c8b8bc6e-1457-4732-87db-fd53a706d1ac"
+          ],
+          "run_ids": [
+            "214a74e3-d3ca-4f14-9a87-75fa3a2a36a9",
+            "ad080498-86c8-46c4-a1d3-5e40b2ba2560"
+          ],
+          "artifact_hashes": [
+            "b4b82695ca85ecfa05b640d420cbf5005293feb1b65f821c336bf18f882481d0"
+          ],
+          "claims_validated": [
+            {
+              "claim": "Sistema TaskDB operativo",
+              "evidence": "Gates pasados, runs completados",
+              "status": "validated"
+            }
+          ],
+          "verification_snapshot_ts": "2025-10-03T20:56:13.373Z"
+        },
+        "created_at": "2025-10-03T20:56:13.373Z",
+        "published_at": null,
+        "retracted_at": null
+      }
+    ],
+    "policies": [
+      {
+        "id": "3f979a7f-be4c-4a93-87a2-df64ef11d7c1",
+        "version": "1.0.0",
+        "name": "Initial Policy",
+        "description": "Política inicial del TaskDB",
+        "rules": {
+          "task_validation": {
+            "required_fields": [
+              "title",
+              "description",
+              "priority"
+            ],
+            "max_title_length": 255,
+            "allowed_priorities": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "run_validation": {
+            "max_duration_ms": 3600000,
+            "required_metrics": [
+              "success_rate",
+              "error_count"
+            ]
+          },
+          "gate_validation": {
+            "required_types": [
+              "lint",
+              "policy",
+              "security"
+            ],
+            "max_checks_per_gate": 100
+          }
+        },
+        "created_at": "2025-10-03T20:51:45.159Z",
+        "is_active": true
+      }
+    ]
+  },
+  "stats": {
+    "total_tasks": 17,
+    "tasks_by_status": {
+      "todo": 17,
+      "doing": 0,
+      "review": 0,
+      "done": 0,
+      "cancelled": 0
+    },
+    "total_runs": 16,
+    "total_gates": 12,
+    "total_artifacts": 3,
+    "total_events": 76,
+    "total_reports": 4,
+    "policy_versions": [
+      "1.0.0"
+    ]
+  }
+}

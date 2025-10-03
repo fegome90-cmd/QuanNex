@@ -1,0 +1,23 @@
+name: 'QuanNex Documentation Policy'
+version: '0.2.0'
+rules:
+  factcheck: true # Solo para datos cuantitativos
+  consistency: false # No aplica para docs
+  metrics: false # No aplica para docs
+  structure: true # Estructura básica
+
+detectors:
+  structure:
+    required:
+      - "^#\\s+"
+      - "^##\\s+(?:Instalación|Installation|Setup)"
+      - "^##\\s+(?:Uso|Usage|Examples)"
+  factcheck:
+    require_citation_near:
+      units: "(%|USD|EUR|CLP|\\bmm\\b|\\bcm\\b|\\bms\\b|\\bps\\b)"
+      window: 30
+    ignore_years: true
+    min_digits: 3
+
+thresholds:
+  min_confidence: 0.70 # Más permisivo

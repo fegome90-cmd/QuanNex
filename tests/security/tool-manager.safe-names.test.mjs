@@ -62,7 +62,12 @@ describe('safeWhich', () => {
 
   it('skips execution and flags invalid names', () => {
     const result = safeWhich('node --inspect');
-    expect(result).toEqual({ found: false, reason: 'invalid_name' });
+    expect(result).toEqual({
+      found: false,
+      reason: 'invalid_name',
+      detail: 'pattern_mismatch',
+      sanitized: 'node?--inspect',
+    });
     expect(spawnSyncMock).not.toHaveBeenCalled();
   });
 
@@ -76,32 +81,49 @@ describe('safeWhich', () => {
         env: expect.objectContaining({ PATH: '/usr/bin:/bin' }),
       })
     );
-    expect(result).toEqual({ found: true, reason: 'ok' });
+    expect(result).toEqual({
+      found: true,
+      reason: 'ok',
+      detail: 'ok',
+      sanitized: 'node',
+    });
   });
 
   it('uses where on Windows systems', () => {
-    safeWhich('npm', { platform: 'win32' });
-    const fallbackRoot = process.env.SystemRoot || 'C\\Windows';
-    const expectedPath = `${fallbackRoot}\\System32`;
-    expect(spawnSyncMock).toHaveBeenCalledWith(
-      'where',
-      ['npm'],
-      expect.objectContaining({
-        shell: false,
-        env: expect.objectContaining({ PATH: expectedPath }),
-      })
-    );
+    const result = safeWhich('npm', { platform: 'win32' });
+    expect(spawnSyncMock).toHaveBeenCalledWith('where', ['npm'], expect.any(Object));
+    const [, , options] = spawnSyncMock.mock.calls[0];
+    expect(options.shell).toBe(false);
+    expect(options.env.PATH).toMatch(/System32$/);
+    expect(options.env.SystemRoot).toMatch(/Windows$/);
+    expect(options.env.PATHEXT).toBe('.COM;.EXE;.BAT;.CMD');
+    expect(result).toEqual({
+      found: true,
+      reason: 'ok',
+      detail: 'ok',
+      sanitized: 'npm',
+    });
   });
 
   it('returns not_found when binary is missing', () => {
     spawnSyncMock.mockReturnValueOnce({ status: 1 });
     const result = safeWhich('nonexistent', { platform: 'linux' });
-    expect(result).toEqual({ found: false, reason: 'not_found' });
+    expect(result).toEqual({
+      found: false,
+      reason: 'not_found',
+      detail: 'not_found',
+      sanitized: 'nonexistent',
+    });
   });
 
   it('returns timeout when execution exceeds limit', () => {
     spawnSyncMock.mockReturnValueOnce({ status: null, error: { code: 'ETIMEDOUT' } });
     const result = safeWhich('npm', { platform: 'linux' });
-    expect(result).toEqual({ found: false, reason: 'timeout' });
+    expect(result).toEqual({
+      found: false,
+      reason: 'timeout',
+      detail: 'command_timeout',
+      sanitized: 'npm',
+    });
   });
 });

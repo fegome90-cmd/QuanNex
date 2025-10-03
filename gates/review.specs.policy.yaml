@@ -1,0 +1,24 @@
+name: 'QuanNex Specifications Policy'
+version: '0.2.0'
+rules:
+  factcheck: true # Para métricas técnicas
+  consistency: true # Para consistencia entre secciones
+  metrics: false # No aplica para specs
+  structure: true # Estructura técnica requerida
+
+detectors:
+  structure:
+    required:
+      - "^#\\s+"
+      - "^##\\s+(?:Overview|Resumen|Summary)"
+      - "^##\\s+(?:Requirements|Requisitos)"
+      - "^##\\s+(?:Implementation|Implementación)"
+  factcheck:
+    require_citation_near:
+      units: "(%|USD|EUR|CLP|\\bmm\\b|\\bcm\\b|\\bms\\b|\\bps\\b|\\bMB\\b|\\bGB\\b|\\bTB\\b)"
+      window: 30
+    ignore_years: true
+    min_digits: 3
+
+thresholds:
+  min_confidence: 0.85 # Moderadamente estricto para specs

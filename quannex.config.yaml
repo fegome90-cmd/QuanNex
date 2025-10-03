@@ -1,0 +1,26 @@
+# QuanNex Configuration - Centralized Policy Management
+default_policy: 'gates/review.reports.policy.yaml'
+metrics_file: 'testdata/metrics.json'
+
+# Policy mapping by file patterns - single source of truth
+policy_mapping:
+  - paths: ['docs/**/*.md', '**/README.md', '**/CHANGELOG.md']
+    policy: 'gates/review.docs.policy.yaml'
+  - paths: ['reports/**/*.md']
+    policy: 'gates/review.reports.policy.yaml'
+  - paths: ['specs/**/*.md', 'requirements/**/*.md']
+    policy: 'gates/review.specs.policy.yaml'
+
+# Global detector settings
+detectors:
+  headings:
+    resumen: "(?:Resumen|Sumario|Executive\\s+Summary)"
+    total: "(?:Total|Cifra\\s+(?:global|total))"
+  factcheck:
+    require_citation_near:
+      units: "(%|USD|EUR|CLP|\\bmm\\b|\\bcm\\b|\\bms\\b|\\bps\\b)"
+      window: 30
+    ignore_years: true
+    min_digits: 3
+  thresholds:
+    min_confidence: 0.90

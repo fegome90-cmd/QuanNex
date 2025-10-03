@@ -250,7 +250,7 @@ class ProvenanceVerifier {
 
     for (const claim of claims) {
       try {
-        const claimResult = await this.verifyClaim(claim, verification);
+        const claimResult = await this.verifyClaim(claim, verification, provenance);
         verification.checks.push({
           check: 'claim_verification',
           claim: claim.claim,
@@ -267,7 +267,7 @@ class ProvenanceVerifier {
   /**
    * Verificar un claim individual
    */
-  async verifyClaim(claim, verification) {
+  async verifyClaim(claim, verification, provenance) {
     const { claim: claimText, evidence, status: claimStatus } = claim;
 
     // Verificar que el claim tiene el formato esperado

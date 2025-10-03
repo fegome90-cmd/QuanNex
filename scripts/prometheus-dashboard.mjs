@@ -3,6 +3,34 @@
 import fs from 'fs';
 import path from 'path';
 
+// Circuit breaker simple para evitar loops
+let circuitBreakerState = 'CLOSED';
+let failures = 0;
+const threshold = 3;
+let lastFailureTime = 0;
+const cooldownMs = 15000;
+
+function canRequest() {
+  const now = Date.now();
+  if (circuitBreakerState === 'OPEN') {
+    return now - lastFailureTime > cooldownMs;
+  }
+  return true;
+}
+
+function onSuccess() {
+  circuitBreakerState = 'CLOSED';
+  failures = 0;
+}
+
+function onFailure() {
+  failures++;
+  lastFailureTime = Date.now();
+  if (failures >= threshold) {
+    circuitBreakerState = 'OPEN';
+  }
+}
+
 // Simular métricas desde archivos de artefactos si no hay servidor de métricas
 function getMetricValue(metricName) {
   try {
@@ -88,6 +116,7 @@ async function generateDashboard() {
 
   console.log('\n📈 Note: Using artifact-based metrics (no Prometheus server)');
   console.log('   To enable real-time metrics, start a Prometheus server');
+  console.log(`   Circuit Breaker State: ${circuitBreakerState}`);
 }
 
 generateDashboard().catch(console.error);

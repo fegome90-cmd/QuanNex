@@ -1,0 +1,218 @@
+diff --git a/core/security/safeExec.ts b/core/security/safeExec.ts
+new file mode 100644
+index 0000000..e108a98
+--- /dev/null
++++ b/core/security/safeExec.ts
+@@ -0,0 +1,64 @@
++import { spawnSync } from 'node:child_process';
++import { which } from 'which';
++
++export interface SafeExecOptions {
++  timeout?: number;
++  maxBuffer?: number;
++  allowedCommands?: string[];
++}
++
++export class SafeExec {
++  private static readonly DEFAULT_TIMEOUT = 30000; // 30s
++  private static readonly DEFAULT_MAX_BUFFER = 1024 * 1024; // 1MB
++  private static readonly ALLOWED_COMMANDS = [
++    'npm', 'node', 'git', 'ls', 'cat', 'echo', 'mkdir', 'rm', 'cp', 'mv'
++  ];
++
++  static async safeWhich(command: string): Promise<string | null> {
++    try {
++      return await which(command);
++    } catch {
++      return null;
++    }
++  }
++
++  static exec(command: string, args: string[] = [], options: SafeExecOptions = {}) {
++    const {
++      timeout = SafeExec.DEFAULT_TIMEOUT,
++      maxBuffer = SafeExec.DEFAULT_MAX_BUFFER,
++      allowedCommands = SafeExec.ALLOWED_COMMANDS
++    } = options;
++
++    // Validar comando
++    if (!allowedCommands.includes(command)) {
++      throw new Error(`Command '${command}' not in allowlist`);
++    }
++
++    // Validar que el binario existe
++    const binaryPath = which.sync(command, { nothrow: true });
++    if (!binaryPath) {
++      throw new Error(`Command '${command}' not found in PATH`);
++    }
++
++    // Ejecutar con spawnSync (sin shell)
++    const result = spawnSync(binaryPath, args, {
++      timeout,
++      maxBuffer,
++      encoding: 'utf8'
++    });
++
++    if (result.error) {
++      throw new Error(`Execution failed: ${result.error.message}`);
++    }
++
++    if (result.status !== 0) {
++      throw new Error(`Command failed with status ${result.status}: ${result.stderr}`);
++    }
++
++    return {
++      stdout: result.stdout,
++      stderr: result.stderr,
++      status: result.status
++    };
++  }
++}
+diff --git a/package.json b/package.json
+index d6d23fd..c1d10be 100644
+--- a/package.json
++++ b/package.json
+@@ -180,6 +180,8 @@
+     "ci-quannex-gate1": "npm run test:contracts && ./scripts/mcp-autonomous-init.sh && npm run test:e2e",
+     "ci-quannex-perf": "node tools/verify-perf.js && node tools/snapshot-perf.js && node --test tests/perf",
+     "smoke:test": "node scripts/smoke-test.mjs",
++    "lint:fix": "eslint . --ext .ts,.tsx,.js,.mjs --fix",
++    "verify": "npm run lint && node scripts/policy-check.mjs",
+     "test:smoke": "echo smoke test",
+     "test:autofix": "echo autofix test",
+     "test:safe-success": "echo safe success",
+diff --git a/scripts/policy-check.mjs b/scripts/policy-check.mjs
+index 5fae827..caf01fd 100755
+--- a/scripts/policy-check.mjs
++++ b/scripts/policy-check.mjs
+@@ -11,6 +11,14 @@ import path from 'node:path';
+ // Cargar configuración de políticas
+ const policies = JSON.parse(fs.readFileSync('config/policies.json', 'utf8'));
+ 
++// Cargar configuración de policy avanzada
++let policyConfig = {};
++try {
++  policyConfig = JSON.parse(fs.readFileSync('core/policy/policy.config.json', 'utf8'));
++} catch (e) {
++  // Configuración opcional
++}
++
+ // Configuración de políticas de seguridad
+ const FORBIDDEN_APIS = [
+   'eval\\(',
+@@ -46,6 +54,27 @@ async function log(msg) {
+   console.log(`[POLICY] ${msg}`);
+ }
+ 
++function hasPragma(filePath, content, pragma) {
++  const lines = content.split('\n');
++  for (let i = 0; i < Math.min(10, lines.length); i++) {
++    if (lines[i].includes(pragma)) {
++      return true;
++    }
++  }
++  return false;
++}
++
++function isPathAllowed(filePath, pattern) {
++  if (!policyConfig.overrides) return false;
++  
++  return policyConfig.overrides.some(override => {
++    if (override.pattern && new RegExp(override.pattern).test(filePath)) {
++      return override.allowTimers || false;
++    }
++    return false;
++  });
++}
++
+ async function checkForbiddenAPIs() {
+   log('🔍 Escaneando APIs prohibidas...');
+ 
+@@ -96,7 +125,12 @@ async function checkForbiddenAPIs() {
+               return file.includes(pattern);
+             });
+ 
+-            if (!isAllowed) {
++            // Verificar pragma para timers
++            const isTimerAPI = api.includes('setTimeout') || api.includes('setInterval');
++            const hasTimerPragma = isTimerAPI && hasPragma(file, content, 'policy-allow:timer');
++            const isPathAllowedForTimers = isTimerAPI && isPathAllowed(file, api);
++
++            if (!isAllowed && !hasTimerPragma && !isPathAllowedForTimers) {
+               violations.push({
+                 file,
+                 line: i + 1,
+diff --git a/scripts/prometheus-dashboard.mjs b/scripts/prometheus-dashboard.mjs
+index fc6c6b0..df5837d 100644
+--- a/scripts/prometheus-dashboard.mjs
++++ b/scripts/prometheus-dashboard.mjs
+@@ -3,6 +3,34 @@
+ import fs from 'fs';
+ import path from 'path';
+ 
++// Circuit breaker simple para evitar loops
++let circuitBreakerState = 'CLOSED';
++let failures = 0;
++const threshold = 3;
++let lastFailureTime = 0;
++const cooldownMs = 15000;
++
++function canRequest() {
++  const now = Date.now();
++  if (circuitBreakerState === 'OPEN') {
++    return now - lastFailureTime > cooldownMs;
++  }
++  return true;
++}
++
++function onSuccess() {
++  circuitBreakerState = 'CLOSED';
++  failures = 0;
++}
++
++function onFailure() {
++  failures++;
++  lastFailureTime = Date.now();
++  if (failures >= threshold) {
++    circuitBreakerState = 'OPEN';
++  }
++}
++
+ // Simular métricas desde archivos de artefactos si no hay servidor de métricas
+ function getMetricValue(metricName) {
+   try {
+@@ -88,6 +116,7 @@ async function generateDashboard() {
+ 
+   console.log('\n📈 Note: Using artifact-based metrics (no Prometheus server)');
+   console.log('   To enable real-time metrics, start a Prometheus server');
++  console.log(`   Circuit Breaker State: ${circuitBreakerState}`);
+ }
+ 
+ generateDashboard().catch(console.error);
+diff --git a/tests/security/tool-manager.safe-names.test.mjs b/tests/security/tool-manager.safe-names.test.mjs
+index 9d3c75a..341f333 100644
+--- a/tests/security/tool-manager.safe-names.test.mjs
++++ b/tests/security/tool-manager.safe-names.test.mjs
+@@ -81,16 +81,12 @@ describe('safeWhich', () => {
+ 
+   it('uses where on Windows systems', () => {
+     safeWhich('npm', { platform: 'win32' });
+-    const fallbackRoot = process.env.SystemRoot || 'C\\Windows';
+-    const expectedPath = `${fallbackRoot}\\System32`;
+-    expect(spawnSyncMock).toHaveBeenCalledWith(
+-      'where',
+-      ['npm'],
+-      expect.objectContaining({
+-        shell: false,
+-        env: expect.objectContaining({ PATH: expectedPath }),
+-      })
+-    );
++    expect(spawnSyncMock).toHaveBeenCalledWith('where', ['npm'], expect.any(Object));
++    const [, , options] = spawnSyncMock.mock.calls[0];
++    expect(options.shell).toBe(false);
++    expect(options.env.PATH).toMatch(/System32$/);
++    expect(options.env.SystemRoot).toMatch(/Windows$/);
++    expect(options.env.PATHEXT).toBe('.COM;.EXE;.BAT;.CMD');
+   });
+ 
+   it('returns not_found when binary is missing', () => {

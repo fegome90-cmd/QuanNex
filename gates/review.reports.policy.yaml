@@ -1,0 +1,27 @@
+name: 'QuanNex Reports Policy'
+version: '0.2.0'
+rules:
+  factcheck: true
+  consistency: true
+  metrics: true
+  structure: true
+
+detectors:
+  headings:
+    resumen: "(?:Resumen|Sumario|Executive\\s+Summary)"
+    total: "(?:Total|Cifra\\s+(?:global|total))"
+  structure:
+    required:
+      - "^#\\s+"
+      - "^##\\s+(?:Resumen|Sumario|Executive\\s+Summary)"
+      - "^##\\s+Hallazgos"
+      - "^##\\s+Métricas"
+  factcheck:
+    require_citation_near:
+      units: "(%|USD|EUR|CLP|\\bmm\\b|\\bcm\\b|\\bms\\b|\\bps\\b)"
+      window: 30
+    ignore_years: true
+    min_digits: 3
+
+thresholds:
+  min_confidence: 0.90

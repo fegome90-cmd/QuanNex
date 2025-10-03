@@ -1,0 +1,78 @@
+name: QuanNex Review
+
+on:
+  pull_request:
+    paths:
+      - 'reports/**/*.md'
+      - 'docs/**/*.md'
+  push:
+    branches: [main]
+    paths:
+      - 'reports/**/*.md'
+      - 'docs/**/*.md'
+
+jobs:
+  quanNex-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build QuanNex CLI
+        run: |
+          npm run build
+
+      - name: Run QuanNex on changed reports
+        shell: bash
+        run: |
+          set -euo pipefail
+          FINAL_STATUS=0
+          echo "::group::Detect changed reports"
+          git fetch origin ${{ github.base_ref }} --depth=1
+          MAPFILE -t FILES < <(git diff --name-only origin/${{ github.base_ref }}... | grep -E '^reports/.*\.md$' || true)
+          echo "Found ${#FILES[@]} report(s)."
+          echo "::endgroup::"
+
+          if [[ ${#FILES[@]} -eq 0 ]]; then
+            echo "No changed reports."
+            exit 0
+          fi
+
+          for f in "${FILES[@]}"; do
+            echo "-----"
+            echo "Reviewing $f"
+            if ! node dist/cli/quannex-cli.js check --input "$f"; then
+              echo "Validation FAILED for $f"
+              FINAL_STATUS=1
+            else
+              echo "Validation PASSED for $f"
+            fi
+          done
+
+          echo "-----"
+          if [[ "$FINAL_STATUS" -eq 1 ]]; then
+            echo "🔴 One or more reports failed the QuanNex review."
+            exit 1
+          else
+            echo "✅ All reviewed reports passed."
+          fi
+
+      - name: Upload QuanNex reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quanNex-reports
+          path: |
+            .reports/quanNex/
+          retention-days: 30

@@ -1,0 +1,44 @@
+{
+  "default": { 
+    "citations": false, 
+    "toolTrace": false, 
+    "schema": false, 
+    "determinism": false, 
+    "quality": true 
+  },
+  "research": { 
+    "citations": true, 
+    "toolTrace": true, 
+    "schema": true, 
+    "determinism": false, 
+    "quality": true 
+  },
+  "coding-plan": { 
+    "citations": false, 
+    "toolTrace": true, 
+    "schema": true, 
+    "determinism": true, 
+    "quality": true 
+  },
+  "ops-runbook": { 
+    "citations": false, 
+    "toolTrace": true, 
+    "schema": true, 
+    "determinism": false, 
+    "quality": true 
+  },
+  "linting-optimization": {
+    "citations": false,
+    "toolTrace": true,
+    "schema": true,
+    "determinism": false,
+    "quality": true
+  },
+  "security-audit": {
+    "citations": true,
+    "toolTrace": true,
+    "schema": true,
+    "determinism": false,
+    "quality": true
+  }
+}

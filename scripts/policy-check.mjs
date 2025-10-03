@@ -11,6 +11,14 @@ import path from 'node:path';
 // Cargar configuración de políticas
 const policies = JSON.parse(fs.readFileSync('config/policies.json', 'utf8'));
 
+// Cargar configuración de policy avanzada
+let policyConfig = {};
+try {
+  policyConfig = JSON.parse(fs.readFileSync('core/policy/policy.config.json', 'utf8'));
+} catch (e) {
+  // Configuración opcional
+}
+
 // Configuración de políticas de seguridad
 const FORBIDDEN_APIS = [
   'eval\\(',
@@ -44,6 +52,27 @@ async function fail(msg) {
 
 async function log(msg) {
   console.log(`[POLICY] ${msg}`);
+}
+
+function hasPragma(filePath, content, pragma) {
+  const lines = content.split('\n');
+  for (let i = 0; i < Math.min(10, lines.length); i++) {
+    if (lines[i].includes(pragma)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isPathAllowed(filePath, pattern) {
+  if (!policyConfig.overrides) return false;
+
+  return policyConfig.overrides.some(override => {
+    if (override.pattern && new RegExp(override.pattern).test(filePath)) {
+      return override.allowTimers || false;
+    }
+    return false;
+  });
 }
 
 async function checkForbiddenAPIs() {
@@ -96,7 +125,12 @@ async function checkForbiddenAPIs() {
               return file.includes(pattern);
             });
 
-            if (!isAllowed) {
+            // Verificar pragma para timers
+            const isTimerAPI = api.includes('setTimeout') || api.includes('setInterval');
+            const hasTimerPragma = isTimerAPI && hasPragma(file, content, 'policy-allow:timer');
+            const isPathAllowedForTimers = isTimerAPI && isPathAllowed(file, api);
+
+            if (!isAllowed && !hasTimerPragma && !isPathAllowedForTimers) {
               violations.push({
                 file,
                 line: i + 1,

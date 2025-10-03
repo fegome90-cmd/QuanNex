@@ -1,0 +1,65 @@
+{
+  "id": "16ad4871-b974-49e1-a354-828e2d6067e7",
+  "title": "Acta Go/No-Go - OLA 1 Robustez",
+  "type": "analysis",
+  "status": "draft",
+  "content": {
+    "summary": "Validación exitosa del Plan Maestro TaskDB OLA 1 - Robustez",
+    "validation_date": "2025-10-03T21:02:51.773Z",
+    "checks_passed": 8,
+    "checks_total": 8,
+    "success_rate": "100%",
+    "system_health": "excellent",
+    "critical_issues": 0,
+    "high_issues": 0,
+    "medium_issues": 0,
+    "validation_results": {
+      "TaskDB Doctor exit 0": true,
+      "Política versionada": true,
+      "Status derived consistente": true,
+      "Provenance verifier pass": true,
+      "Sin problemas críticos": true,
+      "Sin problemas altos": true,
+      "Reporte con provenance": true,
+      "Métricas válidas": true
+    },
+    "artifacts_generated": [
+      {
+        "name": "taskdb-ola1-dump.json",
+        "hash": "d28b1690aaa2c65c01ee78ca340dfbb89b1f02ec534947a8eb958a439164e406",
+        "type": "logical_dump"
+      },
+      {
+        "name": "taskdb.yaml",
+        "hash": "a3c8f6ca20172600417e43da83c4623fbf2c09f9c1d37f6ead0da65de68f69e1",
+        "type": "configuration"
+      }
+    ]
+  },
+  "report_provenance": {
+    "task_ids": [
+      "ebafc7dc-7df3-4f7c-8679-04f8bcd33af0"
+    ],
+    "run_ids": [],
+    "artifact_hashes": [
+      "d28b1690aaa2c65c01ee78ca340dfbb89b1f02ec534947a8eb958a439164e406",
+      "a3c8f6ca20172600417e43da83c4623fbf2c09f9c1d37f6ead0da65de68f69e1"
+    ],
+    "claims_validated": [
+      {
+        "claim": "Sistema TaskDB OLA 1 operativo y validado",
+        "evidence": "8/8 checks pasados, salud excellent",
+        "status": "validated"
+      },
+      {
+        "claim": "Artefactos de release generados correctamente",
+        "evidence": "Dump y configuración con hashes SHA256",
+        "status": "validated"
+      }
+    ],
+    "verification_snapshot_ts": "2025-10-03T21:02:51.773Z"
+  },
+  "created_at": "2025-10-03T21:02:51.773Z",
+  "published_at": null,
+  "retracted_at": null
+}

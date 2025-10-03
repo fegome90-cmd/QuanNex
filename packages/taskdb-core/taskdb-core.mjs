@@ -135,7 +135,7 @@ class TaskDBCore {
           required_metrics: ['success_rate', 'error_count'],
         },
         gate_validation: {
-          required_types: ['lint', 'policy', 'security'],
+          required_types: ['lint', 'policy', 'security', 'quality', 'truth'],
           max_checks_per_gate: 100,
         },
       },
@@ -417,7 +417,7 @@ class TaskDBCore {
     // Validar métricas requeridas para runs completados
     if (run.status === 'completed') {
       for (const metric of rules.required_metrics) {
-        if (!run.metrics[metric]) {
+        if (run.metrics[metric] === undefined || run.metrics[metric] === null) {
           throw new Error(`Métrica requerida faltante: ${metric}`);
         }
       }
