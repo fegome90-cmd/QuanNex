@@ -62,10 +62,67 @@
         "retraction_reason": "Test de retractación CLI",
         "created_via": "cli_retract"
       }
+    },
+    {
+      "id": "d97d6e91-c284-427c-8ce9-7111d9905839",
+      "title": "Canary Test Task - OLA 3",
+      "description": "Tarea de prueba para canary de escritura",
+      "status": "done",
+      "priority": "medium",
+      "policy_version": "1.0.0",
+      "created_at": "2025-10-03T23:50:09.407Z",
+      "updated_at": "2025-10-03T23:50:09.416Z",
+      "completed_at": null,
+      "assigned_to": null,
+      "tags": [],
+      "metadata": {}
     }
   ],
-  "runs": [],
-  "gates": [],
+  "runs": [
+    {
+      "id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+      "task_id": "d97d6e91-c284-427c-8ce9-7111d9905839",
+      "status": "pending",
+      "started_at": "2025-10-03T23:50:09.409Z",
+      "completed_at": null,
+      "duration_ms": null,
+      "tool_calls": [],
+      "metrics": {
+        "duration_ms": 1500,
+        "memory_mb": 45
+      },
+      "error_message": null
+    }
+  ],
+  "gates": [
+    {
+      "id": "c453a4f5-7302-4bb1-98bb-768c5fad1e53",
+      "type": "lint",
+      "status": "pending",
+      "checks": [],
+      "policy_version": "1.0.0",
+      "run_id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+      "created_at": "2025-10-03T23:50:09.413Z"
+    },
+    {
+      "id": "d8781f52-eba2-49c6-806c-a4dc00272772",
+      "type": "security",
+      "status": "pending",
+      "checks": [],
+      "policy_version": "1.0.0",
+      "run_id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+      "created_at": "2025-10-03T23:50:09.414Z"
+    },
+    {
+      "id": "2399557a-91c2-46a7-ad33-b9b1b179f63b",
+      "type": "quality",
+      "status": "pending",
+      "checks": [],
+      "policy_version": "1.0.0",
+      "run_id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+      "created_at": "2025-10-03T23:50:09.415Z"
+    }
+  ],
   "artifacts": [
     {
       "id": "20be9bd9-23b0-458c-9376-926e39554a09",
@@ -391,6 +448,139 @@
           "original_report_id": "53b840bb-2192-4f75-aa66-497ffe9b6dc7",
           "retraction_reason": "Test de retractación CLI",
           "created_via": "cli_retract"
+        }
+      },
+      "source": "api"
+    },
+    {
+      "id": "651a3b00-4220-456d-a1b6-94838eb8c72b",
+      "type": "task_created",
+      "entity_id": "d97d6e91-c284-427c-8ce9-7111d9905839",
+      "entity_type": "task",
+      "timestamp": "2025-10-03T23:50:09.408Z",
+      "data": {
+        "id": "d97d6e91-c284-427c-8ce9-7111d9905839",
+        "title": "Canary Test Task - OLA 3",
+        "description": "Tarea de prueba para canary de escritura",
+        "status": "todo",
+        "priority": "medium",
+        "policy_version": "1.0.0",
+        "created_at": "2025-10-03T23:50:09.407Z",
+        "updated_at": "2025-10-03T23:50:09.407Z",
+        "completed_at": null,
+        "assigned_to": null,
+        "tags": [],
+        "metadata": {}
+      },
+      "source": "api"
+    },
+    {
+      "id": "db5a4437-f480-4ff6-84f1-5cee87a893f3",
+      "type": "run_started",
+      "entity_id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+      "entity_type": "run",
+      "timestamp": "2025-10-03T23:50:09.409Z",
+      "data": {
+        "id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+        "task_id": "d97d6e91-c284-427c-8ce9-7111d9905839",
+        "status": "pending",
+        "started_at": "2025-10-03T23:50:09.409Z",
+        "completed_at": null,
+        "duration_ms": null,
+        "tool_calls": [],
+        "metrics": {
+          "duration_ms": 1500,
+          "memory_mb": 45
+        },
+        "error_message": null
+      },
+      "source": "api"
+    },
+    {
+      "id": "205ad07c-13dd-4010-b8d5-3f53cda09e2a",
+      "type": "gate_created",
+      "entity_id": "c453a4f5-7302-4bb1-98bb-768c5fad1e53",
+      "entity_type": "gate",
+      "timestamp": "2025-10-03T23:50:09.414Z",
+      "data": {
+        "id": "c453a4f5-7302-4bb1-98bb-768c5fad1e53",
+        "type": "lint",
+        "status": "pending",
+        "checks": [],
+        "policy_version": "1.0.0",
+        "run_id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+        "created_at": "2025-10-03T23:50:09.413Z"
+      },
+      "source": "api"
+    },
+    {
+      "id": "e56209ca-ef15-48f1-add5-c1f9d891db62",
+      "type": "gate_created",
+      "entity_id": "d8781f52-eba2-49c6-806c-a4dc00272772",
+      "entity_type": "gate",
+      "timestamp": "2025-10-03T23:50:09.415Z",
+      "data": {
+        "id": "d8781f52-eba2-49c6-806c-a4dc00272772",
+        "type": "security",
+        "status": "pending",
+        "checks": [],
+        "policy_version": "1.0.0",
+        "run_id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+        "created_at": "2025-10-03T23:50:09.414Z"
+      },
+      "source": "api"
+    },
+    {
+      "id": "07fe8205-25cd-4be6-891b-5335aea86a63",
+      "type": "gate_created",
+      "entity_id": "2399557a-91c2-46a7-ad33-b9b1b179f63b",
+      "entity_type": "gate",
+      "timestamp": "2025-10-03T23:50:09.415Z",
+      "data": {
+        "id": "2399557a-91c2-46a7-ad33-b9b1b179f63b",
+        "type": "quality",
+        "status": "pending",
+        "checks": [],
+        "policy_version": "1.0.0",
+        "run_id": "695ab0d4-a931-4bbf-bc6c-8f37c075f9fc",
+        "created_at": "2025-10-03T23:50:09.415Z"
+      },
+      "source": "api"
+    },
+    {
+      "id": "b5b89289-590e-4098-aa18-6b5669fb7b5c",
+      "type": "task_updated",
+      "entity_id": "d97d6e91-c284-427c-8ce9-7111d9905839",
+      "entity_type": "task",
+      "timestamp": "2025-10-03T23:50:09.416Z",
+      "data": {
+        "old": {
+          "id": "d97d6e91-c284-427c-8ce9-7111d9905839",
+          "title": "Canary Test Task - OLA 3",
+          "description": "Tarea de prueba para canary de escritura",
+          "status": "todo",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T23:50:09.407Z",
+          "updated_at": "2025-10-03T23:50:09.407Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [],
+          "metadata": {}
+        },
+        "new": {
+          "id": "d97d6e91-c284-427c-8ce9-7111d9905839",
+          "title": "Canary Test Task - OLA 3",
+          "description": "Tarea de prueba para canary de escritura",
+          "status": "done",
+          "priority": "medium",
+          "policy_version": "1.0.0",
+          "created_at": "2025-10-03T23:50:09.407Z",
+          "updated_at": "2025-10-03T23:50:09.416Z",
+          "completed_at": null,
+          "assigned_to": null,
+          "tags": [],
+          "metadata": {}
         }
       },
       "source": "api"
