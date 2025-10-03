@@ -5,7 +5,7 @@ import { fetchUser } from './fetchUser';
 // Definir tipo Database para los tests
 interface Database {
   users: {
-    findById: (id: number) => Promise<{ id: number; name: string; email: string } | null>;
+    findById: (id: number) => Promise<{ id: number; name: string; email: string }>;
   };
 }
 
