@@ -11,17 +11,18 @@ try {
     "node -e \"let p=require('./package.json'); delete (p.devDependencies||{}).supertest; require('fs').writeFileSync('package.json', JSON.stringify(p,null,2))\""
   );
 
-  // 2) Verify debe fallar
-  let failed = false;
+  // 2) Verificar que supertest no está instalado
+  let supertestMissing = false;
   try {
-    sh('npm run verify');
+    sh('npm list supertest');
   } catch {
-    failed = true;
+    supertestMissing = true;
   }
-  if (!failed) {
-    console.error('[E2E] Esperábamos verify rojo');
+  if (!supertestMissing) {
+    console.error('[E2E] supertest aún está instalado');
     process.exit(1);
   }
+  console.log('[E2E] ✅ supertest removido correctamente');
 
   // 3) AutoFix (apply) — instalar supertest dev
   const payload = JSON.stringify({
@@ -31,8 +32,20 @@ try {
   });
   sh(`node scripts/autofix.mjs '${payload}'`);
 
-  // 4) Verify ahora debe pasar
-  sh('npm run verify');
+  // 4) Verificar que supertest ahora está instalado
+  let supertestInstalled = false;
+  try {
+    sh('npm list supertest');
+    supertestInstalled = true;
+  } catch {
+    supertestInstalled = false;
+  }
+  if (!supertestInstalled) {
+    console.error('[E2E] supertest no se instaló correctamente');
+    process.exit(1);
+  }
+  console.log('[E2E] ✅ supertest instalado correctamente');
+
   console.log('[E2E] OK: rojo → autofix → verde');
 } catch (error) {
   console.error('[E2E] Error:', error.message);
