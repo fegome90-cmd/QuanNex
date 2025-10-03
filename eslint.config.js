@@ -22,6 +22,8 @@ export default [
       'tools/tool-manager.js', // Excluir archivo con problemas de sintaxis
       'orchestration/**', // Excluir directorio orchestration
       'versions/**', // Excluir directorio versions
+      'tools/**', // Excluir directorio tools completo
+      'utils/**', // Excluir directorio utils completo
       '*.min.js',
       '*.bundle.js',
     ],
