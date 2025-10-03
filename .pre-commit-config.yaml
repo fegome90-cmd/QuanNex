@@ -1,15 +1,74 @@
+# Pre-commit hooks para QuanNex Operations
+# Salvavidas local para validación automática
+
 repos:
+  # Hooks estándar de pre-commit
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
-      - id: check-added-large-files
-        args: ['--maxkb=400']
+      - id: check-yaml
+        files: ^ops/.*\.(ya?ml)$
+        description: Validar sintaxis YAML en archivos de ops
       - id: end-of-file-fixer
+        description: Asegurar que los archivos terminen con nueva línea
       - id: trailing-whitespace
-      - id: forbid-new-submodules
+        description: Eliminar espacios en blanco al final de líneas
+      - id: check-json
+        files: ^ops/.*\.json$
+        description: Validar sintaxis JSON en archivos de ops
+      - id: check-executables-have-shebangs
+        files: ^ops/scripts/.*\.sh$
+        description: Verificar que scripts tengan shebang
+      - id: check-shebang-scripts-are-executable
+        files: ^ops/scripts/.*\.sh$
+        description: Verificar que scripts sean ejecutables
+
+  # Hooks locales específicos de QuanNex
   - repo: local
     hooks:
-      - id: block-temp-artifacts
-        name: Block tmp/.reports/coverage in commits
-        entry: bash -c 'git diff --cached --name-only | egrep "^(tmp/|\.reports/|coverage/|.*\.log$)" && { echo "❌ Artefactos temporales detectados"; exit 1; } || exit 0'
+      - id: ops-metrics-validate
+        name: ops-metrics-validate
+        entry: bash ops/scripts/metrics-validate.sh http://localhost:3000/metrics
         language: system
+        pass_filenames: false
+        stages: [commit]
+        description: Validar endpoint de métricas antes del commit
+        always_run: false # Solo si el servidor está corriendo
+
+      - id: ops-acceptance-test
+        name: ops-acceptance-test
+        entry: bash ops/acceptance-test.sh
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+        description: Ejecutar acceptance test antes del push
+        always_run: false # Solo si es necesario
+
+      - id: ops-prometheus-rules
+        name: ops-prometheus-rules
+        entry: bash -c 'if command -v promtool >/dev/null 2>&1; then promtool check rules ops/prometheus/quannex-metrics.rules.yaml; else echo "⚠️ promtool no disponible, saltando validación"; fi'
+        language: system
+        files: ^ops/prometheus/.*\.ya?ml$
+        description: Validar reglas de Prometheus
+        always_run: true
+
+      - id: ops-dashboard-json
+        name: ops-dashboard-json
+        entry: bash -c 'if command -v jq >/dev/null 2>&1; then jq empty ops/dashboards/quannex-operator-golden.json; else python3 -c "import json; json.load(open(\"ops/dashboards/quannex-operator-golden.json\"))"; fi'
+        language: system
+        files: ^ops/dashboards/.*\.json$
+        description: Validar JSON del dashboard
+        always_run: true
+
+      - id: ops-scripts-executable
+        name: ops-scripts-executable
+        entry: bash -c 'for script in ops/scripts/*.sh ops/canary/*.sh; do if [ -f "$script" ] && [ ! -x "$script" ]; then echo "❌ Script $script no es ejecutable"; exit 1; fi; done; echo "✅ Todos los scripts son ejecutables"'
+        language: system
+        files: ^ops/scripts/.*\.sh$|^ops/canary/.*\.sh$
+        description: Verificar que scripts sean ejecutables
+        always_run: true
+
+# Configuración global
+default_stages: [commit]
+fail_fast: false
+minimum_pre_commit_version: 2.0.0

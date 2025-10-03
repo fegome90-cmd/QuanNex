@@ -1,24 +1,46 @@
-## Objetivo
+# QuanNex Ops — Checklist PR
 
-Describe brevemente el propósito de este PR y el problema que resuelve.
+## 📊 Métricas & Gates
 
-## Cambios
+- [ ] `/metrics` 200 siempre (fallback probado)
+- [ ] `X-Metrics-Source` y `Warning` en fallback
+- [ ] `quannex_gate_status{gate=...}` (5+ gates)
+- [ ] `quannex_metrics_fallback_total` y `quannex_e2e_last_pass_timestamp`
 
--
+## 🔧 Operación
 
-## Cómo probar
+- [ ] `ops/acceptance-test.sh` OK (2')
+- [ ] `ops/prometheus/quannex-metrics.rules.yaml` validado con promtool
+- [ ] Dashboard `quannex-operator-golden.json` importable
+- [ ] `RUNBOOK.md` actualizado (síntomas/diag/mitigación/verificación)
 
-1.
-2.
+## 📋 Política
 
-## Checklist
+- [ ] SLOs revisados y sin cambios de umbrales
+- [ ] Canary policy revisada (ratio snapshot canary ≤ +2%)
+- [ ] CI `metrics_integrity_gate` verde en este PR
 
-- [ ] Pruebas locales pasan (`./scripts/verify-dependencies.sh`)
-- [ ] Lint shell ok (`./scripts/lint-shell.sh`)
-- [ ] `scripts/test-claude-init.sh` verde en todos los tipos
-- [ ] Documentación actualizada (si aplica)
-- [ ] Sin secretos expuestos en cambios
+## 🧪 Testing
 
-## Capturas/Logs (opcional)
+- [ ] Smoke pack ejecutado localmente
+- [ ] Acceptance test pasado
+- [ ] Reglas Prometheus validadas
+- [ ] Dashboard importado en Grafana (opcional)
 
-Adjunta árbol de archivos generados o logs relevantes.
+## 📝 Documentación
+
+- [ ] Runbook actualizado con nuevos procedimientos
+- [ ] SLOs documentados y medibles
+- [ ] Políticas de remediación claras
+- [ ] Comandos exactos para diagnóstico
+
+## 🚀 Deployment
+
+- [ ] Canary rollout policy implementada
+- [ ] Abort automático configurado
+- [ ] Métricas de monitoreo definidas
+- [ ] Alertas Prometheus activas
+
+---
+
+**🔒 QuanNex Metrics Integrity Gate - PR Checklist**

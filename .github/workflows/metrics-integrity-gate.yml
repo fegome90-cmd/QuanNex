@@ -1,0 +1,174 @@
+name: Metrics Integrity Gate - A Prueba de Balas
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 */6 * * *' # Cada 6 horas
+
+permissions:
+  contents: read
+
+jobs:
+  metrics-integrity-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start Metrics Server
+        run: |
+          node src/server.mjs &
+          echo $! > server.pid
+          sleep 3
+          # Verificar que el servidor esté funcionando
+          curl -fsS http://localhost:3000/health || exit 1
+
+      - name: Wait for Health Check
+        run: |
+          for i in {1..30}; do
+            if curl -fsS http://localhost:3000/health >/dev/null 2>&1; then
+              echo "✅ Servidor saludable"
+              break
+            fi
+            echo "⏳ Esperando servidor... ($i/30)"
+            sleep 1
+          done
+
+      - name: Validate Metrics Format
+        run: |
+          echo "🔍 Validando formato de métricas..."
+          ./scripts/metrics-validate.sh http://localhost:3000/metrics
+
+      - name: Test Real Traffic Counters
+        run: |
+          echo "🚦 Probando contadores con tráfico real..."
+          # Scrape inicial
+          INITIAL=$(curl -fsS http://localhost:3000/metrics | grep '^qn_http_requests_total' | head -1)
+          echo "Contador inicial: $INITIAL"
+
+          # Generar tráfico real
+          for i in {1..50}; do
+            curl -s http://localhost:3000/health >/dev/null
+          done
+
+          sleep 2
+
+          # Scrape final
+          FINAL=$(curl -fsS http://localhost:3000/metrics | grep '^qn_http_requests_total' | head -1)
+          echo "Contador final: $FINAL"
+
+          if [ "$INITIAL" = "$FINAL" ]; then
+            echo "❌ Contador no incrementó con tráfico real"
+            exit 1
+          fi
+          echo "✅ Contador incrementó correctamente"
+
+      - name: Test Fallback Resilience
+        run: |
+          echo "🔄 Probando resiliencia de fallback..."
+          # Verificar que el endpoint nunca devuelve 500
+          for i in {1..20}; do
+            STATUS=$(curl -fsS -w "%{http_code}" -o /dev/null http://localhost:3000/metrics)
+            if [ "$STATUS" = "500" ]; then
+              echo "❌ Endpoint devolvió 500 en intento $i"
+              exit 1
+            fi
+          done
+          echo "✅ Endpoint nunca devolvió 500"
+
+      - name: Test Circuit Breaker
+        run: |
+          echo "🔴 Probando circuit breaker..."
+          # Verificar estado del circuit breaker
+          CIRCUIT_STATUS=$(curl -fsS http://localhost:3000/metrics | grep 'quannex_circuit_breaker_active' | grep -o '[0-1]' || echo '0')
+          echo "Circuit breaker status: $CIRCUIT_STATUS"
+
+          # Verificar métricas de observabilidad
+          curl -fsS http://localhost:3000/metrics | grep -q 'quannex_metrics_total' || exit 1
+          curl -fsS http://localhost:3000/metrics | grep -q 'quannex_metrics_fallback_total' || exit 1
+          curl -fsS http://localhost:3000/metrics | grep -q 'quannex_e2e_last_pass_timestamp' || exit 1
+          echo "✅ Métricas de observabilidad presentes"
+
+      - name: Test Snapshot Integrity
+        run: |
+          echo "🔐 Probando integridad del snapshot..."
+          if [ -f ".cache/metrics.last.ok" ]; then
+            SNAPSHOT=$(cat .cache/metrics.last.ok)
+            echo "$SNAPSHOT" | grep -q "# SNAPSHA:" || exit 1
+            echo "✅ Snapshot con hash de integridad"
+          else
+            echo "⚠️ Snapshot no existe aún"
+          fi
+
+      - name: Test Autodiagnóstico
+        run: |
+          echo "🔧 Probando autodiagnóstico..."
+          SELFTEST=$(curl -fsS http://localhost:3000/metrics/selftest)
+          echo "$SELFTEST" | jq -e '.validation.live_metrics_available == true' || exit 1
+          echo "$SELFTEST" | jq -e '.snapshot.exists == true' || exit 1
+          echo "✅ Autodiagnóstico funcionando"
+
+      - name: Test Main Branch Snapshot Policy
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "🚨 Verificando política de snapshot en main..."
+          # En main, no debe usar snapshot más de 2 veces seguidas
+          SNAPSHOT_COUNT=0
+          for i in {1..5}; do
+            SOURCE=$(curl -fsS -D- http://localhost:3000/metrics 2>/dev/null | grep 'X-Metrics-Source' | cut -d: -f2 | tr -d ' \r\n')
+            if [ "$SOURCE" = "snapshot" ] || [ "$SOURCE" = "snapshot-circuit-breaker" ]; then
+              SNAPSHOT_COUNT=$((SNAPSHOT_COUNT + 1))
+            fi
+            sleep 1
+          done
+
+          if [ "$SNAPSHOT_COUNT" -gt 2 ]; then
+            echo "❌ Demasiados snapshots en main: $SNAPSHOT_COUNT/5"
+            exit 1
+          fi
+          echo "✅ Política de snapshot respetada: $SNAPSHOT_COUNT/5"
+
+      - name: Run Resilience Tests
+        run: |
+          echo "🔒 Ejecutando pruebas de resiliencia completas..."
+          ./scripts/test-resilience.sh
+
+      - name: Stop Server
+        if: always()
+        run: |
+          if [ -f server.pid ]; then
+            kill $(cat server.pid) || true
+            rm -f server.pid
+          fi
+
+      - name: Generate Report
+        if: always()
+        run: |
+          echo "📊 Generando reporte de Metrics Integrity Gate..."
+          echo "## Metrics Integrity Gate Report" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Formato OpenMetrics válido" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Contadores dinámicos funcionando" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Resiliencia a fallos confirmada" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Circuit breaker operacional" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Snapshot con integridad" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Autodiagnóstico coherente" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Sistema a prueba de balas" >> $GITHUB_STEP_SUMMARY

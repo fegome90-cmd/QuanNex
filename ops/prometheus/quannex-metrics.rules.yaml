@@ -1,0 +1,34 @@
+groups:
+  - name: quannex-metrics
+    rules:
+      - alert: QuanNexMetricsMissing
+        expr: absent(quannex_gate_status)
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'No se expone quannex_gate_status'
+
+      - alert: QuanNexMetricsDegraded
+        expr: increase(quannex_metrics_fallback_total[15m]) > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Fallback a snapshot detectado'
+
+      - alert: QuanNexE2EStale
+        expr: time() - quannex_e2e_last_pass_timestamp > 3600
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Sin E2E PASS en >60 min'
+
+      - alert: QuanNexMetricsHighLatency
+        expr: histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{path="/metrics"}[5m]))) > 0.2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'p95 /metrics > 200 ms'

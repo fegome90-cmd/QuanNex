@@ -1,0 +1,91 @@
+name: E2E Tests in Docker
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start application in background
+        run: |
+          node src/server.mjs &
+          echo $! > app.pid
+          sleep 5
+
+      - name: Run E2E tests
+        run: npm run test:e2e
+
+      - name: Stop application
+        if: always()
+        run: |
+          if [ -f app.pid ]; then
+            kill $(cat app.pid) || true
+            rm app.pid
+          fi
+
+      - name: Upload E2E report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-report
+          path: reports/e2e-test-report.json
+          retention-days: 30
+
+  docker-e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker test image
+        run: docker build -f Dockerfile.test -t quannex-e2e-test .
+
+      - name: Start application container
+        run: |
+          docker run -d --name quannex-app -p 3000:3000 quannex-e2e-test node src/server.mjs
+          sleep 10
+
+      - name: Run E2E tests against container
+        run: |
+          docker exec quannex-app npm run test:e2e
+
+      - name: Stop and cleanup containers
+        if: always()
+        run: |
+          docker stop quannex-app || true
+          docker rm quannex-app || true
+
+      - name: Copy E2E report from container
+        if: always()
+        run: |
+          docker cp quannex-app:/app/reports/e2e-test-report.json ./e2e-test-report.json || echo "No report found"
+
+      - name: Upload Docker E2E report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-e2e-test-report
+          path: e2e-test-report.json
+          retention-days: 30

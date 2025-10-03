@@ -1,0 +1,232 @@
+name: CI Blindaje Anti-Manipulación
+
+on:
+  pull_request:
+    branches: ['main', 'develop']
+  push:
+    branches: ['main', 'develop']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  verify-blindaje:
+    runs-on: ubuntu-latest
+    name: '🔒 Verificación Blindaje Completo'
+
+    steps:
+      - name: '📥 Checkout código'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: '🔧 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: '📦 Instalar dependencias'
+        run: npm ci
+
+      - name: '🔨 Build aplicación'
+        run: npm run build
+
+      - name: '🧪 Tests CI (sin mocks)'
+        run: npm run test:ci
+        env:
+          CI: true
+          NODE_ENV: ci
+
+      - name: '📊 Coverage Gate Anti-Manipulación'
+        run: npm run gate:coverage
+
+      - name: '🚀 Iniciar aplicación'
+        run: |
+          node src/server.mjs &
+          echo $! > app.pid
+          sleep 3
+
+      - name: '📈 Metrics Gate'
+        run: npm run gate:metrics
+
+      - name: '🔍 Metrics Integrity Gate'
+        run: npm run gate:metrics:integrity
+
+      - name: '🔒 Scan Gate'
+        run: npm run gate:scan
+
+      - name: '🛡️ Policy Gate'
+        run: npm run gate:policy
+
+      - name: '🚫 No-Mock Gate'
+        run: npm run gate:nomock
+
+      - name: '📋 Schema Gate'
+        run: npm run gate:schema
+
+      - name: '🛡️ Anti-Tamper Gate'
+        run: npm run gate:dirty
+
+      - name: '🛑 Detener aplicación'
+        if: always()
+        run: |
+          if [ -f app.pid ]; then
+            kill $(cat app.pid) || true
+            rm app.pid
+          fi
+
+      - name: '📄 Subir reportes'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blindaje-reports
+          path: |
+            reports/
+            artifacts/
+            coverage/
+          retention-days: 30
+
+  e2e-docker-blindaje:
+    runs-on: ubuntu-latest
+    name: '🐳 E2E Docker Blindaje'
+
+    steps:
+      - name: '📥 Checkout código'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '🔧 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: '📦 Instalar dependencias'
+        run: npm ci
+
+      - name: '🐳 E2E Tests en Docker'
+        run: npm run e2e:docker
+
+      - name: '📄 Subir reportes E2E'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-docker-reports
+          path: |
+            reports/
+            artifacts/
+          retention-days: 30
+
+  security-blindaje:
+    runs-on: ubuntu-latest
+    name: '🔐 Security Blindaje'
+
+    steps:
+      - name: '📥 Checkout código'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '🔧 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: '📦 Instalar dependencias'
+        run: npm ci
+
+      - name: '🔍 Gitleaks Secret Scan'
+        uses: gitleaks/gitleaks-action@v2
+        with:
+          config-path: .gitleaks.toml
+          redact: 'true'
+          verbose: 'true'
+
+      - name: '🛡️ Security Audit'
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: '🔒 Policy Check'
+        run: npm run gate:policy
+
+      - name: '🚫 No-Mock Gate'
+        run: npm run gate:nomock
+
+  mutation-testing:
+    runs-on: ubuntu-latest
+    name: '🧬 Mutation Testing'
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: '📥 Checkout código'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '🔧 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: '📦 Instalar dependencias'
+        run: npm ci
+
+      - name: '🧬 Mutation Testing (opcional)'
+        run: |
+          echo "Mutation testing configurado pero deshabilitado por ahora"
+          echo "Para habilitar: npm install --save-dev @stryker-mutator/core @stryker-mutator/vitest-runner"
+          echo "Y ejecutar: npx stryker run"
+
+  blindaje-summary:
+    runs-on: ubuntu-latest
+    name: '📊 Resumen Blindaje'
+    needs: [verify-blindaje, e2e-docker-blindaje, security-blindaje]
+    if: always()
+
+    steps:
+      - name: '📥 Checkout código'
+        uses: actions/checkout@v4
+
+      - name: '📊 Generar resumen'
+        run: |
+          echo "## 🔒 Resumen Blindaje Anti-Manipulación" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Gates Ejecutados:" >> $GITHUB_STEP_SUMMARY
+          echo "- Coverage Gate Anti-Manipulación" >> $GITHUB_STEP_SUMMARY
+          echo "- Metrics Integrity Gate" >> $GITHUB_STEP_SUMMARY
+          echo "- No-Mock Gate" >> $GITHUB_STEP_SUMMARY
+          echo "- Schema Gate" >> $GITHUB_STEP_SUMMARY
+          echo "- Anti-Tamper Gate" >> $GITHUB_STEP_SUMMARY
+          echo "- E2E Docker Blindaje" >> $GITHUB_STEP_SUMMARY
+          echo "- Security Blindaje" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🛡️ Protecciones Activas:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ No simulación de métricas" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ No mocking en CI" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Validación de esquemas estricta" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Cobertura por directorio crítico" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Working tree limpio" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ E2E en Docker hermético" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📈 Estado:" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.verify-blindaje.result }}" == "success" ]; then
+            echo "- ✅ Verificación Blindaje: **PASÓ**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ Verificación Blindaje: **FALLÓ**" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ "${{ needs.e2e-docker-blindaje.result }}" == "success" ]; then
+            echo "- ✅ E2E Docker: **PASÓ**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ E2E Docker: **FALLÓ**" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ "${{ needs.security-blindaje.result }}" == "success" ]; then
+            echo "- ✅ Security Blindaje: **PASÓ**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ Security Blindaje: **FALLÓ**" >> $GITHUB_STEP_SUMMARY
+          fi

@@ -1,0 +1,77 @@
+{
+  "title": "QuanNex — Operator Golden",
+  "panels": [
+    {
+      "title": "Live vs Snapshot Ratio (%)", 
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "100 * (1 - (rate(quannex_metrics_snapshot_total[5m]) / clamp_min(rate(quannex_metrics_total[5m]),1)))"
+        }
+      ]
+    },
+    {
+      "title": "Fallback Count (15m rate)", 
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "rate(quannex_metrics_fallback_total[15m])"
+        }
+      ]
+    },
+    {
+      "title": "p95 /metrics latency", 
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{path=\"/metrics\"}[5m])))"
+        }
+      ]
+    },
+    {
+      "title": "E2E last pass age (min)", 
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "(time() - quannex_e2e_last_pass_timestamp) / 60"
+        }
+      ]
+    },
+    {
+      "title": "Breaker flips (events/day)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "increase(quannex_circuit_breaker_active[1d])"
+        }
+      ]
+    },
+    {
+      "title": "Snapshot streak (max 24h)",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "max_over_time((clamp_max((quannex_metrics_snapshot_total>0)*1,1))[24h:])"
+        }
+      ]
+    },
+    {
+      "title": "Live recovery time (min)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "predict_linear(quannex_metrics_snapshot_total[30m], 600)"
+        }
+      ]
+    },
+    {
+      "title": "Build Info",
+      "type": "table",
+      "targets": [
+        {
+          "expr": "quannex_build_info"
+        }
+      ]
+    }
+  ]
+}
