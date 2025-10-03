@@ -2,6 +2,7 @@ import fs from 'fs';
 import cp from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'path';
+import { recordAutofixSuccess, recordAutofixFailure } from '../src/metrics/autofix-metrics.mjs';
 
 const exec = promisify(cp.exec);
 const policy = JSON.parse(fs.readFileSync('config/fixes.json', 'utf8'));
@@ -60,21 +61,39 @@ const handlers = {
 export async function autoFix({ actions = [], dryRun = true, branch = 'autofix/quannex' }) {
   assertPolicy(actions);
   const log = [];
-  if (!dryRun) {
-    await run(`git checkout -b ${branch}`);
-  }
-  for (const a of actions) {
-    const fn = handlers[a.type];
-    if (!fn) {
-      throw new Error(`Handler faltante: ${a.type}`);
+  const startTime = Date.now();
+
+  try {
+    if (!dryRun) {
+      await run(`git checkout -b ${branch}`);
     }
-    log.push({ action: a, res: await fn(a) });
+    for (const a of actions) {
+      const fn = handlers[a.type];
+      if (!fn) {
+        throw new Error(`Handler faltante: ${a.type}`);
+      }
+      log.push({ action: a, res: await fn(a) });
+    }
+    if (!dryRun) {
+      await run(`git add -A`);
+      await run(`git commit -m "autofix: ${actions.map(x => x.type).join(', ')}"`);
+    }
+
+    // Record success metrics
+    if (!dryRun) {
+      for (const action of actions) {
+        recordAutofixSuccess(action.type, policy.risk_levels[action.type] || 0);
+      }
+    }
+
+    return { ok: true, dryRun, risk: risk(actions), log, duration: Date.now() - startTime };
+  } catch (error) {
+    // Record failure metrics
+    for (const action of actions) {
+      recordAutofixFailure(action.type, error.message);
+    }
+    throw error;
   }
-  if (!dryRun) {
-    await run(`git add -A`);
-    await run(`git commit -m "autofix: ${actions.map(x => x.type).join(', ')}"`);
-  }
-  return { ok: true, dryRun, risk: risk(actions), log };
 }
 
 if (process.argv[2]) {

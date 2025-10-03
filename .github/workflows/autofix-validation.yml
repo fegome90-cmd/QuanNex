@@ -1,0 +1,47 @@
+name: AutoFix Validation
+
+on:
+  push:
+    branches: ['autofix/*']
+  pull_request:
+    branches: ['autofix/*']
+
+jobs:
+  validate-autofix:
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'autofix/')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify AutoFix changes
+        run: |
+          echo "🔍 Validating AutoFix changes..."
+          npm run verify
+
+      - name: Policy Gate
+        run: npm run gate:policy
+
+      - name: Diff Gate
+        run: npm run gate:diff
+
+      - name: Workflow Gate
+        run: npm run gate:workflow
+
+      - name: Metrics Integrity
+        run: npm run gate:metrics:integrity
+
+      - name: AutoFix Success Rate
+        run: |
+          echo "📊 AutoFix validation completed successfully"
+          echo "✅ All gates passed for autofix branch"

@@ -1,0 +1,29 @@
+# Branch Protection Rules for QuanNex Triada
+# Applied to main branch via GitHub Settings
+
+required_status_checks:
+  strict: true
+  contexts:
+    - 'verify'
+    - 'gate:workflow'
+    - 'gate:policy'
+    - 'gate:diff'
+    - 'metrics-integrity'
+    - 'scan-gate'
+    - 'anti-tamper'
+    - 'gate:coverage'
+    - 'gate:metrics'
+
+enforce_admins: true
+required_pull_request_reviews:
+  required_approving_review_count: 1
+  dismiss_stale_reviews: true
+  require_code_owner_reviews: false
+
+restrictions:
+  users: []
+  teams: []
+  apps: []
+
+allow_force_pushes: false
+allow_deletions: false
