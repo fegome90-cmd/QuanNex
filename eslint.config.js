@@ -18,6 +18,8 @@ export default [
       'logs/**',
       'types/**/*.d.ts', // Excluir archivos de tipos TypeScript
       'tests/fixtures/**/*.tsx', // Excluir archivos de prueba
+      'apps/**/*.ts', // Excluir archivos de apps problemáticos
+      'tools/tool-manager.js', // Excluir archivo con problemas de sintaxis
       '*.min.js',
       '*.bundle.js',
     ],

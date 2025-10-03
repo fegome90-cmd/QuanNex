@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "disallowChildProcess": { "enabled": true, "allowlistPaths": ["^ops/", "^scripts/"] },
+    "disallowTimersInNode": { "enabled": true },
+    "allowTimerPragma": { "enabled": true, "pragma": "policy-allow:timer" }
+  },
+  "overrides": [
+    { "pattern": "^apps/metrics-dashboard/", "env": "browser", "allowTimers": true }
+  ],
+  "ignore": ["^test/fixtures/", "^dist/", "^build/"]
+}

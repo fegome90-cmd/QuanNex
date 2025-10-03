@@ -12,9 +12,10 @@ fi
 
 REPORTS_DIR="$PROJECT_ROOT/.reports"
 SECURITY_DIR="$REPORTS_DIR/security"
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 RAW_AUDIT_FILE="$SECURITY_DIR/npm-audit-raw-$TIMESTAMP.json"
 NPM_REGISTRY_URL="https://registry.npmjs.org"
+MAX_REPORTS=${MAX_REPORTS:-20}
 
 # Colores
 RED='\033[0;31m'
@@ -44,6 +45,26 @@ verify_network() {
 # Crear directorios
 mkdir -p "$SECURITY_DIR"
 cd "$PROJECT_ROOT"
+
+rotate_reports() {
+    local dir="$1"
+    local prefix="$2"
+    local keep="${3:-20}"
+
+    shopt -s nullglob
+    local files=("$dir"/"$prefix"*)
+    shopt -u nullglob
+
+    if (( ${#files[@]} <= keep )); then
+        return
+    fi
+
+    mapfile -t sorted < <(printf '%s\n' "${files[@]}" | sort -r)
+
+    for ((i = keep; i < ${#sorted[@]}; i++)); do
+        rm -f "${sorted[i]}"
+    done
+}
 
 # Configuración
 OUTPUT_FILE="$SECURITY_DIR/security-deps-report-$TIMESTAMP.json"
@@ -129,6 +150,7 @@ scan_npm_deps() {
     fi
 
     echo "$audit_output" >"$RAW_AUDIT_FILE"
+    rotate_reports "$SECURITY_DIR" "npm-audit-raw-" "$MAX_REPORTS"
 
     if [[ "$VERBOSE" == "true" ]]; then
         log "Reporte bruto guardado en $RAW_AUDIT_FILE"
@@ -298,6 +320,8 @@ main() {
   "findings": [$findings_json]
 }
 EOF
+
+    rotate_reports "$SECURITY_DIR" "security-deps-report-" "$MAX_REPORTS"
 
     # Mostrar resumen
     if [[ $total_findings -eq 0 ]]; then

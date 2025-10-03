@@ -16,12 +16,13 @@ NC='\033[0m' # No Color
 # SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # Unused variable
 PROJECT_DIR="${1:-$(pwd)}"
 REPORT_DIR="${PROJECT_DIR}/security-reports"
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
 REPORT_FILE="${REPORT_DIR}/security-audit-${TIMESTAMP}.json"
 AUDIT_JSON_FILE="${REPORT_DIR}/npm-audit-${TIMESTAMP}.json"
 NPM_REGISTRY_URL="https://registry.npmjs.org"
 NETWORK_TIMEOUT="${NETWORK_TIMEOUT:-5}"
 AUDIT_FAILURE=0
+MAX_REPORTS=${MAX_REPORTS:-20}
 
 # Función de logging
 log() {
@@ -38,6 +39,26 @@ warning() {
 
 error() {
   echo -e "${RED}[ERROR]${NC} $1"
+}
+
+rotate_reports() {
+  local dir="$1"
+  local prefix="$2"
+  local keep="${3:-20}"
+
+  shopt -s nullglob
+  local files=("$dir"/"$prefix"*)
+  shopt -u nullglob
+
+  if (( ${#files[@]} <= keep )); then
+    return
+  fi
+
+  mapfile -t sorted < <(printf '%s\n' "${files[@]}" | sort -r)
+
+  for ((i = keep; i < ${#sorted[@]}; i++)); do
+    rm -f "${sorted[i]}"
+  done
 }
 
 check_network() {
@@ -177,6 +198,8 @@ audit_npm_dependencies() {
       return
     fi
 
+    rotate_reports "$REPORT_DIR" "npm-audit-" "$MAX_REPORTS"
+
     local vulnerabilities
     vulnerabilities=$(jq -r '.vulnerabilities | keys[]' "$AUDIT_JSON_FILE" 2>/dev/null || echo "")
 
@@ -267,6 +290,8 @@ generate_final_report() {
   jq --arg timestamp "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
     '.audit_completed = $timestamp' \
     "$REPORT_FILE" >"$temp_file" && mv "$temp_file" "$REPORT_FILE"
+
+  rotate_reports "$REPORT_DIR" "security-audit-" "$MAX_REPORTS"
 
   # Mostrar resumen
   local total

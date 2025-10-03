@@ -5,7 +5,7 @@ const spawnSyncMock = vi.fn(() => ({ status: 0 }));
 
 vi.mock('node:child_process', () => ({
   spawn: spawnMock,
-  spawnSync: spawnSyncMock
+  spawnSync: spawnSyncMock,
 }));
 
 const { isSafeBinaryName, safeWhich } = await import('../../tools/tool-manager.js');
@@ -24,6 +24,8 @@ describe('isSafeBinaryName', () => {
     }
   });
 
+  const ZERO_WIDTH_SPACE = '\u200b';
+
   it('rejects malicious or malformed names', () => {
     const invalid = [
       '../node',
@@ -34,7 +36,10 @@ describe('isSafeBinaryName', () => {
       '`whoami`',
       '$(id)',
       'a b',
-      'a*b'
+      'a*b',
+      'node.',
+      '-node',
+      `node${ZERO_WIDTH_SPACE}`,
     ];
 
     for (const name of invalid) {
@@ -66,17 +71,25 @@ describe('safeWhich', () => {
     expect(spawnSyncMock).toHaveBeenCalledWith(
       'command',
       ['-v', 'node'],
-      expect.objectContaining({ shell: false })
+      expect.objectContaining({
+        shell: false,
+        env: expect.objectContaining({ PATH: '/usr/bin:/bin' }),
+      })
     );
     expect(result).toEqual({ found: true, reason: 'ok' });
   });
 
   it('uses where on Windows systems', () => {
     safeWhich('npm', { platform: 'win32' });
+    const fallbackRoot = process.env.SystemRoot || 'C\\Windows';
+    const expectedPath = `${fallbackRoot}\\System32`;
     expect(spawnSyncMock).toHaveBeenCalledWith(
       'where',
       ['npm'],
-      expect.objectContaining({ shell: false })
+      expect.objectContaining({
+        shell: false,
+        env: expect.objectContaining({ PATH: expectedPath }),
+      })
     );
   });
 
@@ -84,5 +97,11 @@ describe('safeWhich', () => {
     spawnSyncMock.mockReturnValueOnce({ status: 1 });
     const result = safeWhich('nonexistent', { platform: 'linux' });
     expect(result).toEqual({ found: false, reason: 'not_found' });
+  });
+
+  it('returns timeout when execution exceeds limit', () => {
+    spawnSyncMock.mockReturnValueOnce({ status: null, error: { code: 'ETIMEDOUT' } });
+    const result = safeWhich('npm', { platform: 'linux' });
+    expect(result).toEqual({ found: false, reason: 'timeout' });
   });
 });

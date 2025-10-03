@@ -13,6 +13,9 @@ const __dirname = dirname(__filename);
 const PROJECT_ROOT = join(__dirname, '..');
 const MAX_DEPENDENCY_LENGTH = 64;
 const SAFE_DEPENDENCY_REGEX = /^[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?$/;
+const POSIX_SAFE_PATH = '/usr/bin:/bin';
+const DEFAULT_SYSTEM_ROOT = process.env.SystemRoot || 'C:\\Windows';
+const WINDOWS_SAFE_PATH = `${DEFAULT_SYSTEM_ROOT}\\System32`;
 
 function isSafeBinaryName(name) {
   if (typeof name !== 'string') {
@@ -47,13 +50,32 @@ function safeWhich(binName, { platform = process.platform } = {}) {
   const command = isWindows ? 'where' : 'command';
   const args = isWindows ? [binName] : ['-v', binName];
 
+  const env = isWindows
+    ? {
+        PATH: WINDOWS_SAFE_PATH,
+        SystemRoot: DEFAULT_SYSTEM_ROOT,
+        PATHEXT: process.env.PATHEXT || '.COM;.EXE;.BAT;.CMD',
+      }
+    : {
+        PATH: POSIX_SAFE_PATH,
+      };
+
   const result = spawnSync(command, args, {
     cwd: PROJECT_ROOT,
-    env: { PATH: process.env.PATH },
+    env,
     stdio: 'pipe',
     shell: false,
-    timeout: 5000,
+    timeout: 3000,
+    maxBuffer: 1024 * 64,
   });
+
+  if (result.error && result.error.code === 'ETIMEDOUT') {
+    return { found: false, reason: 'timeout' };
+  }
+
+  if (result.status === null) {
+    return { found: false, reason: 'timeout' };
+  }
 
   return {
     found: result.status === 0,
