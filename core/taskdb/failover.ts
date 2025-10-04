@@ -1,95 +1,81 @@
-import type { TaskDB } from './adapter';
-import type { TaskEvent } from './types';
-import { JSONLTaskDB } from './jsonl';
+import type { TaskDB } from './adapter.ts';
+import type { TaskEvent, TaskEventFilter } from './types.ts';
+import { JsonlTaskDB } from './jsonl.ts';
 
 export class FailoverTaskDB implements TaskDB {
-  private primary: TaskDB;
-  private fallback: JSONLTaskDB;
   private failureCount = 0;
-  private readonly MAX_FAILURES = 3;
+  private readonly maxFailures = 3;
   private isUsingFallback = false;
 
-  constructor(primary: TaskDB, fallbackDir: string = './logs') {
-    this.primary = primary;
-    this.fallback = new JSONLTaskDB(fallbackDir);
+  constructor(private primary: TaskDB, fallbackPattern: string = './logs/taskdb-failover-%Y-%m-%d.jsonl') {
+    this.fallback = new JsonlTaskDB(fallbackPattern);
   }
 
-  async insert<T = any>(evt: TaskEvent<T>): Promise<void> {
+  private fallback: JsonlTaskDB;
+
+  async insert(evt: TaskEvent): Promise<void> {
     if (this.isUsingFallback) {
-      return this.fallback.insert(evt);
+      await this.fallback.insert(evt);
+      return;
     }
 
     try {
       await this.primary.insert(evt);
-      this.failureCount = 0; // Reset on success
+      this.failureCount = 0;
     } catch (error) {
       this.handleFailure(error);
-      return this.fallback.insert(evt);
+      await this.fallback.insert(evt);
     }
   }
 
-  async bulkInsert<T = any>(evts: TaskEvent<T>[]): Promise<void> {
+  async bulkInsert(evts: TaskEvent[]): Promise<void> {
+    if (!evts.length) return;
     if (this.isUsingFallback) {
-      return this.fallback.bulkInsert(evts);
+      await this.fallback.bulkInsert(evts);
+      return;
     }
 
     try {
       await this.primary.bulkInsert(evts);
-      this.failureCount = 0; // Reset on success
+      this.failureCount = 0;
     } catch (error) {
       this.handleFailure(error);
-      return this.fallback.bulkInsert(evts);
+      await this.fallback.bulkInsert(evts);
     }
   }
 
-  async query(filter: Partial<TaskEvent>, limit?: number): Promise<TaskEvent[]> {
-    // Always query from primary if available, fallback otherwise
+  async query(filter: TaskEventFilter, limit?: number): Promise<TaskEvent[]> {
     if (!this.isUsingFallback) {
       try {
         return await this.primary.query(filter, limit);
       } catch (error) {
-        console.warn('Primary query failed, using fallback:', error);
+        console.warn('TaskDB primary query failed, using fallback:', error);
       }
     }
     return this.fallback.query(filter, limit);
   }
 
-  private handleFailure(error: any) {
-    this.failureCount++;
+  private handleFailure(error: unknown): void {
+    this.failureCount += 1;
     console.error(`TaskDB primary failure #${this.failureCount}:`, error);
 
-    if (this.failureCount >= this.MAX_FAILURES && !this.isUsingFallback) {
+    if (this.failureCount >= this.maxFailures && !this.isUsingFallback) {
       this.isUsingFallback = true;
-      console.warn('⚠️ TaskDB: Switching to fallback mode (JSONL)');
-      // TODO: Send alert to monitoring system
+      console.warn('⚠️ TaskDB: switching to fallback JSONL storage');
     }
   }
 
-  // Method to attempt recovery
   async attemptRecovery(): Promise<boolean> {
     if (!this.isUsingFallback) return true;
 
     try {
-      // Test primary with a simple operation
-      await this.primary.insert({
-        kind: 'gate.pass',
-        ctx: {
-          runId: 'recovery-test',
-          taskId: 'recovery-test',
-          spanId: 'recovery-test',
-          component: 'failover',
-        },
-        ts: Date.now(),
-        status: 'ok',
-        details: { test: true },
-      });
-
-      console.log('✅ TaskDB: Primary recovered, switching back');
+      await this.primary.query({ kind: 'gate.pass' }, 1);
+      console.log('✅ TaskDB: primary recovered, switching back');
       this.isUsingFallback = false;
       this.failureCount = 0;
       return true;
     } catch (error) {
-      console.warn('TaskDB: Primary still unavailable:', error);
+      console.warn('TaskDB: primary still unavailable:', error);
       return false;
     }
   }

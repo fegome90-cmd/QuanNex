@@ -1,4 +1,4 @@
-import { getCtx } from './withTask';
+import { getCtx } from './withTask.ts';
 
 export function requireTaskContext() {
   if (process.env.TASKDB_ENFORCE_RUNTIME === 'true' && !getCtx()) {
@@ -6,7 +6,6 @@ export function requireTaskContext() {
   }
 }
 
-// Helper para verificar contexto en funciones críticas
 export function assertTaskContext(functionName: string) {
   const ctx = getCtx();
   if (!ctx) {

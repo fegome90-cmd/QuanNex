@@ -1,0 +1,61 @@
+version: "1.0"
+updated_at: "2025-01-27T10:00:00Z"
+
+# Configuración de herramientas RAG
+tools:
+  embeddings:
+    provider: "openai"
+    model: "text-embedding-3-small"
+    dimension: 1536
+    batch_size: 100
+    max_tokens: 8191
+  
+  reranker:
+    provider: "cohere"
+    model: "rerank-3"
+    max_results: 50
+  
+  retriever:
+    db: "qdrant"
+    k: 12
+    filter:
+      model_id: "text-embedding-3-small"
+    fallback: "postgres"
+
+# Evidencia pinneada (chunks importantes)
+evidence:
+  chunks_pinned:
+    - uri: "docs/MANUAL-COMPLETO-CURSOR.md#L1-L100"
+      id: "rag:cursor-manual:intro"
+      hash: "9f2e8c1a4b7d6e3f"
+      evidence_type: "expert_curated"
+      confidence: 1.0
+    
+    - uri: "docs/QUANNEX-OLA-1-CIERRE-OFICIAL.md#L1-L50"
+      id: "rag:quannex-ola1:summary"
+      hash: "a1b2c3d4e5f6g7h8"
+      evidence_type: "verified"
+      confidence: 0.95
+
+# Políticas de seguridad
+policies:
+  opa_bundle: "policies/bundle_v1.tar.gz"
+  pii_detection: true
+  content_filtering: true
+  rate_limits:
+    queries_per_minute: 60
+    embeddings_per_minute: 120
+
+# Configuración de chunking
+chunking:
+  strategy: "semantic"
+  chunk_size: 512
+  chunk_overlap: 50
+  separators: ["\n\n", "\n", ". ", "! ", "? "]
+
+# Modelos y versiones
+models:
+  primary_llm: "gpt-4o-mini"
+  fallback_llm: "claude-3-haiku"
+  embedding_model: "text-embedding-3-small"
+  rerank_model: "cohere-rerank-3"

@@ -1,0 +1,278 @@
+name: RAG CI (Safe by Default)
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - "rag/**"
+      - "scripts/**"
+      - "prp/**"
+      - "docs/adr/**"
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch: {}
+
+concurrency:
+  group: rag-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  NODE_VERSION: "20.x"
+  PY_VERSION: "3.11"
+  TELEMETRY_LEVEL: "lite"
+  # CI SIEMPRE EN DRY-RUN para operaciones destructivas:
+  RAG_PURGE_THRESHOLD: "20"
+
+jobs:
+  setup:
+    name: Setup Tooling
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.cache-node.outputs.cache-hit }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Install Node deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PY_VERSION }}
+
+      - name: Install Python deps (RAGAS smoke)
+        run: |
+          python -m pip install --upgrade pip
+          pip install ragas datasets evaluate
+
+  validate_context:
+    name: Gate — Context Validate (read replica / snapshot)
+    runs-on: ubuntu-latest
+    needs: [setup]
+    env:
+      PGREAD_HOST: ${{ secrets.RAG_READ_HOST }}   # réplica/snapshot, nunca prod
+      PGREAD_PORT: ${{ secrets.RAG_READ_PORT }}
+      PGREAD_USER: ${{ secrets.RAG_READ_USER }}
+      PGREAD_PASSWORD: ${{ secrets.RAG_READ_PASSWORD }}
+      PGREAD_DB: ${{ secrets.RAG_READ_DB }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # para embed smoke si hiciera falta
+      MAX_PINS: "200"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Validate PRP.lock context (replica/snapshot)
+        run: |
+          node scripts/gates/context-validate.mjs
+
+  rag_smoke_eval:
+    name: RAG — Smoke Eval (evalset + metrics)
+    runs-on: ubuntu-latest
+    needs: [setup, validate_context]
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      QDRANT_URL: ${{ secrets.QDRANT_URL || 'http://localhost:6333' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PY_VERSION }}
+
+      - name: Install RAGAS deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install ragas datasets evaluate qdrant-client
+
+      - name: Run RAGAS smoke with evalset
+        run: |
+          python rag/eval/ragas_smoke.py \
+            --evalset rag/config/evalset.jsonl \
+            --retrieval rag/config/retrieval.yaml \
+            --out artifacts/ragas.json | tee ragas_report.txt
+
+      - name: Upload RAGAS results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ragas-smoke-results
+          path: |
+            artifacts/ragas.json
+            ragas_report.txt
+
+  rag_gate_thresholds:
+    name: Gate — Thresholds (RAGAS + Latency)
+    runs-on: ubuntu-latest
+    needs: [rag_smoke_eval]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download RAGAS results
+        uses: actions/download-artifact@v4
+        with:
+          name: ragas-smoke-results
+          path: artifacts/
+
+      - name: Enforce RAGAS thresholds
+        run: |
+          node scripts/gates/ragas-threshold-check.mjs \
+            artifacts/ragas.json \
+            rag/config/thresholds.json
+
+      - name: Generate summary
+        run: |
+          echo "# RAG Pipeline Evaluation Summary" > artifacts/summary.md
+          echo "" >> artifacts/summary.md
+          echo "## RAGAS Metrics" >> artifacts/summary.md
+          echo "\`\`\`json" >> artifacts/summary.md
+          cat artifacts/ragas.json >> artifacts/summary.md
+          echo "\`\`\`" >> artifacts/summary.md
+          echo "" >> artifacts/summary.md
+          echo "## Thresholds Status" >> artifacts/summary.md
+          echo "✅ All thresholds passed" >> artifacts/summary.md
+
+      - name: Upload summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: rag-eval-summary
+          path: artifacts/summary.md
+
+  perf_latency_smoke:
+    name: Perf — Latency Smoke (20 queries)
+    runs-on: ubuntu-latest
+    needs: [setup]
+    if: github.event_name == 'pull_request'
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      QDRANT_URL: ${{ secrets.QDRANT_URL || 'http://localhost:6333' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PY_VERSION }}
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests qdrant-client
+
+      - name: Start RAG API (background)
+        run: |
+          python rag/serve/api.py &
+          sleep 10
+
+      - name: Run latency test (20 queries)
+        run: |
+          python rag/eval/latency_smoke.py \
+            --evalset rag/config/evalset.jsonl \
+            --num_queries 20 \
+            --out artifacts/latency.json
+
+      - name: Check latency thresholds
+        run: |
+          python -c "
+          import json
+          with open('artifacts/latency.json') as f:
+              data = json.load(f)
+          p95 = data['p95_ms']
+          p99 = data['p99_ms']
+          if p95 > 2500 or p99 > 4000:
+              print(f'❌ Latency thresholds exceeded: p95={p95}ms, p99={p99}ms')
+              exit(1)
+          else:
+              print(f'✅ Latency OK: p95={p95}ms, p99={p99}ms')
+          "
+
+      - name: Upload latency results
+        uses: actions/upload-artifact@v4
+        with:
+          name: latency-smoke-results
+          path: artifacts/latency.json
+
+  prp_lock_update:
+    name: PR Helper — Update PRP.lock (relaxed/ttl only)
+    runs-on: ubuntu-latest
+    needs: [validate_context, rag_gate_thresholds]
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    env:
+      PGREAD_HOST: ${{ secrets.RAG_READ_HOST }}
+      PGREAD_PORT: ${{ secrets.RAG_READ_PORT }}
+      PGREAD_USER: ${{ secrets.RAG_READ_USER }}
+      PGREAD_PASSWORD: ${{ secrets.RAG_READ_PASSWORD }}
+      PGREAD_DB: ${{ secrets.RAG_READ_DB }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update PRP.lock (non-strict pins)
+        run: |
+          node scripts/prp/prp-lock-update.mjs || true
+
+      - name: Create diff artifact
+        run: |
+          git diff -- prp/PRP.lock.yml > prp-lock.diff || true
+          [ -s prp-lock.diff ] && echo "has_changes=1" >> $GITHUB_OUTPUT || echo "has_changes=0" >> $GITHUB_OUTPUT
+        id: diff
+
+      - name: Upload diff
+        if: steps.diff.outputs.has_changes == '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: prp-lock-diff
+          path: prp-lock.diff
+
+      - name: Comment PR (preview)
+        if: steps.diff.outputs.has_changes == '1' && github.event_name == 'pull_request'
+        run: |
+          echo "Actualizaciones benignas en PRP.lock (relaxed/ttl). Revisa el artifact prp-lock-diff." > body.txt
+          gh pr comment ${{ github.event.pull_request.number }} -F body.txt
+
+  # Operación sensible: reindex/purge — SOLO manual y dry-run por defecto
+  reindex_dry_run:
+    name: Maintenance — Reindex (Dry-Run)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    env:
+      RAG_PURGE_THRESHOLD: "20"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dry-run purge (safe)
+        run: |
+          node rag/cli/rag-reindex.mjs
+
+  # Para ejecutar real, usa environment con aprobación manual
+  reindex_force:
+    name: Maintenance — Reindex (Force, Soft-Delete + Audit)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    environment:
+      name: rag-maintenance
+      url: https://github.com/${{ github.repository }}/environments/rag-maintenance
+    env:
+      RAG_PURGE_THRESHOLD: "20"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Force purge (soft-delete + audit)
+        run: |
+          node rag/cli/rag-reindex.mjs --force

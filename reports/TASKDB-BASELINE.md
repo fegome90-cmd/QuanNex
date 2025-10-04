@@ -1,25 +1,27 @@
 # TaskDB Baseline Report (últimos 7 días)
 
-**Generado**: 2025-10-04T00:07:03.622Z  
-**Período**: 2025-09-27T00:07:03.622Z - 2025-10-04T00:07:03.623Z
+**Generado**: 2025-10-04T00:58:31.904Z  
+**Período**: 2025-09-27T00:58:31.904Z - 2025-10-04T00:58:31.904Z
 
 ## Resumen
-- Eventos totales: **0**
-- Runs: start=0, finish=0, error=0
-- Tasa de finalización: **0.0%** | Error rate: **0.0%**
-- TTFQ: p50=0ms, p95=0ms
+- Eventos totales: **70**
+- Runs: start=15, finish=15, error=0
+- Tasa de finalización: **100.0%** | Error rate: **0.0%**
+- TTFQ: p50=1ms, p95=10ms
 
-## Eventos por tipo/estado
+## Salud del Sistema
+- Driver activo: **sqlite**
+- Shadow Write: ⚠️ Revisar
+- Métricas Prometheus: ✅ OK
+- Postgres: ✅ 20 eventos
+- SQLite: ✅ 50 eventos
 
-
-## Estado del Sistema
-- **Shadow Write**: ❌ Inactivo
-- **Driver**: sqlite
-- **Archivos**: taskdb.json (0 eventos), taskdb-core.json (0 eventos)
-
-## Próximos Pasos
-1. Activar shadow write: `npm run taskdb:shadow:on`
-2. Iniciar métricas: `npm run taskdb:metrics`
-3. Monitorear: `curl http://localhost:9464/metrics`
+## Eventos recientes
+- run.finish:ok: 15
+- llm.call:ok: 15
+- memory.inject:ok: 15
+- run.start:ok: 15
+- router.decision:ok: 5
+- guardrail.output:ok: 5
 
 > Generado automáticamente por `cli/generate-baseline.mjs`.

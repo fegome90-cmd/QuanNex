@@ -1,7 +1,8 @@
-import type { TaskEvent } from './types';
+import type { TaskEvent, TaskEventFilter, TaskEventPayload } from './types.ts';
 
 export interface TaskDB {
-  insert<T = any>(evt: TaskEvent<T>): Promise<void>;
-  bulkInsert<T = any>(evts: TaskEvent<T>[]): Promise<void>;
-  query(filter: Partial<TaskEvent>, limit?: number): Promise<TaskEvent[]>;
+  insert<T extends TaskEventPayload = TaskEventPayload>(evt: TaskEvent<T>): Promise<void>;
+  bulkInsert<T extends TaskEventPayload = TaskEventPayload>(evts: TaskEvent<T>[]): Promise<void>;
+  query(filter: TaskEventFilter, limit?: number): Promise<TaskEvent[]>;
+  close?(): Promise<void>;
 }

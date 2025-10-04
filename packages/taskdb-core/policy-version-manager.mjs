@@ -7,50 +7,33 @@
  * Gestiona versiones de políticas y valida tareas según su versión específica
  */
 
-import fs from 'node:fs';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
+import YAML from 'yaml';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 class PolicyVersionManager {
   constructor(configPath = null) {
-    this.config = this.loadConfig(configPath);
+    this.configPath = configPath || path.join(__dirname, 'taskdb-policy-versioned.yaml');
+    this.config = this.loadConfig();
     this.currentVersion = this.config.current_policy_version;
   }
 
   /**
    * Cargar configuración desde YAML
    */
-  loadConfig(configPath = null) {
-    // Configuración hardcoded para evitar problemas de parsing
-    return {
-      current_policy_version: '1.1.0',
-      policy_versions: {
-        '1.0.0': {
-          description: 'Política inicial - Requiere lint y seguridad básica',
-          required_gates: {
-            default: ['lint', 'security']
-          },
-          thresholds: {
-            security: 0.90,
-            lint: 0.85
-          }
-        },
-        '1.1.0': {
-          description: 'Política endurecida - Añade gate de quality obligatorio',
-          required_gates: {
-            default: ['lint', 'security', 'quality']
-          },
-          thresholds: {
-            security: 0.95,
-            lint: 0.90,
-            quality: 0.80
-          }
-        }
-      }
-    };
+  loadConfig() {
+    const fileContents = readFileSync(this.configPath, 'utf8');
+    const parsed = YAML.parse(fileContents);
+
+    if (!parsed?.policy_versions || !parsed.current_policy_version) {
+      throw new Error('Policy configuration inválida: falta current_policy_version o policy_versions');
+    }
+
+    return parsed;
   }
 
   /**
@@ -125,6 +108,18 @@ class PolicyVersionManager {
     return this.currentVersion;
   }
 
+  resolvePolicyVersion(requestedVersion) {
+    if (requestedVersion) {
+      if (this.config.policy_versions?.[requestedVersion]) {
+        return requestedVersion;
+      }
+      throw new Error(`PolicyVersionNotFound: version '${requestedVersion}' not registered`);
+    }
+    const defaultVersion = this.config?.cli?.default_policy_version || this.currentVersion;
+    // TODO: replace default-allow con resolución explícita basada en task metadata
+    return defaultVersion;
+  }
+
   /**
    * Obtener configuración de política para una versión específica
    */
@@ -143,7 +138,7 @@ class PolicyVersionManager {
    * respetando la versión de la política con la que fue creada.
    */
   async isTaskConsideredDone(task, taskdb) {
-    const policyVersion = task.policy_version || '1.0.0';
+    const policyVersion = this.resolvePolicyVersion(task.policy_version);
     
     // GATE DE SEGURIDAD: Verificar que la versión existe
     const policyForVersion = this.getPolicyForVersion(policyVersion);

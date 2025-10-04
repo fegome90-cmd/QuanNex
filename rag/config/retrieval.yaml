@@ -1,0 +1,53 @@
+sources:
+  - type: filesystem
+    path: data/docs/**/*.md
+    exclude: ["**/node_modules/**", "**/.git/**", "**/temp/**"]
+
+chunking:
+  strategy: semantic
+  max_chars: 1200
+  overlap: 120
+  separators: ["\n\n", "\n", ". ", " ", ""]
+  preserve_metadata: true
+
+index:
+  type: qdrant
+  collection: quannex_docs_replica
+  distance: cosine
+  vector_size: 1536
+  hnsw_config:
+    m: 16
+    ef_construct: 100
+    full_scan_threshold: 10000
+
+retrieval:
+  hybrid: true
+  top_k_vector: 12
+  top_k_bm25: 12
+  fusion_algorithm: rrf  # reciprocal rank fusion
+  fusion_k: 60
+
+reranker:
+  enabled: true
+  model: bge-reranker-v2-m3  # libre/OSS-compatible
+  top_k: 8
+  batch_size: 32
+  max_length: 512
+
+embeddings:
+  provider: openai
+  model: text-embedding-3-small
+  dimensions: 1536
+  batch_size: 100
+  rate_limit: 3000  # requests per minute
+
+bm25:
+  k1: 1.2
+  b: 0.75
+  epsilon: 0.25
+
+filters:
+  default:
+    metadata_fields: ["doc_type", "section", "created_at"]
+  strict:
+    required_fields: ["doc_id", "section"]

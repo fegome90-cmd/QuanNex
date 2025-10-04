@@ -1,5 +1,5 @@
-import { ShortMemory } from './short.js';
-import { LongMemory, LongAdapter } from './long.js';
+import { ShortMemory } from './short.ts';
+import { LongMemory, LongAdapter } from './long.ts';
 
 export class Memory {
   short = new ShortMemory();

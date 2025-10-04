@@ -1,30 +1,51 @@
-# Filosofía Toyota: Solo archivos críticos requieren revisión
-# Protección de seguridad sin burocracia innecesaria
+# =====================================================
+# CODEOWNERS - Sistema RAG
+# Requiere revisión de equipos específicos para cambios críticos
+# =====================================================
 
-# Archivos críticos - requiere revisión de seguridad
-/claude-project-init.sh @fegome90-cmd
-/.github/ @fegome90-cmd
-/scripts/ @fegome90-cmd
+# RAG System - Requiere revisión de arquitectura y conocimiento
+/rag/ @quannex-core @quannex-research
+/scripts/gates/ @quannex-core
+/scripts/prp/ @quannex-core
+/prp/ @quannex-core @quannex-research
+/docs/adr/ @quannex-core
 
-# Archivos de configuración de seguridad
-/.secretsallow @fegome90-cmd
-/.githooks/ @fegome90-cmd
+# CI/CD - Requiere revisión de DevOps y arquitectura
+/.github/workflows/ @quannex-infra
+/.github/CODEOWNERS @quannex-infra
 
-# Archivos de investigación crítica
-/investigacion/ @fegome90-cmd
-/docs/research/ @fegome90-cmd
+# Configuración crítica - Requiere revisión de arquitectura
+/config/ @quannex-core
+/schema/ @quannex-core @quannex-dba
+/scripts/migrations/ @quannex-core @quannex-dba
 
-# Decisiones de arquitectura y RFCs
-/docs/adr/ @fegome90-cmd
-/docs/rfc/ @fegome90-cmd
+# Datastores y infraestructura
+/docker-compose*.yml @quannex-infra
+/env*.datastores @quannex-infra
+/Makefile.rag @quannex-infra
 
-# Documentación operativa
-/docs/onboarding/ @fegome90-cmd
-/docs/CHARTER.md @fegome90-cmd
+# Documentación de seguridad y operaciones
+/SECURITY-HARDENING-SUMMARY.md @quannex-core @quannex-security
+/CHANGELOG.md @quannex-core
+/docs/CI-CD-SETUP.md @quannex-infra
 
-# Filosofía Toyota: Mínimo control, máximo valor
-# Solo proteger lo que realmente importa para la seguridad
+# Roadmap y decisiones arquitecturales
+/ROADMAP_RAG.md @quannex-core
+/docs/adr/ @quannex-core
 
-# COORDINACIÓN CON CODEX:
-# - Codex crea: CHARTER.md, ADR-0001, INDEX.md
-# - Claude implementa: CODEOWNERS, estructura, CI/CD
+# Scripts de mantenimiento críticos
+/scripts/smoke-datastores.sh @quannex-infra
+/rag/cli/ @quannex-core @quannex-research
+
+# Reports y análisis
+/reports/ @quannex-pm
+
+# =====================================================
+# Notas:
+# - @quannex-core: Revisión técnica y arquitectural
+# - @quannex-research: Revisión de contenido y corpus
+# - @quannex-infra: Revisión de infraestructura y CI/CD
+# - @quannex-security: Revisión de seguridad y compliance
+# - @quannex-dba: Revisión de esquemas y migraciones de BD
+# - @quannex-pm: Revisión de reportes y análisis
+# =====================================================

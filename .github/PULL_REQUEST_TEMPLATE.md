@@ -1,46 +1,68 @@
-# QuanNex Ops — Checklist PR
+# Pull Request
 
-## 📊 Métricas & Gates
+## 📋 Checklist TaskDB
 
-- [ ] `/metrics` 200 siempre (fallback probado)
-- [ ] `X-Metrics-Source` y `Warning` en fallback
-- [ ] `quannex_gate_status{gate=...}` (5+ gates)
-- [ ] `quannex_metrics_fallback_total` y `quannex_e2e_last_pass_timestamp`
+### Instrumentación Obligatoria
+- [ ] Las funciones nuevas usan **withTask(...)**
+- [ ] Se registran `run.start → … → run.finish` (ver smoke)
+- [ ] Funciones críticas usan `requireTaskContext()`
+- [ ] Eventos adicionales registrados con `insertEvent()`
 
-## 🔧 Operación
+### Plan y Trazabilidad
+- [ ] Este PR referencia un **PLAN-YYYY-MM-…** (taskId) y se usa como `runId` base
+- [ ] Cambios documentados en PROGRESS.md
+- [ ] Tag de versión creado si corresponde
 
-- [ ] `ops/acceptance-test.sh` OK (2')
-- [ ] `ops/prometheus/quannex-metrics.rules.yaml` validado con promtool
-- [ ] Dashboard `quannex-operator-golden.json` importable
-- [ ] `RUNBOOK.md` actualizado (síntomas/diag/mitigación/verificación)
+### Verificación
+- [ ] `npm run smoke:test` pasa y aparecen eventos del nuevo código
+- [ ] `npm run taskdb:health` reporta estado saludable
+- [ ] `npm run ci:require-taskdb` pasa (instrumentación verificada)
 
-## 📋 Política
+## 🎯 Descripción
 
-- [ ] SLOs revisados y sin cambios de umbrales
-- [ ] Canary policy revisada (ratio snapshot canary ≤ +2%)
-- [ ] CI `metrics_integrity_gate` verde en este PR
+### Cambios Realizados
+<!-- Describe los cambios principales -->
+
+### Funciones Nuevas/Modificadas
+<!-- Lista las funciones que requieren instrumentación TaskDB -->
+
+### Impacto en TaskDB
+<!-- Describe cómo afecta a las métricas y observabilidad -->
 
 ## 🧪 Testing
 
-- [ ] Smoke pack ejecutado localmente
-- [ ] Acceptance test pasado
-- [ ] Reglas Prometheus validadas
-- [ ] Dashboard importado en Grafana (opcional)
+### Smoke Tests
+- [ ] `npm run smoke:test` - ✅ PASS
+- [ ] `npm run taskdb:health` - ✅ PASS
+- [ ] `npm run taskdb:delta` - ✅ PASS
 
-## 📝 Documentación
+### Instrumentación
+- [ ] Eventos `run.start` y `run.finish` registrados
+- [ ] Eventos adicionales (`guardrail.*`, `llm.*`, etc.) según corresponda
+- [ ] No hay funciones sin contexto TaskDB
 
-- [ ] Runbook actualizado con nuevos procedimientos
-- [ ] SLOs documentados y medibles
-- [ ] Políticas de remediación claras
-- [ ] Comandos exactos para diagnóstico
+## 📊 Métricas
 
-## 🚀 Deployment
+### Baseline Actualizado
+- [ ] `npm run taskdb:baseline` ejecutado
+- [ ] KPIs dentro de umbrales aceptables
+- [ ] Snapshot de métricas guardado
 
-- [ ] Canary rollout policy implementada
-- [ ] Abort automático configurado
-- [ ] Métricas de monitoreo definidas
-- [ ] Alertas Prometheus activas
+### Observabilidad
+- [ ] Dashboard Grafana actualizado (si aplica)
+- [ ] Alertas configuradas (si aplica)
+- [ ] Logs estructurados implementados
+
+## 🔄 Rollback Plan
+
+### Si algo falla:
+1. Revertir commit: `git revert <commit-hash>`
+2. Cambiar driver: `TASKDB_DRIVER=jsonl`
+3. Verificar estabilidad: `npm run taskdb:health`
 
 ---
 
-**🔒 QuanNex Metrics Integrity Gate - PR Checklist**
+⚠️ **Nota Cultural**  
+Estas métricas son diagnósticas, no se usan para evaluar personas.
+
+*Template generado automáticamente por TaskDB v2*

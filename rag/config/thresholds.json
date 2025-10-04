@@ -1,0 +1,38 @@
+{
+  "ragas": {
+    "faithfulness": 0.85,
+    "answer_relevancy": 0.78,
+    "context_precision": 0.65,
+    "context_recall": 0.70
+  },
+  "latency": {
+    "p95_ms": 2500,
+    "p99_ms": 4000,
+    "avg_ms": 1200
+  },
+  "retrieval": {
+    "hit_rate_at_k": {
+      "k": 8,
+      "min": 0.80
+    },
+    "mrr_at_k": {
+      "k": 10,
+      "min": 0.75
+    },
+    "ndcg_at_k": {
+      "k": 10,
+      "min": 0.70
+    }
+  },
+  "coverage": {
+    "documents_retrieved": {
+      "min_unique_docs": 0.60
+    }
+  },
+  "quality_gates": {
+    "block_deployment": true,
+    "notification_channels": ["slack", "email"],
+    "retry_on_failure": true,
+    "max_retries": 3
+  }
+}

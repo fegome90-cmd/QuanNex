@@ -1,0 +1,154 @@
+# =====================================================
+# Makefile para Sistema RAG - Datastores
+# =====================================================
+
+# Cargar variables de entorno
+-include env.datastores
+export
+
+# =====================================================
+# Comandos principales
+# =====================================================
+
+.PHONY: help up down ps init-db smoke clean logs
+
+help: ## Mostrar ayuda
+	@echo "Comandos disponibles para el sistema RAG:"
+	@echo ""
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
+
+up: ## Levantar servicios de datastores
+	@echo "🚀 Levantando servicios de datastores..."
+	docker compose up -d postgres qdrant redis
+	@echo "⏳ Esperando que los servicios estén listos..."
+	@sleep 10
+	@$(MAKE) ps
+
+down: ## Detener servicios de datastores
+	@echo "🛑 Deteniendo servicios de datastores..."
+	docker compose down
+
+ps: ## Mostrar estado de servicios
+	@echo "📊 Estado de servicios:"
+	docker compose ps
+
+init-db: ## Inicializar base de datos PostgreSQL
+	@echo "🗄️  Inicializando base de datos PostgreSQL..."
+	docker compose exec -T postgres psql -U "$(PGUSER)" -d "$(PGDATABASE)" -f scripts/init_rag.sql
+
+smoke: ## Ejecutar smoke test de datastores
+	@echo "🧪 Ejecutando smoke test de datastores..."
+	./scripts/smoke-datastores.sh
+
+clean: ## Limpiar volúmenes y datos
+	@echo "🧹 Limpiando volúmenes de datos..."
+	docker compose down -v
+	docker volume prune -f
+
+logs: ## Mostrar logs de servicios
+	@echo "📋 Logs de servicios:"
+	docker compose logs -f
+
+logs-postgres: ## Mostrar logs de PostgreSQL
+	docker compose logs -f postgres
+
+logs-qdrant: ## Mostrar logs de Qdrant
+	docker compose logs -f qdrant
+
+logs-redis: ## Mostrar logs de Redis
+	docker compose logs -f redis
+
+# =====================================================
+# Comandos de desarrollo
+# =====================================================
+
+shell-postgres: ## Conectar a shell de PostgreSQL
+	docker compose exec postgres psql -U "$(PGUSER)" -d "$(PGDATABASE)"
+
+shell-redis: ## Conectar a shell de Redis
+	docker compose exec redis redis-cli
+
+status: ## Verificar estado detallado de servicios
+	@echo "📊 Estado detallado de servicios:"
+	@echo ""
+	@echo "PostgreSQL:"
+	@docker compose exec -T postgres pg_isready -U "$(PGUSER)" || echo "❌ No disponible"
+	@echo ""
+	@echo "Qdrant:"
+	@curl -sf "$(QDRANT_URL)/readyz" && echo "✅ Listo" || echo "❌ No disponible"
+	@echo ""
+	@echo "Redis:"
+	@docker compose exec -T redis redis-cli ping || echo "❌ No disponible"
+
+# =====================================================
+# Comandos de prueba
+# =====================================================
+
+test-postgres: ## Probar PostgreSQL
+	@echo "🧪 Probando PostgreSQL..."
+	docker compose exec -T postgres psql -U "$(PGUSER)" -d "$(PGDATABASE)" -c "SELECT 'PostgreSQL funcionando' as status;"
+
+test-qdrant: ## Probar Qdrant
+	@echo "🧪 Probando Qdrant..."
+	curl -s "$(QDRANT_URL)/collections" | jq
+
+test-redis: ## Probar Redis
+	@echo "🧪 Probando Redis..."
+	docker compose exec -T redis redis-cli ping
+
+# =====================================================
+# Comandos de instalación
+# =====================================================
+
+install: ## Instalación completa del sistema RAG
+	@echo "🚀 Instalación completa del sistema RAG..."
+	@$(MAKE) up
+	@sleep 15
+	@$(MAKE) init-db
+	@$(MAKE) smoke
+	@echo "✅ Instalación completada"
+
+# =====================================================
+# Comandos de monitoreo
+# =====================================================
+
+monitor: ## Monitorear recursos de servicios
+	@echo "📊 Monitoreando recursos de servicios:"
+	@echo ""
+	@echo "PostgreSQL:"
+	@docker stats --no-stream postgres-startkit-main-1 2>/dev/null || echo "No disponible"
+	@echo ""
+	@echo "Qdrant:"
+	@docker stats --no-stream qdrant-startkit-main-1 2>/dev/null || echo "No disponible"
+	@echo ""
+	@echo "Redis:"
+	@docker stats --no-stream redis-startkit-main-1 2>/dev/null || echo "No disponible"
+
+# =====================================================
+# Comandos de Seguridad y Operaciones
+# =====================================================
+
+# Purga segura (dry-run por defecto)
+rag-reindex: ## Reindexación segura con dry-run por defecto
+	@echo "🧹 Ejecutando reindexación segura (dry-run)..."
+	node rag/cli/rag-reindex.mjs
+
+# Ejecutar purga real con guardas
+rag-reindex-force: ## Ejecutar purga real con umbrales de seguridad
+	@echo "⚠️  Ejecutando purga real con umbrales de seguridad..."
+	@echo "Umbral: $(or $(RAG_PURGE_THRESHOLD),20)%"
+	RAG_PURGE_THRESHOLD=$(or $(RAG_PURGE_THRESHOLD),20) node rag/cli/rag-reindex.mjs --force
+
+# Validación de contexto contra réplica/snapshot
+rag-context-validate: ## Validar contexto contra réplica/snapshot
+	@echo "🔍 Validando contexto contra réplica/snapshot..."
+	PGREAD_HOST=$(or $(PGREAD_HOST),localhost) \
+	PGREAD_USER=$(or $(PGREAD_USER),rag_read) \
+	PGREAD_PASSWORD=$(or $(PGREAD_PASSWORD),rag_read_only) \
+	PGREAD_DB=$(or $(PGREAD_DB),ragdb) \
+	node scripts/gates/context-validate.mjs
+
+# Actualizar PRP.lock (relaxed/ttl) y reportar STRICT
+prp-lock-update: ## Actualizar PRP.lock y reportar cambios
+	@echo "🔄 Actualizando PRP.lock..."
+	node scripts/prp/prp-lock-update.mjs

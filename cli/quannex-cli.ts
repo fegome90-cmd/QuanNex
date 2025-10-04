@@ -4,11 +4,11 @@ import * as path from 'node:path';
 import YAML from 'yaml';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { factcheck } from '../gates/detectors/factcheck.js';
-import { consistency } from '../gates/detectors/consistency.js';
-import { metrics as metricsCheck } from '../gates/detectors/metrics.js';
-import { structure } from '../gates/detectors/structure.js';
-import { ReviewIssue, ReviewReport, AppConfig } from './types.js';
+import { factcheck } from '../gates/detectors/factcheck.ts';
+import { consistency } from '../gates/detectors/consistency.ts';
+import { metrics as metricsCheck } from '../gates/detectors/metrics.ts';
+import { structure } from '../gates/detectors/structure.ts';
+import { ReviewIssue, ReviewReport, AppConfig } from './types.ts';
 
 const VERSION = '0.2.0';
 

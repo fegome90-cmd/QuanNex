@@ -1,16 +1,50 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
-import type { TaskContext } from './types.js';
+import type { TaskContext } from './types.ts';
 
-const asyncLocalStorage = new AsyncLocalStorage<TaskContext>();
+const storage = new AsyncLocalStorage<TaskContext>();
 
-export function withContext<T>(ctx: TaskContext, fn: () => T): T {
-  return asyncLocalStorage.run(ctx, fn);
+function validate(ctx: TaskContext): void {
+  if (!ctx.traceId) {
+    throw new Error('TaskDB context missing traceId');
+  }
+  if (!ctx.spanId) {
+    throw new Error('TaskDB context missing spanId');
+  }
+  if (!ctx.runId || !ctx.taskId) {
+    throw new Error('TaskDB context missing runId/taskId');
+  }
+}
+
+export function withContext<T>(ctx: TaskContext, fn: () => Promise<T> | T): Promise<T> | T {
+  validate(ctx);
+  return storage.run({ ...ctx }, fn);
 }
 
 export function getContext(): TaskContext | undefined {
-  return asyncLocalStorage.getStore();
+  return storage.getStore();
 }
 
 export function setContext(ctx: TaskContext): void {
-  asyncLocalStorage.enterWith(ctx);
+  validate(ctx);
+  storage.enterWith({ ...ctx });
+}
+
+export function assertContext(): TaskContext {
+  const ctx = storage.getStore();
+  if (!ctx) {
+    throw new Error('TaskDB context not available: wrap the call with withContext()');
+  }
+  validate(ctx);
+  return ctx;
+}
+
+export function forkContext(overrides: Partial<TaskContext> = {}): TaskContext {
+  const parent = assertContext();
+  const next = {
+    ...parent,
+    ...overrides,
+    parentSpanId: overrides.parentSpanId ?? parent.spanId,
+  };
+  validate(next);
+  return next;
 }

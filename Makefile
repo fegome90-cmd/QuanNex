@@ -71,3 +71,34 @@ clean:cache:
 clean:docker:
 	@echo "Limpiando contenedores Docker..."
 	docker compose -f $(DOCKER_COMPOSE_FILE) down -v --remove-orphans
+
+.PHONY: db-up db-migrate seed smoke metrics baseline
+
+TASKDB_COMPOSE ?= docker/taskdb/docker-compose.yml
+PG_USER ?= taskdb
+PG_PASSWORD ?= taskdb
+PG_HOST ?= localhost
+PG_PORT ?= 5432
+PG_DB ?= taskdb
+SQLITE_PATH ?= data/taskdb.sqlite
+
+db-up:
+	@echo "Levantando stack TaskDB (docker compose -f $(TASKDB_COMPOSE) up -d pg)"
+	docker compose -f $(TASKDB_COMPOSE) up -d pg
+
+db-migrate:
+	@echo "Aplicando schema TaskDB (Postgres + SQLite)"
+	PGUSER=$(PG_USER) PGPASSWORD=$(PG_PASSWORD) psql "postgresql://$(PG_USER):$(PG_PASSWORD)@$(PG_HOST):$(PG_PORT)/$(PG_DB)" -f schema/taskdb.sql
+	sqlite3 $(SQLITE_PATH) < schema/taskdb.sqlite.sql
+
+seed:
+	npm run taskdb:seed
+
+smoke:
+	npm run smoke:taskdb
+
+metrics:
+	npm run taskdb:metrics
+
+baseline:
+	npm run report:baseline

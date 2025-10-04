@@ -17,34 +17,34 @@ async function testInstrumentationAcceptance() {
   // Ejecutar función con withTask
   await withTask(runId, { test: true }, async (ctx) => {
     console.log('✅ withTask ejecutado correctamente');
-    
+
     // Simular eventos adicionales
-    await taskdb.insert({ 
-      kind: 'llm.call', 
-      ts: Date.now(), 
-      ctx, 
-      data: { tokens_in: 10, tokens_out: 5 } 
+    await taskdb.insert({
+      kind: 'llm.call',
+      ts: Date.now(),
+      ctx,
+      payload: { tokens_in: 10, tokens_out: 5 },
     });
-    
-    await taskdb.insert({ 
-      kind: 'guardrail.input', 
-      ts: Date.now(), 
-      ctx, 
-      data: { size: 100 } 
+
+    await taskdb.insert({
+      kind: 'guardrail.input',
+      ts: Date.now(),
+      ctx,
+      payload: { size: 100 },
     });
-    
-    await taskdb.insert({ 
-      kind: 'guardrail.output', 
-      ts: Date.now(), 
-      ctx, 
-      data: { success: true } 
+
+    await taskdb.insert({
+      kind: 'guardrail.output',
+      ts: Date.now(),
+      ctx,
+      payload: { success: true },
     });
     
     console.log('✅ Eventos adicionales insertados');
   });
   
   // Verificar eventos registrados
-  const events = await taskdb.query({ ctx: { runId } }, 100);
+  const events = await taskdb.query({ runId }, 100);
   const kinds = events.map(e => e.kind);
   
   console.log(`📋 Eventos registrados: ${kinds.join(', ')}`);
@@ -85,7 +85,7 @@ async function testRuntimeGuard() {
     try {
       requireTaskContext();
       console.log('⚠️ Runtime guard no activado (TASKDB_ENFORCE_RUNTIME != true)');
-    } catch (err) {
+    } catch {
       console.log('✅ Runtime guard funcionando correctamente');
     }
   } catch (err) {

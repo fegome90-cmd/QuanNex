@@ -114,19 +114,7 @@ jobs:
         continue-on-error: true
 
       - name: TaskDB smoke test
-        run: |
-          # Test TaskDB integration with orchestrator
-          node -e "
-            import('./orchestration/orchestrator.js').then(async (mod) => {
-              const result = await mod.executeTask({
-                kind: 'code.fix',
-                taskId: 'smoke-test',
-                maxTokens: 1000,
-                text: 'test input'
-              });
-              console.log('✅ TaskDB smoke test passed:', result.ok);
-            }).catch(err => {
-              console.error('❌ TaskDB smoke test failed:', err);
-              process.exit(1);
-            });
-          "
+        run: npm run smoke:taskdb
+
+      - name: Policy versioning acceptance
+        run: npm run taskdb:policy:acceptance

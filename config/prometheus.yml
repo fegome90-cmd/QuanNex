@@ -3,25 +3,51 @@ global:
   evaluation_interval: 15s
 
 rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
+  - "prometheus-alerts-rag.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
 
 scrape_configs:
-  # TaskDB metrics
-  - job_name: 'taskdb'
-    static_configs:
-      - targets: ['localhost:9464']
-    scrape_interval: 10s
-    metrics_path: '/metrics'
-    
-  # Node.js process metrics (si usas prom-client default)
-  - job_name: 'node'
-    static_configs:
-      - targets: ['localhost:9464']
-    scrape_interval: 15s
-    metrics_path: '/metrics'
-    
   # Prometheus self-monitoring
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
+
+  # Node Exporter - métricas del sistema
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # PostgreSQL Exporter - métricas de la base de datos
+  - job_name: 'postgres-exporter'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+
+  # Aplicación RAG - métricas de la aplicación
+  - job_name: 'rag-app'
+    static_configs:
+      - targets: ['rag-app:3000']
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+
+  # Qdrant - métricas del vector store
+  - job_name: 'qdrant'
+    static_configs:
+      - targets: ['qdrant:6333']
+    metrics_path: '/metrics'
+
+  # Redis - métricas de Redis
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    metrics_path: '/metrics'
+
+  # Text Embeddings Inference - métricas del servicio de embeddings
+  - job_name: 'tei'
+    static_configs:
+      - targets: ['tei:80']
+    metrics_path: '/metrics'

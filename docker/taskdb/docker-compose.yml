@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  pg:
+    image: postgres:16-alpine
+    container_name: taskdb-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PG_USER:-taskdb}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-taskdb}
+      POSTGRES_DB: ${PG_DB:-taskdb}
+    ports:
+      - "${PG_PORT:-5432}:5432"
+    volumes:
+      - taskdb-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-taskdb} -d ${PG_DB:-taskdb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 5s
+
+volumes:
+  taskdb-pg-data:
+    name: taskdb-postgres-data

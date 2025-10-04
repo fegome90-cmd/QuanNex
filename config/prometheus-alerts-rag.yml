@@ -1,0 +1,146 @@
+groups:
+  - name: rag.rules
+    rules:
+      # Alertas de disponibilidad de servicios
+      - alert: RAGServiceDown
+        expr: up{job="rag-app"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: rag
+        annotations:
+          summary: "RAG Service is down"
+          description: "RAG application has been down for more than 1 minute"
+
+      - alert: PostgreSQLDown
+        expr: up{job="postgres-exporter"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: postgres
+        annotations:
+          summary: "PostgreSQL is down"
+          description: "PostgreSQL database has been down for more than 1 minute"
+
+      - alert: QdrantDown
+        expr: up{job="qdrant"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: qdrant
+        annotations:
+          summary: "Qdrant is down"
+          description: "Qdrant vector database has been down for more than 1 minute"
+
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: warning
+          service: redis
+        annotations:
+          summary: "Redis is down"
+          description: "Redis cache/queue has been down for more than 1 minute"
+
+      - alert: TEIDown
+        expr: up{job="tei"} == 0
+        for: 2m
+        labels:
+          severity: warning
+          service: tei
+        annotations:
+          summary: "Text Embeddings Inference is down"
+          description: "TEI service has been down for more than 2 minutes"
+
+      # Alertas de rendimiento
+      - alert: HighRAGLatency
+        expr: rag_query_duration_seconds{quantile="0.95"} > 5
+        for: 2m
+        labels:
+          severity: warning
+          service: rag
+        annotations:
+          summary: "High RAG query latency"
+          description: "95th percentile RAG query latency is above 5 seconds"
+
+      - alert: HighEmbeddingLatency
+        expr: rag_embedding_duration_seconds{quantile="0.95"} > 10
+        for: 2m
+        labels:
+          severity: warning
+          service: embeddings
+        annotations:
+          summary: "High embedding generation latency"
+          description: "95th percentile embedding generation latency is above 10 seconds"
+
+      - alert: LowRAGRecall
+        expr: rag_recall_ratio < 0.7
+        for: 5m
+        labels:
+          severity: warning
+          service: rag
+        annotations:
+          summary: "Low RAG recall ratio"
+          description: "RAG recall ratio is below 70% for more than 5 minutes"
+
+      - alert: HighErrorRate
+        expr: rate(rag_queries_total{status="error"}[5m]) / rate(rag_queries_total[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+          service: rag
+        annotations:
+          summary: "High RAG error rate"
+          description: "RAG error rate is above 5% for more than 2 minutes"
+
+      # Alertas de recursos
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.9
+        for: 2m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is above 90% for more than 2 minutes"
+
+      - alert: HighDiskUsage
+        expr: (node_filesystem_size_bytes - node_filesystem_avail_bytes) / node_filesystem_size_bytes > 0.9
+        for: 2m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High disk usage"
+          description: "Disk usage is above 90% for more than 2 minutes"
+
+      - alert: PostgreSQLConnectionsHigh
+        expr: pg_stat_database_numbackends / pg_settings_max_connections > 0.8
+        for: 2m
+        labels:
+          severity: warning
+          service: postgres
+        annotations:
+          summary: "High PostgreSQL connection usage"
+          description: "PostgreSQL connection usage is above 80% for more than 2 minutes"
+
+      # Alertas de calidad de datos
+      - alert: EmbeddingDimensionMismatch
+        expr: rag_embedding_dimension_errors_total > 0
+        for: 0m
+        labels:
+          severity: warning
+          service: embeddings
+        annotations:
+          summary: "Embedding dimension mismatch detected"
+          description: "Embedding dimension mismatch errors detected"
+
+      - alert: VectorStoreCorruption
+        expr: qdrant_collection_vectors_count < qdrant_collection_vectors_count offset 1h
+        for: 0m
+        labels:
+          severity: critical
+          service: qdrant
+        annotations:
+          summary: "Potential vector store corruption"
+          description: "Vector count decreased significantly in Qdrant"

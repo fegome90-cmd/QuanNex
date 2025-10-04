@@ -1,171 +1,169 @@
-import { Pool, PoolClient } from 'pg';
-import type { TaskDB } from './adapter';
-import type { TaskEvent } from './types';
+import { Pool } from 'pg';
+import type { TaskDB } from './adapter.ts';
+import type { TaskEvent, TaskEventFilter, TaskEventPayload } from './types.ts';
+
+export interface PostgresTaskDBOptions {
+  connectionString?: string;
+  pool?: Pool;
+}
+
+const INSERT_COLUMNS = `trace_id, span_id, parent_span_id, run_id, task_id, component, actor, kind, status, ts, duration_ms, payload, metadata`;
+
+function validateEvent(evt: TaskEvent): void {
+  if (!evt.ctx.traceId) throw new Error('TaskDB event missing traceId');
+  if (!evt.ctx.spanId) throw new Error('TaskDB event missing spanId');
+  if (!evt.ctx.runId || !evt.ctx.taskId) {
+    throw new Error('TaskDB event missing runId/taskId');
+  }
+}
+
+function toPgRow<T extends TaskEventPayload>(evt: TaskEvent<T>): any[] {
+  validateEvent(evt);
+  return [
+    evt.ctx.traceId,
+    evt.ctx.spanId,
+    evt.ctx.parentSpanId ?? null,
+    evt.ctx.runId,
+    evt.ctx.taskId,
+    evt.ctx.component,
+    evt.ctx.actor ?? null,
+    evt.kind,
+    evt.status ?? null,
+    evt.ts,
+    evt.durationMs ?? null,
+    evt.payload ? JSON.stringify(evt.payload) : null,
+    evt.metadata ? JSON.stringify(evt.metadata) : null,
+  ];
+}
+
+function fromPgRow(row: any): TaskEvent {
+  return {
+    id: row.id,
+    kind: row.kind,
+    ts: Number(row.ts),
+    status: row.status ?? undefined,
+    durationMs: row.duration_ms ?? undefined,
+    payload: row.payload ?? undefined,
+    metadata: row.metadata ?? undefined,
+    ctx: {
+      traceId: row.trace_id,
+      spanId: row.span_id,
+      parentSpanId: row.parent_span_id ?? undefined,
+      runId: row.run_id,
+      taskId: row.task_id,
+      component: row.component,
+      actor: row.actor ?? undefined,
+    },
+  };
+}
 
 export class PostgresTaskDB implements TaskDB {
   private pool: Pool;
 
-  constructor(connectionString?: string) {
-    this.pool = new Pool({
-      connectionString: connectionString || process.env.DATABASE_URL,
-      max: 20,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 2000,
+  constructor(options: PostgresTaskDBOptions = {}) {
+    this.pool = options.pool ?? new Pool({
+      connectionString: options.connectionString ?? process.env.TASKDB_PG_URL,
+      max: 10,
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 5_000,
     });
-    this.initSchema();
   }
 
-  private async initSchema() {
+  async init(): Promise<void> {
     const client = await this.pool.connect();
     try {
       await client.query(`
-        CREATE TABLE IF NOT EXISTS task_events (
+        CREATE TABLE IF NOT EXISTS taskdb_events (
           id BIGSERIAL PRIMARY KEY,
-          kind TEXT NOT NULL,
-          run_id TEXT NOT NULL,
-          task_id TEXT NOT NULL,
+          trace_id TEXT NOT NULL,
           span_id TEXT NOT NULL,
           parent_span_id TEXT,
+          run_id TEXT NOT NULL,
+          task_id TEXT NOT NULL,
           component TEXT NOT NULL,
           actor TEXT,
-          ts BIGINT NOT NULL,
+          kind TEXT NOT NULL,
           status TEXT,
+          ts BIGINT NOT NULL,
           duration_ms INTEGER,
-          details JSONB,
-          created_at TIMESTAMP DEFAULT NOW()
+          payload JSONB,
+          metadata JSONB,
+          created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         );
-        
-        CREATE INDEX IF NOT EXISTS idx_task_events_ts ON task_events(ts);
-        CREATE INDEX IF NOT EXISTS idx_task_events_run_id ON task_events(run_id);
-        CREATE INDEX IF NOT EXISTS idx_task_events_kind ON task_events(kind);
-        CREATE INDEX IF NOT EXISTS idx_task_events_created_at ON task_events(created_at);
+        CREATE INDEX IF NOT EXISTS idx_taskdb_events_ts ON taskdb_events (ts DESC);
+        CREATE INDEX IF NOT EXISTS idx_taskdb_events_run ON taskdb_events (run_id);
+        CREATE INDEX IF NOT EXISTS idx_taskdb_events_task ON taskdb_events (task_id);
+        CREATE INDEX IF NOT EXISTS idx_taskdb_events_kind ON taskdb_events (kind);
+        CREATE INDEX IF NOT EXISTS idx_taskdb_events_component ON taskdb_events (component);
       `);
     } finally {
       client.release();
     }
   }
 
-  async insert<T = any>(evt: TaskEvent<T>): Promise<void> {
-    const client = await this.pool.connect();
-    try {
-      await client.query(
-        `INSERT INTO task_events 
-         (kind, run_id, task_id, span_id, parent_span_id, component, actor, ts, status, duration_ms, details)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
-        [
-          evt.kind,
-          evt.ctx.runId,
-          evt.ctx.taskId,
-          evt.ctx.spanId,
-          evt.ctx.parentSpanId || null,
-          evt.ctx.component,
-          evt.ctx.actor || null,
-          evt.ts,
-          evt.status || null,
-          evt.durationMs || null,
-          evt.details ? JSON.stringify(evt.details) : null,
-        ]
-      );
-    } finally {
-      client.release();
-    }
+  async insert<T extends TaskEventPayload>(evt: TaskEvent<T>): Promise<void> {
+    await this.pool.query(
+      `INSERT INTO taskdb_events (${INSERT_COLUMNS}) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+      toPgRow(evt)
+    );
   }
 
-  async bulkInsert<T = any>(evts: TaskEvent<T>[]): Promise<void> {
-    if (evts.length === 0) return;
+  async bulkInsert<T extends TaskEventPayload>(evts: TaskEvent<T>[]): Promise<void> {
+    if (!evts.length) return;
+    const values: string[] = [];
+    const params: any[] = [];
 
-    const client = await this.pool.connect();
-    try {
-      const values = evts
-        .map(
-          (evt, i) =>
-            `($${i * 11 + 1}, $${i * 11 + 2}, $${i * 11 + 3}, $${i * 11 + 4}, $${i * 11 + 5}, $${i * 11 + 6}, $${i * 11 + 7}, $${i * 11 + 8}, $${i * 11 + 9}, $${i * 11 + 10}, $${i * 11 + 11})`
-        )
-        .join(',');
+    evts.forEach((evt, idx) => {
+      const row = toPgRow(evt);
+      const offset = idx * row.length;
+      values.push(`(${row.map((_, i) => `$${offset + i + 1}`).join(',')})`);
+      params.push(...row);
+    });
 
-      const params: any[] = [];
-      evts.forEach(evt => {
-        params.push(
-          evt.kind,
-          evt.ctx.runId,
-          evt.ctx.taskId,
-          evt.ctx.spanId,
-          evt.ctx.parentSpanId || null,
-          evt.ctx.component,
-          evt.ctx.actor || null,
-          evt.ts,
-          evt.status || null,
-          evt.durationMs || null,
-          evt.details ? JSON.stringify(evt.details) : null
-        );
-      });
-
-      await client.query(
-        `INSERT INTO task_events 
-         (kind, run_id, task_id, span_id, parent_span_id, component, actor, ts, status, duration_ms, details)
-         VALUES ${values}`,
-        params
-      );
-    } finally {
-      client.release();
-    }
+    await this.pool.query(
+      `INSERT INTO taskdb_events (${INSERT_COLUMNS}) VALUES ${values.join(',')}`,
+      params
+    );
   }
 
-  async query(filter: Partial<TaskEvent>, limit: number = 1000): Promise<TaskEvent[]> {
-    const client = await this.pool.connect();
-    try {
-      const conditions: string[] = [];
-      const params: any[] = [];
-      let paramCount = 1;
+  async query(filter: TaskEventFilter, limit = 1000): Promise<TaskEvent[]> {
+    const where: string[] = [];
+    const params: any[] = [];
 
-      if (filter.kind) {
-        conditions.push(`kind = $${paramCount++}`);
-        params.push(filter.kind);
-      }
-      if (filter.ctx?.runId) {
-        conditions.push(`run_id = $${paramCount++}`);
-        params.push(filter.ctx.runId);
-      }
-      if (filter.ctx?.taskId) {
-        conditions.push(`task_id = $${paramCount++}`);
-        params.push(filter.ctx.taskId);
-      }
-      if (filter.status) {
-        conditions.push(`status = $${paramCount++}`);
-        params.push(filter.status);
-      }
+    const push = (condition: string, value: unknown) => {
+      params.push(value);
+      where.push(condition.replace('?', `$${params.length}`));
+    };
 
-      const whereClause = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
-      const query = `
-        SELECT * FROM task_events 
-        ${whereClause}
-        ORDER BY ts DESC 
-        LIMIT $${paramCount}
-      `;
-      params.push(limit);
+    if (filter.id) push('id = ?', filter.id);
+    if (filter.traceId) push('trace_id = ?', filter.traceId);
+    if (filter.spanId) push('span_id = ?', filter.spanId);
+    if (filter.runId) push('run_id = ?', filter.runId);
+    if (filter.taskId) push('task_id = ?', filter.taskId);
+    if (filter.kind) push('kind = ?', filter.kind);
+    if (filter.status) push('status = ?', filter.status);
+    if (filter.component) push('component = ?', filter.component);
 
-      const result = await client.query(query, params);
-      return result.rows.map((row: any) => ({
-        kind: row.kind,
-        ctx: {
-          runId: row.run_id,
-          taskId: row.task_id,
-          spanId: row.span_id,
-          parentSpanId: row.parent_span_id,
-          component: row.component,
-          actor: row.actor,
-        },
-        ts: row.ts,
-        status: row.status,
-        durationMs: row.duration_ms,
-        details: row.details,
-      }));
-    } finally {
-      client.release();
-    }
+    const whereClause = where.length ? `WHERE ${where.join(' AND ')}` : '';
+    const result = await this.pool.query(
+      `SELECT id, trace_id, span_id, parent_span_id, run_id, task_id, component, actor, kind, status, ts, duration_ms, payload, metadata
+       FROM taskdb_events
+       ${whereClause}
+       ORDER BY ts DESC
+       LIMIT $${params.length + 1}`,
+      [...params, limit]
+    );
+
+    return result.rows.map(fromPgRow);
   }
 
-  async close() {
+  async close(): Promise<void> {
     await this.pool.end();
   }
+}
+
+export function makePgTaskDB(connectionString?: string): PostgresTaskDB {
+  const db = new PostgresTaskDB({ connectionString });
+  void db.init();
+  return db;
 }

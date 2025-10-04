@@ -1,24 +1,49 @@
-import { DualTaskDB } from './dual';
-import { makePgTaskDB } from './pg';         // ya existente en tu v2
-import { makeSqliteTaskDB } from './sqlite'; // ya existente en tu v2
-import { makeJsonlTaskDB } from './jsonl';   // ya existente en tu v2
+import { DualTaskDB } from './dual.ts';
+import { makeJsonlTaskDB } from './jsonl.ts';
+import type { TaskDB } from './adapter.ts';
+import { makePgTaskDB } from './pg.ts';
+import { TaskDBQueue } from './queue.ts';
+import { makeSqliteTaskDB } from './sqlite.ts';
+import { setCurrentTaskDB } from './state.ts';
 
-export function makeTaskDBFromEnv() {
-  const drv = process.env.TASKDB_DRIVER ?? 'sqlite';
-  if (drv === 'pg') return makePgTaskDB(process.env.TASKDB_PG_URL!);
-  if (drv === 'sqlite') return makeSqliteTaskDB(process.env.TASKDB_SQLITE_PATH!);
-  if (drv === 'jsonl') return makeJsonlTaskDB('./logs/taskdb-%Y-%m-%d.jsonl');
+let cached: TaskDB | null = null;
 
-  if (drv === 'dual') {
-    const pg = makePgTaskDB(process.env.TASKDB_PG_URL!);
-    const sqlite = makeSqliteTaskDB(process.env.TASKDB_SQLITE_PATH!);
-    const strict = (process.env.TASKDB_DUAL_STRICT ?? 'false') === 'true';
-    const logMismatch = (process.env.TASKDB_DUAL_LOG_MISMATCH ?? 'true') === 'true';
-    return new DualTaskDB(pg, sqlite, strict, logMismatch, console);
+function createBaseDriver(): TaskDB {
+  const driver = (process.env.TASKDB_DRIVER ?? 'sqlite').toLowerCase();
+
+  switch (driver) {
+    case 'pg':
+      return makePgTaskDB(process.env.TASKDB_PG_URL);
+    case 'jsonl':
+      return makeJsonlTaskDB(process.env.TASKDB_JSONL_PATH || './logs/taskdb-%Y-%m-%d.jsonl');
+    case 'dual': {
+      const primary = makePgTaskDB(process.env.TASKDB_PG_URL);
+      const secondary = makeSqliteTaskDB(process.env.TASKDB_SQLITE_PATH || './data/taskdb.sqlite');
+      const strict = (process.env.TASKDB_DUAL_STRICT ?? 'false').toLowerCase() === 'true';
+      const logMismatch = (process.env.TASKDB_DUAL_LOG_MISMATCH ?? 'true').toLowerCase() === 'true';
+      return new DualTaskDB(primary, secondary, strict, logMismatch);
+    }
+    case 'sqlite':
+    default:
+      return makeSqliteTaskDB(process.env.TASKDB_SQLITE_PATH || './data/taskdb.sqlite');
   }
-  throw new Error(`Unknown TASKDB_DRIVER=${drv}`);
 }
 
-// Re-export existing adapters
-export { makePgTaskDB, makeSqliteTaskDB, makeJsonlTaskDB } from './adapters';
-export { DualTaskDB } from './dual';
+export function makeTaskDBFromEnv(): TaskDB {
+  if (cached) return cached;
+  const base = createBaseDriver();
+  const queueEnabled = (process.env.TASKDB_QUEUE ?? 'on').toLowerCase() !== 'off';
+  cached = queueEnabled ? new TaskDBQueue(base) : base;
+  setCurrentTaskDB(cached);
+  return cached;
+}
+
+export function resetTaskDBCache(): void {
+  cached = null;
+}
+
+export { makePgTaskDB } from './pg.ts';
+export { makeSqliteTaskDB } from './sqlite.ts';
+export { makeJsonlTaskDB } from './jsonl.ts';
+export { DualTaskDB } from './dual.ts';
+export { TaskDBQueue } from './queue.ts';

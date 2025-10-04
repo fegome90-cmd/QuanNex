@@ -1,0 +1,145 @@
+# =====================================================
+# Configuración del Sistema RAG
+# =====================================================
+
+# Configuración de chunking
+chunking:
+  strategy: "semantic"  # semantic, fixed, sliding_window
+  chunk_size: 512
+  chunk_overlap: 50
+  separators: ["\n\n", "\n", ". ", "! ", "? "]
+  min_chunk_size: 50
+  max_chunk_size: 1024
+
+# Configuración de embeddings
+embeddings:
+  provider: "openai"  # openai, voyage, local
+  model: "text-embedding-3-small"
+  dimension: 1536
+  batch_size: 100
+  max_tokens: 8191
+  timeout: 30
+  
+  # Configuración de respaldo
+  fallback:
+    provider: "local"
+    model: "BAAI/bge-small-en-v1.5"
+    endpoint: "http://tei:80"
+
+# Configuración de reranking
+reranking:
+  enabled: true
+  provider: "cohere"  # cohere, jina, local
+  model: "rerank-3"
+  max_results: 50
+  timeout: 15
+
+# Configuración de recuperación
+retrieval:
+  k: 12
+  filters:
+    model_id: "text-embedding-3-small"
+    min_confidence: 0.7
+  rerank_k: 5
+  
+  # Filtros por tipo de contenido
+  content_filters:
+    min_tokens: 10
+    max_tokens: 1000
+    allowed_types: ["text/plain", "text/markdown", "application/json"]
+
+# Configuración de bases de datos
+databases:
+  # PostgreSQL para metadatos y evidencia
+  postgres:
+    host: "localhost"
+    port: 5432
+    database: "rag_db"
+    user: "rag_user"
+    password: "rag_password"
+    ssl: false
+    pool_size: 10
+  
+  # Qdrant para vector search
+  qdrant:
+    host: "localhost"
+    port: 6333
+    collection: "rag_chunks"
+    vector_size: 1536
+    distance: "Cosine"
+  
+  # Redis para cache
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    ttl: 3600
+
+# Configuración de parsing
+parsing:
+  # Tipos de archivo soportados
+  supported_types:
+    - "text/plain"
+    - "text/markdown"
+    - "application/json"
+    - "text/html"
+    - "application/pdf"
+    - "application/msword"
+    - "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  
+  # Configuración de PDF
+  pdf:
+    extract_images: false
+    ocr_enabled: false
+    max_pages: 100
+  
+  # Configuración de HTML
+  html:
+    clean_markup: true
+    extract_links: false
+    max_length: 10000
+
+# Configuración de observabilidad
+observability:
+  metrics:
+    enabled: true
+    port: 3000
+    path: "/metrics"
+  
+  logging:
+    level: "info"
+    format: "json"
+    include_stack: true
+  
+  tracing:
+    enabled: false
+    jaeger_endpoint: "http://localhost:14268/api/traces"
+
+# Configuración de seguridad
+security:
+  pii_detection: true
+  content_filtering: true
+  rate_limits:
+    queries_per_minute: 60
+    embeddings_per_minute: 120
+    max_query_length: 2000
+  
+  # Configuración de API keys
+  api_keys:
+    openai: "${OPENAI_API_KEY}"
+    cohere: "${COHERE_API_KEY}"
+    voyage: "${VOYAGE_API_KEY}"
+
+# Configuración de cache
+cache:
+  enabled: true
+  ttl: 3600  # 1 hora
+  max_size: 1000
+  strategy: "lru"
+
+# Configuración de limpieza automática
+cleanup:
+  enabled: true
+  schedule: "0 2 * * *"  # Diario a las 2 AM
+  retention_days: 30
+  max_queries_history: 10000

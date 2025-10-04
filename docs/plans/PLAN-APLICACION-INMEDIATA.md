@@ -1,4 +1,5 @@
 # 🚀 Plan de Aplicación Inmediata: Optimizaciones Identificadas
+*taskId: PLAN-APLICACION-INMEDIATA*
 
 ## 📅 **Fecha**: Enero 2025
 ## 🎯 **Propósito**: Aplicación inmediata de optimizaciones sin esperar roadmap completo

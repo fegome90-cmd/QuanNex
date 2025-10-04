@@ -1,0 +1,18 @@
+{
+  "traceId": "3856b89472417bb940fc83c91c701772",
+  "timestamp": "2025-10-04T01:02:01.290Z",
+  "operation": "test_sanitize",
+  "agentId": "test-agent",
+  "context": {
+    "input": {
+      "user": "john",
+      "password": "[REDACTED]",
+      "token": "[REDACTED]",
+      "api_key": "[REDACTED]"
+    },
+    "metadata": {}
+  },
+  "status": "started",
+  "duration": null,
+  "error": null
+}

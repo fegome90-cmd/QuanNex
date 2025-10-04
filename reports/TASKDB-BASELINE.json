@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2025-10-04T00:58:31.904Z",
+  "period": {
+    "start": "2025-09-27T00:58:31.904Z",
+    "end": "2025-10-04T00:58:31.904Z"
+  },
+  "totals": {
+    "events": 70,
+    "runsStart": 15,
+    "runsFinish": 15,
+    "runsError": 0
+  },
+  "metrics": {
+    "finishRate": 1,
+    "errorRate": 0,
+    "ttfq": {
+      "p50": 1,
+      "p95": 10
+    }
+  },
+  "health": {
+    "metrics_ok": true,
+    "pg_ok": true,
+    "sqlite_ok": true,
+    "driver": "sqlite",
+    "counts": {
+      "postgres": 20,
+      "sqlite": 50
+    }
+  },
+  "windowMs": 604800000,
+  "limit": 5000
+}

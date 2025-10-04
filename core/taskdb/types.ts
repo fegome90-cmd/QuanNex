@@ -19,19 +19,37 @@ export type EventKind =
   | 'gate.fail';
 
 export interface TaskContext {
-  runId: QnxId;
-  taskId: QnxId;
+  traceId: QnxId;
   spanId: QnxId;
   parentSpanId?: QnxId;
+  runId: QnxId;
+  taskId: QnxId;
   component: string;
   actor?: string;
 }
 
-export interface TaskEvent<T = any> {
+export type TaskEventStatus = 'ok' | 'fail' | 'skip';
+
+export type TaskEventPayload = Record<string, unknown>;
+
+export interface TaskEvent<T extends TaskEventPayload = TaskEventPayload> {
+  id?: QnxId;
   kind: EventKind;
   ctx: TaskContext;
-  ts: number;
-  status?: 'ok' | 'fail' | 'skip';
+  ts: number; // Unix epoch in milliseconds
+  status?: TaskEventStatus;
   durationMs?: number;
-  details?: T;
+  payload?: T;
+  metadata?: Record<string, unknown>;
 }
+
+export type TaskEventFilter = Partial<{
+  id: QnxId;
+  traceId: QnxId;
+  runId: QnxId;
+  taskId: QnxId;
+  spanId: QnxId;
+  kind: EventKind;
+  status: TaskEventStatus;
+  component: string;
+}>;

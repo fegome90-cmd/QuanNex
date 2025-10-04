@@ -1,4 +1,5 @@
 # PLAN DE REPARACIÓN DE GAPS - PROYECTO MCP
+*taskId: PLAN-REPARACION-GAPS-2025-10-01*
 ## Análisis y Estrategia de Reparación Completa
 
 ---
