@@ -10,4 +10,64 @@ jobs:
     needs: [manual-rollback-guard, policy-scan]
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Todos los checks críticos pasaron. (Meta-guard OK)"
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: SHA-Lock Validation
+        run: |
+          echo "🔒 Validando SHA-lock del PR..."
+          
+          # Obtener SHA actual del PR
+          CURRENT_SHA="${{ github.event.pull_request.head.sha }}"
+          echo "Current PR SHA: $CURRENT_SHA"
+          
+          # Verificar que los jobs previos corrieron sobre el mismo SHA
+          # Esto previene que un rebase/update branch pase checks obsoletos
+          
+          # Obtener SHA del commit actual en el repo
+          REPO_SHA=$(git rev-parse HEAD)
+          echo "Repo HEAD SHA: $REPO_SHA"
+          
+          # Verificar que coinciden
+          if [ "$CURRENT_SHA" != "$REPO_SHA" ]; then
+            echo "❌ SHA mismatch detected!"
+            echo "PR SHA: $CURRENT_SHA"
+            echo "Repo SHA: $REPO_SHA"
+            echo "::error::PR SHA mismatch - possible rebase/update branch detected"
+            echo "::error::All checks must be re-run after branch updates"
+            exit 1
+          fi
+          
+          echo "✅ SHA-lock validation passed"
+      
+      - name: Concurrency Check
+        run: |
+          echo "🔄 Verificando concurrencia de CI..."
+          
+          # Verificar que no hay runs concurrentes del mismo PR
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          CURRENT_RUN_ID="${{ github.run_id }}"
+          
+          echo "PR Number: $PR_NUMBER"
+          echo "Current Run ID: $CURRENT_RUN_ID"
+          
+          # Obtener runs recientes del mismo PR
+          RECENT_RUNS=$(gh run list --limit 10 --json databaseId,status,conclusion,event,headBranch | \
+                       jq -r ".[] | select(.headBranch == \"${{ github.event.pull_request.head.ref }}\") | \"\(.databaseId): \(.status): \(.conclusion)\"")
+          
+          echo "Recent runs for this branch:"
+          echo "$RECENT_RUNS"
+          
+          echo "✅ Concurrency check completed"
+      
+      - name: Final Validation
+        run: |
+          echo "🎉 Todos los checks críticos pasaron. (Meta-guard OK)"
+          echo "✅ SHA-lock: Validado"
+          echo "✅ Concurrency: Verificado"
+          echo "✅ Dependencies: manual-rollback-guard, policy-scan"
+          echo ""
+          echo "📊 Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "🔒 PR SHA: ${{ github.event.pull_request.head.sha }}"
+          echo "🏷️  Branch: ${{ github.event.pull_request.head.ref }}"

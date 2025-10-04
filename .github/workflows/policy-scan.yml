@@ -3,6 +3,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}-policy-scan
+  cancel-in-progress: true
+
 jobs:
   scan:
     runs-on: ubuntu-latest

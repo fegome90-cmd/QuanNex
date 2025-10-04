@@ -1,9 +1,20 @@
 thresholds:
   max_files_deleted: 25
   max_lines_deleted: 5000
+  # Modo emergencia (temporal)
+  emergency_mode: false
+  emergency_max_files: 10
+  emergency_max_lines: 1000
 
 sensitive_globs:
   - "rag/**"
   - ".github/workflows/**"
   - "ops/**"
   - "core/**"
+
+# Configuración de emergencia
+emergency:
+  enabled: false
+  expiration: "2025-10-11T00:00:00Z"
+  reason: "Modo emergencia para ajustes post-incidente"
+  approved_by: "@fegome90-cmd"

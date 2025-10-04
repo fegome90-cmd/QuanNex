@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Script de monitoreo de etiquetas protegidas
 # Fecha: 2025-10-04
-# Propósito: Auditar uso de etiquetas críticas
+# Propósito: Auditar uso de etiquetas críticas y detectar banalización
 
 echo "🏷️  Monitoreo de Etiquetas Protegidas - $(date)"
 

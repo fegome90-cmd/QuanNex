@@ -1,0 +1,28 @@
+Contexto de la Investigación QuanNex (2025-01-27)
+=================================================
+
+1. Problema actual
+   - Los gates y hooks pre-push aplican políticas de producción en entornos de desarrollo.
+   - Más de 30 errores TypeScript y verificaciones MCP rígidas provocan rollbacks masivos (125k+ líneas eliminadas) y uso de `--no-verify`.
+
+2. Hallazgos clave
+   - `INFORME-FINAL-FALLAS-GATES.md` documenta impacto, patrones de fallo y matriz de riesgo.
+   - `ANALISIS-ERRORES-GATES-DETALLADO.md` categoriza errores TS (TS5097, TS1484, TS7016, TS2379) y define metas post-mitigación.
+   - `ANALISIS-HOOKS-PRE-PUSH.md` exige métricas operativas, decisiones por ambiente y escenarios de excepción para MCP.
+   - `AUDITORIA-QUANNEX-INFORMES.md` enlaza fuentes↔hallazgos↔recomendaciones y establece una rúbrica de madurez.
+   - `INFORME-METRICAS-GATES.md` centraliza telemetría: `gates.failures.hourly`, `gates.bypass.manual`, `ts.errors.blocking`, `unlock.mttd`, `rollback.lines.deleted`.
+
+3. Dependencias y bloqueos
+   - Ningún ADR (003 RAGAS, 004 DSPy, 005 ColBERT) avanza hasta elevar la madurez de gates a nivel “En Progreso”.
+   - `MEMORIA-PROYECTO-RAG-ACTUALIZADA.md` y `ROADMAP_RAG.md` condicionan el roadmap a la instrumentación de métricas y hooks graduales.
+
+4. Plan inmediato
+   - Ejecutar fases 1-3 de `PLAN-CORRECCION-TYPESCRIPT.md` con responsables y cronograma asignados.
+   - Instrumentar logging estructurado y auditoría de bypass según `INFORME-METRICAS-GATES.md`.
+   - Registrar desbloqueos en el nuevo Gate Unlock Log del Operations Playbook.
+   - Actualizar semanalmente el semáforo de gates y la rúbrica de madurez en la auditoría.
+
+5. Buenas prácticas de comunicación
+   - `INVESTIGACION-QUANNEX-ERRORES-COMUNICACION.md` incluye timeline y checklist para evitar contradicciones; toda comunicación debe adjuntar evidencia (git status, ubicación real, historial).
+
+Estado general: la investigación está en fase de endurecimiento, con métricas pendientes de instrumentar antes de desbloquear desarrollo y ADRs críticos.
