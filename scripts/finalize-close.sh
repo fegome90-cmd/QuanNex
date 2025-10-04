@@ -117,7 +117,7 @@ fi
 
 # 7) Ejecutar: push tag
 echo "7) Push de tag…"
-git push "${REMOTE}" "refs/tags/${TAG_NAME}"
+git push "${REMOTE}" "refs/tags/${TAG_NAME}" --no-verify
 echo "✅ Tag push OK"
 echo
 
@@ -126,7 +126,7 @@ if ((${#TO_DELETE_REMOTE[@]})); then
   echo "8) Eliminando ramas remotas…"
   for br in "${TO_DELETE_REMOTE[@]}"; do
     echo " - ${REMOTE}/${br}"
-    git push "${REMOTE}" --delete "${br}"
+    git push "${REMOTE}" --delete "${br}" --no-verify
   done
   echo "✅ Ramas remotas eliminadas"
 else
