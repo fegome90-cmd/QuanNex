@@ -3,8 +3,8 @@
 /* global console, process */
 
 import assert from 'node:assert';
-import { withTask } from '../../core/taskdb/withTask.js';
-import { makeTaskDBFromEnv } from '../../core/taskdb/index.js';
+import { withTask } from '../../core/taskdb/withTask.ts';
+import { makeTaskDBFromEnv } from '../../core/taskdb/index.ts';
 
 async function testInstrumentationAcceptance() {
   console.log('🧪 Testing TaskDB Instrumentation Acceptance...\n');
@@ -80,7 +80,7 @@ async function testRuntimeGuard() {
   
   try {
     // Esto debería fallar si TASKDB_ENFORCE_RUNTIME=true
-    const { requireTaskContext } = await import('../../core/taskdb/runtime-guard.js');
+    const { requireTaskContext } = await import('../../core/taskdb/runtime-guard.ts');
     
     try {
       requireTaskContext();
