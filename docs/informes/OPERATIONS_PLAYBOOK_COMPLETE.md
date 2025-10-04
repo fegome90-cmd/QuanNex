@@ -163,6 +163,21 @@ SLACK_WEBHOOK=https://hooks.slack.com/...
 
 ---
 
+## 📉 Lecciones del Bloqueo de Gates
+
+- La ausencia de telemetría (`gates.failures.hourly`, `unlock.mttd`) impidió reaccionar antes de los rollbacks masivos.
+- Los bypasses sin registro (`--no-verify`) deben canalizarse mediante variable `QUANNEX_BYPASS` con justificación obligatoria y alerta automática.
+- Cada desbloqueo deberá registrarse en sección **Gate Unlock Log** (nuevo) con: fecha, requestId, causa, mitigación, `mttd` calculado.
+
+### Gate Unlock Log (Formato propuesto)
+| Fecha/hora | RequestId | Causa | Mitigación aplicada | Tiempo hasta desbloqueo | Responsable |
+| --- | --- | --- | --- | --- | --- |
+| _Pendiente_ | - | - | - | - | - |
+
+Los datos alimentarán `INFORME-METRICAS-GATES.md` y el semáforo de `MEMORIA-PROYECTO-RAG-ACTUALIZADA.md`.
+
+---
+
 ## 🚨 **Escenarios de Emergencia Cubiertos**
 
 ### **Rollback Automático** (Sin intervención humana)
@@ -184,6 +199,19 @@ SLACK_WEBHOOK=https://hooks.slack.com/...
 - Conteos de datos
 - RAGAS quick (20 queries)
 - Validación de gobernanza
+
+---
+
+## 📡 Métricas Operacionales a Monitorear (Gates)
+
+| Métrica | Objetivo | Donde se registra |
+| --- | --- | --- |
+| `gates.failures.hourly` | ≤5 dev / ≤2 staging / ≤1 prod | Logs estructurados + TaskDB |
+| `gates.bypass.manual` | ≤1 evento controlado / 24 h | Tabla `gate_events` |
+| `unlock.mttd` | ≤6 h | Gate Unlock Log |
+| `rollback.lines.deleted` | 0 durante operación normal | Auditoría git semanal |
+
+Estas métricas son obligatorias para el checklist `make governance.check` antes de cualquier despliegue.
 
 ---
 

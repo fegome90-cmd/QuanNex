@@ -1,0 +1,29 @@
+# KILL-SWITCH GLOBAL - INCIDENTE DE SEGURIDAD-OPERATIVA
+# Fecha: 2025-10-04
+# Estado: CONTENCIÓN ACTIVA
+
+killswitch:
+  enabled: true
+  reason: "INCIDENTE DE SEGURIDAD-OPERATIVA - Rollback masivo detectado"
+  timestamp: "2025-10-04T12:00:00Z"
+
+autofix:
+  enabled: false
+  max_files: 25
+  max_deletions: 200
+  max_pr_per_day: 3
+  mode: "PR_ONLY"
+  backoff_enabled: true
+  human_review_required: true
+
+protection:
+  del_threshold: 500
+  sensitive_paths_enabled: true
+  destructive_guard_enabled: true
+  force_human_review: true
+
+emergency:
+  mode: true
+  quarantine_branches: true
+  block_force_push: true
+  require_signed_commits: true

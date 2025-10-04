@@ -1,0 +1,99 @@
+name: manual-rollback-guard
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  guard:
+    name: Detecta rollback destructivo (archivos y líneas) + paths sensibles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cargar configuración (umbrales y globs)
+        id: cfg
+        shell: bash
+        run: |
+          CFG="config/sensitive-paths.yaml"
+          # Valores por defecto si no existe el YAML
+          MAX_FILES=25
+          MAX_LINES=5000
+          GLOBS=("rag/**" ".github/workflows/**" "ops/**" "core/**")
+
+          if [ -f "$CFG" ]; then
+            # Extraer umbrales muy simple (sin yq)
+            mf=$(awk -F': *' '/max_files_deleted/{print $2}' "$CFG" | tr -d '\r')
+            ml=$(awk -F': *' '/max_lines_deleted/{print $2}' "$CFG" | tr -d '\r')
+            [ -n "$mf" ] && MAX_FILES="$mf"
+            [ -n "$ml" ] && MAX_LINES="$ml"
+            # Extraer globs
+            mapfile -t GLOBS < <(awk '/sensitive_globs:/{f=1;next} f&&/^-/{g=$0; sub(/^- *"/,"",g); sub(/" *$/,"",g); print g} f&&$0!~"^-"{if(f)exit}' "$CFG")
+          fi
+
+          echo "max_files=$MAX_FILES" >> $GITHUB_OUTPUT
+          echo "max_lines=$MAX_LINES" >> $GITHUB_OUTPUT
+          printf "%s\n" "${GLOBS[@]}" > globs.txt
+          echo "globs_path=$(pwd)/globs.txt" >> $GITHUB_OUTPUT
+
+      - name: Diff (renames ON) y cómputo de daño
+        id: diff
+        shell: bash
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+
+          # Detecta renames/moves como Rxx (90% similaridad)
+          git diff --name-status -M90 "$base" "$head" > diff.txt
+          echo "=== DIFF ==="; cat diff.txt || true
+
+          # Archivos realmente eliminados (no renames)
+          FILE_DELETIONS=$(awk '$1=="D"{c++} END{print c+0}' diff.txt)
+          # Líneas borradas (solo deleciones)
+          LINES_DELETED=$(git diff --diff-filter=D --numstat "$base...$head" | awk '{d+=$1} END{print d+0}')
+
+          echo "files_deleted=$FILE_DELETIONS" >> $GITHUB_OUTPUT
+          echo "lines_deleted=$LINES_DELETED" >> $GITHUB_OUTPUT
+
+      - name: Bloquear por umbrales (archivos o líneas)
+        shell: bash
+        run: |
+          FILES=${{ steps.diff.outputs.files_deleted }}
+          LINES=${{ steps.diff.outputs.lines_deleted }}
+          MAX_F=${{ steps.cfg.outputs.max_files }}
+          MAX_L=${{ steps.cfg.outputs.max_lines }}
+          echo "Deleted files: $FILES / $MAX_F"
+          echo "Deleted lines: $LINES / $MAX_L"
+          if [ "$FILES" -gt "$MAX_F" ] || [ "$LINES" -gt "$MAX_L" ]; then
+            echo "::error::Rollback masivo detectado (archivos o líneas). Añade labels 'rollback' y 'critical' y solicita 2 reviews de CODEOWNERS."
+            exit 1
+          fi
+
+      - name: Bloquear cambios en paths sensibles (A|M|D|R)
+        shell: bash
+        run: |
+          awk '{print $2"\n"$3}' diff.txt | sed '/^$/d' | sort -u > paths.txt
+          echo "Globs sensibles:"
+          cat "${{ steps.cfg.outputs.globs_path }}"
+
+          # Comprobar cada glob sensible
+          hit=0
+          while read -r g; do
+            if [ -n "$g" ]; then
+              if grep -E -q "^$(printf "%s" "$g" | sed 's/\./\\./g; s/\*/.* /g; s/\*/.*/g; s/\//\/+/g')" paths.txt; then
+                hit=1
+                break
+              fi
+              # fallback simple con grep -F
+              grep -F -q "$g" paths.txt && { hit=1; break; }
+            fi
+          done < "${{ steps.cfg.outputs.globs_path }}"
+
+          if [ "$hit" -eq 1 ]; then
+            echo "::error::Cambio en path sensible detectado. Requiere label 'critical' y aprobación de CODEOWNERS."
+            exit 1
+          fi
+
+      - name: OK
+        run: echo "Guard anti-rollback pasó. Sin destrucción masiva ni paths sensibles."

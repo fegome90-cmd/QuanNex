@@ -22,6 +22,8 @@
 - **Tareas Pendientes**: 9 (39%)
 - **Integración Cursor**: Completa y operativa
 - **Cuerpo de Conocimiento**: 347 docs + investigación completa
+- **RAG Pipeline**: Operations Playbook completo implementado (2025-01-27)
+- **Informes Centralizados**: `docs/informes/` - Todos los análisis organizados
 
 ### ✨ **Características Principales**
 
@@ -32,6 +34,20 @@
 - **📊 Monitoreo en Tiempo Real**: Métricas Prometheus y observabilidad integrada
 - **🔄 Resiliencia**: Sistema de reintentos y recuperación automática
 - **🐳 Docker Ready**: Tests E2E completos en contenedores
+
+### 📚 **Documentación Centralizada**
+
+Todos los informes, análisis y documentación técnica están organizados en:
+- **`docs/informes/`** - Centro de informes del proyecto
+- **`docs/MANUAL-COMPLETO-CURSOR.md`** - Manual principal del sistema
+- **`MEMORIA-PROYECTO-RAG.md`** - Enlace rápido a la memoria del proyecto
+
+**Informes principales**:
+- `MEMORIA-PROYECTO-RAG-ACTUALIZADA.md` - Estado actual completo
+- `ROADMAP_RAG.md` - Roadmap técnico y ADRs
+- `OPERATIONS_PLAYBOOK.md` - Procedimientos operacionales
+- `ANALISIS-RAMAS-COMPLETO.md` - Análisis de branches
+- `PLAN-CORRECCION-TYPESCRIPT.md` - Plan de corrección
 
 ---
 

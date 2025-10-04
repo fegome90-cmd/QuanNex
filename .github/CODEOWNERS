@@ -1,51 +1,36 @@
-# =====================================================
-# CODEOWNERS - Sistema RAG
-# Requiere revisión de equipos específicos para cambios críticos
-# =====================================================
+# CODEOWNERS - Definición de propietarios por área
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
-# RAG System - Requiere revisión de arquitectura y conocimiento
-/rag/ @quannex-core @quannex-research
-/scripts/gates/ @quannex-core
-/scripts/prp/ @quannex-core
-/prp/ @quannex-core @quannex-research
-/docs/adr/ @quannex-core
+# Rutas sensibles - Requieren aprobación de especialistas
+/rag/**                    @fegome90-cmd @equipo-rag @lead-ml
+/ops/**                    @fegome90-cmd @sre-lead
+/.github/workflows/**      @fegome90-cmd @sre-lead @lead-backend
+/core/**                   @fegome90-cmd @lead-backend
 
-# CI/CD - Requiere revisión de DevOps y arquitectura
-/.github/workflows/ @quannex-infra
-/.github/CODEOWNERS @quannex-infra
+# Documentación organizada
+/docs/informes/**          @fegome90-cmd @doc-team
 
-# Configuración crítica - Requiere revisión de arquitectura
-/config/ @quannex-core
-/schema/ @quannex-core @quannex-dba
-/scripts/migrations/ @quannex-core @quannex-dba
+# Configuraciones críticas
+/.github/                  @fegome90-cmd @sre-lead
+/package.json              @fegome90-cmd @lead-backend
+/package-lock.json         @fegome90-cmd @lead-backend
 
-# Datastores y infraestructura
-/docker-compose*.yml @quannex-infra
-/env*.datastores @quannex-infra
-/Makefile.rag @quannex-infra
+# Scripts de automatización
+/scripts/**                @fegome90-cmd @devops-team
+/tools/**                  @fegome90-cmd @devops-team
 
-# Documentación de seguridad y operaciones
-/SECURITY-HARDENING-SUMMARY.md @quannex-core @quannex-security
-/CHANGELOG.md @quannex-core
-/docs/CI-CD-SETUP.md @quannex-infra
+# Configuraciones de seguridad
+/.husky/                   @fegome90-cmd @sre-lead
+/security*                 @fegome90-cmd @sre-lead
 
-# Roadmap y decisiones arquitecturales
-/ROADMAP_RAG.md @quannex-core
-/docs/adr/ @quannex-core
+# Configuraciones de CI/CD
+/.github/                  @fegome90-cmd @sre-lead
+/docker*                   @fegome90-cmd @devops-team
 
-# Scripts de mantenimiento críticos
-/scripts/smoke-datastores.sh @quannex-infra
-/rag/cli/ @quannex-core @quannex-research
+# Archivos de configuración del proyecto
+/quannex.config.yaml       @fegome90-cmd @lead-backend
+/tsconfig*.json            @fegome90-cmd @lead-backend
+/eslint.config.js          @fegome90-cmd @lead-backend
 
-# Reports y análisis
-/reports/ @quannex-pm
-
-# =====================================================
-# Notas:
-# - @quannex-core: Revisión técnica y arquitectural
-# - @quannex-research: Revisión de contenido y corpus
-# - @quannex-infra: Revisión de infraestructura y CI/CD
-# - @quannex-security: Revisión de seguridad y compliance
-# - @quannex-dba: Revisión de esquemas y migraciones de BD
-# - @quannex-pm: Revisión de reportes y análisis
-# =====================================================
+# Todo lo demás - aprobación del mantenedor principal
+*                         @fegome90-cmd

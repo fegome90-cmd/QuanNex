@@ -1,0 +1,9 @@
+thresholds:
+  max_files_deleted: 25
+  max_lines_deleted: 5000
+
+sensitive_globs:
+  - "rag/**"
+  - ".github/workflows/**"
+  - "ops/**"
+  - "core/**"

@@ -1,0 +1,91 @@
+name: destructive-guard
+on: [pull_request]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      
+      - name: Load killswitch config
+        run: |
+          if [ -f "config/emergency-killswitch.yaml" ]; then
+            echo "Killswitch config found - emergency mode active"
+            cat config/emergency-killswitch.yaml
+          fi
+      
+      - name: Compute deletions
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          
+          # Calcular deleciones de líneas
+          git diff --diff-filter=D --numstat "$base...$head" | awk '{d+=$1} END{print d+0}' > deletions.txt
+          D=$(cat deletions.txt)
+          
+          # Calcular archivos eliminados
+          git diff --diff-filter=D --name-only "$base...$head" | wc -l > files_deleted.txt
+          F=$(cat files_deleted.txt)
+          
+          # Umbrales de emergencia
+          THRESHOLD_LINES=${DEL_THRESHOLD:-500}
+          THRESHOLD_FILES=${MAX_FILES_DELETED:-50}
+          
+          echo "Deletions: $D lines / $THRESHOLD_LINES threshold"
+          echo "Files deleted: $F / $THRESHOLD_FILES threshold"
+          
+          # Bloquear si excede umbrales
+          if [ "$D" -gt "$THRESHOLD_LINES" ]; then
+            echo "::error::MASS DELETION DETECTED: $D lines deleted (> $THRESHOLD_LINES)"
+            echo "::error::This PR requires 'critical' label and CODEOWNERS approval"
+            exit 1
+          fi
+          
+          if [ "$F" -gt "$THRESHOLD_FILES" ]; then
+            echo "::error::MASS FILE DELETION: $F files deleted (> $THRESHOLD_FILES)"
+            echo "::error::This PR requires 'critical' label and CODEOWNERS approval"
+            exit 1
+          fi
+          
+          echo "✅ Deletion limits respected: $D lines, $F files"
+      
+      - name: Check sensitive paths
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          
+          # Rutas sensibles
+          SENSITIVE_PATHS=("rag/**" "core/**" ".github/workflows/**" "ops/**" "config/**")
+          
+          for path in "${SENSITIVE_PATHS[@]}"; do
+            if git diff --name-only "$base...$head" | grep -q "^${path//\*\*/.*}"; then
+              echo "::warning::Sensitive path touched: $path"
+              echo "::warning::This requires 'critical' label and CODEOWNERS approval"
+            fi
+          done
+      
+      - name: Check forbidden APIs
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          
+          # APIs prohibidas
+          FORBIDDEN_APIS=("child_process" "execSync" "subprocess" "eval" "dangerouslySetInnerHTML")
+          
+          for api in "${FORBIDDEN_APIS[@]}"; do
+            if git diff "$base...$head" | grep -q "$api"; then
+              echo "::error::FORBIDDEN API DETECTED: $api"
+              echo "::error::This requires security review and 'security' label"
+              exit 1
+            fi
+          done
+      
+      - name: Emergency mode check
+        run: |
+          if [ -f "config/emergency-killswitch.yaml" ]; then
+            echo "🚨 EMERGENCY MODE ACTIVE"
+            echo "All destructive operations require explicit approval"
+            echo "Killswitch config:"
+            cat config/emergency-killswitch.yaml
+          fi

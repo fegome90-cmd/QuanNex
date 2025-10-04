@@ -1,0 +1,13 @@
+name: checks-all-green
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  meta:
+    # Este job simula "required checks" en repos privados sin Branch Protection Pro.
+    # Decláralo dependiente de los demás workflows críticos que usas.
+    needs: [manual-rollback-guard, policy-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Todos los checks críticos pasaron. (Meta-guard OK)"

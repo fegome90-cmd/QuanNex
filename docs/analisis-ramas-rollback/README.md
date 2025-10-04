@@ -12,6 +12,7 @@
    - Análisis completo y consolidado de todas las ramas
    - Identificación de ramas de rollback vs mejoras
    - Estrategias de merge y recomendaciones
+   - **Nota**: Archivo principal también disponible en directorio raíz del proyecto
 
 2. **[ANALISIS-LOTE1-COMMITS.md](./ANALISIS-LOTE1-COMMITS.md)**
    - Análisis detallado de commits de cada rama

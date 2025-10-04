@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Verificar firma de commit
+echo "🔍 Verificando firma de commit..."
+
+# Verificar si hay claves GPG disponibles
+if ! gpg --list-secret-keys >/dev/null 2>&1; then
+  echo "⚠️  No hay claves GPG configuradas"
+  echo "💡 Para configurar: gpg --gen-key"
+  exit 0
+fi
+
+# Verificar si el commit está firmado
+SIGNATURE_STATUS=$(git log -1 --pretty=%G? 2>/dev/null)
+
+case "$SIGNATURE_STATUS" in
+  "G"|"U")
+    echo "✅ Commit firmado correctamente"
+    ;;
+  "B"|"X"|"Y"|"R"|"E")
+    echo "❌ Firma inválida o corrupta"
+    echo "🛑 Commit no firmado - Requiere firma GPG válida"
+    exit 1
+    ;;
+  "N")
+    echo "❌ Commit sin firma"
+    echo "🛑 Commit no firmado - Requiere firma GPG"
+    echo "💡 Para firmar: git commit -S -m 'mensaje'"
+    exit 1
+    ;;
+  *)
+    echo "⚠️  Estado de firma desconocido: $SIGNATURE_STATUS"
+    echo "🛑 Commit no firmado - Requiere firma GPG"
+    exit 1
+    ;;
+esac

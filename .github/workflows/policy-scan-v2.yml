@@ -1,0 +1,25 @@
+name: policy-scan
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Buscar APIs prohibidas (JS/TS)
+        shell: bash
+        run: |
+          FILES=$(git ls-files | grep -E '\.(ts|tsx|js|mjs|cjs)$' || true)
+          if [ -z "$FILES" ]; then
+            echo "Sin archivos JS/TS."
+            exit 0
+          fi
+          BAD=$(echo "$FILES" | xargs -I{} grep -nE 'child_process|execSync\(|spawnSync\(|eval\(|dangerouslySetInnerHTML' {} || true)
+          if [ -n "$BAD" ]; then
+            echo "$BAD"
+            echo "::error::Uso de APIs prohibidas. Remediar o justificar con excepción temporal firmada."
+            exit 1
+          fi
+          echo "OK: sin APIs prohibidas."
