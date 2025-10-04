@@ -1,33 +1,34 @@
 ### Análisis de Auditoría - Felipe
 
-**Entrada a Auditar:** Una versión revisada y expandida del plan integral para reactivar el roadmap, con un enfoque detallado en la mitigación de riesgos de segundo orden.
+**Entrada a Auditar:** Una versión final y expandida del plan integral, que ahora incluye mecanismos para la auto-regulación de la gobernanza, la gestión del ciclo de vida de la telemetría y la mitigación de riesgos de segundo orden.
 
 ---
 
 #### 1. Síntomas Observados
-* El plan extiende la matriz de riesgos con diez escenarios nuevos (fallo de telemetría, sesgo de métricas, datos sensibles, fatiga por advertencias…).
-* Se introducen mitigaciones concretas como `QUANNEX_GATES_SAFE_MODE` para rollback de emergencia.
-* Los “Próximos Pasos” incluyen validaciones previas: ensayo piloto, auditoría legal/compliance, documentación de contingencias.
-* Se reconocen pruebas automatizadas obligatorias antes del despliegue del nuevo framework.
-* Se formaliza la comunicación con producto mediante reportes quincenales.
+* Se añadió “Modulación de Gobernanza” con criterios para bajar la intensidad tras dos trimestres estables.
+* Se asignó propiedad formal al sistema de telemetría (5% del sprint reservado) y se reconoce como producto interno.
+* Cada nuevo servicio debe seguir `docs/architecture/patterns/observable-services.md`; la revisión es obligatoria en ADRs/diseños.
+* El presupuesto de gobernanza se convierte en métrica a revisar por el Comité de Gates.
+* La matriz de riesgos incorpora fatiga por advertencias, sesgo por métricas, fallas de telemetría y dependencias externas.
+* Los pasos inmediatos incluyen runbook de safe mode, métrica de churn de código, catálogo de dependencias y simulacros.
 
 #### 2. Diagnóstico de Causa Raíz
 * La evolución del plan muestra un giro hacia una mentalidad antifrágil: además de arreglar los gates rotos, se anticipan efectos de segundo orden y se preparan amortiguadores antes del despliegue.
 
 #### 3. Puntos Ciegos y Suposiciones Críticas
-* **Suposición:** La carga operativa de nuevos rituales (Comité de Gates, reportes, revisiones) será sostenible.
-* **Punto Ciego:** `QUANNEX_GATES_SAFE_MODE` carece de criterios de activación claros y cadena de autoridad definida.
-* **Punto Ciego:** La mitigación del sesgo por métricas depende de revisiones manuales; falta un indicador proactivo (ej. churn de código) para detectar conductas de “jugar con la métrica”.
+* **Suposición:** El equipo y los stakeholders aceptarán la carga operativa del nuevo “impuesto de gobernanza” porque el beneficio será evidente.
+* **Punto Ciego:** La modulación de gobernanza es reactiva; no hay simulacros obligatorios que prueben la preparación durante periodos de baja intensidad.
+* **Punto Ciego:** El plan no detalla aún la respuesta ante fallas de dependencias externas críticas más allá de la degradación descrita; falta integración operativa.
 
 #### 4. Preguntas Críticas para el Equipo
-* ¿Qué métricas activan `QUANNEX_GATES_SAFE_MODE`, quién lo aprueba y cómo se comunica para evitar activaciones impulsivas o tardías?
-* ¿Cuál es el costo en horas-persona de la nueva gobernanza y cómo se asegurará su eficiencia?
-* Si un módulo incumple repetidamente el SLA de advertencias, ¿qué proceso de escalamiento se activa y cómo se evita que el saneamiento monopolice el tiempo del equipo?
+* Además de la reactivación automática por métricas, ¿qué simulacro trimestral garantizará que la capacidad de respuesta no se oxide?
+* ¿Qué mecanismo de incentivos o control hará cumplir los patrones observables más allá de la checklist del ADR?
+* ¿Quién tiene la autoridad final para activar `QUANNEX_GATES_SAFE_MODE` y cuál es el proceso para comunicarlo sin demoras?
 
 #### 5. Recomendaciones de Mitigación
-* **Runbook de Safe Mode:** Documentar condiciones cuantificables (ej. `gates_false_positive_rate > 30% durante 3h`), cadena de aprobación y protocolo de comunicación en `OPERATIONS_PLAYBOOK_COMPLETE.md`.
-* **Métrica de Estabilidad/Churn:** Instrumentar un indicador que mida la tasa de cambios por módulo; caídas abruptas podrían indicar trabajo complejo diferido por miedo a las métricas.
-* **Presupuesto de Tiempo para Saneamiento:** En el Protocolo de Presupuesto de Errores, reservar 5‑10% del sprint para advertencias menores y definir escalamiento cuando se exceda (refactor may or ajuste de umbrales).
+* **Game Days de Gates:** Programar simulacros trimestrales que degraden métricas o simulen fallas para probar alertas y coordinación aun en tiempos tranquilos.
+* **Revisión de Adopción de Patrones:** Incorporar en la planificación trimestral un punto de control que verifique la alineación con `observable-services.md` antes de aprobar despliegues.
+* **Catálogo de Dependencias Externas:** Mantener y operar el documento que define cómo responde el gate ante la caída de proveedores críticos; incluirlo en los comités de seguimiento.
 
 ---
 

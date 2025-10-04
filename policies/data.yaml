@@ -1,12 +1,12 @@
 # Data YAML para OPA - Generado automáticamente
-# Fecha: 2025-10-04T15:38:32Z
+# Fecha: 2025-10-04T15:52:24Z
 # Fuente: config/sensitive-paths.yaml
 
 max_files_deleted: 25
 max_lines_deleted: 5000
 sync_with_opa: true
 
-sensitive_globs: []
+sensitive_globs: ["rag/**", ".github/workflows/**", "ops/**", "core/**"]
 
 # Configuración de emergencia
 emergency:

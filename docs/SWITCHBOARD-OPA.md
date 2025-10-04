@@ -7,7 +7,7 @@
 
 ### **🏭 Producción (Recomendado)**
 - **Plan A (Pinned)**: ✅ **ACTIVO**
-- **Plan B (Container)**: ❌ **DESACTIVADO**
+- **Plan B (Container)**: 🔄 **CONDICIONAL** (USE_OPA_CONTAINER=true)
 - **Plan C (Fallback)**: ❌ **DESACTIVADO**
 
 ### **🔧 Debug/Emergencia**
@@ -37,7 +37,20 @@ on:
   workflow_dispatch:  # Permite ejecución manual
 ```
 
-### **Método 3: Usar Labels**
+### **Método 3: Usar Variables de Repositorio**
+```yaml
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  opa:
+    if: ${{ vars.USE_OPA_CONTAINER == 'true' }}
+    runs-on: ubuntu-latest
+    # ... resto del job
+```
+
+### **Método 4: Usar Labels**
 ```yaml
 on:
   pull_request:

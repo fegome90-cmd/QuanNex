@@ -1,29 +1,28 @@
 package pr
 
-default deny = []
-
+# Función para verificar si tiene una label específica
 has_label(l) {
-  some i
-  input.labels[i] == l
+  input.labels[_] == l
 }
 
 # Ajusta el límite si quieres alinear con config/sensitive-paths.yaml
 max_files_deleted := 25
 
+# Función para verificar si un archivo es sensible
 is_sensitive[p] {
-  some p in input.files
+  p := input.files[_]
   startswith(p, "rag/")
 } 
 is_sensitive[p] {
-  some p in input.files
+  p := input.files[_]
   startswith(p, ".github/workflows/")
 }
 is_sensitive[p] {
-  some p in input.files
+  p := input.files[_]
   startswith(p, "ops/")
 }
 is_sensitive[p] {
-  some p in input.files
+  p := input.files[_]
   startswith(p, "core/")
 }
 

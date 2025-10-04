@@ -64,3 +64,11 @@ ls .husky/
 ## 7. Mantenimiento
 - Probar el runbook en cada simulacro trimestral (Game Day).
 - Actualizar comandos y dependencias cada vez que cambie la estructura de hooks.
+
+---
+
+## 8. Post-Activación y Ciclo de Aprendizaje
+1. Dentro de las primeras 48 horas, ejecutar análisis de causa raíz con plataforma + auditoría + SecOps.
+2. Registrar hallazgos y acciones en el Gate Unlock Log y en un ADR o actualización del playbook.
+3. Revisar métricas previas/post safe mode para asegurarse de que los umbrales de salida son adecuados.
+4. Validar que las acciones preventivas se planifican en el backlog y se comunican en el siguiente Comité de Gates.

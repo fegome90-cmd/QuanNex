@@ -98,6 +98,7 @@
 ## 9. Adopción de Patrones Observables
 - Checklist obligatorio en cada ADR/proyecto nuevo.
 - Revisión trimestral para asegurar cumplimiento; bloquear despliegues si no se documenta.
+- Crear backlog de deuda de observabilidad para servicios existentes; priorizar remediación en ciclos trimestrales.
 
 ---
 

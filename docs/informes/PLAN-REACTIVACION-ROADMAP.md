@@ -99,7 +99,7 @@ Una vez cumplidos, la rúbrica de madurez (`AUDITORIA-QUANNEX-INFORMES.md`) se a
 - **Revisión Trimestral**: Validar si los gates pueden avanzar a “Controlado” (según rúbrica) y ajustar umbrales.
 - **Modulación de Gobernanza**: Si los criterios de salida se mantienen durante dos trimestres consecutivos, reducir la frecuencia del Comité de Gates a mensual y suspender el rol de Gate Steward (quedará latente). Reactivar automáticamente si cualquier métrica clave cae 15% por debajo del baseline o si se registran más de dos bypasses sin justificación en un trimestre.
 - **Presupuesto de Gobernanza**: El Comité de Gates debe medir y reportar cada trimestre el tiempo invertido en rituales; identificar oportunidades de simplificación cuando el costo supere 5% de la capacidad del equipo.
-- **Simulacros Trimestrales (Game Days)**: Ejecutar ejercicios controlados que degraden métricas clave o simulen bypasses para validar alertas, comunicación y tiempos de respuesta incluso en períodos de baja intensidad.
+- **Simulacros Trimestrales (Game Days)**: Ejecutar ejercicios controlados que degraden métricas clave o simulen bypasses para validar alertas, comunicación y tiempos de respuesta incluso en períodos de baja intensidad; declarar fallo si MTTR > 15 minutos o si la respuesta se desvía del runbook, activando plan de acción correctiva antes del siguiente ejercicio.
 
 ---
 

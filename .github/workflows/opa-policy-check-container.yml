@@ -1,4 +1,4 @@
-name: opa-policy-check (container)
+name: opa-policy-check (container-run)
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -10,18 +10,31 @@ permissions:
   security-events: write
 
 concurrency:
-  group: opa-container-${{ github.event.pull_request.number }}
+  group: opa-dkrun-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
   opa:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    container: ghcr.io/openpolicyagent/opa:0.58.0
+    timeout-minutes: 6
 
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
+
+      - name: Diagnostics
+        run: |
+          echo "🔍 Diagnóstico del entorno:"
+          echo "whoami: $(whoami)"
+          which git || echo "❌ git missing"
+          git --version || true
+          which jq || echo "❌ jq missing"
+          jq --version || true
+          which docker || echo "❌ docker missing"
+          docker --version || true
+          echo "📁 Contenido del directorio:"
+          ls -la
+          echo "✅ Diagnóstico completado"
 
       - name: Build OPA input (labels + changed files)
         id: build-input
@@ -44,22 +57,21 @@ jobs:
       - name: Cargar data externa (umbrales/paths)
         run: |
           test -f policies/data.yaml && echo "Data externa OK" || echo "⚠️ data.yaml no encontrada (usando defaults)"
-      
-      - name: Evaluate Rego con data externa
+
+      - name: Evaluate Rego via container (OPA 0.58.0)
         shell: bash
+        env: { PLAN: "Container" }
         run: |
           set -euo pipefail
-          if [ -f policies/data.yaml ]; then
-            echo "🔍 Evaluando con data externa..."
-            opa eval --format=json -i input.json -d policies/ -d policies/data.yaml 'data.pr.deny' > eval.json
-          else
-            echo "🔍 Evaluando con defaults..."
-            opa eval --format=json -i input.json -d policies/ 'data.pr.deny' > eval.json
-          fi
+          echo "🔍 Evaluando con defaults via contenedor..."
+          docker run --rm \
+            -v "$PWD":/work -w /work \
+            openpolicyagent/opa:0.58.0 \
+            eval --format=json -i input.json -d policies/ 'data.pr.deny' > eval.json
           jq -r '.result[0].expressions[0].value[]?' eval.json > violations.txt || true
           if [ -s violations.txt ]; then
             cat violations.txt; exit 1; fi
-          echo "OPA OK: no violations."
+          echo "OPA (container) OK: no violations."
 
       - name: Comment violations on PR
         if: failure()
@@ -67,9 +79,6 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const plan = process.env.PLAN || "OPA";
             const lines = fs.readFileSync('violations.txt','utf8').split('\n').filter(Boolean);
-            const body = `❌ **Política PR (${plan})**\n\n` + lines.map(l=>`- ${l}`).join('\n');
+            const body = `❌ **Política PR (Container)**\n\n` + lines.map(l=>`- ${l}`).join('\n');
             github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });
-        env:
-          PLAN: "Container"

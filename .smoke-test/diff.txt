@@ -14,6 +14,11 @@ A	.github/workflows/sign-artifacts.yml
 A	.github/workflows/simple-policy-check.yml
 A	.husky/commit-msg
 M	.rate-limits/context.json
+A	.smoke-test/diff.txt
+A	.smoke-test/input.json
+A	.smoke-test/plan-b-result.json
+A	.smoke-test/plan-c-violations.txt
+A	.smoke-test/results.md
 M	ANALISIS-RAMAS-COMPLETO.md
 A	MEMORIA-PROYECTO-RAG.md
 D	OPERATIONS_PLAYBOOK_COMPLETE.md
@@ -28,6 +33,7 @@ A	config/emergency-killswitch.yaml
 A	config/sensitive-paths.yaml
 A	docs/BAU-RUNBOOK.md
 A	docs/BRANCH-PROTECTION-SETUP.md
+A	docs/CHECKLIST-CIERRE-OPA.md
 A	docs/CHECKLIST-SALIDA-BAU.md
 A	docs/EXCEPTIONS-LOG.md
 A	docs/HANDOFF-EXPRESS.md
@@ -36,14 +42,19 @@ M	docs/MANUAL-COMPLETO-CURSOR.md
 A	docs/MINI-DRILL-15MIN.md
 A	docs/PLAYBOOK-ROLLBACK.md
 A	docs/ROOT-CAUSE-ORG.md
+A	docs/SWITCHBOARD-OPA.md
+A	docs/TROUBLESHOOTING-OPA.md
 A	docs/analisis-ramas-rollback/ANALISIS-TYPESCRIPT-QUANNEX.md
 A	docs/analisis-ramas-rollback/AUDITORIA-QUANNEX-COMPLETA.md
 A	docs/analisis-ramas-rollback/CONTEXTO-AGENTES-PROBLEMAS.md
 M	docs/analisis-ramas-rollback/README.md
+A	docs/architecture/patterns/observable-services.md
 A	docs/informes/ANALISIS-ERRORES-GATES-DETALLADO.md
 A	docs/informes/ANALISIS-FALLAS-GATES-SEGURIDAD.md
 A	docs/informes/ANALISIS-HOOKS-PRE-PUSH.md
+A	docs/informes/AUDITORIA-PLAN-REACTIVACION.md
 A	docs/informes/AUDITORIA-QUANNEX-INFORMES.md
+A	docs/informes/CATALOGO-DEPENDENCIAS-GATES.md
 A	docs/informes/CONTEXTO-INVESTIGACION.txt
 A	docs/informes/ENSAYOS-Y-AUDITORIAS-GATES.md
 A	docs/informes/ESTADO-ARCHIVOS-REPOSITORIO.md
@@ -62,6 +73,7 @@ A	docs/informes/PLAN-SOLUCIONES-GATES.md
 A	docs/informes/README.md
 A	docs/informes/ROADMAP_RAG.md
 A	ops/flags/AUTOFIX_ENABLED
+A	ops/runbooks/gates_safe_mode.md
 A	parche-anticrisis.diff
 A	policies/data.yaml
 A	policies/pr_security.rego
@@ -74,3 +86,4 @@ A	scripts/health-check.sh
 A	scripts/incidente-seguridad-operativa.sh
 A	scripts/monitor-labels.sh
 A	scripts/policy-snapshot.sh
+A	scripts/smoke-test-opa.sh

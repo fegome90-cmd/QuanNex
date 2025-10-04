@@ -84,11 +84,12 @@ else
     PLAN_A_STATUS="⚠️ NO DISPONIBLE"
 fi
 
-# 3B. Plan B (Contenedor)
-log "🔍 Plan B: Contenedor OPA..."
+# 3B. Plan B (Contenedor con docker run)
+log "🔍 Plan B: Contenedor OPA (docker run)..."
 if command -v docker &> /dev/null; then
     echo "✅ Docker encontrado"
-    if docker run --rm -v "$PWD":/work -w /work ghcr.io/openpolicyagent/opa:0.58.0 \
+    echo "🔍 Evaluando con defaults via contenedor..."
+    if docker run --rm -v "$PWD":/work -w /work openpolicyagent/opa:0.58.0 \
        eval --format=json -i "$TEST_DIR/input.json" -d policies/ 'data.pr.deny' > "$TEST_DIR/plan-b-result.json" 2>/dev/null; then
         PLAN_B_VIOLATIONS=$(jq -r '.result[0].expressions[0].value[]?' "$TEST_DIR/plan-b-result.json" 2>/dev/null || echo "")
         if [ -n "$PLAN_B_VIOLATIONS" ]; then
@@ -183,7 +184,7 @@ cat >> "$RESULTS_FILE" << EOF
 
 ### Plan B (Contenedor)
 - **Estado**: $PLAN_B_STATUS
-- **Comando**: \`docker run --rm -v "\$PWD":/work -w /work ghcr.io/openpolicyagent/opa:0.58.0 eval --format=json -i input.json -d policies/ 'data.pr.deny'\`
+- **Comando**: \`docker run --rm -v "\$PWD":/work -w /work openpolicyagent/opa:0.58.0 eval --format=json -i input.json -d policies/ 'data.pr.deny'\`
 
 ### Plan C (Bash Puro)
 - **Estado**: $PLAN_C_STATUS

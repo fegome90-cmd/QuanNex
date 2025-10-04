@@ -26,7 +26,11 @@ MAX_LINES=$(grep "max_lines_deleted:" "$CONFIG_FILE" | awk '{print $2}' || echo 
 SYNC_WITH_OPA=$(grep "sync_with_opa:" "$CONFIG_FILE" | awk '{print $2}' || echo "true")
 
 # Extraer sensitive_globs
-SENSITIVE_GLOBS=$(awk '/sensitive_globs:/{f=1;next} f&&/^-/{g=$0; sub(/^- *"/,"",g); sub(/" *$/,"",g); print g} f&&$0!~"^-"{if(f)exit}' "$CONFIG_FILE" | jq -R -s -c 'split("\n")[:-1]' || echo '["rag/**", ".github/workflows/**", "ops/**", "core/**"]')
+SENSITIVE_GLOBS=$(awk '/sensitive_globs:/{f=1;next} f&&/^-/{g=$0; sub(/^- *"/,"",g); sub(/" *$/,"",g); print g} f&&$0!~"^-"{if(f)exit}' "$CONFIG_FILE" | jq -R -s -c 'split("\n")[:-1]' 2>/dev/null || echo '["rag/**", ".github/workflows/**", "ops/**", "core/**"]')
+# Si está vacío, usar defaults
+if [ "$SENSITIVE_GLOBS" = "[]" ]; then
+    SENSITIVE_GLOBS='["rag/**", ".github/workflows/**", "ops/**", "core/**"]'
+fi
 
 # Generar data.yaml
 cat > "$DATA_FILE" << EOF
