@@ -1,7 +1,7 @@
 # 🚨 INCIDENTE DE SEGURIDAD-OPERATIVA - 2025-10-04
 
-**ID del Incidente**: incident-20251004-121645  
-**Fecha**: 2025-10-04T15:16:54Z  
+**ID del Incidente**: incident-20251004-121711  
+**Fecha**: 2025-10-04T15:17:20Z  
 **Estado**: 🔴 **ACTIVO**  
 **Severidad**: CRÍTICA
 
@@ -16,11 +16,11 @@
 
 | Timestamp | Evento | Estado |
 |-----------|--------|--------|
-| 15:16:54 | **INCIDENTE DETECTADO** | 🔴 CRÍTICO |
-| 15:16:54 | Contención aplicada (guards + meta-guard) | 🟡 CONTENIDO |
-| 15:16:54 | Rama archivada (tag: backup/autofix-test-rollback-safety) | 🟡 CONTENIDO |
-| 15:16:54 | Kill-switch activado (AUTOFIX_ENABLED=false) | 🟡 CONTENIDO |
-| 15:16:54 | Protecciones validadas (canarios) | 🟢 ESTABLE |
+| 15:17:20 | **INCIDENTE DETECTADO** | 🔴 CRÍTICO |
+| 15:17:20 | Contención aplicada (guards + meta-guard) | 🟡 CONTENIDO |
+| 15:17:20 | Rama archivada (tag: backup/autofix-test-rollback-safety) | 🟡 CONTENIDO |
+| 15:17:20 | Kill-switch activado (AUTOFIX_ENABLED=false) | 🟡 CONTENIDO |
+| 15:17:20 | Protecciones validadas (canarios) | 🟢 ESTABLE |
 
 ## 🎯 Impacto
 
@@ -64,13 +64,13 @@
 ## 📊 Evidencia
 
 ### **Archivos de Evidencia**:
-- `.reports/forensics/repo-incident-20251004-121645.bundle`: Snapshot completo del repo
-- `.reports/forensics/prs-incident-20251004-121645.json`: Historial de PRs
-- `.reports/forensics/runs-incident-20251004-121645.json`: Historial de CI runs
-- `.reports/forensics/repo-state-incident-20251004-121645.txt`: Estado actual del repo
+- `.reports/forensics/repo-incident-20251004-121711.bundle`: Snapshot completo del repo
+- `.reports/forensics/prs-incident-20251004-121711.json`: Historial de PRs
+- `.reports/forensics/runs-incident-20251004-121711.json`: Historial de CI runs
+- `.reports/forensics/repo-state-incident-20251004-121711.txt`: Estado actual del repo
 
 ### **Tags de Referencia**:
-- `incident/snapshot-incident-20251004-121645`: Snapshot del incidente
+- `incident/snapshot-incident-20251004-121711`: Snapshot del incidente
 - `backup/autofix-test-rollback-safety/20251004-120029`: Rama archivada
 
 ## 🔄 Próximos Pasos
