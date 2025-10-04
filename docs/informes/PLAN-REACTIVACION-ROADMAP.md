@@ -106,6 +106,13 @@ Una vez cumplidos, la rúbrica de madurez (`AUDITORIA-QUANNEX-INFORMES.md`) se a
 | Métricas incompletas | Automatizar auditorías de datos; fallback manual semanal mientras se estabiliza la recolección. |
 | Sobrecarga de equipo | Distribuir responsabilidades (Gate Steward rotativo); incorporar KPIs de gates en evaluaciones. |
 | Falsos positivos elevados | Revisar configuración MCP y TypeScript; permitir degradación temporal documentada en dev. |
+| Fallo de la infraestructura de telemetría | Plan de rollback para hooks graduales: variable `QUANNEX_GATES_SAFE_MODE` que reestablece configuración actual; respaldo diario de TaskDB y Prometheus; operación documentada en `OPERATIONS_PLAYBOOK_COMPLETE.md`. |
+| Sesgo por métricas (equipos evitando cambios complejos) | Revisión bisemanal del backlog por Comité de Gates para detectar trabajo diferido; canalizar decisiones con producto. |
+| Datos sensibles en telemetría | Revisar estructura con SecOps/Legal; anonimizar requestId y limitar retención a 30 días; registrar decisión en `docs/policies/data-handling.md`. |
+| Fatiga por advertencias | Establecer SLA de saneamiento (24h reconocimiento, 3 días resolución) y activar sprint-focus si se acumulan >20 warnings por módulo. |
+| Componentes legacy no alineados | Auditoría específica de módulos heredados (`core/taskdb/sqlite.ts`, `cli-reports.mjs`) y plan de refactor o aislamiento documentado. |
+| Falta de pruebas automáticas del nuevo framework | Añadir suite de tests (unit + smoke) para hooks graduales y telemetría en CI antes del despliegue general. |
+| Falta de comunicación con negocio | Reporte quincenal al comité de producto con estado de madurez y ETA de ADRs; registrar acuerdos. |
 
 ---
 
@@ -115,6 +122,9 @@ Una vez cumplidos, la rúbrica de madurez (`AUDITORIA-QUANNEX-INFORMES.md`) se a
 2. Iniciar desarrollo de hooks graduales en una rama controlada; completar pruebas en dev/staging.
 3. Presentar borrador del protocolo de presupuesto de errores al comité en 48 horas.
 4. Programar la sesión de capacitación del equipo en los próximos 5 días.
+5. Documentar plan de rollback y procedimientos de contingencia en `OPERATIONS_PLAYBOOK_COMPLETE.md`.
+6. Ejecutar auditoría de herramientas y ensayo piloto según `ENSAYOS-Y-AUDITORIAS-GATES.md`.
+7. Coordinar revisión legal/compliance de la telemetría propuesta.
 
 ---
 

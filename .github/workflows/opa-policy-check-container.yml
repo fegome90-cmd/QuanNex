@@ -1,48 +1,22 @@
-name: opa-policy-check (pinned)
+name: opa-policy-check (container)
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
-  group: opa-${{ github.event.pull_request.number }}
+  group: opa-container-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
   opa:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    container: ghcr.io/openpolicyagent/opa:0.58.0
 
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
 
-      - name: Cache OPA binary
-        uses: actions/cache@v4
-        with:
-          path: /usr/local/bin/opa
-          key: opa-bin-${{ runner.os }}-0.58.0
-
-      - name: Install OPA (checksum + retries)
-        if: steps.cache.outputs.cache-hit != 'true'
-        shell: bash
-        env:
-          OPA_VER: "0.58.0"
-        run: |
-          set -euo pipefail
-          OS=linux ARCH=amd64
-          url="https://github.com/open-policy-agent/opa/releases/download/v${OPA_VER}/opa_${OS}_${ARCH}_v${OPA_VER}.tar.gz"
-          shas="https://github.com/open-policy-agent/opa/releases/download/v${OPA_VER}/checksums.txt"
-
-          for attempt in 1 2 3; do
-            echo "Download attempt $attempt…"
-            curl -fsSL "$url" -o opa.tgz && curl -fsSL "$shas" -o checksums.txt && break || sleep $((2**attempt))
-          done
-
-          grep "opa_${OS}_${ARCH}_v${OPA_VER}.tar.gz" checksums.txt | sha256sum -c -
-          tar -xzf opa.tgz opa
-          sudo install -m 0755 opa /usr/local/bin/opa
-          opa version
-      
       - name: Build OPA input (labels + changed files)
         id: build-input
         shell: bash
@@ -60,8 +34,7 @@ jobs:
               files: ( $files | split(" ") | map(select(length>0)) ),
               deleted_files: ( $deleted | split(" ") | map(select(length>0)) )
             }' > input.json
-          echo "files=$(jq '.files|length' input.json)"
-      
+
       - name: Evaluate Rego (policies/)
         shell: bash
         run: |
@@ -69,23 +42,15 @@ jobs:
           opa eval --format=json -i input.json -d policies/ 'data.pr.deny' > eval.json
           jq -r '.result[0].expressions[0].value[]?' eval.json > violations.txt || true
           if [ -s violations.txt ]; then
-            echo "Violations:"
-            cat violations.txt
-            exit 1
-          fi
+            cat violations.txt; exit 1; fi
           echo "OPA OK: no violations."
-      
+
       - name: Comment violations on PR
         if: failure()
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            let body = "❌ **Política PR**: Se encontraron violaciones:\n\n";
+            let body = "❌ **Política PR (container)**:\n\n";
             body += fs.readFileSync('violations.txt','utf8').split('\n').filter(Boolean).map(v=>`- ${v}`).join('\n');
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body
-            });
+            github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });

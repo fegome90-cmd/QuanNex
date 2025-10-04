@@ -1,0 +1,16 @@
+# Data YAML para OPA - Generado automáticamente
+# Fecha: 2025-10-04T15:38:32Z
+# Fuente: config/sensitive-paths.yaml
+
+max_files_deleted: 25
+max_lines_deleted: 5000
+sync_with_opa: true
+
+sensitive_globs: []
+
+# Configuración de emergencia
+emergency:
+  enabled: false
+  expiration: "2025-10-11T00:00:00Z"
+  reason: "Modo emergencia"
+  approved_by: "@fegome90-cmd"

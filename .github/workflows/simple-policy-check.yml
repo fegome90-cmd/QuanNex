@@ -1,92 +1,91 @@
-name: simple-policy-check
+name: simple-policy-check (fallback)
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
+concurrency:
+  group: simple-policy-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
-  policy:
+  simple:
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      
-      - name: Simple Policy Check
+        with: { fetch-depth: 0 }
+
+      - name: Build input (labels + changed files)
+        id: build-input
+        shell: bash
         run: |
-          echo "🔍 Ejecutando verificación de políticas simple..."
-          
-          # Obtener archivos cambiados
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
-          
-          # Obtener labels
-          LABELS=$(echo '${{ toJson(github.event.pull_request.labels) }}' | jq -r '.[].name' | tr '\n' ' ')
-          
-          # Contar deleciones
-          DELETIONS=$(git diff --diff-filter=D --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | wc -l | awk '{print $1}')
-          
-          echo "📊 Datos del PR:"
-          echo "- Archivos cambiados: $(echo "$CHANGED_FILES" | wc -l | awk '{print $1}')"
-          echo "- Labels: $LABELS"
-          echo "- Deleciones: $DELETIONS"
-          
-          # Verificar paths sensibles
-          SENSITIVE_PATHS=("rag/" "core/" "ops/" ".github/workflows/")
-          VIOLATIONS=()
-          
-          for path in "${SENSITIVE_PATHS[@]}"; do
-            if echo "$CHANGED_FILES" | grep -q "^$path"; then
-              if [[ "$LABELS" != *"critical"* ]]; then
-                VIOLATIONS+=("Tocar $path requiere label 'critical' + CODEOWNERS")
+          set -euo pipefail
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          git diff --name-status -M90 "$base" "$head" > diff.txt
+          jq -nc \
+            --argjson labels '${{ toJson(github.event.pull_request.labels) }}' \
+            --arg files "$(awk '{print $2"\n"$3}' diff.txt | sed '/^$/d' | sort -u | tr '\n' ' ')" \
+            --arg deleted "$(awk '$1=="D"{print $2}' diff.txt | tr '\n' ' ')" \
+            '{
+              labels: ( $labels | if .=="" then [] else (fromjson|map(.name)) end ),
+              files: ( $files | split(" ") | map(select(length>0)) ),
+              deleted_files: ( $deleted | split(" ") | map(select(length>0)) )
+            }' > input.json
+          cat input.json
+
+      - name: Evaluate policies (bash)
+        id: eval
+        shell: bash
+        run: |
+          set -euo pipefail
+          labels=$(jq -r '.labels[]?' input.json)
+          files=$(jq -r '.files[]?' input.json)
+          dels=$(jq -r '.deleted_files|length' input.json)
+          max_files=$(awk -F': *' '/max_files_deleted/{print $2}' config/sensitive-paths.yaml 2>/dev/null || echo 25)
+
+          # sensitive globs (del YAML o defaults)
+          if [ -f config/sensitive-paths.yaml ]; then
+            mapfile -t globs < <(awk '/sensitive_globs:/{f=1;next} f&&/^-/{g=$0; sub(/^- *"/,"",g); sub(/" *$/,"",g); print g} f&&$0!~"^-"{if(f)exit}' config/sensitive-paths.yaml)
+          else
+            globs=("rag/**" ".github/workflows/**" "ops/**" "core/**")
+          fi
+
+          to_regex() { sed -E 's/([.^$+(){}|[])/\\\1/g; s/\*/.*/g'; }
+
+          violations=()
+
+          # Rule 1: sensitive paths require "critical"
+          for g in "${globs[@]}"; do
+            rgx=$(printf "%s" "$g" | to_regex)
+            hit=$(printf "%s\n" $files | grep -E "^${rgx}$" || true)
+            if [ -n "$hit" ]; then
+              echo "Sensitive path hit: $g"
+              if ! printf "%s\n" $labels | grep -qi '^critical$'; then
+                violations+=("Tocar rutas sensibles requiere label 'critical' + CODEOWNERS")
               fi
+              break
             fi
           done
-          
-          # Verificar deleciones masivas
-          if [ "$DELETIONS" -gt 25 ]; then
-            if [[ "$LABELS" != *"rollback"* ]]; then
-              VIOLATIONS+=("Deleciones masivas ($DELETIONS > 25) requieren label 'rollback' + CODEOWNERS")
+
+          # Rule 2: mass deletions require "rollback"
+          if [ "$dels" -gt "$max_files" ]; then
+            if ! printf "%s\n" $labels | grep -qi '^rollback$'; then
+              violations+=("Deleciones masivas ($dels > $max_files) requieren 'rollback' + CODEOWNERS")
             fi
           fi
-          
-          # Verificar APIs peligrosas
-          DANGEROUS_APIS=$(git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -E 'child_process|execSync|spawnSync|eval|dangerouslySetInnerHTML' | wc -l | awk '{print $1}')
-          if [ "$DANGEROUS_APIS" -gt 0 ]; then
-            if [[ "$LABELS" != *"security"* ]]; then
-              VIOLATIONS+=("APIs peligrosas detectadas requieren label 'security' + revisión especializada")
-            fi
-          fi
-          
-          # Verificar cambios en CODEOWNERS
-          if echo "$CHANGED_FILES" | grep -q "^\.github/CODEOWNERS$"; then
-            if [[ "$LABELS" != *"governance"* ]]; then
-              VIOLATIONS+=("Cambios en CODEOWNERS requieren label 'governance' + aprobación de mantenedores")
-            fi
-          fi
-          
-          # Verificar cambios en workflows
-          if echo "$CHANGED_FILES" | grep -q "^\.github/workflows/"; then
-            if [[ "$LABELS" != *"ci-cd"* ]]; then
-              VIOLATIONS+=("Cambios en workflows requieren label 'ci-cd' + aprobación de SRE")
-            fi
-          fi
-          
-          # Reportar violaciones
-          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
-            echo "❌ Violaciones de política detectadas:"
-            for violation in "${VIOLATIONS[@]}"; do
-              echo "  - $violation"
-            done
-            echo "::error::Violaciones de política detectadas. Revisar y corregir."
-            exit 1
-          else
-            echo "✅ Todas las políticas pasaron"
-          fi
-      
-      - name: Policy Summary
-        run: |
-          echo "📊 Resumen de Políticas:"
-          echo "- Archivos cambiados: $(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | wc -l | awk '{print $1}')"
-          echo "- Labels aplicadas: $(echo '${{ toJson(github.event.pull_request.labels) }}' | jq -r '.[].name' | wc -l | awk '{print $1}')"
-          echo "- Deleciones: $(git diff --diff-filter=D --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | wc -l | awk '{print $1}')"
-          echo "- APIs peligrosas: $(git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -E 'child_process|execSync|spawnSync|eval|dangerouslySetInnerHTML' | wc -l | awk '{print $1}')"
-          echo "- Políticas evaluadas: ✅ PASARON"
+
+          printf "%s\n" "${violations[@]}" > violations.txt
+          if [ -s violations.txt ]; then
+            cat violations.txt; exit 1; fi
+          echo "Fallback policy OK."
+
+      - name: Comment violations on PR
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = "❌ **Política PR (fallback)**:\n\n";
+            body += fs.readFileSync('violations.txt','utf8').split('\n').filter(Boolean).map(v=>`- ${v}`).join('\n');
+            github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });

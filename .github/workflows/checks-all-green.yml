@@ -7,7 +7,7 @@ jobs:
   meta:
     # Este job simula "required checks" en repos privados sin Branch Protection Pro.
     # Decláralo dependiente de los demás workflows críticos que usas.
-    needs: [manual-rollback-guard, policy-scan]
+    needs: [manual-rollback-guard, policy-scan, opa]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

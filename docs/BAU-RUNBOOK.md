@@ -182,28 +182,39 @@ deny[msg] {
 }
 ```
 
-#### **Workflows de Validación**
+#### **Workflows de Validación (Endurecido Plus)**
 
-**Opción 1: OPA Completo (Recomendado)**
+**Plan A: OPA Pinned con Checksum + Retries (Recomendado)**
 ```yaml
 # .github/workflows/opa-policy-check-v2.yml
-# Usa versión específica de OPA para evitar problemas de descarga
+# - Versión específica (0.58.0) con checksum
+# - Cache de binario por versión
+# - Retries con backoff exponencial
+# - Comentarios automáticos en PR
 ```
 
-**Opción 2: Simple Policy Check (Fallback)**
+**Plan B: Contenedor Oficial (Sin Instalar)**
+```yaml
+# .github/workflows/opa-policy-check-container.yml
+# - ghcr.io/openpolicyagent/opa:0.58.0
+# - Sin problemas de red/SSL
+# - Siempre funciona
+```
+
+**Plan C: Fallback Bash Puro**
 ```yaml
 # .github/workflows/simple-policy-check.yml
-# No requiere OPA, usa bash puro para validaciones básicas
+# - No requiere OPA
+# - Lee config/sensitive-paths.yaml
+# - Siempre funciona
 ```
 
-**Instalación de OPA Mejorada**:
-```bash
-# Método robusto con fallbacks
-OPA_VERSION="0.58.0"
-wget -O opa "https://github.com/openpolicyagent/opa/releases/download/v${OPA_VERSION}/opa_linux_amd64"
-chmod +x opa
-sudo mv opa /usr/local/bin/
-```
+**Características del Endurecido Plus**:
+- ✅ **Integridad de binarios**: Checksum + retry con backoff
+- ✅ **Cache por versión**: Menos latencia, menos fallos
+- ✅ **Entrada estandarizada**: `input.json` común para todos los planes
+- ✅ **Comentarios automáticos**: Violaciones posteadas en PR
+- ✅ **Sincronización YAML**: `generate-opa-data.sh` para mantener consistencia
 
 ---
 

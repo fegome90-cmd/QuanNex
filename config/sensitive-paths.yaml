@@ -5,6 +5,8 @@ thresholds:
   emergency_mode: false
   emergency_max_files: 10
   emergency_max_lines: 1000
+  # Flag para sincronizar con OPA
+  sync_with_opa: true
 
 sensitive_globs:
   - "rag/**"
