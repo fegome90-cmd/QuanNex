@@ -52,20 +52,19 @@ echo
 # 3) Identificar ramas problemáticas (remotas)
 echo "3) Descubrimiento de ramas problemáticas en remoto…"
 REMOTE_BRANCHES=$(git branch -r | sed 's|^[ *]*||' | sed "s|${REMOTE}/||")
-mapfile -t TO_DELETE_REMOTE < <(
-  echo "${REMOTE_BRANCHES}" | tr ' ' '\n' | awk 'NF' | while read -r br; do
-    # saltar main y tags y quarantine/*
-    if [[ "${br}" == "${MAIN_BRANCH}" ]] || [[ "${br}" == */HEAD ]] || [[ "${br}" == quarantine/* ]]; then
-      continue
+TO_DELETE_REMOTE=()
+while IFS= read -r br; do
+  # saltar main y tags y quarantine/*
+  if [[ "${br}" == "${MAIN_BRANCH}" ]] || [[ "${br}" == */HEAD ]] || [[ "${br}" == quarantine/* ]]; then
+    continue
+  fi
+  for p in "${DELETE_PATTERNS[@]}"; do
+    if [[ "${br}" == ${p}* ]]; then
+      TO_DELETE_REMOTE+=("${br}")
+      break
     fi
-    for p in "${DELETE_PATTERNS[@]}"; do
-      if [[ "${br}" == ${p}* ]]; then
-        echo "${br}"
-        break
-      fi
-    done
-  done | sort -u
-)
+  done
+done < <(echo "${REMOTE_BRANCHES}" | tr ' ' '\n' | awk 'NF' | sort -u)
 
 if ((${#TO_DELETE_REMOTE[@]})); then
   echo "🧹 Ramas remotas candidatas a eliminar:"
@@ -78,19 +77,18 @@ echo
 # 4) Identificar ramas problemáticas (locales)
 echo "4) Descubrimiento de ramas problemáticas locales…"
 LOCAL_BRANCHES=$(git branch --format='%(refname:short)')
-mapfile -t TO_DELETE_LOCAL < <(
-  echo "${LOCAL_BRANCHES}" | tr ' ' '\n' | awk 'NF' | while read -r br; do
-    if [[ "${br}" == "${MAIN_BRANCH}" ]] || [[ "${br}" == quarantine/* ]]; then
-      continue
+TO_DELETE_LOCAL=()
+while IFS= read -r br; do
+  if [[ "${br}" == "${MAIN_BRANCH}" ]] || [[ "${br}" == quarantine/* ]]; then
+    continue
+  fi
+  for p in "${DELETE_PATTERNS[@]}"; do
+    if [[ "${br}" == ${p}* ]]; then
+      TO_DELETE_LOCAL+=("${br}")
+      break
     fi
-    for p in "${DELETE_PATTERNS[@]}"; do
-      if [[ "${br}" == ${p}* ]]; then
-        echo "${br}"
-        break
-      fi
-    done
-  done | sort -u
-)
+  done
+done < <(echo "${LOCAL_BRANCHES}" | tr ' ' '\n' | awk 'NF' | sort -u)
 
 if ((${#TO_DELETE_LOCAL[@]})); then
   echo "🧹 Ramas locales candidatas a eliminar:"
