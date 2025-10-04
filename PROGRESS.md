@@ -302,3 +302,75 @@ _Última actualización: 2025-10-03_
 
 **OLA 2 - ANTIFRÁGIL: MISIÓN CUMPLIDA** 🎉
 2025-10-03 — OLA 2 cerrada oficialmente (antifrágil + políticas versionadas). Tag v0.2.0-ola2 publicado.
+
+## 2025-10-03 — OLA 3 - SPRINT 1: CANARY + SHADOW-WRITE ✅
+
+**Estado:** ✅ Completado  
+**Logros:**
+
+- Shadow-write activado (dual adapter)
+- Métricas Prometheus configuradas
+- Baseline establecido
+- Canary mode funcionando
+
+## 2025-10-03 — OLA 3 - SPRINT 2: PROMOCIÓN A PG-ONLY ✅
+
+**Estado:** ✅ Completado  
+**Tag:** `v0.3.0-ola3-s2`  
+**Logros:**
+
+- Paridad estricta activada
+- Promoción a `TASKDB_DRIVER=pg`
+- Observabilidad configurada
+- Definition of Done verificada
+- Scripts de operación diaria implementados
+
+## 2025-10-03 — OLA 3 - SPRINT 3: OBSERVABILIDAD CONTINUA + TASKDB ALWAYS-ON ✅
+
+**Estado:** ✅ Completado  
+**Tag:** `v0.3.1-ola3-s3`  
+**Logros:**
+
+- Dashboard Grafana configurado (4 paneles clave)
+- Prometheus scrape config para métricas TaskDB
+- Alertas suaves con umbrales configurables
+- withTask wrapper obligatorio para todas las funciones
+- Runtime guard para funciones críticas
+- CI gate que verifica instrumentación automáticamente
+- Template de función con withTask pre-configurado
+- Template de PR con checklist TaskDB completo
+- Test de aceptación que valida instrumentación
+
+## 2025-10-03 — PILOTO AUTOMÁTICO: MONITOREO CONTINUO + GOBERNANZA ✅
+
+**Estado:** ✅ Completado  
+**Tag:** `v0.3.2-piloto-automatico`  
+**Logros:**
+
+- Script de monitoreo diario con baseline + snapshot
+- Health check rápido (endpoint, baseline, gates)
+- Métricas de gobernanza semanales
+- Issue semanal automático para ritual sin reunión
+- Gobernanza operativa establecida
+- Sistema en piloto automático
+
+### 🎯 **ESTADO ACTUAL DEL SISTEMA**
+
+**Sistema TaskDB v2 en piloto automático con:**
+
+- ✅ Observabilidad continua
+- ✅ Enforcement automático
+- ✅ Gobernanza operativa
+- ✅ Monitoreo diario
+- ✅ Health check rápido
+- ✅ Ritual semanal sin reunión
+
+### 🗺️ **PRÓXIMOS PASOS**
+
+**Puente a RAG (Cuando Digas "Go"):**
+
+1. Mantener sistema estable 3-5 días
+2. Ejecutar checklist Pre-RAG
+3. Iniciar Ola 4 (RAG): ingesta → índice → retriever → eventos memory.inject/store → policy 1.2.0 (citas)
+
+**Listo para puente a RAG cuando se mantenga estable 3-5 días.**

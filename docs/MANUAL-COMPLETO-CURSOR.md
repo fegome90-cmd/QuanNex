@@ -2988,6 +2988,77 @@ npm run prepush          # Pipeline completo (pre-push)
 
 ---
 
+## 🚀 **TASKDB V2 + QUANNEX - PILOTO AUTOMÁTICO COMPLETADO (2025-10-03)**
+
+### ✅ **OLAs COMPLETADAS EXITOSAMENTE**
+
+#### **OLA 2 - TaskDB v2 + Governance** ✅
+- **Tag**: `v0.2.0`
+- **Logros**: Cola asíncrona, ALS, adaptadores SQLite/PG/JSONL, failover controlado, CLI reportes, gobernanza cultural
+
+#### **OLA 3 Sprint 1 - Canary + Shadow-Write** ✅
+- **Logros**: Shadow-write activado, métricas Prometheus, baseline establecido, canary mode funcionando
+
+#### **OLA 3 Sprint 2 - Promoción a PG-only** ✅
+- **Tag**: `v0.3.0-ola3-s2`
+- **Logros**: Paridad estricta, promoción a PostgreSQL, observabilidad configurada, scripts operación diaria
+
+#### **OLA 3 Sprint 3 - Observabilidad Continua + TaskDB Always-On** ✅
+- **Tag**: `v0.3.1-ola3-s3`
+- **Logros**: Dashboard Grafana, Prometheus, alertas, withTask wrapper, runtime guard, CI gate, templates
+
+#### **Piloto Automático - Monitoreo Continuo + Gobernanza** ✅
+- **Tag**: `v0.3.2-piloto-automatico`
+- **Logros**: Monitoreo diario, health check, métricas gobernanza, issue semanal automático, gobernanza operativa
+
+### 🎯 **SISTEMA EN PILOTO AUTOMÁTICO**
+
+**Sistema TaskDB v2 completamente operativo con:**
+- ✅ **Observabilidad continua**: Métricas Prometheus, dashboard Grafana, alertas configurables
+- ✅ **Enforcement automático**: withTask wrapper obligatorio, runtime guard, CI gate
+- ✅ **Gobernanza operativa**: 100% instrumentación, ≥95% cumplimiento gates, delta PG consistente
+- ✅ **Monitoreo diario**: Baseline automático, snapshots métricas, health check rápido
+- ✅ **Ritual semanal**: Issue automático sin reunión, dueño rotativo, acciones específicas
+
+### 🛠️ **COMANDOS DISPONIBLES**
+
+```bash
+# Monitoreo y Health
+npm run daily:monitoring      # Monitoreo diario completo
+npm run quick:health          # Health check rápido
+npm run taskdb:health         # Health check completo
+npm run taskdb:delta          # Verificar delta PG vs SQLite
+npm run alert:thresholds      # Alertas de umbrales
+
+# Verificación y Testing
+npm run smoke:test            # Smoke test completo
+npm run ci:require-taskdb     # Verificar instrumentación
+npm run test:instrumentation  # Test de aceptación
+npm run taskdb:always-on      # Verificar enforcement pack
+
+# Reportes y Métricas
+npm run taskdb:report         # Reporte semanal
+npm run governance:metrics    # Métricas de gobernanza
+npm run weekly:ops            # Issue semanal automático
+npm run taskdb:metrics        # Iniciar exporter Prometheus
+
+# Desarrollo
+npm run new-function <Name>   # Crear función con withTask
+npm run taskdb:shadow:on      # Activar shadow-write
+npm run taskdb:dual-check     # Verificar dual adapter
+```
+
+### 🗺️ **PRÓXIMOS PASOS**
+
+**Puente a RAG (Cuando Digas "Go"):**
+1. Mantener sistema estable 3-5 días
+2. Ejecutar checklist Pre-RAG
+3. Iniciar Ola 4 (RAG): ingesta → índice → retriever → eventos memory.inject/store → policy 1.2.0 (citas)
+
+**Listo para puente a RAG cuando se mantenga estable 3-5 días.**
+
+---
+
 **Última actualización**: Octubre 3, 2025
-**Versión del manual**: 2.5.0
-**Estado del proyecto**: Enterprise-grade operativo con Hot Start Endurecido, Contrato Real, Plan de Integración de 20 Lecciones, Kit de Calidad Blindado y Fix Pack v1 ✅
+**Versión del manual**: 2.6.0
+**Estado del proyecto**: Enterprise-grade operativo con Hot Start Endurecido, Contrato Real, Plan de Integración de 20 Lecciones, Kit de Calidad Blindado, Fix Pack v1 y TaskDB v2 en Piloto Automático ✅
