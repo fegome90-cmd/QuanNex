@@ -32,10 +32,10 @@ El plan aborda observabilidad, remediación técnica, cultura y antifragilidad:
 - Establecer roles y rituales (Comité de Gates, Gate Steward, reportes quincenales).
 
 ### Capa 4 – Antifragilidad
-- Introducir Game Days trimestrales (
-Simulacros de fallos).
-- Aplicar “Modulación de Gobernanza” para reducir control cuando el sistema se estabilice.
-- Publicar patrones `docs/architecture/patterns/observable-services.md` para prevenir nueva deuda.
+- Introducir Game Days trimestrales (simulacros de fallos) con charter y MTTR objetivo.
+- Aplicar “Modulación de Gobernanza” para reducir control cuando el sistema se estabilice y reactivarlo ante degradaciones.
+- Publicar patrones `docs/architecture/patterns/observable-services.md` y auditar servicios existentes contra ellos.
+- Mantener catálogo de dependencias externas y runbook de safe mode con aprendizaje post-activación.
 
 ## 4. Criterio de Éxito: Desbloqueo del Roadmap
 

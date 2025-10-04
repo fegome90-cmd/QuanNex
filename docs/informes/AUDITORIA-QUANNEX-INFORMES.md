@@ -158,6 +158,7 @@
 - ✅ **Verificaciones MCP opcionales** coherentemente recomendadas
 - ✅ **Gates graduales** consistentemente propuestos
 - ✅ **Configuración TypeScript gradual** coherentemente recomendada
+- ✅ **Telemetría ampliada** (churn, tiempo de gobernanza) alineada con plan antifrágil
 
 ---
 

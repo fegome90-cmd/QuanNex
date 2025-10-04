@@ -19,13 +19,14 @@ Diseñar experimentos controlados para validar el nuevo marco de gates antes del
 
 ### 2.2 Alcance del Ensayo
 1. Activar los hooks graduales solo en la rama piloto (simular `NODE_ENV=development`).
-2. Instrumentar telemetría (`gates.failures.hourly`, `gates.bypass.manual`, `hook.false_positive.rate`) contra un entorno de Prometheus aislado.
-3. Registrar todas las ejecuciones en el Gate Unlock Log piloto.
+2. Instrumentar telemetría (`gates.failures.hourly`, `gates.bypass.manual`, `hook.false_positive.rate`, `code.churn.delta`) contra un entorno de Prometheus aislado.
+3. Registrar todas las ejecuciones en el Gate Unlock Log piloto, incluyendo uso del runbook `ops/runbooks/gates_safe_mode.md` si aplica.
 
 ### 2.3 Métricas de Éxito del Ensayo
 - 100% de bypasses documentados y revisados al día siguiente.
 - Reducción observable de errores TS por commit (comparar contra baseline previa).
 - Ningún despliegue bloqueado por falsos positivos sin remediación en <24h.
+- Variación de churn dentro de ±20% respecto al baseline, con explicación registrada.
 - Feedback cualitativo positivo del squad sobre claridad de reglas.
 
 ### 2.4 Retroalimentación

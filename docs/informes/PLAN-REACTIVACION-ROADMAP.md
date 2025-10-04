@@ -146,6 +146,7 @@ Una vez cumplidos, la rúbrica de madurez (`AUDITORIA-QUANNEX-INFORMES.md`) se a
 14. Programar el primer simulacro trimestral (Game Day) y documentar resultados.
 15. Completar catálogo de dependencias externas con modos de fallo definidos.
 16. Establecer revisión trimestral de adopción de patrones observables.
+17. Auditar servicios existentes contra el patrón observable y generar backlog de remediación.
 
 ---
 

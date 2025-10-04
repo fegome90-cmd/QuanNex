@@ -19,6 +19,8 @@ Consolidar la telemetría mínima necesaria para evaluar la efectividad y la res
 | `rollback.lines.deleted` | Líneas eliminadas por ramas de rollback masivo | TaskDB git analytics | Post-incident | Auditoría | 🟠 Diseño en curso |
 | `unlock.mttd` | Tiempo medio desde bloqueo hasta mitigación documentada | Registro en `OPERATIONS_PLAYBOOK.md` | Mensual | Operaciones | 🔴 Instrumentar |
 | `bypass.alerts.triggered` | Alertas emitidas por uso de bypass por encima de umbral | Alertmanager + `policy-check.mjs` | Cada evento | SecOps | 🔴 Instrumentar |
+| `code.churn.delta` | Variación semanal del churn en módulos críticos | TaskDB + git analytics | Semanal | Plataforma | 🔴 Instrumentar |
+| `governance.time.percent` | % de capacidad invertida en rituales de gates | Reporte Comité de Gates | Trimestral | Auditoría | 🔴 Instrumentar |
 
 > Estado legend: 🔴 No instrumentado, 🟠 Diseño en curso, 🟢 En producción.
 
@@ -31,6 +33,8 @@ Consolidar la telemetría mínima necesaria para evaluar la efectividad y la res
 - **Seguimiento de deuda técnica**: `ts.errors.blocking` muestra la efectividad del plan de corrección TypeScript y evidencia tendencias por módulo.
 - **Costos de rollback**: `rollback.lines.deleted` cuantifica el impacto destructivo y alimenta el termómetro operativo en `INFORME-FINAL-FALLAS-GATES.md`.
 - **Madurez operacional**: `unlock.mttd` refleja la capacidad antifrágil del equipo para recuperarse sin improvisar.
+- **Control del sesgo por métricas**: `code.churn.delta` alerta si los equipos evitan cambios complejos.
+- **Eficiencia del sistema de control**: `governance.time.percent` ayuda a optimizar la carga operativa de los rituales.
 
 ---
 
@@ -56,6 +60,14 @@ Consolidar la telemetría mínima necesaria para evaluar la efectividad y la res
    - Actualizar runbooks para que cada mitigación incluya tiempo de inicio/fin y responsable.  
    - Volcar datos en tabla `gate_unlocks` o en `OPERATIONS_PLAYBOOK.md` con formato estandarizado.
 
+6. **Métrica de churn** (responsable: Plataforma)  
+   - Calcular churn semanal por módulo con TaskDB + git analytics.  
+   - Alertar cuando descienda >20% sin justificación documental.
+
+7. **Presupuesto de gobernanza** (responsable: Auditoría)  
+   - Registrar horas dedicadas a rituales en cada sprint.  
+   - Reportar porcentajes al Comité de Gates para aplicar modulación.
+
 ---
 
 ## 📊 Tablero de Referencia
@@ -67,6 +79,8 @@ Consolidar la telemetría mínima necesaria para evaluar la efectividad y la res
 | `ts.errors.blocking` sin tendencia a la baja en 3 iteraciones | Escalar a dirección técnica | TaskDB Core |
 | `rollback.lines.deleted` > 1k en semana | Congelar ramas afectadas, abrir postmortem | Auditoría |
 | `unlock.mttd` > 6 h | Revisar runbooks y staffing | Operaciones |
+| `code.churn.delta` descenso >20% durante 2 semanas | Revisar backlog por sesgo, activar mentoring | Plataforma |
+| `governance.time.percent` >5% capacidad de sprint | Aplicar modulación o reducir rituales | Comité de Gates |
 
 ---
 
