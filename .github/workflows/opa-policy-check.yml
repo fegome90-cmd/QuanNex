@@ -1,0 +1,77 @@
+name: opa-policy-check
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Install OPA
+        run: |
+          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+          chmod +x opa
+          sudo mv opa /usr/local/bin/
+      
+      - name: Prepare PR Data
+        id: pr-data
+        run: |
+          # Obtener archivos cambiados
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | jq -R -s -c 'split("\n")[:-1]')
+          
+          # Obtener labels
+          LABELS=$(echo '${{ toJson(github.event.pull_request.labels) }}' | jq -r '.[].name' | jq -R -s -c 'split("\n")[:-1]')
+          
+          # Contar deleciones
+          DELETIONS=$(git diff --diff-filter=D --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | wc -l | awk '{print $1}')
+          
+          # Detectar APIs peligrosas
+          DANGEROUS_APIS=$(git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -E 'child_process|execSync|spawnSync|eval|dangerouslySetInnerHTML' | wc -l | awk '{print $1}')
+          
+          # Crear archivo JSON con datos del PR
+          cat > pr-data.json << EOF
+          {
+            "changed_files": $CHANGED_FILES,
+            "labels": $LABELS,
+            "deletions": $DELETIONS,
+            "dangerous_apis": $DANGEROUS_APIS
+          }
+          EOF
+          
+          echo "PR Data:"
+          cat pr-data.json
+      
+      - name: Run OPA Policy Check
+        run: |
+          echo "🔍 Ejecutando verificación de políticas OPA..."
+          
+          # Ejecutar política
+          RESULT=$(opa eval --data policy.rego --input pr-data.json 'data.pr.security.deny' --format json)
+          
+          echo "Resultado OPA:"
+          echo "$RESULT"
+          
+          # Verificar si hay denegaciones
+          DENY_COUNT=$(echo "$RESULT" | jq -r '.result | length')
+          
+          if [ "$DENY_COUNT" -gt 0 ]; then
+            echo "❌ Políticas violadas:"
+            echo "$RESULT" | jq -r '.result[]'
+            echo "::error::Violaciones de política detectadas. Revisar y corregir."
+            exit 1
+          else
+            echo "✅ Todas las políticas pasaron"
+          fi
+      
+      - name: Policy Summary
+        run: |
+          echo "📊 Resumen de Políticas:"
+          echo "- Archivos cambiados: $(jq -r '.changed_files | length' pr-data.json)"
+          echo "- Labels aplicadas: $(jq -r '.labels | length' pr-data.json)"
+          echo "- Deleciones: $(jq -r '.deletions' pr-data.json)"
+          echo "- APIs peligrosas: $(jq -r '.dangerous_apis' pr-data.json)"
+          echo "- Políticas evaluadas: ✅ PASARON"

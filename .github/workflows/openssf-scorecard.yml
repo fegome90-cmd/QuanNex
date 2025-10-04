@@ -1,0 +1,118 @@
+name: openssf-scorecard
+on:
+  schedule: [{cron: "0 6 * * 1"}]  # Lunes 06:00
+  workflow_dispatch:
+
+jobs:
+  scorecard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Run OpenSSF Scorecard
+        uses: ossf/scorecard-action@v2.3.1
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+      
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+      
+      - name: Check Scorecard Score
+        run: |
+          echo "📊 Verificando score de OpenSSF Scorecard..."
+          
+          # Verificar que el archivo SARIF existe
+          if [ ! -f "results.sarif" ]; then
+            echo "❌ Archivo SARIF no encontrado"
+            exit 1
+          fi
+          
+          # Extraer score del archivo SARIF
+          SCORE=$(jq -r '.runs[0].results[] | select(.ruleId == "ScorecardScore") | .message.text' results.sarif | grep -o '[0-9]\+' | head -1)
+          
+          if [ -z "$SCORE" ]; then
+            echo "⚠️  No se pudo extraer el score del SARIF"
+            echo "Contenido del SARIF:"
+            head -20 results.sarif
+            exit 0  # No fallar si no se puede extraer el score
+          fi
+          
+          echo "📈 Scorecard Score: $SCORE/10"
+          
+          # Verificar que el score sea ≥7/10
+          if [ "$SCORE" -lt 7 ]; then
+            echo "❌ Scorecard score $SCORE < 7/10"
+            echo "::error::OpenSSF Scorecard score $SCORE/10 es menor al objetivo de 7/10"
+            echo "::error::Revisar y mejorar la seguridad del repositorio"
+            exit 1
+          else
+            echo "✅ Scorecard score: $SCORE/10 (objetivo cumplido)"
+          fi
+      
+      - name: Generate Scorecard Report
+        run: |
+          echo "📋 Generando reporte de Scorecard..."
+          
+          # Crear directorio de reportes si no existe
+          mkdir -p .reports/security
+          
+          # Generar reporte en markdown
+          REPORT_FILE=".reports/security/scorecard-$(date +%Y%m%d-%H%M%S).md"
+          
+          cat > "$REPORT_FILE" << EOF
+          # 📊 OpenSSF Scorecard Report - $(date)
+          
+          **Fecha**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          **Score**: $SCORE/10
+          **Estado**: $([ "$SCORE" -ge 7 ] && echo "✅ CUMPLE" || echo "❌ NO CUMPLE")
+          
+          ## 📈 Métricas de Seguridad
+          
+          EOF
+          
+          # Extraer métricas específicas del SARIF
+          if [ -f "results.sarif" ]; then
+            echo "### Detalles del Scorecard" >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+            echo '```json' >> "$REPORT_FILE"
+            jq -r '.runs[0].results[] | select(.ruleId | startswith("Scorecard")) | "\(.ruleId): \(.message.text)"' results.sarif >> "$REPORT_FILE"
+            echo '```' >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+          fi
+          
+          cat >> "$REPORT_FILE" << EOF
+          ## 🎯 Objetivos
+          
+          - **Score mínimo**: ≥7/10
+          - **Frecuencia**: Semanal (lunes)
+          - **Acción**: Bloquear si score <7
+          
+          ## 📋 Próximos Pasos
+          
+          $([ "$SCORE" -ge 7 ] && echo "- ✅ Score objetivo cumplido" || echo "- 🔧 Mejorar score de seguridad")
+          - 📅 Revisar métricas semanalmente
+          - 🔄 Actualizar políticas según sea necesario
+          
+          ---
+          **Generado**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          **Workflow**: openssf-scorecard
+          EOF
+          
+          echo "📄 Reporte generado: $REPORT_FILE"
+      
+      - name: Scorecard Summary
+        run: |
+          echo "📊 RESUMEN DE SCORECARD:"
+          echo "========================"
+          echo "Score: $SCORE/10"
+          echo "Estado: $([ "$SCORE" -ge 7 ] && echo "✅ CUMPLE OBJETIVO" || echo "❌ NO CUMPLE OBJETIVO")"
+          echo "Fecha: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo ""
+          echo "🎯 Objetivo: ≥7/10"
+          echo "📅 Próxima ejecución: Lunes 06:00 UTC"

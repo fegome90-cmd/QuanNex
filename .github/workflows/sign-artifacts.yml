@@ -1,0 +1,179 @@
+name: sign-artifacts
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+      
+      - name: Build Artifacts
+        run: |
+          echo "🔨 Construyendo artefactos..."
+          
+          # Crear directorio de artefactos
+          mkdir -p dist
+          
+          # Simular build (reemplazar con build real)
+          echo "#!/bin/bash" > dist/app.sh
+          echo "echo 'Hello from signed app!'" >> dist/app.sh
+          chmod +x dist/app.sh
+          
+          # Crear tarball
+          tar -czf dist/app.tgz dist/app.sh
+          
+          # Crear checksum
+          sha256sum dist/app.tgz > dist/app.tgz.sha256
+          
+          echo "✅ Artefactos construidos:"
+          ls -la dist/
+      
+      - name: Sign Artifacts
+        run: |
+          echo "✍️  Firmando artefactos con Cosign..."
+          
+          # Firmar todos los artefactos
+          for file in dist/*.tgz dist/*.sh; do
+            if [ -f "$file" ]; then
+              echo "Firmando: $file"
+              cosign sign-blob --yes "$file" > "$file.sig"
+              echo "✅ Firma creada: $file.sig"
+            fi
+          done
+          
+          # Firmar checksum
+          if [ -f "dist/app.tgz.sha256" ]; then
+            cosign sign-blob --yes dist/app.tgz.sha256 > dist/app.tgz.sha256.sig
+            echo "✅ Checksum firmado: dist/app.tgz.sha256.sig"
+          fi
+          
+          echo "📋 Artefactos firmados:"
+          ls -la dist/*.sig
+      
+      - name: Verify Signatures
+        run: |
+          echo "🔍 Verificando firmas..."
+          
+          # Verificar firmas
+          for file in dist/*.tgz dist/*.sh; do
+            if [ -f "$file" ] && [ -f "$file.sig" ]; then
+              echo "Verificando: $file"
+              if cosign verify-blob --signature "$file.sig" "$file"; then
+                echo "✅ Firma válida: $file"
+              else
+                echo "❌ Firma inválida: $file"
+                exit 1
+              fi
+            fi
+          done
+          
+          # Verificar checksum
+          if [ -f "dist/app.tgz.sha256" ] && [ -f "dist/app.tgz.sha256.sig" ]; then
+            if cosign verify-blob --signature dist/app.tgz.sha256.sig dist/app.tgz.sha256; then
+              echo "✅ Checksum firmado válido"
+            else
+              echo "❌ Checksum firmado inválido"
+              exit 1
+            fi
+          fi
+      
+      - name: Upload Signed Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-artifacts
+          path: |
+            dist/*.tgz
+            dist/*.sh
+            dist/*.sig
+            dist/*.sha256
+          retention-days: 30
+      
+      - name: Generate Signature Report
+        run: |
+          echo "📋 Generando reporte de firmas..."
+          
+          # Crear directorio de reportes si no existe
+          mkdir -p .reports/security
+          
+          # Generar reporte en markdown
+          REPORT_FILE=".reports/security/signatures-$(date +%Y%m%d-%H%M%S).md"
+          
+          cat > "$REPORT_FILE" << EOF
+          # ✍️ Reporte de Firmas de Artefactos - $(date)
+          
+          **Fecha**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          **Release**: ${{ github.event.release.tag_name || 'manual' }}
+          **Estado**: ✅ **FIRMADO Y VERIFICADO**
+          
+          ## 📦 Artefactos Firmados
+          
+          EOF
+          
+          # Listar artefactos firmados
+          for file in dist/*.tgz dist/*.sh; do
+            if [ -f "$file" ]; then
+              echo "- **$file**" >> "$REPORT_FILE"
+              echo "  - Tamaño: $(stat -c%s "$file") bytes" >> "$REPORT_FILE"
+              echo "  - SHA256: $(sha256sum "$file" | awk '{print $1}')" >> "$REPORT_FILE"
+              echo "  - Firma: $file.sig" >> "$REPORT_FILE"
+              echo "" >> "$REPORT_FILE"
+            fi
+          done
+          
+          cat >> "$REPORT_FILE" << EOF
+          ## 🔍 Verificación de Firmas
+          
+          Todas las firmas han sido verificadas exitosamente usando Cosign.
+          
+          ### Comandos de Verificación
+          
+          \`\`\`bash
+          # Verificar artefacto
+          cosign verify-blob --signature dist/app.tgz.sig dist/app.tgz
+          
+          # Verificar checksum
+          cosign verify-blob --signature dist/app.tgz.sha256.sig dist/app.tgz.sha256
+          \`\`\`
+          
+          ## 🎯 Objetivos de Seguridad
+          
+          - ✅ **Integridad**: Artefactos firmados criptográficamente
+          - ✅ **Autenticidad**: Firmas verificables
+          - ✅ **Trazabilidad**: Registro de firmas
+          - ✅ **No repudio**: Firmas inmutables
+          
+          ## 📋 Próximos Pasos
+          
+          - 📦 Publicar artefactos firmados como release assets
+          - 🔄 Automatizar verificación en CI/CD
+          - 📊 Monitorear integridad de artefactos
+          
+          ---
+          **Generado**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          **Workflow**: sign-artifacts
+          **Cosign**: $(cosign version --short)
+          EOF
+          
+          echo "📄 Reporte generado: $REPORT_FILE"
+      
+      - name: Signature Summary
+        run: |
+          echo "✍️  RESUMEN DE FIRMAS:"
+          echo "======================"
+          echo "Artefactos firmados: $(ls dist/*.tgz dist/*.sh 2>/dev/null | wc -l | awk '{print $1}')"
+          echo "Firmas creadas: $(ls dist/*.sig 2>/dev/null | wc -l | awk '{print $1}')"
+          echo "Verificaciones: ✅ TODAS EXITOSAS"
+          echo "Fecha: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo ""
+          echo "🎯 Objetivos cumplidos:"
+          echo "- ✅ Integridad de artefactos"
+          echo "- ✅ Autenticidad verificable"
+          echo "- ✅ Trazabilidad completa"
