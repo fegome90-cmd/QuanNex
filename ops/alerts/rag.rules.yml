@@ -1,0 +1,182 @@
+groups:
+  - name: rag
+    rules:
+      - alert: RAG_GateFail_Surge
+        expr: rate(taskdb_gate_fail_total[3m]) > 0.07
+        for: 3m
+        labels:
+          severity: critical
+          service: rag
+          component: gates
+        annotations:
+          summary: 'RAG Gate fail rate > 7% (3m)'
+          description: 'Gate failure rate has exceeded 7% for 3 minutes. Automatic rollback may be triggered.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-rollback'
+
+      - alert: RAG_Faithfulness_Drop
+        expr: rag_faithfulness_rolling_mean < 0.75
+        for: 5m
+        labels:
+          severity: critical
+          service: rag
+          component: quality
+        annotations:
+          summary: 'RAG Faithfulness dropped below 0.75'
+          description: 'Faithfulness rolling mean has been below 0.75 for 5 minutes. Quality degradation detected.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-quality'
+
+      - alert: RAG_P95_Spike
+        expr: rag_latency_p95 > (rag_latency_p95_baseline * 3)
+        for: 5m
+        labels:
+          severity: critical
+          service: rag
+          component: performance
+        annotations:
+          summary: 'RAG P95 latency > 3x baseline'
+          description: 'P95 latency has exceeded 3x baseline for 5 minutes. Performance degradation detected.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-performance'
+
+      - alert: RAG_TopKScore_Drift
+        expr: rag_topk_score_mean < (rag_topk_score_mean_baseline * 0.75)
+        for: 10m
+        labels:
+          severity: warning
+          service: rag
+          component: retrieval
+        annotations:
+          summary: 'RAG Top-K score mean dropped >25%'
+          description: 'Top-K retrieval score mean has dropped more than 25% from baseline for 10 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-retrieval'
+
+      - alert: RAG_HTTP_5xx_Spike
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.02
+        for: 5m
+        labels:
+          severity: critical
+          service: rag
+          component: api
+        annotations:
+          summary: 'RAG HTTP 5xx error rate > 2%'
+          description: 'HTTP 5xx error rate has exceeded 2% for 5 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-api-errors'
+
+      - alert: RAG_Docs_Expired
+        expr: rag_docs_expired_total > 0
+        for: 1m
+        labels:
+          severity: warning
+          service: rag
+          component: governance
+        annotations:
+          summary: 'Critical documents expired'
+          description: '{{ $value }} critical documents have expired and should be quarantined.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-governance'
+
+      - alert: RAG_Embedding_Failures
+        expr: rate(rag_embedding_failures_total[5m]) > 0.01
+        for: 5m
+        labels:
+          severity: warning
+          service: rag
+          component: embeddings
+        annotations:
+          summary: 'RAG Embedding failure rate > 1%'
+          description: 'Embedding generation failure rate has exceeded 1% for 5 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-embeddings'
+
+      - alert: RAG_Retrieval_Timeout
+        expr: rate(rag_retrieval_timeouts_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: rag
+          component: retrieval
+        annotations:
+          summary: 'RAG Retrieval timeout rate > 5%'
+          description: 'Retrieval operation timeout rate has exceeded 5% for 5 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-timeouts'
+
+      - alert: RAG_Context_Drift
+        expr: rag_context_drift_total > 0
+        for: 0m
+        labels:
+          severity: critical
+          service: rag
+          component: context
+        annotations:
+          summary: 'RAG Context drift detected'
+          description: 'Context validation detected drifts in pinned chunks.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-context-validation'
+
+      - alert: RAG_Answer_Relevancy_Drop
+        expr: rag_answer_relevancy_rolling_mean < 0.70
+        for: 10m
+        labels:
+          severity: warning
+          service: rag
+          component: quality
+        annotations:
+          summary: 'RAG Answer relevancy < 0.70'
+          description: 'Answer relevancy has been below 0.70 for 10 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-quality'
+
+      - alert: RAG_Context_Recall_Drop
+        expr: rag_context_recall_rolling_mean < 0.60
+        for: 10m
+        labels:
+          severity: warning
+          service: rag
+          component: quality
+        annotations:
+          summary: 'RAG Context recall < 0.60'
+          description: 'Context recall has been below 0.60 for 10 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-quality'
+
+      - alert: RAG_Collection_Size_Drop
+        expr: (rag_collection_size_baseline - rag_collection_size_current) / rag_collection_size_baseline > 0.10
+        for: 5m
+        labels:
+          severity: warning
+          service: rag
+          component: storage
+        annotations:
+          summary: 'RAG Collection size dropped >10%'
+          description: 'Collection size has dropped more than 10% from baseline.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-storage'
+
+      - alert: RAG_Reranker_Latency_High
+        expr: rag_reranker_latency_p95 > 1000
+        for: 5m
+        labels:
+          severity: warning
+          service: rag
+          component: reranking
+        annotations:
+          summary: 'RAG Reranker P95 latency > 1000ms'
+          description: 'Reranker P95 latency has exceeded 1000ms for 5 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-reranking'
+
+      - alert: RAG_Vector_Search_Latency_High
+        expr: rag_vector_search_latency_p95 > 500
+        for: 5m
+        labels:
+          severity: warning
+          service: rag
+          component: vector_search
+        annotations:
+          summary: 'RAG Vector search P95 latency > 500ms'
+          description: 'Vector search P95 latency has exceeded 500ms for 5 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-vector-search'
+
+      - alert: RAG_BM25_Search_Latency_High
+        expr: rag_bm25_search_latency_p95 > 200
+        for: 5m
+        labels:
+          severity: warning
+          service: rag
+          component: bm25_search
+        annotations:
+          summary: 'RAG BM25 search P95 latency > 200ms'
+          description: 'BM25 search P95 latency has exceeded 200ms for 5 minutes.'
+          runbook_url: 'https://docs.quannex.com/runbooks/rag-bm25-search'

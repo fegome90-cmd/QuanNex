@@ -1,0 +1,122 @@
+# Sources Configuration - RAG Pipeline
+# Define critical documents and their governance requirements
+
+sources:
+  # ADR Documents - Critical architectural decisions
+  - uri: 'docs/adr/adr-002.md'
+    owner: 'quannex-core'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 90
+    description: 'ADR-002: Pipeline RAG implementation'
+
+  - uri: 'docs/adr/adr-003.md'
+    owner: 'quannex-core'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 90
+    description: 'ADR-003: RAGAS validation implementation'
+
+  - uri: 'docs/adr/adr-004.md'
+    owner: 'quannex-core'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 90
+    description: 'ADR-004: DSPy integration for PRPs'
+
+  - uri: 'docs/adr/adr-005.md'
+    owner: 'quannex-core'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 90
+    description: 'ADR-005: ColBERT for critical retrieval'
+
+  # Operations Documentation - Critical for operations
+  - uri: 'OPERATIONS_PLAYBOOK.md'
+    owner: 'quannex-infra'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 60
+    description: 'Operations playbook for RAG pipeline'
+
+  - uri: 'ops/runbooks/RAG_ROLLBACK.md'
+    owner: 'quannex-infra'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 60
+    description: 'Rollback procedures for RAG system'
+
+  # Security Documentation - Critical for compliance
+  - uri: 'SECURITY-HARDENING-SUMMARY.md'
+    owner: 'quannex-security'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 30
+    description: 'Security hardening summary and procedures'
+
+  # Configuration Files - Critical for system operation
+  - uri: 'rag/config/retrieval.yaml'
+    owner: 'quannex-core'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 30
+    description: 'RAG retrieval configuration'
+
+  - uri: 'rag/config/thresholds.json'
+    owner: 'quannex-core'
+    review_date: '2025-02-27'
+    critical: true
+    ttl_days: 30
+    description: 'Quality thresholds for RAG evaluation'
+
+  # Non-critical sources (examples)
+  - uri: 'docs/README.md'
+    owner: 'quannex-research'
+    review_date: '2025-03-27'
+    critical: false
+    ttl_days: 180
+    description: 'General documentation'
+
+# Governance Rules
+governance:
+  # Default settings for all sources
+  default_ttl_days: 90
+  default_review_cycle_days: 30
+
+  # Escalation rules
+  escalation:
+    # Days before expiration to send warning
+    warning_days: 7
+    # Days before expiration to send critical alert
+    critical_days: 3
+    # Days after expiration to quarantine
+    quarantine_days: 1
+
+  # Notification settings
+  notifications:
+    # Slack channels for notifications
+    warning_channel: '#quannex-alerts'
+    critical_channel: '#quannex-critical'
+
+    # Email notifications
+    warning_email: 'alerts@quannex.com'
+    critical_email: 'critical@quannex.com'
+
+# Validation Rules
+validation:
+  # Required fields for critical sources
+  critical_required_fields:
+    - 'owner'
+    - 'review_date'
+    - 'description'
+
+  # Date format validation
+  date_format: 'YYYY-MM-DD'
+
+  # Owner validation (must be valid team/email)
+  valid_owners:
+    - 'quannex-core'
+    - 'quannex-infra'
+    - 'quannex-security'
+    - 'quannex-research'
+    - 'quannex-pm'

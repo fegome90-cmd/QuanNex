@@ -1,0 +1,319 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "RAG Pipeline Overview",
+    "tags": ["rag", "quannex", "taskdb"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "RAG Quality Metrics",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rag_faithfulness_rolling_mean",
+            "legendFormat": "Faithfulness",
+            "refId": "A"
+          },
+          {
+            "expr": "rag_answer_relevancy_rolling_mean",
+            "legendFormat": "Answer Relevancy",
+            "refId": "B"
+          },
+          {
+            "expr": "rag_context_recall_rolling_mean",
+            "legendFormat": "Context Recall",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "yellow", "value": 0.70},
+                {"color": "green", "value": 0.85}
+              ]
+            },
+            "unit": "short",
+            "decimals": 3
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Gate Fail Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rate(taskdb_gate_fail_total[5m]) * 100",
+            "legendFormat": "Fail Rate %",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 3},
+                {"color": "red", "value": 7}
+              ]
+            },
+            "unit": "percent",
+            "decimals": 2
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Retrieval Score Distribution",
+        "type": "histogram",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(taskdb_rag_retrieval_score_bucket[5m]))",
+            "legendFormat": "P95 Score",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.50, rate(taskdb_rag_retrieval_score_bucket[5m]))",
+            "legendFormat": "P50 Score",
+            "refId": "B"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short",
+            "decimals": 3
+          }
+        },
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8}
+      },
+      {
+        "id": 4,
+        "title": "Latency Breakdown",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rag_latency_p95{component=\"internal\"}",
+            "legendFormat": "P95 Internal",
+            "refId": "A"
+          },
+          {
+            "expr": "rag_latency_p95{component=\"provider\"}",
+            "legendFormat": "P95 Provider",
+            "refId": "B"
+          },
+          {
+            "expr": "rag_latency_p99{component=\"internal\"}",
+            "legendFormat": "P99 Internal",
+            "refId": "C"
+          },
+          {
+            "expr": "rag_latency_p99{component=\"provider\"}",
+            "legendFormat": "P99 Provider",
+            "refId": "D"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "ms",
+            "decimals": 0
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16}
+      },
+      {
+        "id": 5,
+        "title": "Component Latency",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rag_retriever_latency_p95",
+            "legendFormat": "Retriever P95",
+            "refId": "A"
+          },
+          {
+            "expr": "rag_reranker_latency_p95",
+            "legendFormat": "Reranker P95",
+            "refId": "B"
+          },
+          {
+            "expr": "rag_vector_search_latency_p95",
+            "legendFormat": "Vector Search P95",
+            "refId": "C"
+          },
+          {
+            "expr": "rag_bm25_search_latency_p95",
+            "legendFormat": "BM25 Search P95",
+            "refId": "D"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "ms",
+            "decimals": 0
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16}
+      },
+      {
+        "id": 6,
+        "title": "Governance Status",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rag_docs_expired_total",
+            "legendFormat": "Expired Docs",
+            "refId": "A"
+          },
+          {
+            "expr": "rag_context_drift_total",
+            "legendFormat": "Context Drifts",
+            "refId": "B"
+          },
+          {
+            "expr": "rag_quarantine_hits_total",
+            "legendFormat": "Quarantine Hits",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 1},
+                {"color": "red", "value": 5}
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 24}
+      },
+      {
+        "id": 7,
+        "title": "Collection Metrics",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rag_collection_size_current",
+            "legendFormat": "Current Size",
+            "refId": "A"
+          },
+          {
+            "expr": "rag_collection_size_baseline",
+            "legendFormat": "Baseline Size",
+            "refId": "B"
+          },
+          {
+            "expr": "rag_chunks_total{model_id=\"text-embedding-3-small\"}",
+            "legendFormat": "Chunks (3-small)",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short",
+            "decimals": 0
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32}
+      },
+      {
+        "id": 8,
+        "title": "Error Rates",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{status=~\"5..\"}[5m]) * 100",
+            "legendFormat": "5xx Rate %",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(rag_embedding_failures_total[5m]) * 100",
+            "legendFormat": "Embedding Failures %",
+            "refId": "B"
+          },
+          {
+            "expr": "rate(rag_retrieval_timeouts_total[5m]) * 100",
+            "legendFormat": "Retrieval Timeouts %",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "percent",
+            "decimals": 2
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 32}
+      },
+      {
+        "id": 9,
+        "title": "Rollback Events",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rag_rollback_total{reason=\"gate_fail_rate\"}",
+            "legendFormat": "Gate Fail Rate Rollbacks",
+            "refId": "A"
+          },
+          {
+            "expr": "rag_rollback_total{reason=\"faithfulness_drop\"}",
+            "legendFormat": "Faithfulness Rollbacks",
+            "refId": "B"
+          },
+          {
+            "expr": "rag_rollback_total{reason=\"latency_spike\"}",
+            "legendFormat": "Latency Rollbacks",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short"
+          }
+        },
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 40}
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "30s",
+    "schemaVersion": 27,
+    "version": 1,
+    "links": [
+      {
+        "title": "RAG Runbooks",
+        "url": "https://docs.quannex.com/runbooks",
+        "type": "link"
+      },
+      {
+        "title": "Alertmanager",
+        "url": "http://localhost:9093",
+        "type": "link"
+      }
+    ]
+  }
+}

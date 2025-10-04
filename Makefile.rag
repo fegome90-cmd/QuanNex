@@ -152,3 +152,83 @@ rag-context-validate: ## Validar contexto contra réplica/snapshot
 prp-lock-update: ## Actualizar PRP.lock y reportar cambios
 	@echo "🔄 Actualizando PRP.lock..."
 	node scripts/prp/prp-lock-update.mjs
+
+# =====================================================
+# Comandos Operacionales (Operations Playbook)
+# =====================================================
+
+eval.quick: ## RAGAS rápido (20 queries)
+	@echo "🧪 Ejecutando RAGAS quick (20 queries)..."
+	python rag/eval/ragas_smoke.py --num_queries 20
+
+eval.full: ## RAGAS completo (evalset)
+	@echo "🧪 Ejecutando RAGAS completo..."
+	python rag/eval/ragas_smoke.py --evalset rag/config/evalset.jsonl
+
+perf.p95: ## Verificar latencia P95/P99
+	@echo "📊 Verificando latencia P95/P99..."
+	python rag/eval/latency_smoke.py --p95 2500 --p99 4000
+
+governance.check: ## Verificar gobernanza (owner, review_date)
+	@echo "🔍 Verificando gobernanza..."
+	node ops/gates/governance_check.mjs
+
+context.validate: ## Validar contexto contra PRP.lock
+	@echo "🔍 Validando contexto..."
+	node ops/gates/context-validate.mjs
+
+snapshot.create: ## Crear snapshots (Postgres + Qdrant)
+	@echo "📸 Creando snapshots..."
+	bash ops/snapshots/create_all.sh
+
+snapshot.restore: ## Restaurar snapshots
+	@echo "🔄 Restaurando snapshots..."
+	bash ops/snapshots/restore_all.sh
+
+traffic.%: ## Configurar tráfico canary (10, 25, 50, 100)
+	@echo "🚦 Configurando tráfico canary a $*%..."
+	node ops/traffic/set_canary.mjs --percent $*
+
+rollback.auto: ## Rollback automático (disparado por alertas)
+	@echo "🚨 Ejecutando rollback automático..."
+	bash ops/runbooks/rollback_auto.sh
+
+revert.last-green: ## Revertir a última versión estable
+	@echo "⏪ Revirtiendo a última versión estable..."
+	bash ops/runbooks/revert_last_green.sh
+
+# =====================================================
+# Comandos de Validación Pre-Deploy
+# =====================================================
+
+pre-deploy: up smoke eval.quick perf.p95 governance.check context.validate snapshot.create ## Checklist completo pre-deploy
+	@echo "✅ Pre-deploy checklist completado"
+
+# =====================================================
+# Comandos de Emergencia (3 AM scenario)
+# =====================================================
+
+emergency.rollback: ## Rollback de emergencia completo
+	@echo "🚨 ROLLBACK DE EMERGENCIA - 3 AM SCENARIO"
+	@echo "1. Deteniendo tráfico..."
+	@$(MAKE) traffic.0
+	@echo "2. Rollback automático..."
+	@$(MAKE) rollback.auto
+	@echo "3. Verificación rápida..."
+	@$(MAKE) smoke
+	@echo "4. Notificación enviada automáticamente"
+
+emergency.status: ## Estado de emergencia
+	@echo "🚨 ESTADO DE EMERGENCIA - RAG Pipeline"
+	@echo "=========================================="
+	@echo "Servicios:"
+	@$(MAKE) status
+	@echo ""
+	@echo "Gobernanza:"
+	@$(MAKE) governance.check || echo "❌ Gobernanza FAILED"
+	@echo ""
+	@echo "Contexto:"
+	@$(MAKE) context.validate || echo "❌ Contexto FAILED"
+	@echo ""
+	@echo "Últimos snapshots disponibles:"
+	@ls -la backups/rag_*.dump 2>/dev/null | tail -5 || echo "❌ No snapshots found"
