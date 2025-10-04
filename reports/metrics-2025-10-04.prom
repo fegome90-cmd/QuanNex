@@ -1,0 +1,175 @@
+# HELP taskdb_process_cpu_user_seconds_total Total user CPU time spent in seconds.
+# TYPE taskdb_process_cpu_user_seconds_total counter
+taskdb_process_cpu_user_seconds_total 2.96827
+
+# HELP taskdb_process_cpu_system_seconds_total Total system CPU time spent in seconds.
+# TYPE taskdb_process_cpu_system_seconds_total counter
+taskdb_process_cpu_system_seconds_total 2.173362
+
+# HELP taskdb_process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE taskdb_process_cpu_seconds_total counter
+taskdb_process_cpu_seconds_total 5.1416319999999995
+
+# HELP taskdb_process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE taskdb_process_start_time_seconds gauge
+taskdb_process_start_time_seconds 1759535085
+
+# HELP taskdb_process_resident_memory_bytes Resident memory size in bytes.
+# TYPE taskdb_process_resident_memory_bytes gauge
+taskdb_process_resident_memory_bytes 19120128
+
+# HELP taskdb_nodejs_eventloop_lag_seconds Lag of event loop in seconds.
+# TYPE taskdb_nodejs_eventloop_lag_seconds gauge
+taskdb_nodejs_eventloop_lag_seconds 0.005191166
+
+# HELP taskdb_nodejs_eventloop_lag_min_seconds The minimum recorded event loop delay.
+# TYPE taskdb_nodejs_eventloop_lag_min_seconds gauge
+taskdb_nodejs_eventloop_lag_min_seconds 0.010174464
+
+# HELP taskdb_nodejs_eventloop_lag_max_seconds The maximum recorded event loop delay.
+# TYPE taskdb_nodejs_eventloop_lag_max_seconds gauge
+taskdb_nodejs_eventloop_lag_max_seconds 0.011067391
+
+# HELP taskdb_nodejs_eventloop_lag_mean_seconds The mean of the recorded event loop delays.
+# TYPE taskdb_nodejs_eventloop_lag_mean_seconds gauge
+taskdb_nodejs_eventloop_lag_mean_seconds 0.01096928304761905
+
+# HELP taskdb_nodejs_eventloop_lag_stddev_seconds The standard deviation of the recorded event loop delays.
+# TYPE taskdb_nodejs_eventloop_lag_stddev_seconds gauge
+taskdb_nodejs_eventloop_lag_stddev_seconds 0.00019586899054761217
+
+# HELP taskdb_nodejs_eventloop_lag_p50_seconds The 50th percentile of the recorded event loop delays.
+# TYPE taskdb_nodejs_eventloop_lag_p50_seconds gauge
+taskdb_nodejs_eventloop_lag_p50_seconds 0.011042815
+
+# HELP taskdb_nodejs_eventloop_lag_p90_seconds The 90th percentile of the recorded event loop delays.
+# TYPE taskdb_nodejs_eventloop_lag_p90_seconds gauge
+taskdb_nodejs_eventloop_lag_p90_seconds 0.011067391
+
+# HELP taskdb_nodejs_eventloop_lag_p99_seconds The 99th percentile of the recorded event loop delays.
+# TYPE taskdb_nodejs_eventloop_lag_p99_seconds gauge
+taskdb_nodejs_eventloop_lag_p99_seconds 0.011067391
+
+# HELP taskdb_nodejs_active_resources Number of active resources that are currently keeping the event loop alive, grouped by async resource type.
+# TYPE taskdb_nodejs_active_resources gauge
+taskdb_nodejs_active_resources{type="PipeWrap"} 2
+taskdb_nodejs_active_resources{type="TCPServerWrap"} 1
+taskdb_nodejs_active_resources{type="TCPSocketWrap"} 1
+taskdb_nodejs_active_resources{type="Immediate"} 1
+
+# HELP taskdb_nodejs_active_resources_total Total number of active resources.
+# TYPE taskdb_nodejs_active_resources_total gauge
+taskdb_nodejs_active_resources_total 5
+
+# HELP taskdb_nodejs_active_handles Number of active libuv handles grouped by handle type. Every handle type is C++ class name.
+# TYPE taskdb_nodejs_active_handles gauge
+taskdb_nodejs_active_handles{type="Socket"} 3
+taskdb_nodejs_active_handles{type="Server"} 1
+
+# HELP taskdb_nodejs_active_handles_total Total number of active handles.
+# TYPE taskdb_nodejs_active_handles_total gauge
+taskdb_nodejs_active_handles_total 4
+
+# HELP taskdb_nodejs_active_requests Number of active libuv requests grouped by request type. Every request type is C++ class name.
+# TYPE taskdb_nodejs_active_requests gauge
+
+# HELP taskdb_nodejs_active_requests_total Total number of active requests.
+# TYPE taskdb_nodejs_active_requests_total gauge
+taskdb_nodejs_active_requests_total 0
+
+# HELP taskdb_nodejs_heap_size_total_bytes Process heap size from Node.js in bytes.
+# TYPE taskdb_nodejs_heap_size_total_bytes gauge
+taskdb_nodejs_heap_size_total_bytes 10846208
+
+# HELP taskdb_nodejs_heap_size_used_bytes Process heap size used from Node.js in bytes.
+# TYPE taskdb_nodejs_heap_size_used_bytes gauge
+taskdb_nodejs_heap_size_used_bytes 9501976
+
+# HELP taskdb_nodejs_external_memory_bytes Node.js external memory size in bytes.
+# TYPE taskdb_nodejs_external_memory_bytes gauge
+taskdb_nodejs_external_memory_bytes 3624806
+
+# HELP taskdb_nodejs_heap_space_size_total_bytes Process heap space size total from Node.js in bytes.
+# TYPE taskdb_nodejs_heap_space_size_total_bytes gauge
+taskdb_nodejs_heap_space_size_total_bytes{space="read_only"} 0
+taskdb_nodejs_heap_space_size_total_bytes{space="new"} 1048576
+taskdb_nodejs_heap_space_size_total_bytes{space="old"} 6815744
+taskdb_nodejs_heap_space_size_total_bytes{space="code"} 786432
+taskdb_nodejs_heap_space_size_total_bytes{space="shared"} 0
+taskdb_nodejs_heap_space_size_total_bytes{space="trusted"} 1916928
+taskdb_nodejs_heap_space_size_total_bytes{space="shared_trusted"} 0
+taskdb_nodejs_heap_space_size_total_bytes{space="new_large_object"} 0
+taskdb_nodejs_heap_space_size_total_bytes{space="large_object"} 278528
+taskdb_nodejs_heap_space_size_total_bytes{space="code_large_object"} 0
+taskdb_nodejs_heap_space_size_total_bytes{space="shared_large_object"} 0
+taskdb_nodejs_heap_space_size_total_bytes{space="shared_trusted_large_object"} 0
+taskdb_nodejs_heap_space_size_total_bytes{space="trusted_large_object"} 0
+
+# HELP taskdb_nodejs_heap_space_size_used_bytes Process heap space size used from Node.js in bytes.
+# TYPE taskdb_nodejs_heap_space_size_used_bytes gauge
+taskdb_nodejs_heap_space_size_used_bytes{space="read_only"} 0
+taskdb_nodejs_heap_space_size_used_bytes{space="new"} 485376
+taskdb_nodejs_heap_space_size_used_bytes{space="old"} 6630120
+taskdb_nodejs_heap_space_size_used_bytes{space="code"} 620608
+taskdb_nodejs_heap_space_size_used_bytes{space="shared"} 0
+taskdb_nodejs_heap_space_size_used_bytes{space="trusted"} 1507520
+taskdb_nodejs_heap_space_size_used_bytes{space="shared_trusted"} 0
+taskdb_nodejs_heap_space_size_used_bytes{space="new_large_object"} 0
+taskdb_nodejs_heap_space_size_used_bytes{space="large_object"} 262160
+taskdb_nodejs_heap_space_size_used_bytes{space="code_large_object"} 0
+taskdb_nodejs_heap_space_size_used_bytes{space="shared_large_object"} 0
+taskdb_nodejs_heap_space_size_used_bytes{space="shared_trusted_large_object"} 0
+taskdb_nodejs_heap_space_size_used_bytes{space="trusted_large_object"} 0
+
+# HELP taskdb_nodejs_heap_space_size_available_bytes Process heap space size available from Node.js in bytes.
+# TYPE taskdb_nodejs_heap_space_size_available_bytes gauge
+taskdb_nodejs_heap_space_size_available_bytes{space="read_only"} 0
+taskdb_nodejs_heap_space_size_available_bytes{space="new"} 563136
+taskdb_nodejs_heap_space_size_available_bytes{space="old"} 173864
+taskdb_nodejs_heap_space_size_available_bytes{space="code"} 165728
+taskdb_nodejs_heap_space_size_available_bytes{space="shared"} 0
+taskdb_nodejs_heap_space_size_available_bytes{space="trusted"} 405440
+taskdb_nodejs_heap_space_size_available_bytes{space="shared_trusted"} 0
+taskdb_nodejs_heap_space_size_available_bytes{space="new_large_object"} 1048576
+taskdb_nodejs_heap_space_size_available_bytes{space="large_object"} 0
+taskdb_nodejs_heap_space_size_available_bytes{space="code_large_object"} 0
+taskdb_nodejs_heap_space_size_available_bytes{space="shared_large_object"} 0
+taskdb_nodejs_heap_space_size_available_bytes{space="shared_trusted_large_object"} 0
+taskdb_nodejs_heap_space_size_available_bytes{space="trusted_large_object"} 0
+
+# HELP taskdb_nodejs_version_info Node.js version info.
+# TYPE taskdb_nodejs_version_info gauge
+taskdb_nodejs_version_info{version="v24.9.0",major="24",minor="9",patch="0"} 1
+
+# HELP taskdb_nodejs_gc_duration_seconds Garbage collection duration by kind, one of major, minor, incremental or weakcb.
+# TYPE taskdb_nodejs_gc_duration_seconds histogram
+taskdb_nodejs_gc_duration_seconds_bucket{le="0.001",kind="minor"} 0
+taskdb_nodejs_gc_duration_seconds_bucket{le="0.01",kind="minor"} 9
+taskdb_nodejs_gc_duration_seconds_bucket{le="0.1",kind="minor"} 12
+taskdb_nodejs_gc_duration_seconds_bucket{le="1",kind="minor"} 12
+taskdb_nodejs_gc_duration_seconds_bucket{le="2",kind="minor"} 12
+taskdb_nodejs_gc_duration_seconds_bucket{le="5",kind="minor"} 12
+taskdb_nodejs_gc_duration_seconds_bucket{le="+Inf",kind="minor"} 12
+taskdb_nodejs_gc_duration_seconds_sum{kind="minor"} 0.18959825003147124
+taskdb_nodejs_gc_duration_seconds_count{kind="minor"} 12
+
+# HELP taskdb_events_total Eventos insertados (sumados por proceso)
+# TYPE taskdb_events_total counter
+
+# HELP taskdb_flush_latency_seconds Latencia del flush de la cola (si aplica)
+# TYPE taskdb_flush_latency_seconds histogram
+taskdb_flush_latency_seconds_bucket{le="0.01"} 0
+taskdb_flush_latency_seconds_bucket{le="0.05"} 0
+taskdb_flush_latency_seconds_bucket{le="0.1"} 0
+taskdb_flush_latency_seconds_bucket{le="0.25"} 0
+taskdb_flush_latency_seconds_bucket{le="0.5"} 0
+taskdb_flush_latency_seconds_bucket{le="1"} 0
+taskdb_flush_latency_seconds_bucket{le="2"} 0
+taskdb_flush_latency_seconds_bucket{le="5"} 0
+taskdb_flush_latency_seconds_bucket{le="+Inf"} 0
+taskdb_flush_latency_seconds_sum 0
+taskdb_flush_latency_seconds_count 0
+
+# HELP taskdb_queue_depth Eventos en cola pendientes de flush
+# TYPE taskdb_queue_depth gauge
+taskdb_queue_depth 0

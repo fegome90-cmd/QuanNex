@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # TaskDB metrics
+  - job_name: 'taskdb'
+    static_configs:
+      - targets: ['localhost:9464']
+    scrape_interval: 10s
+    metrics_path: '/metrics'
+    
+  # Node.js process metrics (si usas prom-client default)
+  - job_name: 'node'
+    static_configs:
+      - targets: ['localhost:9464']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

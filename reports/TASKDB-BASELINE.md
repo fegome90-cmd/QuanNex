@@ -1,7 +1,7 @@
 # TaskDB Baseline Report (últimos 7 días)
 
-**Generado**: 2025-10-03T23:56:55.209Z  
-**Período**: 2025-09-26T23:56:55.209Z - 2025-10-03T23:56:55.210Z
+**Generado**: 2025-10-04T00:07:03.622Z  
+**Período**: 2025-09-27T00:07:03.622Z - 2025-10-04T00:07:03.623Z
 
 ## Resumen
 - Eventos totales: **0**
