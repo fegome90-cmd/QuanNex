@@ -88,6 +88,25 @@
 
 ---
 
+## 8. Simulacros Trimestrales
+- Definir calendario anual de Game Days (uno por trimestre).
+- Escenarios sugeridos: incremento artificial de `gates_failures_hourly`, indisponibilidad del escáner externo, bypass simulado sin justificación.
+- Evaluar tiempos de detección, comunicación y recuperación; alimentar postmortem.
+
+---
+
+## 9. Adopción de Patrones Observables
+- Checklist obligatorio en cada ADR/proyecto nuevo.
+- Revisión trimestral para asegurar cumplimiento; bloquear despliegues si no se documenta.
+
+---
+
+## 10. Catálogo de Dependencias Externas
+- Mantener `docs/informes/CATALOGO-DEPENDENCIAS-GATES.md` actualizado.
+- Revisar en cada Comité de Gates; ajustar comportamientos de degradación según experiencia.
+
+---
+
 ## 8. Seguimiento Consolidado
 
 | Actividad | Frecuencia | Entregable |

@@ -3,6 +3,12 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
+permissions:
+  contents: read
+  pull-requests: write
+  actions: read
+  security-events: write
+
 concurrency:
   group: opa-container-${{ github.event.pull_request.number }}
   cancel-in-progress: true
@@ -35,11 +41,21 @@ jobs:
               deleted_files: ( $deleted | split(" ") | map(select(length>0)) )
             }' > input.json
 
-      - name: Evaluate Rego (policies/)
+      - name: Cargar data externa (umbrales/paths)
+        run: |
+          test -f policies/data.yaml && echo "Data externa OK" || echo "⚠️ data.yaml no encontrada (usando defaults)"
+      
+      - name: Evaluate Rego con data externa
         shell: bash
         run: |
           set -euo pipefail
-          opa eval --format=json -i input.json -d policies/ 'data.pr.deny' > eval.json
+          if [ -f policies/data.yaml ]; then
+            echo "🔍 Evaluando con data externa..."
+            opa eval --format=json -i input.json -d policies/ -d policies/data.yaml 'data.pr.deny' > eval.json
+          else
+            echo "🔍 Evaluando con defaults..."
+            opa eval --format=json -i input.json -d policies/ 'data.pr.deny' > eval.json
+          fi
           jq -r '.result[0].expressions[0].value[]?' eval.json > violations.txt || true
           if [ -s violations.txt ]; then
             cat violations.txt; exit 1; fi
@@ -51,6 +67,9 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            let body = "❌ **Política PR (container)**:\n\n";
-            body += fs.readFileSync('violations.txt','utf8').split('\n').filter(Boolean).map(v=>`- ${v}`).join('\n');
+            const plan = process.env.PLAN || "OPA";
+            const lines = fs.readFileSync('violations.txt','utf8').split('\n').filter(Boolean);
+            const body = `❌ **Política PR (${plan})**\n\n` + lines.map(l=>`- ${l}`).join('\n');
             github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });
+        env:
+          PLAN: "Container"

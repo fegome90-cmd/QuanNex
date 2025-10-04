@@ -59,6 +59,7 @@ Establecer los pasos técnicos, operativos y culturales necesarios para elevar l
 ### 3.3 Gate Unlock Log
 - Integrar plantilla de registro en `OPERATIONS_PLAYBOOK_COMPLETE.md` y automatizar llenado vía script (pre-push o CLI) tras cada bypass.
 - Revisar el log en la daily gestión (5 minutos dedicados).
+- Referenciar el runbook `ops/runbooks/gates_safe_mode.md` para activación de emergencias.
 
 ---
 
@@ -72,6 +73,7 @@ Establecer los pasos técnicos, operativos y culturales necesarios para elevar l
 ### 4.2 Mentoring y Accountability
 - Nombrar “Gate Steward” rotativo por sprint encargado de vigilar el presupuesto de errores y reportar incidentes.
 - Establecer política de “postmortem liviano” (máx. 1 h) para cada bypass no justificado o repetido.
+- Incluir revisión del patrón `docs/architecture/patterns/observable-services.md` en cada ADR o diseño de servicio nuevo.
 
 ---
 
@@ -95,6 +97,9 @@ Una vez cumplidos, la rúbrica de madurez (`AUDITORIA-QUANNEX-INFORMES.md`) se a
 - **Comité de Gates**: Reunión semanal (Plataforma, TaskDB Core, Auditoría, SecOps). Revisar métricas, incidentes y acciones correctivas.
 - **Reporte Mensual**: Auditoría entrega informe a stakeholders con estado de madurez, incidentes y recomendaciones.
 - **Revisión Trimestral**: Validar si los gates pueden avanzar a “Controlado” (según rúbrica) y ajustar umbrales.
+- **Modulación de Gobernanza**: Si los criterios de salida se mantienen durante dos trimestres consecutivos, reducir la frecuencia del Comité de Gates a mensual y suspender el rol de Gate Steward (quedará latente). Reactivar automáticamente si cualquier métrica clave cae 15% por debajo del baseline o si se registran más de dos bypasses sin justificación en un trimestre.
+- **Presupuesto de Gobernanza**: El Comité de Gates debe medir y reportar cada trimestre el tiempo invertido en rituales; identificar oportunidades de simplificación cuando el costo supere 5% de la capacidad del equipo.
+- **Simulacros Trimestrales (Game Days)**: Ejecutar ejercicios controlados que degraden métricas clave o simulen bypasses para validar alertas, comunicación y tiempos de respuesta incluso en períodos de baja intensidad.
 
 ---
 
@@ -102,17 +107,24 @@ Una vez cumplidos, la rúbrica de madurez (`AUDITORIA-QUANNEX-INFORMES.md`) se a
 
 | Riesgo | Mitigación |
 | --- | --- |
+
 | Persistencia de `--no-verify` | Alertas + revisión diaria del Gate Unlock Log; mentoring obligatorio. |
 | Métricas incompletas | Automatizar auditorías de datos; fallback manual semanal mientras se estabiliza la recolección. |
 | Sobrecarga de equipo | Distribuir responsabilidades (Gate Steward rotativo); incorporar KPIs de gates en evaluaciones. |
 | Falsos positivos elevados | Revisar configuración MCP y TypeScript; permitir degradación temporal documentada en dev. |
-| Fallo de la infraestructura de telemetría | Plan de rollback para hooks graduales: variable `QUANNEX_GATES_SAFE_MODE` que reestablece configuración actual; respaldo diario de TaskDB y Prometheus; operación documentada en `OPERATIONS_PLAYBOOK_COMPLETE.md`. |
+| Fallo de la infraestructura de telemetría | Plan de rollback para hooks graduales: variable `QUANNEX_GATES_SAFE_MODE` que restablece configuración actual; respaldo diario de TaskDB y Prometheus; operación documentada en `OPERATIONS_PLAYBOOK_COMPLETE.md`. |
 | Sesgo por métricas (equipos evitando cambios complejos) | Revisión bisemanal del backlog por Comité de Gates para detectar trabajo diferido; canalizar decisiones con producto. |
 | Datos sensibles en telemetría | Revisar estructura con SecOps/Legal; anonimizar requestId y limitar retención a 30 días; registrar decisión en `docs/policies/data-handling.md`. |
 | Fatiga por advertencias | Establecer SLA de saneamiento (24h reconocimiento, 3 días resolución) y activar sprint-focus si se acumulan >20 warnings por módulo. |
 | Componentes legacy no alineados | Auditoría específica de módulos heredados (`core/taskdb/sqlite.ts`, `cli-reports.mjs`) y plan de refactor o aislamiento documentado. |
 | Falta de pruebas automáticas del nuevo framework | Añadir suite de tests (unit + smoke) para hooks graduales y telemetría en CI antes del despliegue general. |
 | Falta de comunicación con negocio | Reporte quincenal al comité de producto con estado de madurez y ETA de ADRs; registrar acuerdos. |
+| Nueva burocracia (comités/reportes) | Estimar costo en horas cada trimestre; eliminar rituales sin impacto medible; limitar reuniones a 30 min con agenda fija. |
+| Éxito sostenido degrada vigilancia | Aplicar protocolo de Modulación de Gobernanza para bajar la intensidad sin perder readiness. |
+| Deuda del sistema de telemetría | Asignar owner dedicado (Plataforma) con presupuesto de 5% del sprint para mantenimiento y evolución. |
+| Patrones observables ignorados | Auditar adopción en cada planificación trimestral; bloquear promociones a staging sin checklist cumplido. |
+| Dependencias externas inestables | Catalogar proveedores críticos con respuestas definidas (degradar a warning, ticket P3); establecer monitoreo y alertas específicas. |
+
 
 ---
 
@@ -125,6 +137,15 @@ Una vez cumplidos, la rúbrica de madurez (`AUDITORIA-QUANNEX-INFORMES.md`) se a
 5. Documentar plan de rollback y procedimientos de contingencia en `OPERATIONS_PLAYBOOK_COMPLETE.md`.
 6. Ejecutar auditoría de herramientas y ensayo piloto según `ENSAYOS-Y-AUDITORIAS-GATES.md`.
 7. Coordinar revisión legal/compliance de la telemetría propuesta.
+8. Definir runbook del modo seguro con criterios cuantitativos y cadena de aprobación.
+9. Instrumentar métrica de churn de código para detectar sesgo por métricas.
+10. Publicar presupuesto de tiempo para saneamiento por sprint (5-10%) y mecanismo de escalamiento.
+11. Asignar owner de telemetría de gates y reservar 5% del sprint para mantenimiento.
+12. Publicar patrones de arquitectura observables y adoptarlos como criterio de revisión.
+13. Incluir medición del presupuesto de gobernanza en la agenda del Comité de Gates.
+14. Programar el primer simulacro trimestral (Game Day) y documentar resultados.
+15. Completar catálogo de dependencias externas con modos de fallo definidos.
+16. Establecer revisión trimestral de adopción de patrones observables.
 
 ---
 

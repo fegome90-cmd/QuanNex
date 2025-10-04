@@ -3,6 +3,12 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
+permissions:
+  contents: read
+  pull-requests: write
+  actions: read
+  security-events: write
+
 concurrency:
   group: simple-policy-${{ github.event.pull_request.number }}
   cancel-in-progress: true
@@ -46,7 +52,13 @@ jobs:
 
           # sensitive globs (del YAML o defaults)
           if [ -f config/sensitive-paths.yaml ]; then
-            mapfile -t globs < <(awk '/sensitive_globs:/{f=1;next} f&&/^-/{g=$0; sub(/^- *"/,"",g); sub(/" *$/,"",g); print g} f&&$0!~"^-"{if(f)exit}' config/sensitive-paths.yaml)
+            # Compatible con macOS (sin mapfile)
+            globs=()
+            while IFS= read -r line; do
+              [ -n "$line" ] && globs+=("$line")
+            done < <(awk '/sensitive_globs:/{f=1;next} f&&/^-/{g=$0; sub(/^- *"/,"",g); sub(/" *$/,"",g); print g} f&&$0!~"^-"{if(f)exit}' config/sensitive-paths.yaml)
+            # Si no se encontraron globs, usar defaults
+            [ ${#globs[@]} -eq 0 ] && globs=("rag/**" ".github/workflows/**" "ops/**" "core/**")
           else
             globs=("rag/**" ".github/workflows/**" "ops/**" "core/**")
           fi
@@ -75,7 +87,12 @@ jobs:
             fi
           fi
 
-          printf "%s\n" "${violations[@]}" > violations.txt
+          # Escribir violaciones (manejar array vacío)
+          if [ ${#violations[@]} -gt 0 ]; then
+            printf "%s\n" "${violations[@]}" > violations.txt
+          else
+            touch violations.txt
+          fi
           if [ -s violations.txt ]; then
             cat violations.txt; exit 1; fi
           echo "Fallback policy OK."
@@ -86,6 +103,9 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            let body = "❌ **Política PR (fallback)**:\n\n";
-            body += fs.readFileSync('violations.txt','utf8').split('\n').filter(Boolean).map(v=>`- ${v}`).join('\n');
+            const plan = process.env.PLAN || "OPA";
+            const lines = fs.readFileSync('violations.txt','utf8').split('\n').filter(Boolean);
+            const body = `❌ **Política PR (${plan})**\n\n` + lines.map(l=>`- ${l}`).join('\n');
             github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });
+        env:
+          PLAN: "Fallback"
