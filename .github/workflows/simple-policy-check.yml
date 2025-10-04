@@ -1,0 +1,92 @@
+name: simple-policy-check
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Simple Policy Check
+        run: |
+          echo "🔍 Ejecutando verificación de políticas simple..."
+          
+          # Obtener archivos cambiados
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          
+          # Obtener labels
+          LABELS=$(echo '${{ toJson(github.event.pull_request.labels) }}' | jq -r '.[].name' | tr '\n' ' ')
+          
+          # Contar deleciones
+          DELETIONS=$(git diff --diff-filter=D --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | wc -l | awk '{print $1}')
+          
+          echo "📊 Datos del PR:"
+          echo "- Archivos cambiados: $(echo "$CHANGED_FILES" | wc -l | awk '{print $1}')"
+          echo "- Labels: $LABELS"
+          echo "- Deleciones: $DELETIONS"
+          
+          # Verificar paths sensibles
+          SENSITIVE_PATHS=("rag/" "core/" "ops/" ".github/workflows/")
+          VIOLATIONS=()
+          
+          for path in "${SENSITIVE_PATHS[@]}"; do
+            if echo "$CHANGED_FILES" | grep -q "^$path"; then
+              if [[ "$LABELS" != *"critical"* ]]; then
+                VIOLATIONS+=("Tocar $path requiere label 'critical' + CODEOWNERS")
+              fi
+            fi
+          done
+          
+          # Verificar deleciones masivas
+          if [ "$DELETIONS" -gt 25 ]; then
+            if [[ "$LABELS" != *"rollback"* ]]; then
+              VIOLATIONS+=("Deleciones masivas ($DELETIONS > 25) requieren label 'rollback' + CODEOWNERS")
+            fi
+          fi
+          
+          # Verificar APIs peligrosas
+          DANGEROUS_APIS=$(git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -E 'child_process|execSync|spawnSync|eval|dangerouslySetInnerHTML' | wc -l | awk '{print $1}')
+          if [ "$DANGEROUS_APIS" -gt 0 ]; then
+            if [[ "$LABELS" != *"security"* ]]; then
+              VIOLATIONS+=("APIs peligrosas detectadas requieren label 'security' + revisión especializada")
+            fi
+          fi
+          
+          # Verificar cambios en CODEOWNERS
+          if echo "$CHANGED_FILES" | grep -q "^\.github/CODEOWNERS$"; then
+            if [[ "$LABELS" != *"governance"* ]]; then
+              VIOLATIONS+=("Cambios en CODEOWNERS requieren label 'governance' + aprobación de mantenedores")
+            fi
+          fi
+          
+          # Verificar cambios en workflows
+          if echo "$CHANGED_FILES" | grep -q "^\.github/workflows/"; then
+            if [[ "$LABELS" != *"ci-cd"* ]]; then
+              VIOLATIONS+=("Cambios en workflows requieren label 'ci-cd' + aprobación de SRE")
+            fi
+          fi
+          
+          # Reportar violaciones
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            echo "❌ Violaciones de política detectadas:"
+            for violation in "${VIOLATIONS[@]}"; do
+              echo "  - $violation"
+            done
+            echo "::error::Violaciones de política detectadas. Revisar y corregir."
+            exit 1
+          else
+            echo "✅ Todas las políticas pasaron"
+          fi
+      
+      - name: Policy Summary
+        run: |
+          echo "📊 Resumen de Políticas:"
+          echo "- Archivos cambiados: $(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | wc -l | awk '{print $1}')"
+          echo "- Labels aplicadas: $(echo '${{ toJson(github.event.pull_request.labels) }}' | jq -r '.[].name' | wc -l | awk '{print $1}')"
+          echo "- Deleciones: $(git diff --diff-filter=D --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | wc -l | awk '{print $1}')"
+          echo "- APIs peligrosas: $(git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -E 'child_process|execSync|spawnSync|eval|dangerouslySetInnerHTML' | wc -l | awk '{print $1}')"
+          echo "- Políticas evaluadas: ✅ PASARON"

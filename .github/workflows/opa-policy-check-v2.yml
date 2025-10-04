@@ -1,4 +1,4 @@
-name: opa-policy-check
+name: opa-policy-check-v2
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -11,28 +11,13 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Install OPA
+      - name: Install OPA (Alternative Method)
         run: |
-          # Método 1: Usar wget (más confiable que curl)
-          if wget -O opa https://github.com/openpolicyagent/opa/releases/latest/download/opa_linux_amd64; then
-            chmod +x opa
-            sudo mv opa /usr/local/bin/
-            echo "✅ OPA instalado con wget"
-          else
-            # Método 2: Fallback con curl
-            echo "⚠️ wget falló, intentando con curl..."
-            if curl -L -o opa https://github.com/openpolicyagent/opa/releases/latest/download/opa_linux_amd64; then
-              chmod +x opa
-              sudo mv opa /usr/local/bin/
-              echo "✅ OPA instalado con curl"
-            else
-              # Método 3: Usar apt (último recurso)
-              echo "⚠️ curl falló, intentando con apt..."
-              sudo apt-get update
-              sudo apt-get install -y opa
-              echo "✅ OPA instalado con apt"
-            fi
-          fi
+          # Usar el método más confiable: descarga directa desde releases
+          OPA_VERSION="0.58.0"  # Versión específica para evitar problemas
+          wget -O opa "https://github.com/openpolicyagent/opa/releases/download/v${OPA_VERSION}/opa_linux_amd64"
+          chmod +x opa
+          sudo mv opa /usr/local/bin/
           
           # Verificar instalación
           opa version
@@ -68,6 +53,18 @@ jobs:
       - name: Run OPA Policy Check
         run: |
           echo "🔍 Ejecutando verificación de políticas OPA..."
+          
+          # Verificar que OPA está instalado
+          if ! command -v opa &> /dev/null; then
+            echo "❌ OPA no está instalado"
+            exit 1
+          fi
+          
+          # Verificar que el archivo de política existe
+          if [ ! -f "policy.rego" ]; then
+            echo "❌ Archivo policy.rego no encontrado"
+            exit 1
+          fi
           
           # Ejecutar política
           RESULT=$(opa eval --data policy.rego --input pr-data.json 'data.pr.security.deny' --format json)

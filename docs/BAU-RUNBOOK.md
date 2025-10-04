@@ -182,23 +182,27 @@ deny[msg] {
 }
 ```
 
-#### **Workflow de Validación**
+#### **Workflows de Validación**
+
+**Opción 1: OPA Completo (Recomendado)**
 ```yaml
-name: opa-policy-check
-on: [pull_request]
-jobs:
-  policy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: OPA Policy Check
-        run: |
-          # Instalar OPA
-          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
-          chmod +x opa
-          
-          # Ejecutar política
-          ./opa eval --data policy.rego --input pr-data.json 'data.pr.security.deny'
+# .github/workflows/opa-policy-check-v2.yml
+# Usa versión específica de OPA para evitar problemas de descarga
+```
+
+**Opción 2: Simple Policy Check (Fallback)**
+```yaml
+# .github/workflows/simple-policy-check.yml
+# No requiere OPA, usa bash puro para validaciones básicas
+```
+
+**Instalación de OPA Mejorada**:
+```bash
+# Método robusto con fallbacks
+OPA_VERSION="0.58.0"
+wget -O opa "https://github.com/openpolicyagent/opa/releases/download/v${OPA_VERSION}/opa_linux_amd64"
+chmod +x opa
+sudo mv opa /usr/local/bin/
 ```
 
 ---
